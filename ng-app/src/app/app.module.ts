@@ -39,6 +39,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserChangePasswordComponent } from './user/user-change-password/user-change-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { EventPlanFormComponent } from './event-plan/event-plan-form/event-plan-form.component';
+import { EventPlanListComponent } from './event-plan/event-plan-list/event-plan-list.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     ForgotPasswordComponent,
     UserProfileComponent,
     UserChangePasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EventPlanFormComponent,
+    EventPlanListComponent
   ],
   imports: [
     BrowserModule,

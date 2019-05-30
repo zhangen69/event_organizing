@@ -12,12 +12,19 @@ import { RegisterComponent } from './auth/register/register.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { EventPlanListComponent } from './event-plan/event-plan-list/event-plan-list.component';
+import { EventPlanFormComponent } from './event-plan/event-plan-form/event-plan-form.component';
 
 const routes: Routes = [
   { path: 'product', canActivate: [AuthGuard], children: [
     { path: 'list', component: ProductListComponent },
     { path: 'add', component: ProductFormComponent },
     { path: 'edit/:id', component: ProductFormComponent },
+  ]},
+  { path: 'eventPlan', canActivate: [AuthGuard], children: [
+    { path: 'list', component: EventPlanListComponent },
+    { path: 'add', component: EventPlanFormComponent },
+    { path: 'edit/:id', component: EventPlanFormComponent },
   ]},
   { path: 'user', canActivate: [AuthGuard], children: [
     { path: 'list', component: UserListComponent },
