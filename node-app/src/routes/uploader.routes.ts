@@ -13,7 +13,7 @@ router.post('/multer/upload', checkAuth, multerUploader, (req, res) => {
 });
 
 router.post('/cloudinary/upload', checkAuth, cloudinaryUploader, (req, res) => {
-    res.status(200).json({ messge: 'upload success', url: req.file.url });
+    // res.status(200).json({ messge: 'upload success', url: req.file.url });
 });
 
 export default router;

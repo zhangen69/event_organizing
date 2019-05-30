@@ -79,6 +79,6 @@ typings/
 */node_modules/
 
 # dist
-dist/
 node-app/package-lock.json
 ng-app/package-lock.json
+dist/package-lock.json
