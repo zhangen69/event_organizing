@@ -21,8 +21,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     currentPage: 0,
   };
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private userService: UserService, private authService: AuthService) {
     this.userService.init('user', this.queryModel, this.paginator);

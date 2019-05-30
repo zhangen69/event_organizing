@@ -27,8 +27,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   selectedFilter: any;
   selectedFilterListerner = new Subject<any>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private service: StandardService, private authService: AuthService) {
     this.service.init('product', this.queryModel);
