@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+table { width: 100%; }
+
+.mat-card[class*="card-"] {
+  margin: 0 auto;
+}
+
+.mat-card.card-xs {
+  max-width: 576px;
+}
+
+.mat-card.card-sm {
+  max-width: 768px;
+}
+
+.mat-card.card-md {
+  max-width: 992px;
+}
+
+.mat-card.card-lg {
+  max-width: 1200px;
+}
+
+.mat-card[class*="card-"] form > mat-form-field {
+  width: 100%;
+}
+
+.standard-table.mat-table .mat-column-audit-updatedDate {
+  width: 150px;
+}
+
+.standard-table.mat-table .mat-column-action {
+  width: 250px;
+}
+
+.standard-table.mat-table .mat-column-action button {
+  padding: 0 8px;
+  margin: 0 5px;
+}
+
+.standard-table.mat-table .mat-column-action button .mat-icon {
+  vertical-align: middle !important;
+}
+
+.image-wrapper .input-file {
+  visibility: hidden;
+}
+
+.image-wrapper .image-picker {
+  margin: 1rem 0;
+}
+
+.image-wrapper .image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-wrapper .image-preview img {
+  height: 100%;
+}
+
