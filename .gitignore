@@ -80,3 +80,5 @@ typings/
 
 # dist
 dist/
+node-app/package-lock.json
+ng-app/package-lock.json
