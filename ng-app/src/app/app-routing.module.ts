@@ -12,8 +12,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-import { EventPlanListComponent } from './event-plan/event-plan-list/event-plan-list.component';
-import { EventPlanFormComponent } from './event-plan/event-plan-form/event-plan-form.component';
+import { EventPlanListComponent } from './event/event-plan-list/event-plan-list.component';
+import { EventPlanFormComponent } from './event/event-plan-form/event-plan-form.component';
 
 const routes: Routes = [
   { path: 'product', canActivate: [AuthGuard], children: [
