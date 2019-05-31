@@ -39,8 +39,46 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserChangePasswordComponent } from './user/user-change-password/user-change-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-import { EventPlanFormComponent } from './event-plan/event-plan-form/event-plan-form.component';
-import { EventPlanListComponent } from './event-plan/event-plan-list/event-plan-list.component';
+import { EventFormComponent } from './event/event-form/event-form.component';
+import { EventListComponent } from './event/event-list/event-list.component';
+import { ProviderFormComponent } from './provider/provider-form/provider-form.component';
+import { ProviderListComponent } from './provider/provider-list/provider-list.component';
+import { StoreListComponent } from './inventory/store-list/store-list.component';
+import { StoreFormComponent } from './inventory/store-form/store-form.component';
+import { StockItemListComponent } from './inventory/stock-item-list/stock-item-list.component';
+import { StockItemFormComponent } from './inventory/stock-item-form/stock-item-form.component';
+import { StockTransactionListComponent } from './inventory/stock-transaction-list/stock-transaction-list.component';
+import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+import { CustomerFormComponent } from './customer/customer-form/customer-form.component';
+import { InvoiceListComponent } from './customer/invoice-list/invoice-list.component';
+import { InvoiceFormComponent } from './customer/invoice-form/invoice-form.component';
+import { ProviderServiceListComponent } from './provider/provider-service-list/provider-service-list.component';
+import { ProviderServiceFormComponent } from './provider/provider-service-form/provider-service-form.component';
+import { ProviderFacilityFormComponent } from './provider/provider-facility-form/provider-facility-form.component';
+import { ProviderFacilityListComponent } from './provider/provider-facility-list/provider-facility-list.component';
+import { AttendanceListComponent } from './attendance/attendance-list/attendance-list.component';
+import { AttendanceFormComponent } from './attendance/attendance-form/attendance-form.component';
+import { AttendeeListComponent } from './attendee/attendee-list/attendee-list.component';
+import { AttendeeFormComponent } from './attendee/attendee-form/attendee-form.component';
+import { PaymentListComponent } from './attendee/payment-list/payment-list.component';
+import { CategoryListComponent } from './provider/category-list/category-list.component';
+import { CategoryFormComponent } from './provider/category-form/category-form.component';
+import { AttendeeGroupListComponent } from './attendee/attendee-group-list/attendee-group-list.component';
+import { AttendeeGroupFormComponent } from './attendee/attendee-group-form/attendee-group-form.component';
+import { ReceiptFormComponent } from './provider/receipt-form/receipt-form.component';
+import { ReceiptListComponent } from './provider/receipt-list/receipt-list.component';
+import { RoleFormComponent } from './role/role-form/role-form.component';
+import { RoleListComponent } from './role/role-list/role-list.component';
+import { EventProcessFormComponent } from './event/event-process-form/event-process-form.component';
+import { EventProcessListComponent } from './event/event-process-list/event-process-list.component';
+import { EventPlanFormComponent } from './event/event-plan-form/event-plan-form.component';
+import { EventPlanListComponent } from './event/event-plan-list/event-plan-list.component';
+import { PaymentVoucherListComponent } from './provider/payment-voucher-list/payment-voucher-list.component';
+import { PaymentVoucherFormComponent } from './provider/payment-voucher-form/payment-voucher-form.component';
+import { SupplierInvoiceFormComponent } from './provider/supplier-invoice-form/supplier-invoice-form.component';
+import { SupplierInvoiceListComponent } from './provider/supplier-invoice-list/supplier-invoice-list.component';
+import { RegistrationFormComponent } from './event/registration-form/registration-form.component';
+import { RegistrationListComponent } from './event/registration-list/registration-list.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +97,47 @@ import { EventPlanListComponent } from './event-plan/event-plan-list/event-plan-
     UserProfileComponent,
     UserChangePasswordComponent,
     ResetPasswordComponent,
+    EventFormComponent,
+    EventListComponent,
+    ProviderFormComponent,
+    ProviderListComponent,
+    StoreListComponent,
+    StoreFormComponent,
+    StockItemListComponent,
+    StockItemFormComponent,
+    StockTransactionListComponent,
+    CustomerListComponent,
+    CustomerFormComponent,
+    InvoiceListComponent,
+    InvoiceFormComponent,
+    ProviderServiceListComponent,
+    ProviderServiceFormComponent,
+    ProviderFacilityFormComponent,
+    ProviderFacilityListComponent,
+    AttendanceListComponent,
+    AttendanceFormComponent,
+    AttendeeListComponent,
+    AttendeeFormComponent,
+    PaymentListComponent,
+    CategoryListComponent,
+    CategoryFormComponent,
+    AttendeeGroupListComponent,
+    AttendeeGroupFormComponent,
+    ReceiptFormComponent,
+    ReceiptListComponent,
+    RoleFormComponent,
+    RoleListComponent,
+    EventProcessFormComponent,
+    EventProcessListComponent,
     EventPlanFormComponent,
-    EventPlanListComponent
+    EventPlanListComponent,
+    PaymentVoucherListComponent,
+    PaymentVoucherFormComponent,
+    SupplierInvoiceFormComponent,
+    SupplierInvoiceListComponent,
+    RegistrationFormComponent,
+    RegistrationListComponent,
+
   ],
   imports: [
     BrowserModule,
