@@ -28,6 +28,18 @@ table { width: 100%; }
   width: 100%;
 }
 
+.action-group {
+  padding: 10px 0;
+}
+
+.standard-filter {
+  margin: 10px;
+}
+
+.standard-filter .mat-form-field {
+  padding: 0 5px;
+}
+
 .standard-table.mat-table .mat-column-audit-updatedDate {
   width: 150px;
 }
@@ -43,6 +55,36 @@ table { width: 100%; }
 
 .standard-table.mat-table .mat-column-action button .mat-icon {
   vertical-align: middle !important;
+}
+
+.standard-table th.mat-sort-header-sorted {
+  color: black;
+}
+
+.standard-table .number-form-fields {
+  display: inline-block;
+}
+
+.standard-table .mat-paginator {
+  margin-top: 1rem;
+}
+
+.standard-table .mat-column-select {
+  width: 50px;
+}
+
+.standard-table .mat-column-audit-updatedDate {
+  width: 150px;
+}
+
+.standard-table .mat-column-action {
+  width: 200px;
+  text-align: center;
+}
+
+.standard-table .mat-column-action button {
+  padding: 0 8px;
+  margin: 0 5px;
 }
 
 .image-wrapper .input-file {
