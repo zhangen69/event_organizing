@@ -2,7 +2,7 @@
   <a [routerLink]="['/product/add']" routerLinkActive="router-link-active" mat-raised-button><mat-icon>insert_drive_file</mat-icon> New Product</a>
 </div>
 
-<div class="standard-filter">
+<div fxLayout fxLayoutAlign="start center" class="standard-filter">
   <mat-form-field *ngIf="selectedFilter.queryType === 'string'">
     <input matInput [(ngModel)]="queryModel.searchText" (keyup)="$event.keyCode === 13 && applyFilter(queryModel)" placeholder="Filter">
   </mat-form-field>
@@ -21,6 +21,7 @@
     </mat-select>
   </mat-form-field>
   <button mat-raised-button type="button" color="primary" (click)="applyFilter(queryModel)">Search</button>
+  <button fxFlexOffset="auto" mat-raised-button type="button" color="primary" (click)="applyFilter(queryModel)">Refresh</button>
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 standard-table" (matSortChange)="sortData($event)">

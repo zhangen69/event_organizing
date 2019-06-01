@@ -1,7 +1,9 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subject } from 'rxjs';
 import { StandardService } from 'src/app/services/standard.service';
 import { IQueryModel } from 'src/app/interfaces/query-model';

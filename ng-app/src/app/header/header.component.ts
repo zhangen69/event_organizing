@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit {
   isAuth = false;
   routes = [
-    { name: 'Products', children: [
+    { url: '/product/list', name: 'Products', children: [
         { url: '/product/form', name: 'New' },
         { url: '/product/list', name: 'List' },
     ]},

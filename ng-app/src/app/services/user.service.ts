@@ -2,7 +2,7 @@ import { ConfirmationDialogComponent } from './../templates/confirmation-dialog/
 import { HttpClient } from '@angular/common/http';
 import { StandardService } from './standard.service';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 

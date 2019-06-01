@@ -1,6 +1,8 @@
 import { UserService } from './../../services/user.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, Sort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/models/user.model';
 import { IQueryModel } from 'src/app/interfaces/query-model';
 import { merge } from 'rxjs';
