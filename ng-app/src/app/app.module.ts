@@ -15,7 +15,8 @@ import {
   MatSnackBarModule,
   MatDialogModule,
   MatIconModule,
-  MatSelectModule
+  MatSelectModule,
+  MatMenuModule,
 } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
@@ -137,7 +138,6 @@ import { RegistrationListComponent } from './event/registration-list/registratio
     SupplierInvoiceListComponent,
     RegistrationFormComponent,
     RegistrationListComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -165,6 +165,7 @@ import { RegistrationListComponent } from './event/registration-list/registratio
     MatDialogModule,
     MatIconModule,
     MatSelectModule,
+    MatMenuModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [

@@ -1,11 +1,13 @@
 <mat-toolbar>
-  <span routerLink="/">Ng-Node App</span>
-  <a routerLink="/product/list" mat-button *ngIf="isAuth">Products</a>
-  <a routerLink="/eventPlan/list" mat-button *ngIf="isAuth">Event Plans</a>
-  <a routerLink="/user/list" mat-button *ngIf="isAuth">Users</a>
-  <a routerLink="/auth/login" mat-button *ngIf="!isAuth">Login</a>
-  <a routerLink="/auth/register" mat-button *ngIf="!isAuth">Sign Up</a>
-  <a routerLink="/user/changePassword" mat-button *ngIf="isAuth">Change Password</a>
-  <a routerLink="/user/profile" mat-button *ngIf="isAuth">My Profile</a>
-  <a mat-button (click)="onLogout()" *ngIf="isAuth">Logout</a>
+  <span class="logo" routerLink="/">Ng-Node App</span>
+
+  <ng-container *ngIf="isAuth">
+    <a [routerLink]="route.url" mat-button *ngFor="let route of routes">{{ route.name }}</a>
+    <a mat-button (click)="onLogout()">Logout</a>
+  </ng-container>
+
+  <ng-container *ngIf="!isAuth">
+    <a routerLink="/auth/login" mat-button *ngIf="!isAuth">Login</a>
+    <a routerLink="/auth/register" mat-button *ngIf="!isAuth">Sign Up</a>
+  </ng-container>
 </mat-toolbar>

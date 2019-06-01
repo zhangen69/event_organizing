@@ -9,6 +9,16 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   isAuth = false;
+  routes = [
+    { name: 'Products', children: [
+        { url: '/product/form', name: 'New' },
+        { url: '/product/list', name: 'List' },
+    ]},
+    { url: '/event-plan/list', name: 'Event Plans' },
+    { url: '/user/list', name: 'Users' },
+    { url: '/user/changePassword', name: 'Change Password' },
+    { url: '/user/profile', name: 'My Profile' },
+  ];
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService) { }

@@ -21,7 +21,7 @@ const routes: Routes = [
     { path: 'add', component: ProductFormComponent },
     { path: 'edit/:id', component: ProductFormComponent },
   ]},
-  { path: 'eventPlan', canActivate: [AuthGuard], children: [
+  { path: 'event-plan', canActivate: [AuthGuard], children: [
     { path: 'list', component: EventPlanListComponent },
     { path: 'add', component: EventPlanFormComponent },
     { path: 'edit/:id', component: EventPlanFormComponent },
