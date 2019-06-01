@@ -36,7 +36,7 @@ export class AuthService {
         this.setAuthTimer(expiresIn);
         this.authStatusListerner.next(true);
         const now = new Date();
-        const expiration = new Date(now.getTime() + (expiresIn * 1000));
+        const expiration = new Date(now.getTime() + (expiresIn));
         this.saveAuthData(this.token, expiration);
         this.toastr.success(res.message);
         this.router.navigate(['/']);
@@ -66,6 +66,11 @@ export class AuthService {
   getToken() {
     return this.token;
   }
+
+  // getExpiration() {
+  //   const expiration = localStorage.getItem('expiration');
+  //   return new Date(expiration);
+  // }
 
   getAuthStatusListener() {
     return this.authStatusListerner.asObservable();
@@ -103,11 +108,11 @@ export class AuthService {
     }
   }
 
-  private setAuthTimer(duration: number) {
+  private setAuthTimer(duration) {
     this.tokenTimer = setTimeout(() => {
       debugger;
       this.logout();
-    }, duration * 1000);
+    }, duration);
   }
 
   private saveAuthData(token: string, expirationDate: Date) {

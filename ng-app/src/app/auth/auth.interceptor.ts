@@ -8,6 +8,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = this.authService.getToken();
+    // const expiration = this.authService.getExpiration();
+    // const now = new Date();
+    // const expiresIn = expiration.getTime() - now.getTime();
+
+    // debugger;
+    // if (expiresIn <= 0) {
+    //   debugger;
+    //   this.authService.logout();
+    // }
 
     if (token) {
       const request = req.clone({

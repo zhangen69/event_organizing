@@ -1,3 +1,22 @@
-<p>
-  event-plan-form works!
-</p>
+<mat-card class="card-md">
+    <mat-card-header>
+      <mat-card-title>New Event Plan</mat-card-title>
+      <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form #form="ngForm" id="form" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input matInput #name="ngModel" [(ngModel)]="formData.name" name="name" placeholder="Name" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="number" matInput #price="ngModel" [(ngModel)]="formData.totalBudgetAmount" name="totalBudgetAmount" placeholder="Total Budget (RM)" required />
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button [routerLink]="['/event-plan/list']" type="button"><mat-icon>arrow_back_ios</mat-icon> Cancel</button>
+      <button mat-raised-button color="primary" type="submit" form="form"><mat-icon>done</mat-icon> Submit</button>
+    </mat-card-actions>
+  </mat-card>

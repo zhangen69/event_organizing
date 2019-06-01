@@ -9,6 +9,7 @@ import path from 'path';
 import configs from '../configs/app.configs';
 
 // import routes
+import eventPlanRoutes from '../routes/event-plan.routes';
 import NgAppRoutes from '../routes/ng-app.routes';
 import productRoutes from '../routes/product.routes';
 import uploaderRoutes from '../routes/uploader.routes';
@@ -27,6 +28,7 @@ router.use(uploaderRoutes);
 
 // apply service routes
 router.use('/service', productRoutes);
+router.use('/service', eventPlanRoutes);
 router.use('/service/user', userRoutes);
 
 // apply ng-app routes, public folders
