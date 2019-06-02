@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -164,6 +165,7 @@ import { RegistrationListComponent } from './event/registration-list/registratio
     MatIconModule,
     MatSelectModule,
     MatMenuModule,
+    MatTooltipModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [

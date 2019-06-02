@@ -4,6 +4,18 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 table { width: 100%; }
 
+.mat-icon.icon-xs {
+  font-size: 1.3rem;
+}
+
+.mat-icon.icon-md {
+  font-size: 1.5rem;
+}
+
+.mat-icon.icon-lg {
+  font-size: 1.7rem;
+}
+
 .mat-card[class*="card-"] {
   margin: 0 auto;
 }

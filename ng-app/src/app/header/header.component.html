@@ -2,7 +2,7 @@
   <span class="logo" routerLink="/">Ng-Node App</span>
 
   <ng-container *ngIf="isAuth">
-    <a [routerLink]="route.url" mat-button *ngFor="let route of routes">{{ route.name }}</a>
+    <a mat-button [routerLink]="route.url" routerLinkActive="mat-primary" mat-button *ngFor="let route of routes">{{ route.name }}</a>
     <a mat-button (click)="onLogout()">Logout</a>
   </ng-container>
 

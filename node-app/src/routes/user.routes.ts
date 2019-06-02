@@ -40,27 +40,27 @@ router.post('/login', (req, res) => {
 router.post('/logout', (req, res) => {});
 
 router.post('/changePassword', checkAuth, (req, res) => {
-    // if (req.auth.isAuth) {
-    //     req.body.username = req.auth.user.username;
-    // }
+    if (req['auth']['isAuth']) {
+        req.body.username = req['auth']['user']['username'];
+    }
 
-    // UserController.changePassword(req.body, req.auth).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.changePassword(req.body, req['auth']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.get('/fetchProfile', checkAuth, (req, res) => {
-    // if (!req.auth.isAuth) {
-    //     res.status(401).json({ message: 'Access Denied' });
-    // }
+    if (!req['auth']['isAuth']) {
+        res.status(401).json({ message: 'Access Denied' });
+    }
 
-    // UserController.fetchProfile(req.auth.user._id).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.fetchProfile(req['auth']['user']['_id']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.put('/updateProfile', checkAuth, (req, res) => {
@@ -92,11 +92,11 @@ router.post('/verifyResetPasswordToken', (req, res) => {
 router.get('/', checkAuth, (req, res) => {
     const queryModel = req.query.queryModel ? JSON.parse(req.query.queryModel) : {};
 
-    // UserController.fetchAll(queryModel, req.auth).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.fetchAll(queryModel, req['auth']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.get('/:id', checkAuth, (req, res) => {
@@ -116,27 +116,27 @@ router.post('/', checkAuth, (req, res) => {
 });
 
 router.put('/', checkAuth, (req, res) => {
-    // UserController.update(req.body, req.auth).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.update(req.body, req['auth']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.post('/lock', checkAuth, (req, res) => {
-    // UserController.lock(req.body, req.auth).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.lock(req.body, req['auth']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.post('/unlock', checkAuth, (req, res) => {
-    // UserController.unlock(req.body, req.auth).then((result: any) => {
-    //     res.status(result.status).json(result);
-    // }).catch((result: any) => {
-    //     res.status(result.status).json(result);
-    // });
+    UserController.unlock(req.body, req['auth']).then((result: any) => {
+        res.status(result.status).json(result);
+    }).catch((result: any) => {
+        res.status(result.status).json(result);
+    });
 });
 
 router.post('/resetPassword', (req, res) => {

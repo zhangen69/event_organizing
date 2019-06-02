@@ -14,7 +14,8 @@
         "no-empty": false,
         "jsdoc-format": false,
         "forin": false,
-        "no-shadowed-variable": false
+        "no-shadowed-variable": false,
+        "no-string-literal": false
     },
     "rulesDirectory": []
 }

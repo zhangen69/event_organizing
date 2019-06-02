@@ -13,6 +13,7 @@ export class UserService extends StandardService {
 
   constructor(public http: HttpClient, public dialog: MatDialog, public router: Router, public toastr: ToastrService) {
     super(http, dialog, router, toastr);
+    this.init('user');
   }
 
   lock(user): void {
