@@ -4,8 +4,6 @@ import { UserFormComponent } from './user/user-form/user-form.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
-import { ProductFormComponent } from './product/product-form/product-form.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RegisterComponent } from './auth/register/register.component';
