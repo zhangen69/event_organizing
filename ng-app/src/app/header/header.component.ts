@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -8,17 +8,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() navToggle = new EventEmitter<any>();
   isAuth = false;
-  routes = [
-    { url: '/product/list', name: 'Products', children: [
-        { url: '/product/form', name: 'New' },
-        { url: '/product/list', name: 'List' },
-    ]},
-    { url: '/event-plan/list', name: 'Event Plans' },
-    { url: '/user/list', name: 'Users' },
-    { url: '/user/changePassword', name: 'Change Password' },
-    { url: '/user/profile', name: 'My Profile' },
-  ];
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService) { }

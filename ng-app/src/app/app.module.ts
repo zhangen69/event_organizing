@@ -17,6 +17,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -166,6 +168,8 @@ import { RegistrationListComponent } from './event/registration-list/registratio
     MatSelectModule,
     MatMenuModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [

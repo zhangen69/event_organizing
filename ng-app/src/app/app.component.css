@@ -1,3 +1,20 @@
 .main-content {
   padding: 10px 15px;
+  height: calc(100% - 85px);
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  padding-right: 10px;
+}
+
+mat-sidenav-content {
+  padding: 0 10px;
+}
+
+.mat-list-item.mat-primary {
+  color: #3f51b5;
 }
