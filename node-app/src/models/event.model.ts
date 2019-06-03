@@ -18,14 +18,14 @@ const eventStockItemSchema = new mongoose.Schema({
 
 const attendeeSchema = new mongoose.Schema({
     name: String,
-    status: { type: String, enum: ['Open', 'Paid', 'Cancelled'] },
+    status: { type: String, enum: ['Open', 'Paid', 'Cancelled'], default: 'Open' },
     attendeeGroup: { type: mongoose.Types.ObjectId, ref: 'AttendeeGroup' },
     remarks: String,
 });
 
 const eventProcessSchema = new mongoose.Schema({
     name: String,
-    status: { type: String, enum: ['Open', 'Paid', 'Cancelled'] },
+    status: { type: String, enum: ['Open', 'Paid', 'Cancelled'], default: 'Open' },
     startFrom: { type: Date, required: true },
     endTo: { type: Date, required: true },
     providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderService' },
@@ -37,14 +37,16 @@ const eventProcessSchema = new mongoose.Schema({
 
 const schema = new mongoose.Schema({
     name: { type: String, required: true },
-    eventPlanId: { type: mongoose.Types.ObjectId, default: null },
+    customer: { type: mongoose.Types.ObjectId, ref: 'Customer' },
+    eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan', default: null },
     totalBudgetAmount: { type: Number, default: 0.0 },
     services: { type: [eventServiceSchema], default: [] },
     facilities: { type: [eventFacilitySchema], default: [] },
     stockItems: { type: [eventStockItemSchema], default: [] },
     attendees: { type: [attendeeSchema], default: [] },
     processes: { type: [eventProcessSchema], default: [] },
-    registrationForm: { type: mongoose.Types.ObjectId, ref: 'RegistrationForm' },
+    registrationForm: { type: mongoose.Types.ObjectId, ref: 'RegistrationForm', default: null },
+    status: { type: String, enum: ['Open', 'Cancelled', 'Preparation', 'Initial', 'In Progress', 'Closed'], defualt: 'Open' },
 });
 
 schema.add(auditable);

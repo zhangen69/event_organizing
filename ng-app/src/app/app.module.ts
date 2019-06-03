@@ -81,6 +81,8 @@ import { SupplierInvoiceFormComponent } from './provider/supplier-invoice-form/s
 import { SupplierInvoiceListComponent } from './provider/supplier-invoice-list/supplier-invoice-list.component';
 import { RegistrationFormComponent } from './event/registration-form/registration-form.component';
 import { RegistrationListComponent } from './event/registration-list/registration-list.component';
+import { StandardListComponent } from './standard/standard-list/standard-list.component';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -139,6 +141,7 @@ import { RegistrationListComponent } from './event/registration-list/registratio
     SupplierInvoiceListComponent,
     RegistrationFormComponent,
     RegistrationListComponent,
+    StandardListComponent,
   ],
   imports: [
     BrowserModule,
@@ -173,7 +176,9 @@ import { RegistrationListComponent } from './event/registration-list/registratio
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    DatePipe,
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent]
 })
