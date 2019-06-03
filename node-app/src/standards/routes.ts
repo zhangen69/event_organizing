@@ -1,3 +1,4 @@
+import { Router } from 'express';
 import { checkAuth } from '../middlewares/checkAuth';
 
 export default class StandardRoutes {
@@ -10,7 +11,7 @@ export default class StandardRoutes {
         this.modelService = modelService;
     }
 
-    public router(router) {
+    public router(router): Router {
         if (!router) {
             throw new Error('"router" is not defined.');
         }

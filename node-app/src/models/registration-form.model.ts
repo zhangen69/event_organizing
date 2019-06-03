@@ -10,4 +10,4 @@ const schema = new mongoose.Schema({
 
 schema.add(auditable);
 
-export default mongoose.model('Receipt', schema);
+export default mongoose.model('RegistrationForm', schema);
