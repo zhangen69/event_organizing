@@ -4,7 +4,7 @@
     <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <form #form="ngForm" id="form" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" id="form" (ngSubmit)="form.valid && onSubmit()">
       <ng-container [ngSwitch]="field.type" *ngFor="let field of fields">
         <mat-form-field *ngSwitchCase="'string'">
           <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName" [required]="field.required" />
@@ -15,12 +15,12 @@
         <div *ngSwitchCase="'image'">
           <div class="image-picker">
               <button mat-stroked-button type="button" (click)="filePicker.click()"><mat-icon>photo</mat-icon> {{ field.displayName }}</button>
-              <input type="file" class="input-file" #filePicker (change)="onImagePicked($event)">
+              <input type="file" class="input-file" #filePicker (change)="onImagePicked($event, field.name)">
             </div>
 
-            <div class="image-preview" *ngIf="(imagePreview !== '' && imagePreview) || formData.photoUrl">
-              <img [src]="imagePreview" *ngIf="imagePreview !== '' && imagePreview">
-              <img [src]="formData.photoUrl" *ngIf="formData.photoUrl && !imagePreview">
+            <div class="image-preview" *ngIf="(imagePreview[field.name] !== '' && imagePreview[field.name]) || formData[field.name]">
+              <img [src]="imagePreview[field.name]" *ngIf="imagePreview[field.name] !== '' && imagePreview[field.name]">
+              <img [src]="formData[field.name]" *ngIf="formData[field.name] && !imagePreview[field.name]">
             </div>
         </div>
       </ng-container>
@@ -28,7 +28,7 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button [routerLink]="['/product/list']" type="button"><mat-icon>arrow_back_ios</mat-icon> Cancel</button>
+    <button mat-raised-button [routerLink]="['/' + domainName + '/list']" type="button"><mat-icon>arrow_back_ios</mat-icon> Cancel</button>
     <button mat-raised-button color="primary" type="submit" form="form"><mat-icon>done</mat-icon> Submit</button>
   </mat-card-actions>
 </mat-card>

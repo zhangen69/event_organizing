@@ -14,7 +14,7 @@ export class StandardFormComponent implements OnInit {
   @Input() fields: any[];
   mode = 'create';
   formData: any = { name: null, price: null };
-  imagePreview: string;
+  imagePreview = {};
   pickedImage: any = null;
 
   constructor(
@@ -35,13 +35,13 @@ export class StandardFormComponent implements OnInit {
     });
   }
 
-  onImagePicked(event: Event) {
+  onImagePicked(event: Event, fieldName) {
     const file = (event.target as HTMLInputElement).files[0];
 
     if (file.type.indexOf('image/') > -1) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = reader.result.toString();
+        this.imagePreview[fieldName] = reader.result.toString();
       };
       reader.readAsDataURL(file);
       this.pickedImage = file;

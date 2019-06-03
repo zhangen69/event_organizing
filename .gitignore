@@ -83,3 +83,4 @@ node-app/package-lock.json
 ng-app/package-lock.json
 dist/package-lock.json
 dist/*
+*.jpg
