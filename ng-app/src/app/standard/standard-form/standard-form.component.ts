@@ -13,7 +13,7 @@ export class StandardFormComponent implements OnInit {
   @Input() domainName: string;
   @Input() fields: any[];
   mode = 'create';
-  formData: any = { name: null, price: null };
+  formData: any = {};
   imagePreview = {};
   pickedImage: any = null;
 
@@ -31,6 +31,11 @@ export class StandardFormComponent implements OnInit {
         this.service.fetch(params['id']).subscribe((res: any) => {
           this.formData = res.data;
         });
+      }
+    });
+    this.fields.forEach(field => {
+      if (field.default) {
+        this.formData[field.name] = field.default;
       }
     });
   }
