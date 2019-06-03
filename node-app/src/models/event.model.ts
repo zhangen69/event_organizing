@@ -46,7 +46,7 @@ const schema = new mongoose.Schema({
     attendees: { type: [attendeeSchema], default: [] },
     processes: { type: [eventProcessSchema], default: [] },
     registrationForm: { type: mongoose.Types.ObjectId, ref: 'RegistrationForm', default: null },
-    status: { type: String, enum: ['Open', 'Cancelled', 'Preparation', 'Initial', 'In Progress', 'Closed'], defualt: 'Open' },
+    status: { type: String, enum: ['Open', 'Cancelled', 'Preparation', 'Initial', 'InProgress', 'Closed'], defualt: 'Open' },
 });
 
 schema.add(auditable);

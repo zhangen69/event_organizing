@@ -11,6 +11,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class EventPlanFormComponent implements OnInit {
   mode = 'create';
   formData: any = { name: null, totalBudgetAmount: null };
+  fields = [
+    { name: 'name', type: 'string', displayName: 'Name', required: true },
+    { name: 'totalBudgetAmount', type: 'number', displayName: 'Total Budget (RM)', required: true },
+  ];
 
   constructor(
     private route: ActivatedRoute,

@@ -83,6 +83,7 @@ import { RegistrationFormComponent } from './event/registration-form/registratio
 import { RegistrationListComponent } from './event/registration-list/registration-list.component';
 import { StandardListComponent } from './standard/standard-list/standard-list.component';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { StandardFormComponent } from './standard/standard-form/standard-form.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
     RegistrationFormComponent,
     RegistrationListComponent,
     StandardListComponent,
+    StandardFormComponent,
   ],
   imports: [
     BrowserModule,
