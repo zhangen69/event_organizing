@@ -11,7 +11,6 @@ export class CustomerListComponent implements OnInit {
     { name: 'email', displayName: 'Email' },
     { name: 'address', displayName: 'Address' },
     { name: 'registrationNumber', displayName: 'Registration Number' },
-    { name: 'personInCharged.name', displayName: 'Person In Charged' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
