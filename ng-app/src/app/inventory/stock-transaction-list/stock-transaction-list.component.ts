@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-transaction-list.component.css']
 })
 export class StockTransactionListComponent implements OnInit {
+  columns = [
+     { name: 'name', displayName: 'Name' },
+  ];
+  filterList = [
+     { type: 'name', display: 'Name', queryType: 'string' },
+  ];
 
   constructor() { }
 

@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-voucher-form.component.css']
 })
 export class PaymentVoucherFormComponent implements OnInit {
+  fields = [
+     { name: 'name', type: 'string', displayName: 'Name', required: true },
+  ];
 
   constructor() { }
 

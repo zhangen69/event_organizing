@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
+  columns = [
+     { name: 'name', displayName: 'Name' },
+  ];
+  filterList = [
+     { type: 'name', display: 'Name', queryType: 'string' },
+  ];
 
   constructor() { }
 

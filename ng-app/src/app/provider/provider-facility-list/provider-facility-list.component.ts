@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-facility-list.component.css']
 })
 export class ProviderFacilityListComponent implements OnInit {
+  columns = [
+     { name: 'name', displayName: 'Name' },
+  ];
+  filterList = [
+     { type: 'name', display: 'Name', queryType: 'string' },
+  ];
 
   constructor() { }
 

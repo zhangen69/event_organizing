@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent implements OnInit {
+  fields = [
+     { name: 'name', type: 'string', displayName: 'Name', required: true },
+  ];
 
   constructor() { }
 

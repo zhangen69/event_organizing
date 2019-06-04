@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./attendee-form.component.css']
 })
 export class AttendeeFormComponent implements OnInit {
+  fields = [
+     { name: 'name', type: 'string', displayName: 'Name', required: true },
+  ];
 
   constructor() { }
 

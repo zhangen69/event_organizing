@@ -4,7 +4,19 @@
         "description": "sd-form's fields in typescript",
         "body": [
             "fields = [",
-            "   { name: 'name', type: 'string', displayName: 'Name', required: true },",
+            "   { name: '${1:name}', type: '${2:string}', displayName: '${3:Name}', required: true },",
+            "];"
+        ]
+    },
+    "standard-list": {
+        "prefix": "sd-list",
+        "description": "sd-list's fields in typescript",
+        "body": [
+            "columns = [",
+            "   { name: '${1:name}', displayName: '${2:Name}' },",
+            "];",
+            "filterList = [",
+            "   { type: '${1:name}', display: '${2:Name}', queryType: '${3:string}' },",
             "];"
         ]
     }

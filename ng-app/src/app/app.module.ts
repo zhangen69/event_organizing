@@ -25,8 +25,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductFormComponent } from './product/product-form/product-form.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './templates/confirmation-dialog/confirmation-dialog.component';
@@ -71,8 +69,6 @@ import { ReceiptFormComponent } from './provider/receipt-form/receipt-form.compo
 import { ReceiptListComponent } from './provider/receipt-list/receipt-list.component';
 import { RoleFormComponent } from './role/role-form/role-form.component';
 import { RoleListComponent } from './role/role-list/role-list.component';
-import { EventProcessFormComponent } from './event/event-process-form/event-process-form.component';
-import { EventProcessListComponent } from './event/event-process-list/event-process-list.component';
 import { EventPlanFormComponent } from './event/event-plan-form/event-plan-form.component';
 import { EventPlanListComponent } from './event/event-plan-list/event-plan-list.component';
 import { PaymentVoucherListComponent } from './provider/payment-voucher-list/payment-voucher-list.component';
@@ -89,8 +85,6 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent,
-    ProductFormComponent,
     ConfirmationDialogComponent,
     LoginComponent,
     RegisterComponent,
@@ -133,8 +127,6 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
     ReceiptListComponent,
     RoleFormComponent,
     RoleListComponent,
-    EventProcessFormComponent,
-    EventProcessListComponent,
     EventPlanFormComponent,
     EventPlanListComponent,
     PaymentVoucherListComponent,

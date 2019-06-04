@@ -6,7 +6,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './auth/register/register.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
@@ -14,8 +13,6 @@ import { EventPlanListComponent } from './event/event-plan-list/event-plan-list.
 import { EventPlanFormComponent } from './event/event-plan-form/event-plan-form.component';
 import { EventListComponent } from './event/event-list/event-list.component';
 import { EventFormComponent } from './event/event-form/event-form.component';
-import { EventProcessListComponent } from './event/event-process-list/event-process-list.component';
-import { EventProcessFormComponent } from './event/event-process-form/event-process-form.component';
 import { StoreFormComponent } from './inventory/store-form/store-form.component';
 import { StoreListComponent } from './inventory/store-list/store-list.component';
 import { StockItemFormComponent } from './inventory/stock-item-form/stock-item-form.component';
@@ -59,11 +56,6 @@ const routes: Routes = [
     { path: 'list', component: EventListComponent },
     { path: 'add', component: EventFormComponent },
     { path: 'edit/:id', component: EventFormComponent },
-  ]},
-  { path: 'event-process', canActivate: [AuthGuard], children: [
-    { path: 'list', component: EventProcessListComponent },
-    { path: 'add', component: EventProcessFormComponent },
-    { path: 'edit/:id', component: EventProcessFormComponent },
   ]},
   { path: 'store', canActivate: [AuthGuard], children: [
     { path: 'list', component: StoreListComponent },
@@ -155,7 +147,6 @@ const routes: Routes = [
   ]},
   { path: 'auth', children: [
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
     { path: 'forgotPassword', component: ForgotPasswordComponent },
     { path: 'resetPassword/:token', component: ResetPasswordComponent },
   ]},
