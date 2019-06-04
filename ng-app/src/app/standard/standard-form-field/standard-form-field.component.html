@@ -1,0 +1,34 @@
+<!-- {{field | json}} -->
+<ng-container [ngSwitch]="field.type">
+  <mat-form-field *ngSwitchCase="'string'">
+    <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName" [required]="field.required" />
+  </mat-form-field>
+
+  <mat-form-field *ngSwitchCase="'number'">
+    <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName" [required]="field.required" />
+  </mat-form-field>
+
+  <mat-form-field *ngSwitchCase="'enum'">
+    <mat-label>{{ field.displayName }}</mat-label>
+    <mat-select [(ngModel)]="formData[field.name]" [name]="field.name" [required]="field.required">
+        <mat-option *ngFor="let enum of field.enumList" [value]="enum.value">{{ enum.value }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngSwitchCase="'object'">
+    {{ field.displayName }}
+      <app-standard-form-field [field]="objectField" [(formData)]="formData[field.name]" *ngFor="let objectField of field.fields"></app-standard-form-field>
+  </div>
+
+  <div *ngSwitchCase="'image'">
+    <div class="image-picker">
+        <button mat-stroked-button type="button" (click)="filePicker.click()"><mat-icon>photo</mat-icon> {{ field.displayName }}</button>
+        <input type="file" class="input-file" #filePicker (change)="onImagePicked($event, field.name)">
+      </div>
+
+      <div class="image-preview" *ngIf="(imagePreview[field.name] !== '' && imagePreview[field.name]) || formData[field.name]">
+        <img [src]="imagePreview[field.name]" *ngIf="imagePreview[field.name] !== '' && imagePreview[field.name]">
+        <img [src]="formData[field.name]" *ngIf="formData[field.name] && !imagePreview[field.name]">
+      </div>
+  </div>
+</ng-container>
