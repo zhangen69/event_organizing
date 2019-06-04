@@ -1,6 +1,3 @@
-<div *ngIf="parentField && parentField.type === 'array'">
-
-</div>
 <ng-container [ngSwitch]="field.type">
   <mat-form-field *ngSwitchCase="'string'">
     <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
@@ -28,15 +25,15 @@
       *ngFor="let objectField of field.fields"></app-standard-form-field>
   </div>
 
-  <div *ngSwitchCase="'array'">
+  <div class="form-field-array" *ngSwitchCase="'array'">
       <mat-list>
-        <mat-list-item>{{ field.displayName }} <button type="button" mat-icon-button color="primary" (click)="formData[field.name].push({})"><mat-icon>add</mat-icon></button> </mat-list-item>
+        <mat-list-item>{{ field.displayName }} <button type="button" mat-icon-button [matTooltip]="'Add New ' + field.childName" matTooltipPosition="above" color="primary" (click)="formData[field.name].push({})"><mat-icon>add</mat-icon></button> </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
-      <div *ngFor="let item of formData[field.name]">
-        <!-- {{ item | json }} -->
-          <app-standard-form-field [field]="objectField" [(formData)]="item" [parentField]="field"
-            *ngFor="let objectField of field.fields"></app-standard-form-field>
+      <div *ngFor="let item of formData[field.name]; let i = index">
+        <b>{{ field.childName + ' ' + (i + 1) }}</b>
+        <app-standard-form-field [field]="objectField" [(formData)]="item" [parentField]="field"
+          *ngFor="let objectField of field.fields"></app-standard-form-field>
       </div>
     </div>
 
