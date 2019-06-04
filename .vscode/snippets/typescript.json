@@ -1,0 +1,11 @@
+{
+    "standard-form": {
+        "prefix": "sd-form",
+        "description": "sd-form's fields in typescript",
+        "body": [
+            "fields = [",
+            "   { name: 'name', type: 'string', displayName: 'Name', required: true },",
+            "];"
+        ]
+    }
+}

@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customer-form.component.css']
 })
 export class CustomerFormComponent implements OnInit {
+  fields = [
+     { name: 'name', type: 'string', displayName: 'Name', required: true },
+  ];
 
   constructor() { }
 

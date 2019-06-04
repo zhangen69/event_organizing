@@ -1,0 +1,7 @@
+{
+    "standard-form": {
+        "prefix": "sd-form",
+        "description": "sd-form is a standard form",
+        "body": "<app-standard-form title=\"${1}\" domainName=\"${2}\" [fields]=\"fields\"></app-standard-form>"
+    }
+}
