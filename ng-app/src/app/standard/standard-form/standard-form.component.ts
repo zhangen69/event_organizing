@@ -40,21 +40,6 @@ export class StandardFormComponent implements OnInit {
     });
   }
 
-  onImagePicked(event: Event, fieldName) {
-    const file = (event.target as HTMLInputElement).files[0];
-
-    if (file.type.indexOf('image/') > -1) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview[fieldName] = reader.result.toString();
-      };
-      reader.readAsDataURL(file);
-      this.pickedImage = file;
-    } else {
-      this.toastr.error('Invalid MIME type, please select JPEG or PNG type image.');
-    }
-  }
-
   onUploadFile() {
     this.service.uploadImage(this.pickedImage).then((res: any) => {
       this.formData.photoUrl = res.url;
