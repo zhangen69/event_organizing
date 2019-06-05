@@ -18,3 +18,7 @@ mat-sidenav-content {
 .mat-list-item.mat-primary {
   color: #3f51b5;
 }
+
+mat-sidenav:not(.is-auth) {
+  display: none;
+}
