@@ -1,8 +1,8 @@
 <app-header (navToggle)="snav.toggle($event)"></app-header>
 
 <div class="main-content">
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" [ngClass]="{'is-auth': isAuth}" fixedTopGap="56" opened>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0" [ngClass]="{'is-auth': isAuth}">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened>
       <mat-nav-list>
         <ng-container *ngIf="isAuth">
             <a mat-list-item [routerLink]="route.url" routerLinkActive="mat-primary" *ngFor="let route of routes">{{ route.name }}</a>

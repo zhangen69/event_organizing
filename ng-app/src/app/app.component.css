@@ -19,6 +19,10 @@ mat-sidenav-content {
   color: #3f51b5;
 }
 
-mat-sidenav:not(.is-auth) {
+mat-sidenav-container:not(.is-auth) mat-sidenav {
   display: none;
+}
+
+mat-sidenav-container:not(.is-auth) mat-sidenav-content {
+  margin-left: 0 !important;
 }
