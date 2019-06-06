@@ -1,14 +1,17 @@
+import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 interface IFieldOptions {
   name: string;
   type: string;
-  displayName: string;
+  displayName?: string;
   required?: boolean;
   default?: any;
   enum?: any;
   enumList?: IFieldEnumList[];
+  fields?: any[];
+  childName?: string;
 }
 
 interface IFieldEnumList {
@@ -16,8 +19,8 @@ interface IFieldEnumList {
   value: string;
 }
 
-class FieldModel {
-  constructor(private options: IFieldOptions) {
+class FieldModel implements IFieldOptions {
+  constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe) {
     Object.keys(options).forEach((option: string) => {
       this[option] = options[option];
     });
@@ -28,15 +31,21 @@ class FieldModel {
         this.enumList.push({ key: key, value: this.enum[key] });
       });
     }
+
+    if (!this.displayName) {
+      this.displayName = this.titleDisplayPipe.transform(this.name);
+    }
   }
 
   name: string;
   type: string;
-  displayName: string;
+  displayName?: string;
   required?: boolean;
   default?: any;
   enum?: any;
   enumList?: IFieldEnumList[];
+  fields?: any[];
+  childName?: string;
 }
 
 @Component({
@@ -51,14 +60,14 @@ export class StandardFormFieldComponent implements OnInit {
   imagePreview: string;
   pickedImage: any = null;
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe) { }
 
   ngOnInit() {
     this.initial();
   }
 
   initial() {
-    this.field = new FieldModel(this.field);
+    this.field = new FieldModel(this.field, this.titleDisplayPipe);
 
     switch (this.field.type) {
       case 'object':

@@ -4,6 +4,11 @@
       [required]="field.required" />
   </mat-form-field>
 
+  <mat-form-field *ngSwitchCase="'textarea'">
+    <textarea matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    [required]="field.required"></textarea>
+  </mat-form-field>
+
   <mat-form-field *ngSwitchCase="'number'">
     <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" />

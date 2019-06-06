@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class StoreListComponent implements OnInit {
   storeStatusEnumList = [];
   columns = [
-     { name: 'name', displayName: 'Name' },
-     { name: 'description', displayName: 'Description' },
-     { name: 'status', displayName: 'Status' },
+     { name: 'name' },
+     { name: 'description' },
+     { name: 'status' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

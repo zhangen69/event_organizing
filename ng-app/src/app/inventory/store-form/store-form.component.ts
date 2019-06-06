@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreFormComponent implements OnInit {
   fields = [
-     { name: 'name', type: 'string', displayName: 'Name', required: true },
+     { name: 'name', type: 'string', required: true },
+     { name: 'description', type: 'string' },
   ];
 
   constructor() { }

@@ -81,6 +81,8 @@ import { StandardListComponent } from './standard/standard-list/standard-list.co
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { StandardFormComponent } from './standard/standard-form/standard-form.component';
 import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
+import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
+import { TitleDisplayPipe } from './pipes/title-display.pipe';
 
 @NgModule({
   declarations: [
@@ -138,6 +140,7 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
     StandardListComponent,
     StandardFormComponent,
     StandardFormFieldComponent,
+    StandardFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -175,6 +178,7 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DatePipe,
     CurrencyPipe,
+    TitleDisplayPipe,
   ],
   bootstrap: [AppComponent]
 })

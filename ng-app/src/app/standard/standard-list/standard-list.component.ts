@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { IQueryModel } from 'src/app/interfaces/query-model';
-import { Subject, merge } from 'rxjs';
+import { merge } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AuthService } from 'src/app/services/auth.service';
 import { StandardService } from 'src/app/services/standard.service';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 
 @Component({
   selector: 'app-standard-list',
@@ -30,28 +31,26 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     pageSize: 10,
     currentPage: 0,
   };
-  selectedFilter: any;
-  selectedFilterListerner = new Subject<any>();
 
   constructor(
     private service: StandardService,
     private authService: AuthService,
     private datePipe: DatePipe,
+    private titleDisplayPipe: TitleDisplayPipe,
     private currencyPipe: CurrencyPipe) {
     this.isAuth = this.authService.getIsAuth();
     this.authService.getAuthStatusListener().subscribe(isAuth => this.isAuth = isAuth);
-    this.selectedFilterListerner.asObservable().subscribe(filter => {
-      this.queryModel.type = filter.type;
-      this.queryModel.queryType = filter.queryType;
-    });
   }
 
   ngOnInit() {
     this.initial(this.domainName);
-    this.selectedFilter = this.filterList[0];
-    this.selectedFilterListerner.next(this.selectedFilter);
     this.displayedColumns = this.columns.map(x => x.name);
     this.displayedColumns.push('action');
+    this.columns.forEach(column => {
+      if (!column.displayName) {
+        column.displayName = this.titleDisplayPipe.transform(column.name);
+      }
+    });
     this.fetchAll();
   }
 
@@ -72,10 +71,6 @@ export class StandardListComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<any>(res.data);
       this.totalItems = res.totalItems;
     });
-  }
-
-  onChangeFilter(filter) {
-    this.selectedFilterListerner.next(filter);
   }
 
   delete(item) {
