@@ -1,6 +1,43 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { StandardService } from 'src/app/services/standard.service';
+
+interface IFieldOptions {
+  name: string;
+  type: string;
+  displayName: string;
+  required?: boolean;
+  default?: any;
+  enum?: any;
+  enumList?: IFieldEnumList[];
+}
+
+interface IFieldEnumList {
+  key: string;
+  value: string;
+}
+
+class FieldModel {
+  constructor(private options: IFieldOptions) {
+    Object.keys(options).forEach((option: string) => {
+      this[option] = options[option];
+    });
+
+    if (this.type === 'enum' && this.enum) {
+      this.enumList = [];
+      Object.keys(this.enum).filter(x => typeof this.enum[x as any] !== 'number').forEach((key: string) => {
+        this.enumList.push({ key: key, value: this.enum[key] });
+      });
+    }
+  }
+
+  name: string;
+  type: string;
+  displayName: string;
+  required?: boolean;
+  default?: any;
+  enum?: any;
+  enumList?: IFieldEnumList[];
+}
 
 @Component({
   selector: 'app-standard-form-field',
@@ -9,7 +46,7 @@ import { StandardService } from 'src/app/services/standard.service';
 })
 export class StandardFormFieldComponent implements OnInit {
   @Input() parentField: any;
-  @Input() field: any;
+  @Input() field: FieldModel;
   @Input() formData: any;
   imagePreview: string;
   pickedImage: any = null;
@@ -17,14 +54,24 @@ export class StandardFormFieldComponent implements OnInit {
   constructor(private toastr: ToastrService) { }
 
   ngOnInit() {
-    if (this.field.type === 'object') {
-      this.formData[this.field.name] = {};
-    } else if (this.field.type === 'array') {
-      this.formData[this.field.name] = [{}];
-    }
+    this.initial();
+  }
 
-    if (this.parentField && this.parentField.type === 'array' && !this.formData) {
-      this.formData = {};
+  initial() {
+    this.field = new FieldModel(this.field);
+
+    switch (this.field.type) {
+      case 'object':
+        this.formData[this.field.name] = {};
+        break;
+      case 'array':
+        this.formData[this.field.name] = [{}];
+        break;
+      default:
+        if (this.parentField && this.parentField.type === 'array' && !this.formData) {
+          this.formData = {};
+        }
+        break;
     }
   }
 
