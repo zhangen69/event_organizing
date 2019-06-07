@@ -15,7 +15,6 @@ export class AppComponent implements OnInit, OnDestroy {
   routes = [
     { url: '/event-plan/list', name: 'Event Plans' },
     { url: '/event/list', name: 'Events' },
-    { url: '/event-process/list', name: 'Event Processes' },
     { url: '/store/list', name: 'Stores' },
     { url: '/stock-item/list', name: 'Stock Items' },
     { url: '/stock-transaction/list', name: 'Stock Transactions' },

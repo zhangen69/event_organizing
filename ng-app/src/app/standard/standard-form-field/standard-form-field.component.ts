@@ -12,6 +12,10 @@ interface IFieldOptions {
   enumList?: IFieldEnumList[];
   fields?: any[];
   childName?: string;
+  ref?: string;
+  refName?: string;
+  refValue: string;
+  refOptions?: any[];
 }
 
 interface IFieldEnumList {
@@ -30,6 +34,20 @@ class FieldModel implements IFieldOptions {
       Object.keys(this.enum).filter(x => typeof this.enum[x as any] !== 'number').forEach((key: string) => {
         this.enumList.push({ key: key, value: this.enum[key] });
       });
+    } else if (this.type === 'ref' && this.ref) {
+      if (!this.refName) {
+        this.refName = 'name';
+      }
+
+      if (!this.refValue) {
+        this.refValue = this.refName;
+      }
+
+      this.refOptions = [
+        { name: 'One', value: 1 },
+        { name: 'Two', value: 2 },
+        { name: 'Three', value: 3 },
+      ];
     }
 
     if (!this.displayName) {
@@ -46,6 +64,10 @@ class FieldModel implements IFieldOptions {
   enumList?: IFieldEnumList[];
   fields?: any[];
   childName?: string;
+  ref?: string;
+  refName?: string;
+  refValue: string;
+  refOptions?: any[];
 }
 
 @Component({
@@ -97,6 +119,18 @@ export class StandardFormFieldComponent implements OnInit {
     } else {
       this.toastr.error('Invalid MIME type, please select JPEG or PNG type image.');
     }
+  }
+
+  getOptions(): any[] {
+    return [
+      { name: 'One', value: 1 },
+      { name: 'Two', value: 2 },
+      { name: 'Three', value: 3 },
+    ];
+  }
+
+  displayFn = item => {
+    return item ? item[this.field.refName] : undefined;
   }
 
 }

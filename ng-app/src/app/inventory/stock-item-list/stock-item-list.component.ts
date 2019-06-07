@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockItemListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'category.name', displayName: 'Category' },
+     { name: 'cost', displayName: 'Cost (RM)', type: 'currency' },
+     { name: 'unit' },
+     { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'currency' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

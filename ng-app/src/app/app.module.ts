@@ -19,6 +19,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -172,6 +174,7 @@ import { TitleDisplayPipe } from './pipes/title-display.pipe';
     MatTooltipModule,
     MatSidenavModule,
     MatListModule,
+    MatAutocompleteModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [
