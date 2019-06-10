@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 interface IFieldOptions {
   name: string;
@@ -24,7 +26,7 @@ interface IFieldEnumList {
 }
 
 class FieldModel implements IFieldOptions {
-  constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe) {
+  constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {
     Object.keys(options).forEach((option: string) => {
       this[option] = options[option];
     });
@@ -43,11 +45,7 @@ class FieldModel implements IFieldOptions {
         this.refValue = this.refName;
       }
 
-      this.refOptions = [
-        { name: 'One', value: 1 },
-        { name: 'Two', value: 2 },
-        { name: 'Three', value: 3 },
-      ];
+      this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => this.refOptions = res.data );
     }
 
     if (!this.displayName) {
@@ -82,14 +80,14 @@ export class StandardFormFieldComponent implements OnInit {
   imagePreview: string;
   pickedImage: any = null;
 
-  constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe) { }
+  constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) { }
 
   ngOnInit() {
     this.initial();
   }
 
   initial() {
-    this.field = new FieldModel(this.field, this.titleDisplayPipe);
+    this.field = new FieldModel(this.field, this.titleDisplayPipe, this.http);
 
     switch (this.field.type) {
       case 'object':
