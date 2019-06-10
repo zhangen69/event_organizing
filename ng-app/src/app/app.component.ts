@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'ng-app';
   isAuth = false;
+  sidenavOpened = true;
   mobileQuery: MediaQueryList;
   routes = [
     { url: '/event-plan/list', name: 'Event Plans' },

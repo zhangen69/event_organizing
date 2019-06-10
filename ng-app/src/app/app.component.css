@@ -9,10 +9,15 @@ mat-sidenav-container {
 
 mat-sidenav {
   padding-right: 10px;
+  width: 200px;
 }
 
 mat-sidenav-content {
   padding: 0 10px;
+}
+
+mat-sidenav-container.is-opened mat-sidenav-content {
+  margin-left: 200px;
 }
 
 .mat-list-item.mat-primary {
