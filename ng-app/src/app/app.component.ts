@@ -14,27 +14,39 @@ export class AppComponent implements OnInit, OnDestroy {
   sidenavOpened = true;
   mobileQuery: MediaQueryList;
   routes = [
-    { url: '/event-plan/list', name: 'Event Plans' },
-    { url: '/event/list', name: 'Events' },
-    { url: '/store/list', name: 'Stores' },
-    { url: '/stock-item/list', name: 'Stock Items' },
-    { url: '/stock-transaction/list', name: 'Stock Transactions' },
-    { url: '/invoice/list', name: 'Invoices' },
-    { url: '/supplier-invoice/list', name: 'Supplier Invoices' },
-    { url: '/receipt/list', name: 'Receipts' },
-    { url: '/provider/list', name: 'Providers' },
-    { url: '/provider-service/list', name: 'Provider Services' },
-    { url: '/provider-facility/list', name: 'Provider Facilities' },
-    { url: '/attendee/list', name: 'Attendees' },
-    { url: '/attendee-group/list', name: 'Attendee Groups' },
-    { url: '/payment-voucher/list', name: 'Payment Vouchers' },
-    { url: '/payment/list', name: 'Payments' },
-    { url: '/registration-form/list', name: 'Registration Forms' },
+    { name: 'Profile', children: [
+      { url: '/user/changePassword', name: 'Change Password' },
+      { url: '/user/profile', name: 'My Profile' },
+    ]},
+    { name: 'Event', children: [
+      { url: '/event-plan/list', name: 'Event Plans' },
+      { url: '/event/list', name: 'Events' },
+      { url: '/attendee/list', name: 'Attendees' },
+      { url: '/attendee-group/list', name: 'Attendee Groups' },
+      { url: '/registration-form/list', name: 'Registration Forms' },
+      { url: '/payment/list', name: 'Payments' },
+      { url: '/supplier-invoice/list', name: 'Supplier Invoices' },
+      { url: '/payment-voucher/list', name: 'Payment Vouchers' },
+    ]},
     { url: '/customer/list', name: 'Customers' },
-    { url: '/category/list', name: 'Categories' },
-    { url: '/user/list', name: 'Users' },
-    { url: '/user/changePassword', name: 'Change Password' },
-    { url: '/user/profile', name: 'My Profile' },
+    { name: 'Invoice & Receipt', children: [
+      { url: '/invoice/list', name: 'Invoice List' },
+      { url: '/receipt/list', name: 'Receipt List' },
+    ]},
+    { name: 'Inventory', children: [
+      { url: '/store/list', name: 'Stores' },
+      { url: '/stock-item/list', name: 'Stock Items' },
+      { url: '/stock-transaction/list', name: 'Stock Transactions' },
+    ]},
+    { name: 'Service & Facility', children: [
+      { url: '/provider/list', name: 'Providers' },
+      { url: '/provider-service/list', name: 'Provider Services' },
+      { url: '/provider-facility/list', name: 'Provider Facilities' },
+      { url: '/category/list', name: 'Categories' },
+    ]},
+    { name: 'User', children: [
+      { url: '/user/list', name: 'User List' },
+    ]},
   ];
 
   private _mobileQueryListener: () => void;

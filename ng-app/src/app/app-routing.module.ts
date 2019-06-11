@@ -105,7 +105,7 @@ const routes: Routes = [
     { path: 'add', component: AttendeeFormComponent },
     { path: 'edit/:id', component: AttendeeFormComponent },
   ]},
-  { path: 'attendee-grouo', canActivate: [AuthGuard], children: [
+  { path: 'attendee-group', canActivate: [AuthGuard], children: [
     { path: 'list', component: AttendeeGroupListComponent },
     { path: 'add', component: AttendeeGroupFormComponent },
     { path: 'edit/:id', component: AttendeeGroupFormComponent },

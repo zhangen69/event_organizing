@@ -31,3 +31,26 @@ mat-sidenav-container:not(.is-auth) mat-sidenav {
 mat-sidenav-container:not(.is-auth) mat-sidenav-content {
   margin-left: 0 !important;
 }
+
+.sidenav-list-item > .nested-list-item {
+  margin-left: 15px;
+  border-left: 2px solid #aaa;
+  overflow: hidden;
+  -webkit-animation: fadein .5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein .5s; /* Firefox < 16 */
+  -ms-animation: fadein .5s; /* Internet Explorer */
+  -o-animation: fadein .5s; /* Opera < 12.1 */
+  animation: fadein .3s;
+}
+
+.sidenav-list-item > .nested-list-item > .mat-list-item {
+  font-size: .9rem;
+  height: 36px;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
