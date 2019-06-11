@@ -1,4 +1,4 @@
-import { AuthService } from './services/auth.service';
+import { AuthService } from './auth/auth.service';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';

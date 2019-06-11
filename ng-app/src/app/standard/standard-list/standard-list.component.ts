@@ -4,7 +4,7 @@ import { IQueryModel } from 'src/app/interfaces/query-model';
 import { merge } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { StandardService } from 'src/app/standard/standard.service';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';

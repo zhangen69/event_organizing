@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 

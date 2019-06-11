@@ -1,4 +1,4 @@
-import { AuthService } from './../services/auth.service';
+import { AuthService } from './auth.service';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';

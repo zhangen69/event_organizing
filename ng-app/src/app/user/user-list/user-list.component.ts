@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/models/user.model';
 import { IQueryModel } from 'src/app/interfaces/query-model';
 import { merge } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-list',
