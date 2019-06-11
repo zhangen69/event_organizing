@@ -1,6 +1,6 @@
 import { ConfirmationDialogComponent } from './../templates/confirmation-dialog/confirmation-dialog.component';
 import { HttpClient } from '@angular/common/http';
-import { StandardService } from './standard.service';
+import { StandardService } from '../standard/standard.service';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';

@@ -5,7 +5,7 @@ import { merge } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AuthService } from 'src/app/services/auth.service';
-import { StandardService } from 'src/app/services/standard.service';
+import { StandardService } from 'src/app/standard/standard.service';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 

@@ -1,7 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { StandardService } from 'src/app/services/standard.service';
+import { StandardService } from 'src/app/standard/standard.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
