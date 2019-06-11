@@ -71,11 +71,18 @@ export default class StandardController {
         return new Promise((resolve, reject) => {
             const { conditions, options } = new QueryModel(queryModel).getQuery();
 
-            const tempConditions = { name: /e/i };
             const sortQuery = (options.sortDirection === 0 ? '' : '-') + options.sort;
 
             this.model.countDocuments(conditions).then((count) => {
-                this.model.find(conditions).sort(sortQuery).skip(options.skip).limit(options.limit).then((data) => {
+                let func = this.model.find(conditions).sort(sortQuery).skip(options.skip).limit(options.limit);
+
+                if (queryModel.includes && queryModel.includes.length > 0) {
+                    queryModel.includes.forEach((include) => {
+                        func = func.populate(include);
+                    });
+                }
+
+                func.then((data) => {
                     const result = {
                         status: 200,
                         message: `${this.modelName} fetched all successfully!`,
