@@ -5,23 +5,25 @@
     [ngClass]="{'is-auth': isAuth, 'is-opened': sidenavOpened}">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56" [(opened)]="sidenavOpened">
-      <mat-nav-list>
-        <ng-container *ngIf="isAuth">
-          <div class="sidenav-list-item" *ngFor="let route of routes">
-              <a mat-list-item [routerLink]="route.url" routerLinkActive="mat-primary" (click)="route.opened = !route.opened">
-                {{ route.name }}
-                <span fxFlexOffset="auto" *ngIf="route.children && route.children.length > 0">
-                  <mat-icon *ngIf="!!route.opened">keyboard_arrow_down</mat-icon>
-                  <mat-icon *ngIf="!route.opened">keyboard_arrow_right</mat-icon>
-                </span>
-              </a>
-              <div class="nested-list-item" *ngIf="route.children && route.children.length > 0 && !!route.opened">
-                <a mat-list-item [routerLink]="nestedRoute.url" routerLinkActive="mat-primary" *ngFor="let nestedRoute of route.children">{{ nestedRoute.name }}</a>
-              </div>
-          </div>
-          <a mat-list-item (click)="onLogout()">Logout</a>
-        </ng-container>
-      </mat-nav-list>
+      <div class="mat-drawer-inner-container">
+        <mat-nav-list>
+          <ng-container *ngIf="isAuth">
+            <div class="sidenav-list-item" *ngFor="let route of routes">
+                <a mat-list-item [routerLink]="route.url" routerLinkActive="mat-primary" (click)="route.opened = !route.opened">
+                  {{ route.name }}
+                  <span fxFlexOffset="auto" *ngIf="route.children && route.children.length > 0">
+                    <mat-icon *ngIf="!!route.opened">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!route.opened">keyboard_arrow_right</mat-icon>
+                  </span>
+                </a>
+                <div class="nested-list-item" *ngIf="route.children && route.children.length > 0 && !!route.opened">
+                  <a mat-list-item [routerLink]="nestedRoute.url" routerLinkActive="mat-primary" *ngFor="let nestedRoute of route.children">{{ nestedRoute.name }}</a>
+                </div>
+            </div>
+            <a mat-list-item (click)="onLogout()">Logout</a>
+          </ng-container>
+        </mat-nav-list>
+      </div>
     </mat-sidenav>
 
     <mat-sidenav-content>
