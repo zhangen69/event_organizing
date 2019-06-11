@@ -19,6 +19,10 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   @Input() filterList: any[];
   @Input() domainName: string;
   @Input() title: string;
+  @Input()
+  set includes(includes: string[]) {
+    this.queryModel.includes = includes || [];
+  }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

@@ -9,4 +9,5 @@ export interface IQueryModel {
   selectedFilter?: any;
   min?: number;
   max?: number;
+  includes?: string[];
 }
