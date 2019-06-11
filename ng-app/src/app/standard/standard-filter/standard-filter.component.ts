@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subject } from 'rxjs';
+import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 
 @Component({
   selector: 'app-standard-filter',
@@ -17,15 +18,23 @@ export class StandardFilterComponent implements OnInit {
   selectedFilter: any;
   selectedFilterListerner = new Subject<any>();
 
-  constructor() { }
+  constructor(private titleDisplayPipe: TitleDisplayPipe) { }
 
   ngOnInit() {
     this.selectedFilterListerner.asObservable().subscribe(filter => {
       this.queryModel.type = filter.type;
       this.queryModel.queryType = filter.queryType;
     });
-    this.selectedFilter = this.filterList[0];
+
+    if (this.filterList && this.filterList.length > 0) {
+      this.filterList.forEach((filter) => {
+        if (!filter.displayName) {
+          filter.displayName = this.titleDisplayPipe.transform(filter.type);
+        }
+      });
+      this.selectedFilter = this.filterList[0];
     this.selectedFilterListerner.next(this.selectedFilter);
+    }
   }
 
   applyFilter() {

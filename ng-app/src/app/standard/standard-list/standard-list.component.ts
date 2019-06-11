@@ -105,7 +105,18 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         value = this.datePipe.transform(value, column.format || 'hh:mm a, dd-MM-yyyy');
         break;
       case 'currency':
-          value = this.currencyPipe.transform(value);
+        value = this.currencyPipe.transform(value);
+        break;
+      case 'array':
+        let arrayIndex = column.index || 0;
+
+        if ((value && value.length) && column.key) {
+          arrayIndex = value.findIndex((currentVal, index, arr) => {
+            return currentVal[column.key] === column.keyVal;
+          });
+        }
+
+        value = value && value.length && arrayIndex > -1 ? value[arrayIndex][column.fieldName] : null;
         break;
       default:
 

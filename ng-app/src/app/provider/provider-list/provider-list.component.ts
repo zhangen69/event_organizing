@@ -7,11 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'email' },
+     { name: 'address' },
+     { name: 'registrationNumber' },
+     { name: 'personInCharged', type: 'array' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'name', queryType: 'string' },
+     { type: 'email', queryType: 'string' },
+     { type: 'address', queryType: 'string' },
+     { type: 'registrationNumber', queryType: 'string' },
   ];
 
   constructor() { }

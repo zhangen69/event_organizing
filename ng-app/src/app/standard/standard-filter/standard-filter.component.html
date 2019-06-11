@@ -16,7 +16,7 @@
   <mat-form-field>
     <mat-label>Type</mat-label>
     <mat-select [(ngModel)]="selectedFilter" (valueChange)="onChangeFilter($event)">
-      <mat-option *ngFor="let item of filterList" [value]="item">{{ item.display }}</mat-option>
+      <mat-option *ngFor="let item of filterList" [value]="item">{{ item.displayName }}</mat-option>
     </mat-select>
   </mat-form-field>
   <button mat-raised-button matTooltip="Search" matTooltipPosition="above" type="button" color="primary"
