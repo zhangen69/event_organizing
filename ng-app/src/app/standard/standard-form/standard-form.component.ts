@@ -12,6 +12,8 @@ export class StandardFormComponent implements OnInit {
   @Input() title: string;
   @Input() domainName: string;
   @Input() fields: any[];
+  @Input() includes: string[];
+
   mode = 'create';
   formData: any = {};
   imagePreview = {};
@@ -28,7 +30,7 @@ export class StandardFormComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
         this.mode = 'update';
-        this.service.fetch(params['id']).subscribe((res: any) => {
+        this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
         });
       }
@@ -52,6 +54,14 @@ export class StandardFormComponent implements OnInit {
     if (this.pickedImage !== null) {
       this.onUploadFile();
     } else {
+      this.fields.filter((field) => {
+        return field.type === 'ref';
+      }).forEach((field) => {
+        if (typeof this.formData[field.type] !== 'object') {
+          this.formData[field.type] = null;
+        }
+      });
+
       if (this.mode === 'update') {
         this.service.update(this.formData);
       } else if (this.mode === 'create') {

@@ -45,9 +45,23 @@ export default class StandardController {
         });
     }
 
-    public fetch(id) {
+    public fetch(id, query) {
         return new Promise((resolve, reject) => {
-            this.model.findById(id).then((data) => {
+            let includes = [];
+
+            if (query['includes']) {
+                includes = query['includes'].split(',');
+            }
+
+            let func = this.model.findById(id);
+
+            if (includes.length > 0) {
+                includes.forEach((include) => {
+                    func = func.populate(include);
+                });
+            }
+
+            func.then((data) => {
                 if (data == null) { throw new Error('Product not found!'); }
 
                 const result = {

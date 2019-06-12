@@ -21,7 +21,7 @@ export default class StandardRoutes {
         });
 
         router.get(`/${this.modelName}/:id`, checkAuth, (req, res) => {
-            this.resHandling(res, this.modelService.fetch(req.params.id));
+            this.resHandling(res, this.modelService.fetch(req.params.id, req.query));
         });
 
         router.get(`/${this.modelName}`, checkAuth, (req, res) => {

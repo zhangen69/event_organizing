@@ -63,8 +63,14 @@ export class StandardService {
     );
   }
 
-  fetch(id, formData = null) {
-    const fetchData = this.http.get(this.apiUrl + '/' + id);
+  fetch(id, formData = null, includes = []) {
+    let url = `${this.apiUrl}/${id}`;
+
+    if (includes.length > 0) {
+      url += `?includes=${includes.toString()}`;
+    }
+
+    const fetchData = this.http.get(url);
 
     if (formData !== null) {
       fetchData.subscribe(
