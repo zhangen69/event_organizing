@@ -15,8 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   routes = [
     { name: 'Profile', children: [
-      { url: '/user/changePassword', name: 'Change Password' },
       { url: '/user/profile', name: 'My Profile' },
+      { url: '/user/changePassword', name: 'Change Password' },
     ]},
     { name: 'Event', children: [
       { url: '/event-plan/list', name: 'Event Plans' },
