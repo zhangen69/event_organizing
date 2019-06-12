@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'remarks' },
+     { name: 'status',  },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

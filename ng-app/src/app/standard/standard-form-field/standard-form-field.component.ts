@@ -36,13 +36,14 @@ class FieldModel implements IFieldOptions {
       Object.keys(this.enum).filter(x => typeof this.enum[x as any] !== 'number').forEach((key: string) => {
         this.enumList.push({ key: key, value: this.enum[key] });
       });
-    } else if (this.type === 'ref' && this.ref) {
-      if (!this.refName) {
-        this.refName = 'name';
+    } else if (this.type === 'ref') {
+      if (!this.ref) {
+        this.ref = this.name.replace(/([A-Z])/g, '-$1')
+        .replace(/^./, (str) => str.toLowerCase());
       }
 
-      if (!this.refValue) {
-        this.refValue = this.refName;
+      if (!this.refName) {
+        this.refName = 'name';
       }
 
       this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => this.refOptions = res.data );
