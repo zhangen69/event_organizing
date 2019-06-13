@@ -1,0 +1,76 @@
+<p>
+  event-view works!
+</p>
+
+{{ formData | json }}
+
+<mat-card class="card-md">
+  <mat-card-header>
+    <mat-card-title>View Event</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <div class="action-group">
+          <button mat-raised-button [routerLink]="['/event/list']" type="button"><mat-icon>arrow_back_ios</mat-icon> Back to List</button>
+          <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
+            <mat-icon>edit</mat-icon> Edit
+          </a>
+      </div>
+      <mat-expansion-panel expanded>
+          <mat-expansion-panel-header class="bg-primary">
+            <mat-panel-title>
+                Basic Information
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="view-field">
+              <h3>Name</h3>
+              <p>{{ formData.name }}</p>
+            </div>
+            <div class="view-field">
+              <h3>Status</h3>
+              <p>{{ formData.status }}</p>
+            </div>
+            <div class="view-field">
+              <h3>Total Budget (RM)</h3>
+              <p>{{ formData.totalBudgetAmount | currency }}</p>
+            </div>
+            <div class="view-field">
+              <h3>Total Budget (RM)</h3>
+              <p>{{ formData.totalBudgetAmount | currency }}</p>
+          </div>
+
+      </mat-expansion-panel>
+
+
+      <mat-expansion-panel expanded>
+          <mat-expansion-panel-header class="bg-primary">
+            <mat-panel-title>
+                Detail Information
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="view-field">
+            <h3>Services <a mat-icon-button><mat-icon>add</mat-icon></a></h3>
+            <p *ngIf="formData.services.length === 0">No service yet.</p>
+            <ng-container *ngIf="formData.services.length > 0">
+                <p *ngFor="let service of formData.services"> {{ service.name }} </p>
+            </ng-container>
+          </div>
+          <div class="view-field">
+            <h3>Facilities <a mat-icon-button><mat-icon>add</mat-icon></a></h3>
+            <p *ngIf="formData.facilities.length === 0">No facility yet.</p>
+            <ng-container *ngIf="formData.services.length > 0">
+                <p *ngFor="let facility of formData.facilities"> {{ facility.name }} </p>
+            </ng-container>
+          </div>
+          <div class="view-field">
+            <h3>Stock Items <a mat-icon-button><mat-icon>add</mat-icon></a></h3>
+            <p *ngIf="formData.stockItems.length === 0">No stock item yet.</p>
+            <ng-container *ngIf="formData.stockItem.length > 0">
+                <p *ngFor="let stockItem of formData.stockItems"> {{ stockItem.name }} </p>
+            </ng-container>
+          </div>
+
+      </mat-expansion-panel>
+  </mat-card-content>
+</mat-card>

@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
@@ -85,6 +86,7 @@ import { StandardFormComponent } from './standard/standard-form/standard-form.co
 import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
+import { EventViewComponent } from './event/event-view/event-view.component';
 
 @NgModule({
   declarations: [
@@ -143,6 +145,7 @@ import { TitleDisplayPipe } from './pipes/title-display.pipe';
     StandardFormComponent,
     StandardFormFieldComponent,
     StandardFilterComponent,
+    EventViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -175,6 +178,7 @@ import { TitleDisplayPipe } from './pipes/title-display.pipe';
     MatSidenavModule,
     MatListModule,
     MatAutocompleteModule,
+    MatExpansionModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [

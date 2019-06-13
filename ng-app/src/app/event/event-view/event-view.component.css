@@ -1,0 +1,12 @@
+.view-field p {
+  font-size: 16px;
+}
+
+.action-group > * {
+  margin: 0 5px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 10px;
+}
+

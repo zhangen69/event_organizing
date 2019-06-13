@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventListComponent implements OnInit {
   columns = [
-    { name: 'name', displayName: 'Name' },
+    { name: 'name', displayName: 'Name', format: 'link', link: '/event/view' },
     { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
     { name: 'status', displayName: 'Status' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
