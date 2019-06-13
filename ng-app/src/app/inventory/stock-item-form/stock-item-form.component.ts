@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StandardFormField } from 'src/app/standard/standard-form-field';
+import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
 
 @Component({
   selector: 'app-stock-item-form',
@@ -7,7 +7,7 @@ import { StandardFormField } from 'src/app/standard/standard-form-field';
   styleUrls: ['./stock-item-form.component.css']
 })
 export class StockItemFormComponent implements OnInit {
-  fields: StandardFormField[] = [
+  fields: IStandardFormField[] = [
      { name: 'name', type: 'string', displayName: 'Name', required: true },
      { name: 'category', type: 'ref', ref: 'category', refName: 'name', displayName: 'Category', required: true },
      { name: 'cost', displayName: 'Cost (RM)', type: 'number', required: true },

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StandardFormField } from 'src/app/standard/standard-form-field';
+import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
 
 @Component({
   selector: 'app-attendee-form',
@@ -7,7 +7,7 @@ import { StandardFormField } from 'src/app/standard/standard-form-field';
   styleUrls: ['./attendee-form.component.css']
 })
 export class AttendeeFormComponent implements OnInit {
-  fields: StandardFormField[] = [
+  fields: IStandardFormField[] = [
      { name: 'name', type: 'string', displayName: 'Name', required: true },
      { name: 'event', type: 'ref', required: true },
      { name: 'registrationForm', type: 'ref', required: true },

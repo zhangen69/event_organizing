@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StandardFormField } from 'src/app/standard/standard-form-field';
+import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
 import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
 
 @Component({
@@ -8,7 +8,7 @@ import { RegistrationFormStatus, RegistrationFormFieldType } from '../registrati
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent implements OnInit {
-  fields: StandardFormField[] = [
+  fields: IStandardFormField[] = [
      { name: 'name', type: 'string', required: true },
      { name: 'fields', type: 'array', displayName: 'Form Fields', childName: 'Field', fields: [
        { name: 'name', type: 'string' },

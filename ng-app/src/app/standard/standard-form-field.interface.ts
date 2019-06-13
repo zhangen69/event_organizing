@@ -1,4 +1,4 @@
-export interface StandardFormField {
+export interface IStandardFormField {
   name: string;
   type: string;
   displayName?: string;
