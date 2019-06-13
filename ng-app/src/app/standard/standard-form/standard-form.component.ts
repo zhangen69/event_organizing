@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { StandardService } from 'src/app/standard/standard.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-standard-form',
@@ -21,8 +20,7 @@ export class StandardFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: StandardService,
-    private toastr: ToastrService
+    private service: StandardService
   ) {}
 
   ngOnInit() {

@@ -14,7 +14,7 @@
       <mat-form-field>
         <input matInput formControlName="phoneNumber" placeholder="Phone Number" required />
       </mat-form-field>
-      <div class="image-wrapper">
+      <!-- <div class="image-wrapper">
         <label for="">Avatar Image</label>
         <div class="image-picker">
           <button mat-stroked-button type="button" (click)="filePicker.click()"><mat-icon>photo</mat-icon> Pick Image</button>
@@ -37,12 +37,12 @@
           <img [src]="imagesPreview.signatureImage" *ngIf="imagesPreview.signatureImage !== '' && imagesPreview.signatureImage">
           <img [src]="formData.value.signatureImageUrl" *ngIf="formData.value.signatureImageUrl && !imagesPreview.signatureImage">
         </div>
-      </div>
+      </div> -->
     </form>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" type="submit" form="form">
-      <mat-icon>done</mat-icon> Submit
+      <mat-icon>done</mat-icon> Update
     </button>
   </mat-card-actions>
 </mat-card>

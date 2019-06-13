@@ -99,9 +99,10 @@
   </div>
 
   <div *ngSwitchCase="'image'">
+    <label for="">{{ field.displayName }}</label>
     <div class="image-picker">
       <button mat-stroked-button type="button" (click)="filePicker.click()">
-        <mat-icon>photo</mat-icon> {{ field.displayName }}
+        <mat-icon>photo</mat-icon> Upload {{ field.displayName }}
       </button>
       <input
         type="file"
