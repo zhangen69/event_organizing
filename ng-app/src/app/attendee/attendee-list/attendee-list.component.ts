@@ -7,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AttendeeListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'attendeeGroup.name', displayName: 'Group' },
+     { name: 'remarks' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'name', queryType: 'string' },
+     { type: 'remarks', queryType: 'string' },
   ];
 
   constructor() { }

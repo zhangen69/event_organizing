@@ -10,11 +10,11 @@ export class AttendeeGroupFormComponent implements OnInit {
   fields: IStandardFormField[] = [
     { name: 'name', type: 'string', required: true },
     { name: 'event', type: 'ref', required: true },
-    {
-      name: 'attachments', type: 'array', childName: 'Attachment', fields: [
-        { name: 'attachment', type: 'image' },
-      ]
-    },
+    // {
+    //   name: 'attachments', type: 'array', childName: 'Attachment', fields: [
+    //     { name: 'attachment', type: 'image' },
+    //   ]
+    // },
     { name: 'description', type: 'textarea' },
     { name: 'remarks', type: 'textarea' },
   ];

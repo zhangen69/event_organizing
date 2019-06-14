@@ -38,8 +38,7 @@ class FieldModel implements IFieldOptions {
       });
     } else if (this.type === 'ref') {
       if (!this.ref) {
-        this.ref = this.name.replace(/([A-Z])/g, '-$1')
-        .replace(/^./, (str) => str.toLowerCase());
+        this.ref = this.name.replace(/([A-Z])/g, '-$1').toLowerCase();
       }
 
       if (!this.refName) {
