@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderServiceFormComponent implements OnInit {
   fields = [
-     { name: 'name', type: 'string', displayName: 'Name', required: true },
+     { name: 'name', type: 'string', required: true },
+     { name: 'unit', type: 'string', required: true },
+     { name: 'unitPrice', type: 'number', required: true },
+     { name: 'provider', type: 'ref', required: true },
+     { name: 'description', type: 'textarea', required: true },
   ];
 
   constructor() { }
