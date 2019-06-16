@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentVoucherListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'provider.name', displayName: 'Provider' },
+     { name: 'event.name', displayName: 'Event' },
+     { name: 'status' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

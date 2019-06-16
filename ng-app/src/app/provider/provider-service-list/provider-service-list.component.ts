@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderServiceListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'name' },
+     { name: 'unitPrice', displayName: 'U/Price (RM)' },
+     { name: 'description' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

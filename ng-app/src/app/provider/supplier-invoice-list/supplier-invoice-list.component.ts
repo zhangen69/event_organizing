@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupplierInvoiceListComponent implements OnInit {
   columns = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'provider.name', displayName: 'Provider' },
+     { name: 'supplierInvoice.name', displayName: 'Supplier Invoice' },
+     { name: 'status' },
+     { name: 'remarks' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
