@@ -6,6 +6,11 @@
   >
     <mat-icon>insert_drive_file</mat-icon> New {{ title }}
   </a>
+  <ng-container *ngFor="let action of actions">
+    <a mat-raised-button *ngIf="isOneItemSelected">
+      <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon> {{ action.name }}
+    </a>
+  </ng-container>
 </div>
 
 <app-standard-filter
@@ -21,6 +26,15 @@
   class="mat-elevation-z2 standard-table"
   (matSortChange)="sortData($event)"
 >
+
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="checkbox">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let item">
+      <mat-checkbox [(ngModel)]="item.selected" (change)="toggleItemSelection()"></mat-checkbox>
+    </td>
+  </ng-container>
+
   <ng-container [matColumnDef]="col.name" *ngFor="let col of columns">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ col.displayName }}

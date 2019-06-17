@@ -16,6 +16,9 @@ export class EventListComponent implements OnInit {
     { type: 'name', display: 'Name', queryType: 'string' },
     { type: 'status', display: 'Status', queryType: 'string' },
   ];
+  actions = [
+    { name: 'Action 01' }
+  ];
 
   constructor() { }
 

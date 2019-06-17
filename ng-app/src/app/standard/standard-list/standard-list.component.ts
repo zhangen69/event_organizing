@@ -19,6 +19,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   @Input() filterList: any[];
   @Input() domainName: string;
   @Input() title: string;
+  @Input() actions: any[];
   @Input()
   set includes(includes: string[]) {
     this.queryModel.includes = includes || [];
@@ -28,6 +29,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   isAuth = false;
+  isOneItemSelected = false;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   totalItems = 0;
@@ -49,6 +51,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initial(this.domainName);
     this.displayedColumns = this.columns.map(x => x.name);
+    this.displayedColumns.unshift('checkbox');
     this.displayedColumns.push('action');
     this.columns.forEach(column => {
       if (!column.displayName) {
@@ -124,5 +127,10 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     }
 
     return value;
+  }
+
+  toggleItemSelection() {
+    const selectedItems = this.dataSource.data.filter(x => x.selected);
+    this.isOneItemSelected = selectedItems.length === 1;
   }
 }

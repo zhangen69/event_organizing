@@ -11,7 +11,7 @@ export class ProviderServiceFormComponent implements OnInit {
      { name: 'unit', type: 'string', required: true },
      { name: 'unitPrice', type: 'number', required: true },
      { name: 'provider', type: 'ref', required: true },
-     { name: 'description', type: 'textarea', required: true },
+     { name: 'description', type: 'textarea' },
   ];
 
   constructor() { }
