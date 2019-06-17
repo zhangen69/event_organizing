@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc",
     "serve": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
-    "dev": "concurrently -k \"npm run serve\" \"npm start --prefix ../ng-app\" ",
+    "dev": "concurrently -k \"npm run serve\" \"npm run start-open --prefix ../ng-app\" ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jacob Tan",

@@ -45,7 +45,7 @@ class FieldModel implements IFieldOptions {
         this.refName = 'name';
       }
 
-      this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => this.refOptions = res.data );
+      this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => this.refOptions = res.data);
     }
 
     if (!this.displayName) {
@@ -91,10 +91,14 @@ export class StandardFormFieldComponent implements OnInit {
 
     switch (this.field.type) {
       case 'object':
-        this.formData[this.field.name] = {};
+        if (!this.formData[this.field.name]) {
+          this.formData[this.field.name] = {};
+        }
         break;
       case 'array':
-        this.formData[this.field.name] = [{}];
+        if (!this.formData[this.field.name]) {
+          this.formData[this.field.name] = [{}];
+        }
         break;
       default:
         if (this.parentField && this.parentField.type === 'array' && !this.formData) {
@@ -129,6 +133,10 @@ export class StandardFormFieldComponent implements OnInit {
 
   displayFn = item => {
     return item ? item[this.field.refName] : undefined;
+  }
+
+  onAddItemInArray(array) {
+    array.push({});
   }
 
 }

@@ -80,7 +80,7 @@
           [matTooltip]="'Add New ' + field.childName"
           matTooltipPosition="above"
           color="primary"
-          (click)="formData[field.name].push({})"
+          (click)="onAddItemInArray(formData[field.name])"
         >
           <mat-icon>add</mat-icon>
         </button>

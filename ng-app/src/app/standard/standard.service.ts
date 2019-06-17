@@ -63,6 +63,16 @@ export class StandardService {
     );
   }
 
+  submit(formData) {
+    let mode = 'post';
+
+    if (formData._id) {
+      mode = 'put';
+    }
+
+    return this.http[mode](this.apiUrl, formData);
+  }
+
   fetch(id, formData = null, includes = []) {
     let url = `${this.apiUrl}/${id}`;
 

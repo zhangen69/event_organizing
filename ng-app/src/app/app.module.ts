@@ -86,7 +86,7 @@ import { StandardFormComponent } from './standard/standard-form/standard-form.co
 import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
-import { EventViewComponent } from './event/event-view/event-view.component';
+import { EventViewComponent, EventAddItemDialogComponent } from './event/event-view/event-view.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +146,7 @@ import { EventViewComponent } from './event/event-view/event-view.component';
     StandardFormFieldComponent,
     StandardFilterComponent,
     EventViewComponent,
+    EventAddItemDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -180,7 +181,7 @@ import { EventViewComponent } from './event/event-view/event-view.component';
     MatAutocompleteModule,
     MatExpansionModule,
   ],
-  entryComponents: [ConfirmationDialogComponent],
+  entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DatePipe,

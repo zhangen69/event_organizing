@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StandardService } from 'src/app/standard/standard.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-standard-form',
@@ -12,6 +13,8 @@ export class StandardFormComponent implements OnInit {
   @Input() domainName: string;
   @Input() fields: any[];
   @Input() includes: string[];
+  @Input() dataSource: any;
+  @Output() cancel = new EventEmitter<any>();
 
   mode = 'create';
   formData: any = {};
@@ -20,7 +23,9 @@ export class StandardFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: StandardService
+    private service: StandardService,
+    private router: Router,
+    public toastr: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -38,6 +43,10 @@ export class StandardFormComponent implements OnInit {
         this.formData[field.name] = field.default;
       }
     });
+    if (this.dataSource) {
+      this.mode = 'update';
+      this.formData = this.dataSource;
+    }
   }
 
   onUploadFile() {
@@ -46,6 +55,14 @@ export class StandardFormComponent implements OnInit {
       this.pickedImage = null;
       this.onSubmit();
     });
+  }
+
+  onCancel(url) {
+    if (this.cancel.observers.length > 0) {
+      this.cancel.emit();
+    } else {
+      this.router.navigate([url]);
+    }
   }
 
   onSubmit() {
@@ -60,11 +77,14 @@ export class StandardFormComponent implements OnInit {
         }
       });
 
-      if (this.mode === 'update') {
-        this.service.update(this.formData);
-      } else if (this.mode === 'create') {
-        this.service.create(this.formData);
-      }
+      this.service.submit(this.formData).subscribe((res: any) => {
+        this.toastr.success(res.message);
+        if (this.cancel.observers.length > 0) {
+          this.cancel.emit();
+        } else {
+          this.router.navigate([`/${this.domainName}/list`]);
+        }
+      });
     }
   }
 }

@@ -7,7 +7,7 @@ const eventServiceSchema = new mongoose.Schema({
 });
 
 const eventFacilitySchema = new mongoose.Schema({
-    providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility' },
+    providerFacility: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility' },
     remarks: String,
 });
 
