@@ -116,7 +116,7 @@ export class StandardService {
         this.http.delete(this.apiUrl + '/' + result._id).subscribe(
           (res: any) => {
             this.toastr.success(res.message);
-            window.location.reload();
+            this.setRefreshListerner();
           },
           (res: any) => this.toastr.error(res.error.message)
         );

@@ -68,7 +68,7 @@
       [matAutocomplete]="auto"
     />
 
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="field.refChange && field.refChange($event, formData)">
       <mat-option *ngFor="let option of field.refOptions" [value]="option">{{
         option[field.refName]
       }}</mat-option>

@@ -58,7 +58,10 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         column.displayName = this.titleDisplayPipe.transform(column.name);
       }
     });
-    this.fetchAll();
+    this.service.getRefreshListerner().subscribe(() => {
+      this.fetchAll();
+    });
+    this.service.setRefreshListerner();
   }
 
   ngAfterViewInit() {

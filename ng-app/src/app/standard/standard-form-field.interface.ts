@@ -6,6 +6,7 @@ export interface IStandardFormField {
   childName?: string;
   ref?: string;
   refName?: string;
+  refValue?: string;
   refOptions?: any[];
   default?: any;
   enum?: any;

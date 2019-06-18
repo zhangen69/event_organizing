@@ -18,7 +18,10 @@ interface IFieldOptions {
   refName?: string;
   refValue: string;
   refOptions?: any[];
+  refChange?: IRefChange;
 }
+
+type IRefChange = (refData: any, data: any) => any;
 
 interface IFieldEnumList {
   key: string;
@@ -74,6 +77,7 @@ class FieldModel implements IFieldOptions {
   refName?: string;
   refValue: string;
   refOptions?: any[];
+  refChange?: IRefChange;
 }
 
 @Component({
@@ -92,7 +96,7 @@ export class StandardFormFieldComponent implements OnInit {
     private toastr: ToastrService,
     private titleDisplayPipe: TitleDisplayPipe,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initial();
@@ -154,8 +158,28 @@ export class StandardFormFieldComponent implements OnInit {
     ];
   }
 
+  getRefValue(option, field) {
+    // if (option && field.refChange) {
+    //   this.field.refChange(option, this.formData);
+    // }
+
+    if (!field.refValue) {
+      return option;
+    }
+
+    return option[field.refValue];
+  }
+
   displayFn = item => {
-    return item ? item[this.field.refName] : undefined;
+    if (!item) {
+      return undefined;
+    }
+
+    if (!this.field.refValue && this.field.refName) {
+      return item[this.field.refName];
+    }
+
+    return item;
   }
 
   onAddItemInArray(array) {
