@@ -35,7 +35,7 @@
         matInput
         [matDatepicker]="datepicker"
         [(ngModel)]="formData[field.name]"
-        placeholder="Choose a date"
+        [placeholder]="field.displayName"
         class="date"
         disabled
       />
