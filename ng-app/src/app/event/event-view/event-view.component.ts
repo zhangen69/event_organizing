@@ -39,6 +39,7 @@ export class EventViewComponent implements OnInit {
     // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(EventAddItemDialogComponent, {
       width: 'auto',
+      maxHeight: '99vh',
       data: { event: this.formData, fields, title: dName }
     });
 
@@ -49,7 +50,8 @@ export class EventViewComponent implements OnInit {
 
   private reformItem({ name, displayName, childName, fieldName }) {
     return { name, displayName, type: 'array', childName, fields: [
-      { name: fieldName, type: 'ref' },
+      { name: fieldName, type: 'ref', required: true },
+      { name: 'quantity', type: 'number', required: true },
       { name: 'remarks', type: 'textarea' },
     ]};
   }

@@ -3,11 +3,13 @@ import auditable from './auditable.model';
 
 const eventServiceSchema = new mongoose.Schema({
     providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderService' },
+    quantity: Number,
     remarks: String,
 });
 
 const eventFacilitySchema = new mongoose.Schema({
     providerFacility: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility' },
+    quantity: Number,
     remarks: String,
 });
 
