@@ -115,15 +115,9 @@
         <ng-container
           *ngIf="formData.processes && formData.processes.length > 0"
         >
-          <p *ngFor="let process of formData.processes">{{ process?.name }}</p>
+          <p *ngFor="let process of formData.processes">{{ process?.name }} ({{ process?.startFrom | date: 'dd MMMM yyyy' }} - {{ process?.endTo | date: 'dd MMMM yyyy' }})</p>
         </ng-container>
       </div>
-
-      <mat-form-field>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="testdate" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
     </mat-expansion-panel>
   </mat-card-content>
 </mat-card>

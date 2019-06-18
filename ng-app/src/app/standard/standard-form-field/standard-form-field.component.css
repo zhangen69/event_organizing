@@ -18,3 +18,7 @@
 .image-preview img {
   height: 100%;
 }
+
+.mat-input-element.date:disabled {
+  color: rgba(0, 0, 0, 0.87);
+}

@@ -46,6 +46,7 @@ export class EventViewComponent implements OnInit {
   }
 
   addItemToEvent(type, name) {
+    const formData = JSON.parse(JSON.stringify(this.formData));
     const dName = `Event ${name.replace(/^\w/, c => c.toUpperCase())}`;
     const cName = `Event ${dName.substring(0, dName.length - 1)} Item`;
     const obj = this.reformItem({
@@ -60,7 +61,7 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventAddItemDialogComponent, {
       width: 'auto',
       maxHeight: '99vh',
-      data: { event: this.formData, fields, title: dName }
+      data: { event: formData, fields, title: dName }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -69,6 +70,7 @@ export class EventViewComponent implements OnInit {
   }
 
   addEventProcessToEvent() {
+    const formData = JSON.parse(JSON.stringify(this.formData));
     const fields = [
       { name: 'processes', type: 'array', displayName: 'Event Process Items', childName: 'Process Item', fields: [
         { name: 'name', type: 'string', required: true },
@@ -81,7 +83,7 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventAddItemDialogComponent, {
       width: 'auto',
       maxHeight: '99vh',
-      data: { event: this.formData, fields, title: 'Event Processes' }
+      data: { event: formData, fields, title: 'Event Processes' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
