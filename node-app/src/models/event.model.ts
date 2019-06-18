@@ -15,6 +15,7 @@ const eventFacilitySchema = new mongoose.Schema({
 
 const eventStockItemSchema = new mongoose.Schema({
     stockItem: { type: mongoose.Types.ObjectId, ref: 'StockItem' },
+    quantity: Number,
     remarks: String,
 });
 

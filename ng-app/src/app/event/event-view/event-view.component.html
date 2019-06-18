@@ -3,68 +3,127 @@
     <mat-card-title>View Event</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-      <div class="action-group">
-          <button mat-raised-button [routerLink]="['/event/list']" type="button"><mat-icon>arrow_back_ios</mat-icon> Back to List</button>
-          <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
-            <mat-icon>edit</mat-icon> Edit
-          </a>
+    <div class="action-group">
+      <button mat-raised-button [routerLink]="['/event/list']" type="button">
+        <mat-icon>arrow_back_ios</mat-icon> Back to List
+      </button>
+      <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
+        <mat-icon>edit</mat-icon> Edit
+      </a>
+    </div>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header class="bg-primary">
+        <mat-panel-title>
+          Basic Information
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="view-field">
+        <h3>Name</h3>
+        <p>{{ formData.name }}</p>
       </div>
-      <mat-expansion-panel expanded>
-          <mat-expansion-panel-header class="bg-primary">
-            <mat-panel-title>
-                Basic Information
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+      <div class="view-field">
+        <h3>Status</h3>
+        <p>{{ formData.status }}</p>
+      </div>
+      <div class="view-field">
+        <h3>Total Budget (RM)</h3>
+        <p>{{ formData.totalBudgetAmount | currency }}</p>
+      </div>
+      <div class="view-field">
+        <h3>Total Budget (RM)</h3>
+        <p>{{ formData.totalBudgetAmount | currency }}</p>
+      </div>
+    </mat-expansion-panel>
 
-          <div class="view-field">
-              <h3>Name</h3>
-              <p>{{ formData.name }}</p>
-            </div>
-            <div class="view-field">
-              <h3>Status</h3>
-              <p>{{ formData.status }}</p>
-            </div>
-            <div class="view-field">
-              <h3>Total Budget (RM)</h3>
-              <p>{{ formData.totalBudgetAmount | currency }}</p>
-            </div>
-            <div class="view-field">
-              <h3>Total Budget (RM)</h3>
-              <p>{{ formData.totalBudgetAmount | currency }}</p>
-          </div>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header class="bg-primary">
+        <mat-panel-title>
+          Detail Information
+        </mat-panel-title>
+      </mat-expansion-panel-header>
 
-      </mat-expansion-panel>
+      <div class="view-field">
+        <h3>
+          Services
+          <a
+            mat-icon-button
+            (click)="addItemToEvent('providerService', 'services')"
+            ><mat-icon>edit</mat-icon></a
+          >
+        </h3>
+        <p *ngIf="formData.services && formData.services.length === 0">
+          No service yet.
+        </p>
+        <ng-container *ngIf="formData.services && formData.services.length > 0">
+          <p *ngFor="let service of formData.services">
+            {{ service?.providerService?.name }} x {{ service?.quantity }}
+            {{ service?.providerService?.unit }}
+          </p>
+        </ng-container>
+      </div>
+      <div class="view-field">
+        <h3>
+          Facilities
+          <a
+            mat-icon-button
+            (click)="addItemToEvent('providerFacility', 'facilities')"
+            ><mat-icon>edit</mat-icon></a
+          >
+        </h3>
+        <p *ngIf="formData.facilities && formData.facilities.length === 0">
+          No facility yet.
+        </p>
+        <ng-container
+          *ngIf="formData.facilities && formData.facilities.length > 0"
+        >
+          <p *ngFor="let facility of formData.facilities">
+            {{ facility?.providerFacility?.name }} x {{ facility?.quantity }}
+            {{ facility?.providerFacility?.unit }}
+          </p>
+        </ng-container>
+      </div>
+      <div class="view-field">
+        <h3>
+          Stock Items
+          <a mat-icon-button (click)="addItemToEvent('stockItem', 'stockItems')"
+            ><mat-icon>edit</mat-icon></a
+          >
+        </h3>
+        <p *ngIf="formData.stockItems && formData.stockItems.length === 0">
+          No stock item yet.
+        </p>
+        <ng-container
+          *ngIf="formData.stockItems && formData.stockItems.length > 0"
+        >
+          <p *ngFor="let stockItem of formData.stockItems">
+            {{ stockItem?.stockItem?.name }} x {{ stockItem?.quantity }}
+            {{ stockItem?.stockItem?.unit }}
+          </p>
+        </ng-container>
+      </div>
+      <div class="view-field">
+        <h3>
+          Event Processes
+          <a mat-icon-button (click)="addEventProcessToEvent()"
+            ><mat-icon>edit</mat-icon></a
+          >
+        </h3>
+        <p *ngIf="formData.processes && formData.processes.length === 0">
+          No stock item yet.
+        </p>
+        <ng-container
+          *ngIf="formData.processes && formData.processes.length > 0"
+        >
+          <p *ngFor="let process of formData.processes">{{ process?.name }}</p>
+        </ng-container>
+      </div>
 
-
-      <mat-expansion-panel expanded>
-          <mat-expansion-panel-header class="bg-primary">
-            <mat-panel-title>
-                Detail Information
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="view-field">
-            <h3>Services <a mat-icon-button (click)="addItemToEvent('providerService', 'services')"><mat-icon>edit</mat-icon></a></h3>
-            <p *ngIf="formData.services && formData.services.length === 0">No service yet.</p>
-            <ng-container *ngIf="formData.services && formData.services.length > 0">
-                <p *ngFor="let service of formData.services"> {{ service?.providerService?.name }} x {{ service?.quantity }} {{ service?.providerService?.unit }}</p>
-            </ng-container>
-          </div>
-          <div class="view-field">
-            <h3>Facilities <a mat-icon-button (click)="addItemToEvent('providerFacility', 'facilities')"><mat-icon>edit</mat-icon></a></h3>
-            <p *ngIf="formData.facilities && formData.facilities.length === 0">No facility yet.</p>
-            <ng-container *ngIf="formData.facilities && formData.facilities.length > 0">
-                <p *ngFor="let facility of formData.facilities"> {{ facility?.providerFacility?.name }} x {{ facility?.quantity }} {{ facility?.providerFacility?.unit }}</p>
-            </ng-container>
-          </div>
-          <div class="view-field">
-            <h3>Stock Items <a mat-icon-button><mat-icon>edit</mat-icon></a></h3>
-            <p *ngIf="formData.stockItems && formData.stockItems.length === 0">No stock item yet.</p>
-            <ng-container *ngIf="formData.stockItems && formData.stockItems.length > 0">
-                <p *ngFor="let stockItem of formData.stockItems"> {{ stockItem?.name }} </p>
-            </ng-container>
-          </div>
-
-      </mat-expansion-panel>
+      <mat-form-field>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="testdate" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </mat-expansion-panel>
   </mat-card-content>
 </mat-card>

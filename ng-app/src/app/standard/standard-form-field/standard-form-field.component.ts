@@ -26,16 +26,22 @@ interface IFieldEnumList {
 }
 
 class FieldModel implements IFieldOptions {
-  constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {
+  constructor(
+    private options: IFieldOptions,
+    private titleDisplayPipe: TitleDisplayPipe,
+    private http: HttpClient
+  ) {
     Object.keys(options).forEach((option: string) => {
       this[option] = options[option];
     });
 
     if (this.type === 'enum' && this.enum) {
       this.enumList = [];
-      Object.keys(this.enum).filter(x => typeof this.enum[x as any] !== 'number').forEach((key: string) => {
-        this.enumList.push({ key: key, value: this.enum[key] });
-      });
+      Object.keys(this.enum)
+        .filter(x => typeof this.enum[x as any] !== 'number')
+        .forEach((key: string) => {
+          this.enumList.push({ key: key, value: this.enum[key] });
+        });
     } else if (this.type === 'ref') {
       if (!this.ref) {
         this.ref = this.name.replace(/([A-Z])/g, '-$1').toLowerCase();
@@ -45,7 +51,9 @@ class FieldModel implements IFieldOptions {
         this.refName = 'name';
       }
 
-      this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => this.refOptions = res.data);
+      this.http
+        .get(`${environment.apiUrl}/service/${this.ref}`)
+        .subscribe((res: any) => (this.refOptions = res.data));
     }
 
     if (!this.displayName) {
@@ -80,7 +88,11 @@ export class StandardFormFieldComponent implements OnInit {
   imagePreview: string;
   pickedImage: any = null;
 
-  constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) { }
+  constructor(
+    private toastr: ToastrService,
+    private titleDisplayPipe: TitleDisplayPipe,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.initial();
@@ -100,8 +112,17 @@ export class StandardFormFieldComponent implements OnInit {
           this.formData[this.field.name] = [{}];
         }
         break;
+      case 'date':
+        if (!this.formData[this.field.name]) {
+          this.formData[this.field.name] = new Date();
+        }
+        break;
       default:
-        if (this.parentField && this.parentField.type === 'array' && !this.formData) {
+        if (
+          this.parentField &&
+          this.parentField.type === 'array' &&
+          !this.formData
+        ) {
           this.formData = {};
         }
         break;
@@ -119,7 +140,9 @@ export class StandardFormFieldComponent implements OnInit {
       reader.readAsDataURL(file);
       this.pickedImage = file;
     } else {
-      this.toastr.error('Invalid MIME type, please select JPEG or PNG type image.');
+      this.toastr.error(
+        'Invalid MIME type, please select JPEG or PNG type image.'
+      );
     }
   }
 
@@ -127,7 +150,7 @@ export class StandardFormFieldComponent implements OnInit {
     return [
       { name: 'One', value: 1 },
       { name: 'Two', value: 2 },
-      { name: 'Three', value: 3 },
+      { name: 'Three', value: 3 }
     ];
   }
 
@@ -138,5 +161,4 @@ export class StandardFormFieldComponent implements OnInit {
   onAddItemInArray(array) {
     array.push({});
   }
-
 }

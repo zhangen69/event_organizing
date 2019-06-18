@@ -21,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
@@ -87,6 +88,7 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
 import { EventViewComponent, EventAddItemDialogComponent } from './event/event-view/event-view.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -180,6 +182,8 @@ import { EventViewComponent, EventAddItemDialogComponent } from './event/event-v
     MatListModule,
     MatAutocompleteModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
   providers: [

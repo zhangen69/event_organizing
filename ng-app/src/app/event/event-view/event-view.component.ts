@@ -1,7 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { StandardService } from 'src/app/standard/standard.service';
 import { Params, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
 import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
 
 @Component({
@@ -11,9 +15,18 @@ import { IStandardFormField } from 'src/app/standard/standard-form-field.interfa
 })
 export class EventViewComponent implements OnInit {
   formData: any = {};
-  includes: string[] = ['services.providerService', 'facilities.providerFacility'];
+  includes: string[] = [
+    'services.providerService',
+    'facilities.providerFacility',
+    'stockItems.stockItem'
+  ];
+  testdate = null;
 
-  constructor(private service: StandardService, private route: ActivatedRoute, private dialog: MatDialog) { }
+  constructor(
+    private service: StandardService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.service.init('event');
@@ -23,9 +36,11 @@ export class EventViewComponent implements OnInit {
   refresh() {
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
-        this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
-          this.formData = res.data;
-        });
+        this.service
+          .fetch(params['id'], null, this.includes)
+          .subscribe((res: any) => {
+            this.formData = res.data;
+          });
       }
     });
   }
@@ -33,7 +48,12 @@ export class EventViewComponent implements OnInit {
   addItemToEvent(type, name) {
     const dName = `Event ${name.replace(/^\w/, c => c.toUpperCase())}`;
     const cName = `Event ${dName.substring(0, dName.length - 1)} Item`;
-    const obj = this.reformItem({ name, displayName: dName, childName: cName, fieldName: type });
+    const obj = this.reformItem({
+      name,
+      displayName: dName,
+      childName: cName,
+      fieldName: type
+    });
     const fields = [obj];
 
     // tslint:disable-next-line: no-use-before-declare
@@ -48,19 +68,45 @@ export class EventViewComponent implements OnInit {
     });
   }
 
-  private reformItem({ name, displayName, childName, fieldName }) {
-    return { name, displayName, type: 'array', childName, fields: [
-      { name: fieldName, type: 'ref', required: true },
-      { name: 'quantity', type: 'number', required: true },
-      { name: 'remarks', type: 'textarea' },
-    ]};
+  addEventProcessToEvent() {
+    const fields = [
+      { name: 'processes', type: 'array', displayName: 'Event Process Items', childName: 'Process Item', fields: [
+        { name: 'name', type: 'string', required: true },
+        { name: 'startFrom', type: 'date', required: true },
+        { name: 'endTo', type: 'date', required: true },
+        { name: 'remarks', type: 'textarea' },
+      ] }
+    ];
+    // tslint:disable-next-line: no-use-before-declare
+    const dialogRef = this.dialog.open(EventAddItemDialogComponent, {
+      width: 'auto',
+      maxHeight: '99vh',
+      data: { event: this.formData, fields, title: 'Event Processes' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.refresh();
+    });
   }
 
+  private reformItem({ name, displayName, childName, fieldName }) {
+    return {
+      name,
+      displayName,
+      type: 'array',
+      childName,
+      fields: [
+        { name: fieldName, type: 'ref', required: true },
+        { name: 'quantity', type: 'number', required: true },
+        { name: 'remarks', type: 'textarea' }
+      ]
+    };
+  }
 }
 
 @Component({
   selector: 'app-event-add-item-dialog',
-  templateUrl: './event-add-item-dialog.html',
+  templateUrl: './event-add-item-dialog.html'
 })
 export class EventAddItemDialogComponent implements OnInit {
   formData: any = {};
@@ -69,7 +115,8 @@ export class EventAddItemDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EventAddItemDialogComponent>,
     private service: StandardService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
     this.service.init('event');
@@ -80,7 +127,4 @@ export class EventAddItemDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-
-
 }
