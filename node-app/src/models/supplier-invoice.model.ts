@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import auditable from './auditable.model';
 
 const line = new mongoose.Schema({
+    type: { type: String, enum: ['Service', 'Facility'] },
     name: String,
     quantity: Number,
     unit: String,

@@ -98,6 +98,9 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     if (column.name.includes('.')) {
       let thisVal = item;
       column.name.split('.').forEach(ele => {
+        if (!thisVal) {
+          return;
+        }
         thisVal = thisVal[ele];
       });
       value = thisVal;

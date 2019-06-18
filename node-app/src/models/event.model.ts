@@ -29,11 +29,13 @@ const attendeeSchema = new mongoose.Schema({
 const eventProcessSchema = new mongoose.Schema({
     name: String,
     status: { type: String, enum: ['Open', 'Paid', 'Cancelled'], default: 'Open' },
+    type: { type: String, enum: ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'], default: 'Initial' },
     startFrom: { type: Date, required: true },
     endTo: { type: Date, required: true },
-    providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderService' },
-    providerFacility: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility' },
-    category: { type: mongoose.Types.ObjectId, ref: 'Category' },
+    provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
+    services: { type: [eventServiceSchema], default: [] },
+    facilities: { type: [eventFacilitySchema], default: [] },
+    personInCharged: { type: Object, default: null },
     budgetAmount: Number,
     remarks: String,
 });
