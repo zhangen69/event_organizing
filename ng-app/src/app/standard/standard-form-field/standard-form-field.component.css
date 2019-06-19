@@ -22,3 +22,12 @@
 .mat-input-element.date:disabled {
   color: rgba(0, 0, 0, 0.87);
 }
+
+.form-field-table thead th {
+  padding: 10px;
+}
+
+.form-field-table tbody td {
+  padding: 5px;
+  border-top: 2px solid #eee;
+}

@@ -57,6 +57,12 @@ class FieldModel implements IFieldOptions {
       this.http
         .get(`${environment.apiUrl}/service/${this.ref}`)
         .subscribe((res: any) => (this.refOptions = res.data));
+    } else if (this.type === 'table') {
+      this.fields.forEach((field) => {
+        if (!field.displayName) {
+          field.displayName = this.titleDisplayPipe.transform(field.name);
+        }
+      });
     }
 
     if (!this.displayName) {
@@ -184,5 +190,9 @@ export class StandardFormFieldComponent implements OnInit {
 
   onAddItemInArray(array) {
     array.push({});
+  }
+
+  onRemoveItemFromArray(array, index) {
+    array.splice(index, 1);
   }
 }
