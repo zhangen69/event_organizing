@@ -118,6 +118,7 @@ export class StandardFormFieldComponent implements OnInit {
         }
         break;
       case 'array':
+      case 'table':
         if (!this.formData[this.field.name]) {
           this.formData[this.field.name] = [{}];
         }
@@ -189,6 +190,10 @@ export class StandardFormFieldComponent implements OnInit {
   }
 
   onAddItemInArray(array) {
+    if (!array) {
+      array = [];
+    }
+
     array.push({});
   }
 
