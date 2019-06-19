@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-voucher-list.component.css']
 })
 export class PaymentVoucherListComponent implements OnInit {
+  includes = ['provider', 'receipt', 'event'];
   columns = [
-     { name: 'name' },
+     { name: 'code' },
      { name: 'provider.name', displayName: 'Provider' },
      { name: 'event.name', displayName: 'Event' },
      { name: 'status' },

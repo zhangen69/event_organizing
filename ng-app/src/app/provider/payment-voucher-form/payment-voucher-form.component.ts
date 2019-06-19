@@ -13,9 +13,11 @@ enum PaymentVoucherStatus {
   styleUrls: ['./payment-voucher-form.component.css']
 })
 export class PaymentVoucherFormComponent implements OnInit {
+  includes = ['provider', 'receipt', 'event'];
   fields = [
+    { name: 'code', type: 'string', required: true },
     { name: 'provider', type: 'ref', required: true },
-    { name: 'receipt', type: 'ref' },
+    { name: 'receipt', type: 'ref', refName: 'code' },
     { name: 'event', type: 'ref' },
     { name: 'status', type: 'enum', enum: PaymentVoucherStatus, default: PaymentVoucherStatus[PaymentVoucherStatus.Open] },
     {

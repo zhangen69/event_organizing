@@ -12,6 +12,7 @@ const line = new mongoose.Schema({
 });
 
 const schema = new mongoose.Schema({
+    code: String,
     totalAmount: Number,
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider', required: true },
     receipt: { type: mongoose.Types.ObjectId, ref: 'Receipt', default: null },

@@ -10,6 +10,7 @@ const line = new mongoose.Schema({
 });
 
 const schema = new mongoose.Schema({
+    code: String,
     totalAmount: Number,
     customer: { type: mongoose.Types.ObjectId, ref: 'Customer' },
     event: { type: mongoose.Types.ObjectId, ref: 'Event' },

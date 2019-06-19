@@ -8,6 +8,7 @@ import { IStandardFormField } from '../../standard/standard-form-field.interface
 })
 export class ReceiptFormComponent implements OnInit {
   fields: IStandardFormField[] = [
+    { name: 'code', type: 'string', required: true },
     { name: 'provider', type: 'ref', required: true },
     { name: 'supplierInvoice', type: 'ref' },
     { name: 'remarks', type: 'textarea' },

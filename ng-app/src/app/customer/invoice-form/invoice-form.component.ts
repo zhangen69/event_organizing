@@ -14,16 +14,19 @@ enum InvoiceStatus {
 })
 export class InvoiceFormComponent implements OnInit {
   fields = [
-     { name: 'customer', type: 'ref', required: true },
-     { name: 'event', type: 'ref' },
-     { name: 'status', type: 'enum', enum: InvoiceStatus, default: InvoiceStatus[InvoiceStatus.Open], required: true },
-     { name: 'remarks', type: 'textarea' },
-     { name: 'lines', type: 'table', displayName: 'Invoice Items', fields: [
-       { name: 'name', type: 'string', required: true },
-       { name: 'unit', type: 'string', required: true },
-       { name: 'unitPrice', type: 'number', required: true },
-       { name: 'quantity', type: 'number', required: true },
-     ]},
+    { name: 'code', type: 'string', required: true },
+    { name: 'customer', type: 'ref', required: true },
+    { name: 'event', type: 'ref' },
+    { name: 'status', type: 'enum', enum: InvoiceStatus, default: InvoiceStatus[InvoiceStatus.Open], required: true },
+    { name: 'remarks', type: 'textarea' },
+    {
+      name: 'lines', type: 'table', displayName: 'Invoice Items', fields: [
+        { name: 'name', type: 'string', required: true },
+        { name: 'unit', type: 'string', required: true },
+        { name: 'unitPrice', type: 'number', required: true },
+        { name: 'quantity', type: 'number', required: true },
+      ]
+    },
   ];
 
   constructor() { }
