@@ -22,11 +22,26 @@ export class EventViewComponent implements OnInit {
   ];
   testdate = null;
 
+  columns = [
+    { name: 'name' },
+    { name: 'attendeeGroup.name', displayName: 'Group' },
+    { name: 'event.name', displayName: 'Event' },
+    { name: 'remarks' },
+  ];
+  filterList = [
+    { type: 'name', queryType: 'string' },
+    { type: 'remarks', queryType: 'string' },
+  ];
+
+  queryModel = {
+    filters: []
+  };
+
   constructor(
     private service: StandardService,
     private route: ActivatedRoute,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.service.init('event');
@@ -41,6 +56,8 @@ export class EventViewComponent implements OnInit {
           .subscribe((res: any) => {
             this.formData = res.data;
           });
+
+        this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });
       }
     });
   }
@@ -72,12 +89,14 @@ export class EventViewComponent implements OnInit {
   addEventProcessToEvent() {
     const formData = JSON.parse(JSON.stringify(this.formData));
     const fields = [
-      { name: 'processes', type: 'array', displayName: 'Event Process Items', childName: 'Process Item', fields: [
-        { name: 'name', type: 'string', required: true },
-        { name: 'startFrom', type: 'date', required: true },
-        { name: 'endTo', type: 'date', required: true },
-        { name: 'remarks', type: 'textarea' },
-      ] }
+      {
+        name: 'processes', type: 'array', displayName: 'Event Process Items', childName: 'Process Item', fields: [
+          { name: 'name', type: 'string', required: true },
+          { name: 'startFrom', type: 'date', required: true },
+          { name: 'endTo', type: 'date', required: true },
+          { name: 'remarks', type: 'textarea' },
+        ]
+      }
     ];
     // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(EventAddItemDialogComponent, {
@@ -118,7 +137,7 @@ export class EventAddItemDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<EventAddItemDialogComponent>,
     private service: StandardService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.service.init('event');

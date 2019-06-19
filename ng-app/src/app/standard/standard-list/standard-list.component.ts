@@ -20,8 +20,13 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   @Input() domainName: string;
   @Input() title: string;
   @Input() actions: any[];
+  @Input() queryModel: any;
   @Input()
   set includes(includes: string[]) {
+    if (!this.queryModel) {
+      this.queryModel = {};
+    }
+
     this.queryModel.includes = includes || [];
   }
 
@@ -33,10 +38,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   totalItems = 0;
-  queryModel: IQueryModel = {
-    pageSize: 10,
-    currentPage: 0,
-  };
+
 
   constructor(
     private service: StandardService,
@@ -50,14 +52,17 @@ export class StandardListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.initial(this.domainName);
+
     this.displayedColumns = this.columns.map(x => x.name);
     this.displayedColumns.unshift('checkbox');
     this.displayedColumns.push('action');
+
     this.columns.forEach(column => {
       if (!column.displayName) {
         column.displayName = this.titleDisplayPipe.transform(column.name);
       }
     });
+
     this.service.getRefreshListerner().subscribe(() => {
       this.fetchAll();
     });
@@ -73,6 +78,17 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   }
 
   initial(domainName) {
+    if (!this.queryModel) {
+      this.queryModel = {};
+    }
+
+    if (!('pageSize' in this.queryModel)) {
+      this.queryModel.pageSize = 10;
+    }
+    if (!('currentPage' in this.queryModel)) {
+      this.queryModel.currentPage = 0;
+    }
+
     this.service.init(domainName, this.queryModel);
   }
 

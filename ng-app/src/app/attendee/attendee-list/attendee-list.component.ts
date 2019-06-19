@@ -6,14 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./attendee-list.component.css']
 })
 export class AttendeeListComponent implements OnInit {
+  includes = ['attendeeGroup', 'event'];
   columns = [
-     { name: 'name' },
-     { name: 'attendeeGroup.name', displayName: 'Group' },
-     { name: 'remarks' },
+    { name: 'name' },
+    { name: 'attendeeGroup.name', displayName: 'Group' },
+    { name: 'event.name', displayName: 'Event' },
+    { name: 'remarks' },
   ];
   filterList = [
-     { type: 'name', queryType: 'string' },
-     { type: 'remarks', queryType: 'string' },
+    { type: 'name', queryType: 'string' },
+    { type: 'remarks', queryType: 'string' },
   ];
 
   constructor() { }

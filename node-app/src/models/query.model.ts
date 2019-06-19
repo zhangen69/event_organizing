@@ -53,7 +53,7 @@ export default class QueryModel implements IQueryModel {
             options.sortDirection = this.sortDirection === 'ASC' ? 0 : -1;
         }
 
-        return {conditions, options};
+        return { conditions, options };
     }
 
     private _isEmpty(obj) {
@@ -68,6 +68,9 @@ export default class QueryModel implements IQueryModel {
                 } else {
                     conditions[options.type] = [new RegExp(`${options.searchText}`, 'gi')];
                 }
+                break;
+            case 'match':
+                conditions[options.type] = options.searchText;
                 break;
             case 'number':
                 const query: IMongooseQueryModel = {};

@@ -119,5 +119,18 @@
         </ng-container>
       </div>
     </mat-expansion-panel>
+
+    
+    <mat-expansion-panel expanded>
+        <mat-expansion-panel-header class="bg-primary">
+          <mat-panel-title>
+            Attendee Information
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        
+        <app-standard-list title="Attendee" domainName="attendee" [columns]="columns" [filterList]="filterList" [includes]="['attendeeGroup', 'event']" [queryModel]="queryModel"></app-standard-list>
+
+
+      </mat-expansion-panel>
   </mat-card-content>
 </mat-card>

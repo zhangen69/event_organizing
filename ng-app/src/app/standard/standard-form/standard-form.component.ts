@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StandardService } from 'src/app/standard/standard.service';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-standard-form',
@@ -26,7 +27,8 @@ export class StandardFormComponent implements OnInit {
     private service: StandardService,
     private router: Router,
     public toastr: ToastrService,
-  ) {}
+    private location: Location
+  ) { }
 
   ngOnInit() {
     this.service.init(this.domainName);
@@ -60,8 +62,10 @@ export class StandardFormComponent implements OnInit {
   onCancel(url) {
     if (this.cancel.observers.length > 0) {
       this.cancel.emit();
+    } else if (window.history.length > 1) {
+      this.location.back();
     } else {
-      this.router.navigate([url]);
+      this.router.navigate([`/${this.domainName}/list`]);
     }
   }
 
@@ -79,11 +83,7 @@ export class StandardFormComponent implements OnInit {
 
       this.service.submit(this.formData).subscribe((res: any) => {
         this.toastr.success(res.message);
-        if (this.cancel.observers.length > 0) {
-          this.cancel.emit();
-        } else {
-          this.router.navigate([`/${this.domainName}/list`]);
-        }
+        this.onCancel(`/${this.domainName}/list`);
       });
     }
   }

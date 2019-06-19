@@ -10,4 +10,13 @@ export interface IQueryModel {
   min?: number;
   max?: number;
   includes?: string[];
+  filters?: IFilter[];
+}
+
+interface IFilter {
+  searchText?: string;
+  type?: string;
+  queryType?: string; // string, number, Date, ...
+  min?: number;
+  max?: number;
 }
