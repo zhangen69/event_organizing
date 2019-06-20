@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AttendeeListComponent implements OnInit {
   includes = ['attendeeGroup', 'event'];
   columns = [
+    { name: 'code' },
     { name: 'name' },
     { name: 'attendeeGroup.name', displayName: 'Group' },
     { name: 'event.name', displayName: 'Event' },
