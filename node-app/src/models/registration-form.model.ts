@@ -4,6 +4,7 @@ import auditable from './auditable.model';
 const schema = new mongoose.Schema({
     name: String,
     fields: [Object],
+    event: { type: mongoose.Types.ObjectId, ref: 'Event' },
     status: { type: String, enum: ['Open', 'Confirmed', 'Published'] },
     remarks: String,
 });

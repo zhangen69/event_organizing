@@ -71,7 +71,13 @@
   </div>
 
   <div class="form-field-table" *ngSwitchCase="'table'">
-    <h4>{{ field.displayName }}</h4>
+    <h4>
+      <span>{{ field.displayName }}</span>
+      <button type="button" mat-icon-button matTooltip="Add" matTooltipPosition="above"
+        (click)="onAddItemInArray(formData[field.name])">
+        <mat-icon class="icon-xs">add</mat-icon>
+      </button>
+    </h4>
     <table class="mat-elevation-z2 standard-table">
       <thead>
         <tr>
@@ -86,12 +92,8 @@
           </td>
           <td>
             <div class="btn-group">
-              <button type="button" mat-icon-button matTooltip="Add" matTooltipPosition="above"
-                (click)="onAddItemInArray(formData[field.name])" *ngIf="i === formData[field.name].length - 1">
-                <mat-icon class="icon-xs">add</mat-icon>
-              </button>
               <button type="button" mat-icon-button matTooltip="Remove" matTooltipPosition="above" color="warn"
-                (click)="onRemoveItemFromArray(formData[field.name], i)" *ngIf="formData[field.name].length > 1">
+                (click)="onRemoveItemFromArray(formData[field.name], i)">
                 <mat-icon class="icon-xs">delete</mat-icon>
               </button>
             </div>

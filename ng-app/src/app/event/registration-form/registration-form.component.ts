@@ -8,8 +8,10 @@ import { RegistrationFormStatus, RegistrationFormFieldType } from '../registrati
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent implements OnInit {
+  includes = ['event'];
   fields: IStandardFormField[] = [
      { name: 'name', type: 'string', required: true },
+     { name: 'event', type: 'ref', required: true },
      { name: 'status', type: 'enum', enum: RegistrationFormStatus, default: RegistrationFormStatus[RegistrationFormStatus.Open] },
      { name: 'remarks', type: 'textarea' },
      { name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', fields: [

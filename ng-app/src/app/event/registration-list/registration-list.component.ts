@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registration-list.component.css']
 })
 export class RegistrationListComponent implements OnInit {
+  actions = [
+    { name: 'Publish', format: 'link', link: '/register/', icon: 'public' }
+  ]
   columns = [
      { name: 'name', format: 'link', link: '/registration-form/view' },
      { name: 'remarks' },

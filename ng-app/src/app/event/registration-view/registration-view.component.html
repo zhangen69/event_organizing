@@ -11,6 +11,9 @@
       <a [routerLink]="['/registration-form/edit/' + formData._id]" mat-raised-button>
         <mat-icon>edit</mat-icon> Edit
       </a>
+      <a [routerLink]="['/register/' + formData._id]" target="_blank" mat-raised-button>
+        <mat-icon>public</mat-icon> Publish
+      </a>
     </div>
 
     <mat-expansion-panel expanded>
@@ -37,9 +40,22 @@
         <mat-panel-title>Preview Form</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div *ngFor="let field of formData?.fields">
-        <app-standard-form-field [field]="field"></app-standard-form-field>
+      <h4>Basic Information</h4>
+      <app-standard-form-field [field]="{ name: 'name', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'gender', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'email', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"></app-standard-form-field>
+
+      <div *ngIf="formData?.fields.length > 0">
+        <h4>Detail Information</h4>
+        <div *ngFor="let field of formData?.fields">
+          <app-standard-form-field [field]="field"></app-standard-form-field>
+        </div>
       </div>
+
     </mat-expansion-panel>
 
   </mat-card-content>

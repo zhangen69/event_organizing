@@ -105,13 +105,13 @@ export class StandardFormFieldComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.formData) {
-      this.formData = {};
-    }
     this.initial();
   }
 
   initial() {
+    if (!this.formData) {
+      this.formData = {};
+    }
     this.field = new FieldModel(this.field, this.titleDisplayPipe, this.http);
 
     switch (this.field.type) {

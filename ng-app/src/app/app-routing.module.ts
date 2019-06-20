@@ -47,6 +47,7 @@ import { CategoryFormComponent } from './provider/category-form/category-form.co
 import { CategoryListComponent } from './provider/category-list/category-list.component';
 import { EventViewComponent } from './event/event-view/event-view.component';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
+import { RegisterEventComponent } from './event/register-event/register-event.component';
 
 const routes: Routes = [
   { path: 'event-plan', canActivate: [AuthGuard], children: [
@@ -155,6 +156,7 @@ const routes: Routes = [
     { path: 'resetPassword/:token', component: ResetPasswordComponent },
   ]},
   { path: '', component: HomeComponent },
+  { path: 'register/:formId', component: RegisterEventComponent },
 ];
 
 @NgModule({

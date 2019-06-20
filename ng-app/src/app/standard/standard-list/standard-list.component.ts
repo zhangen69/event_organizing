@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { StandardService } from 'src/app/standard/standard.service';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-standard-list',
@@ -44,6 +45,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     private service: StandardService,
     private authService: AuthService,
     private datePipe: DatePipe,
+    private router: Router,
     private titleDisplayPipe: TitleDisplayPipe,
     private currencyPipe: CurrencyPipe) {
     this.isAuth = this.authService.getIsAuth();
@@ -154,5 +156,11 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   toggleItemSelection() {
     const selectedItems = this.dataSource.data.filter(x => x.selected);
     this.isOneItemSelected = selectedItems.length === 1;
+  }
+
+  executeAction(action) {
+    if (action.format === 'link' && action.link) {
+      this.router.navigate([action.link]);
+    }
   }
 }

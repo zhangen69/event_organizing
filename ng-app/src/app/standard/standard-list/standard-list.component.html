@@ -7,7 +7,7 @@
     <mat-icon>insert_drive_file</mat-icon> New {{ title }}
   </a>
   <ng-container *ngFor="let action of actions">
-    <a mat-raised-button *ngIf="isOneItemSelected">
+    <a mat-raised-button (click)="executeAction(action)" *ngIf="isOneItemSelected">
       <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon> {{ action.name }}
     </a>
   </ng-container>

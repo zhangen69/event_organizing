@@ -90,6 +90,7 @@ import { TitleDisplayPipe } from './pipes/title-display.pipe';
 import { EventViewComponent, EventAddItemDialogComponent } from './event/event-view/event-view.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
+import { RegisterEventComponent } from './event/register-event/register-event.component';
 
 @NgModule({
   declarations: [
@@ -151,6 +152,7 @@ import { RegistrationViewComponent } from './event/registration-view/registratio
     EventViewComponent,
     EventAddItemDialogComponent,
     RegistrationViewComponent,
+    RegisterEventComponent,
   ],
   imports: [
     BrowserModule,
