@@ -89,6 +89,7 @@ import { StandardFilterComponent } from './standard/standard-filter/standard-fil
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
 import { EventViewComponent, EventAddItemDialogComponent } from './event/event-view/event-view.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     StandardFilterComponent,
     EventViewComponent,
     EventAddItemDialogComponent,
+    RegistrationViewComponent,
   ],
   imports: [
     BrowserModule,

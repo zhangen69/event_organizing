@@ -105,6 +105,9 @@ export class StandardFormFieldComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.formData) {
+      this.formData = {};
+    }
     this.initial();
   }
 

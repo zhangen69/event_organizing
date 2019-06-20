@@ -46,6 +46,7 @@ import { CustomerFormComponent } from './customer/customer-form/customer-form.co
 import { CategoryFormComponent } from './provider/category-form/category-form.component';
 import { CategoryListComponent } from './provider/category-list/category-list.component';
 import { EventViewComponent } from './event/event-view/event-view.component';
+import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 
 const routes: Routes = [
   { path: 'event-plan', canActivate: [AuthGuard], children: [
@@ -129,6 +130,7 @@ const routes: Routes = [
     { path: 'list', component: RegistrationListComponent },
     { path: 'add', component: RegistrationFormComponent },
     { path: 'edit/:id', component: RegistrationFormComponent },
+    { path: 'view/:id', component: RegistrationViewComponent },
   ]},
   { path: 'customer', canActivate: [AuthGuard], children: [
     { path: 'list', component: CustomerListComponent },
