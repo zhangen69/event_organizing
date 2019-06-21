@@ -4,9 +4,9 @@
   </mat-card-header>
   <mat-card-content>
     <div class="action-group">
-      <button mat-raised-button [routerLink]="['/event/list']" type="button">
-        <mat-icon>arrow_back_ios</mat-icon> Back to List
-      </button>
+        <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
+          <mat-icon>arrow_back_ios</mat-icon> Back
+        </button>
       <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
         <mat-icon>edit</mat-icon> Edit
       </a>

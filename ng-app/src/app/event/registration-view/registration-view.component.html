@@ -1,17 +1,16 @@
 <mat-card class="card-md">
   <mat-card-header>
     <mat-card-title>View Registration Form</mat-card-title>
-    <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div class="action-group">
-      <button mat-raised-button [routerLink]="['/registration-form/list']" type="button">
-        <mat-icon>arrow_back_ios</mat-icon> Back to List
+      <button mat-raised-button type="button" (click)="functions.onBack('/registration/list')">
+        <mat-icon>arrow_back_ios</mat-icon> Back
       </button>
-      <a [routerLink]="['/registration-form/edit/' + formData._id]" mat-raised-button>
+      <a [routerLink]="['/registration-form/edit/' + formData?._id]" mat-raised-button>
         <mat-icon>edit</mat-icon> Edit
       </a>
-      <a [routerLink]="['/register/' + formData._id]" target="_blank" mat-raised-button>
+      <a [routerLink]="['/register/' + formData?._id]" target="_blank" mat-raised-button>
         <mat-icon>public</mat-icon> Publish
       </a>
     </div>

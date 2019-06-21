@@ -1,3 +1,4 @@
+import { StandardFunctionsService } from './../../standard/standard-functions.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { StandardService } from 'src/app/standard/standard.service';
 import { Params, ActivatedRoute } from '@angular/router';
@@ -23,6 +24,7 @@ export class EventViewComponent implements OnInit {
   testdate = null;
 
   columns = [
+    { name: 'code', format: 'link', link: '/attendee/view/' },
     { name: 'name' },
     { name: 'attendeeGroup.name', displayName: 'Group' },
     { name: 'event.name', displayName: 'Event' },
@@ -40,7 +42,8 @@ export class EventViewComponent implements OnInit {
   constructor(
     private service: StandardService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public functions: StandardFunctionsService
   ) { }
 
   ngOnInit() {

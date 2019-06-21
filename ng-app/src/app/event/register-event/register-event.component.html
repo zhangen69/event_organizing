@@ -4,7 +4,7 @@
     <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <form #form="ngForm" id="form" (ngSubmit)="form.valid && onSubmit()">
+    <form #form="ngForm" id="form" (ngSubmit)="form.valid && onSubmit()" *ngIf="mode === 'new'">
 
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header class="bg-primary">
@@ -31,6 +31,10 @@
       </mat-expansion-panel>
 
     </form>
+
+    <div *ngIf="mode === 'submitted'">
+      Congratulation! You're registered the event successfully.
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" type="submit" form="form">

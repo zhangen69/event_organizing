@@ -1,3 +1,4 @@
+import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserChangePasswordComponent } from './user/user-change-password/user-change-password.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
@@ -108,6 +109,7 @@ const routes: Routes = [
     { path: 'list', component: AttendeeListComponent },
     { path: 'add', component: AttendeeFormComponent },
     { path: 'edit/:id', component: AttendeeFormComponent },
+    { path: 'view/:id', component: AttendeeViewComponent },
   ]},
   { path: 'attendee-group', canActivate: [AuthGuard], children: [
     { path: 'list', component: AttendeeGroupListComponent },

@@ -1,6 +1,9 @@
-import { ActivatedRoute, Params } from '@angular/router';
-import { StandardService } from './../../services/standard.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { StandardService } from 'src/app/standard/standard.service';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-event',
@@ -8,16 +11,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-event.component.css']
 })
 export class RegisterEventComponent implements OnInit {
+  mode = 'new';
   registrationForm: any;
   formData: any = {};
   attendeeData: any = {};
+  private formService: StandardService;
+  private attendeeService: StandardService;
 
-  constructor(private service: StandardService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public http: HttpClient,
+    public dialog: MatDialog,
+    public router: Router,
+    public toastr: ToastrService) {
+    this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
+    this.attendeeService = new StandardService(this.http, this.dialog, this.router, this.toastr);
+  }
 
   ngOnInit() {
-    this.service.init('registration-form');
+    this.attendeeService.init('attendee');
+    this.formService.init('registration-form');
     this.route.params.subscribe((params: Params) => {
-      this.service.fetch(params['formId']).subscribe((res: any) => {
+      this.formService.fetch(params['formId']).subscribe((res: any) => {
         this.registrationForm = res.data;
       });
     });
@@ -28,10 +41,18 @@ export class RegisterEventComponent implements OnInit {
       registrationForm: this.registrationForm._id,
       event: this.registrationForm.event,
       formData: this.formData,
-      name: this.attendeeData.name,
     };
 
+    Object.keys(this.attendeeData).forEach(key => {
+      attendeeData[key] = this.attendeeData[key];
+    });
+
     console.log(attendeeData);
+
+    this.attendeeService.submit(attendeeData).subscribe((res: any) => {
+      this.toastr.success(res.message);
+      this.mode = 'submitted';
+    });
 
   }
 

@@ -91,6 +91,7 @@ import { EventViewComponent, EventAddItemDialogComponent } from './event/event-v
 import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
+import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { RegisterEventComponent } from './event/register-event/register-event.co
     EventAddItemDialogComponent,
     RegistrationViewComponent,
     RegisterEventComponent,
+    AttendeeViewComponent,
   ],
   imports: [
     BrowserModule,
