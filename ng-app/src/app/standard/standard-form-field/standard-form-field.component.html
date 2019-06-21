@@ -14,6 +14,10 @@
       [required]="field.required" />
   </mat-form-field>
 
+  <div *ngSwitchCase="'boolean'">
+      <mat-checkbox [(ngModel)]="formData[field.name]" [name]="field.name">{{ field.displayName }}</mat-checkbox>
+  </div>
+
   <div *ngSwitchCase="'date'">
     <mat-form-field>
       <input matInput [matDatepicker]="datepicker" [(ngModel)]="formData[field.name]" [placeholder]="field.displayName"
@@ -49,8 +53,9 @@
       <mat-list-item>{{ field.displayName }}</mat-list-item>
       <mat-divider></mat-divider>
     </mat-list>
-    <app-standard-form-field [field]="objectField" [(formData)]="formData[field.name]"
-      *ngFor="let objectField of field.fields"></app-standard-form-field>
+    <div *ngFor="let objectField of field.fields">
+      <app-standard-form-field [parentField]="field" [field]="objectField" [(formData)]="formData[field.name]"></app-standard-form-field>
+    </div>
   </div>
 
   <div class="form-field-array" *ngSwitchCase="'array'">

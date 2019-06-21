@@ -118,18 +118,30 @@
 
       <ng-container *ngIf="registrationForm; else elseTemplate">
         <h3>Preview Form</h3>
-        <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
-          <mat-icon>edit</mat-icon> Edit
-        </button>
+        <div class="action-group">
+          <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
+            <mat-icon>edit</mat-icon> Edit
+          </button>
+          <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
+            <mat-icon>public</mat-icon> Publish
+          </a>
+        </div>
 
         <h4>Basic Information</h4>
-        <app-standard-form-field [field]="{ name: 'name', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'email', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'name', type: 'string' }" *ngIf="registrationForm.settings.name">
+        </app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" *ngIf="registrationForm.settings.gender">
+        </app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"
+          *ngIf="registrationForm.settings.identityNumber"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'email', type: 'string' }" *ngIf="registrationForm.settings.email">
+        </app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"
+          *ngIf="registrationForm.settings.phoneNumber"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"
+          *ngIf="registrationForm.settings.organization"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"
+          *ngIf="registrationForm.settings.address"></app-standard-form-field>
 
         <div *ngIf="registrationForm.fields.length > 0">
           <h4>Detail Information</h4>
@@ -139,7 +151,7 @@
         </div>
       </ng-container>
       <ng-template #elseTemplate>
-        Registration Form no ready yet, <a [routerLink]="['/registration-form/new']">configure now</a>.
+        Registration Form no ready yet, <a [routerLink]="['/registration-form/add']">configure now</a>.
       </ng-template>
 
     </mat-expansion-panel>

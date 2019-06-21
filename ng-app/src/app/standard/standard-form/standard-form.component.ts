@@ -37,6 +37,7 @@ export class StandardFormComponent implements OnInit {
         this.mode = 'update';
         this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
+          this.initialDefaultValues();
         });
       }
     });
@@ -49,6 +50,36 @@ export class StandardFormComponent implements OnInit {
       this.mode = 'update';
       this.formData = this.dataSource;
     }
+  }
+
+  private initialDefaultValues() {
+    this.fields.forEach((field) => {
+      let defaultValue;
+
+      switch (field.type) {
+        case 'object':
+          defaultValue = {};
+          break;
+        case 'array':
+        case 'table':
+          defaultValue = [{}];
+          break;
+        case 'date':
+          defaultValue = new Date();
+          break;
+        case 'boolean':
+          defaultValue = false;
+          break;
+      }
+
+      if (!this.checkHasValue(this.formData, field.name)) {
+        this.formData[field.name] = defaultValue;
+      }
+    });
+  }
+
+  private checkHasValue(formData, fieldName) {
+    return formData[fieldName];
   }
 
   onUploadFile() {

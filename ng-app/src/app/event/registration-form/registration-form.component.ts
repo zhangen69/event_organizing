@@ -14,6 +14,15 @@ export class RegistrationFormComponent implements OnInit {
      { name: 'event', type: 'ref', required: true },
      { name: 'status', type: 'enum', enum: RegistrationFormStatus, default: RegistrationFormStatus[RegistrationFormStatus.Open] },
      { name: 'remarks', type: 'textarea' },
+     { name: 'settings', type: 'object', fields: [
+       { name: 'name', type: 'boolean' },
+       { name: 'gender', type: 'boolean' },
+       { name: 'identityNumber', type: 'boolean' },
+       { name: 'email', type: 'boolean' },
+       { name: 'phoneNumber', type: 'boolean' },
+       { name: 'organization', type: 'boolean' },
+       { name: 'address', type: 'boolean' },
+     ] },
      { name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', fields: [
        { name: 'name', type: 'string' },
        { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },

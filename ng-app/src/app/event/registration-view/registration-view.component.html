@@ -40,13 +40,13 @@
       </mat-expansion-panel-header>
 
       <h4>Basic Information</h4>
-      <app-standard-form-field [field]="{ name: 'name', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'gender', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'email', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"></app-standard-form-field>
-      <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'name', type: 'string' }" *ngIf="formData.settings.name"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" *ngIf="formData.settings.gender"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }" *ngIf="formData.settings.identityNumber"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'email', type: 'string' }" *ngIf="formData.settings.email"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }" *ngIf="formData.settings.phoneNumber"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'organization', type: 'string' }" *ngIf="formData.settings.organization"></app-standard-form-field>
+      <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }" *ngIf="formData.settings.address"></app-standard-form-field>
 
       <div *ngIf="formData?.fields.length > 0">
         <h4>Detail Information</h4>

@@ -131,6 +131,11 @@ export class StandardFormFieldComponent implements OnInit {
           this.formData[this.field.name] = new Date();
         }
         break;
+      case 'boolean':
+        if (!this.formData[this.field.name]) {
+          this.formData[this.field.name] = false;
+        }
+        break;
       default:
         if (
           this.parentField &&
