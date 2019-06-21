@@ -1,31 +1,19 @@
 <div class="action-group">
-  <a
-    [routerLink]="['/' + domainName + '/add']"
-    routerLinkActive="router-link-active"
-    mat-raised-button
-  >
+  <a [routerLink]="['/' + domainName + '/add']" routerLinkActive="router-link-active" mat-raised-button>
     <mat-icon>insert_drive_file</mat-icon> New {{ title }}
   </a>
   <ng-container *ngFor="let action of actions">
-    <a mat-raised-button (click)="executeAction(action)" *ngIf="isOneItemSelected">
+    <a mat-raised-button (click)="executeAction(action)" *ngIf="showAction(action)">
       <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon> {{ action.name }}
     </a>
   </ng-container>
 </div>
 
-<app-standard-filter
-  [filterList]="filterList"
-  [(queryModel)]="queryModel"
-  (refresh)="applyFilter()"
-></app-standard-filter>
+<app-standard-filter [filterList]="filterList" [(queryModel)]="queryModel" (refresh)="applyFilter()">
+</app-standard-filter>
 
-<table
-  mat-table
-  [dataSource]="dataSource"
-  matSort
-  class="mat-elevation-z2 standard-table"
-  (matSortChange)="sortData($event)"
->
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 standard-table"
+  (matSortChange)="sortData($event)">
 
   <!-- Checkbox Column -->
   <ng-container matColumnDef="checkbox">
@@ -41,11 +29,7 @@
     </th>
     <td mat-cell *matCellDef="let item">
       <span *ngIf="col.format !== 'link'">{{ getValue(item, col) }}</span>
-      <a
-        [routerLink]="[col.link + '/' + item._id]"
-        *ngIf="col.format === 'link'"
-        >{{ getValue(item, col) }}</a
-      >
+      <a [routerLink]="[col.link + '/' + item._id]" *ngIf="col.format === 'link'">{{ getValue(item, col) }}</a>
     </td>
   </ng-container>
 
@@ -54,21 +38,11 @@
     <th mat-header-cell *matHeaderCellDef>Action</th>
     <td mat-cell *matCellDef="let item">
       <div class="btn-group" *ngIf="isAuth">
-        <button
-          mat-icon-button
-          matTooltip="Edit"
-          matTooltipPosition="above"
-          [routerLink]="['/' + domainName + '/edit', item._id]"
-        >
+        <button mat-icon-button matTooltip="Edit" matTooltipPosition="above"
+          [routerLink]="['/' + domainName + '/edit', item._id]">
           <mat-icon class="icon-xs">edit</mat-icon>
         </button>
-        <button
-          mat-icon-button
-          matTooltip="Delete"
-          matTooltipPosition="above"
-          color="warn"
-          (click)="delete(item)"
-        >
+        <button mat-icon-button matTooltip="Delete" matTooltipPosition="above" color="warn" (click)="delete(item)">
           <mat-icon class="icon-xs">delete</mat-icon>
         </button>
       </div>
@@ -79,7 +53,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<mat-paginator
-  [length]="totalItems"
-  [pageSizeOptions]="[10, 25, 100]"
-></mat-paginator>
+<mat-paginator [length]="totalItems" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

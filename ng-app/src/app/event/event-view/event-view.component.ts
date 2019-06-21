@@ -27,16 +27,23 @@ export class EventViewComponent implements OnInit {
     'facilities.providerFacility',
     'stockItems.stockItem'
   ];
-  testdate = null;
 
+  actions = [
+    {
+      name: 'Group Attendees', format: 'function', function: (selectedItems) => {
+        console.log('triggered function', selectedItems);
+      }, isMultiple: true
+    }
+  ];
   columns = [
     { name: 'code', format: 'link', link: '/attendee/view/' },
     { name: 'name' },
     { name: 'attendeeGroup.name', displayName: 'Group' },
-    { name: 'event.name', displayName: 'Event' },
+    // { name: 'event.name', displayName: 'Event' },
     { name: 'remarks' },
   ];
   filterList = [
+    { type: 'code', queryType: 'string' },
     { type: 'name', queryType: 'string' },
     { type: 'remarks', queryType: 'string' },
   ];

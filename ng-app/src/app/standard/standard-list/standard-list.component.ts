@@ -35,7 +35,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   isAuth = false;
-  isOneItemSelected = false;
+  selectedItems = [];
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   totalItems = 0;
@@ -154,13 +154,28 @@ export class StandardListComponent implements OnInit, AfterViewInit {
   }
 
   toggleItemSelection() {
-    const selectedItems = this.dataSource.data.filter(x => x.selected);
-    this.isOneItemSelected = selectedItems.length === 1;
+    this.selectedItems = this.dataSource.data.filter(x => x.selected);
   }
 
   executeAction(action) {
     if (action.format === 'link' && action.link) {
       this.router.navigate([action.link]);
     }
+
+    if (action.format === 'function' && action.function) {
+      action.function(action.isMultiple ? this.selectedItems : this.selectedItems[0]);
+    }
+  }
+
+  showAction(action) {
+    if (this.selectedItems.length === 0) {
+      return false;
+    }
+
+    if (this.selectedItems.length > 1 && !action.isMultiple) {
+      return false;
+    }
+
+    return true;
   }
 }
