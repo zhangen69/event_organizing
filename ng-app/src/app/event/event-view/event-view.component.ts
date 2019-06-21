@@ -1,13 +1,16 @@
+import { ToastrService } from 'ngx-toastr';
 import { StandardFunctionsService } from './../../standard/standard-functions.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { StandardService } from 'src/app/standard/standard.service';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
+import { HttpClient } from '@angular/common/http';
+import { IQueryModel } from 'src/app/interfaces/query-model';
 
 @Component({
   selector: 'app-event-view',
@@ -16,6 +19,9 @@ import { IStandardFormField } from 'src/app/standard/standard-form-field.interfa
 })
 export class EventViewComponent implements OnInit {
   formData: any = {};
+  registrationForm: any;
+  formService: StandardService;
+
   includes: string[] = [
     'services.providerService',
     'facilities.providerFacility',
@@ -43,11 +49,17 @@ export class EventViewComponent implements OnInit {
     private service: StandardService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    public functions: StandardFunctionsService
-  ) { }
+    public functions: StandardFunctionsService,
+    private http: HttpClient,
+    private router: Router,
+    private toastr: ToastrService,
+  ) {
+    this.service.init('event');
+    this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
+    this.formService.init('registration-form');
+  }
 
   ngOnInit() {
-    this.service.init('event');
     this.refresh();
   }
 
@@ -58,9 +70,19 @@ export class EventViewComponent implements OnInit {
           .fetch(params['id'], null, this.includes)
           .subscribe((res: any) => {
             this.formData = res.data;
+            this.fetchRegistrationForm(this.formData._id);
           });
 
         this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });
+      }
+    });
+  }
+
+  fetchRegistrationForm(eventId: string) {
+    const queryModel: IQueryModel = { pageSize: 0, currentPage: 0, searchText: eventId, type: 'event', queryType: 'match' };
+    this.formService.fetchAll(queryModel).subscribe((res: any) => {
+      if (res.data.length > 0) {
+        this.registrationForm = res.data[0];
       }
     });
   }

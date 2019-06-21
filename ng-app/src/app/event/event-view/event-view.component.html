@@ -1,12 +1,12 @@
-<mat-card class="card-md">
+<mat-card class="card-md view-page">
   <mat-card-header>
     <mat-card-title>View Event</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div class="action-group">
-        <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
-          <mat-icon>arrow_back_ios</mat-icon> Back
-        </button>
+      <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
+        <mat-icon>arrow_back_ios</mat-icon> Back
+      </button>
       <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
         <mat-icon>edit</mat-icon> Edit
       </a>
@@ -14,7 +14,7 @@
     <mat-expansion-panel expanded>
       <mat-expansion-panel-header class="bg-primary">
         <mat-panel-title>
-          Basic Information
+          <span class="c-primary">Basic Information</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -111,6 +111,38 @@
       </div>
     </mat-expansion-panel>
 
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header class="bg-primary">
+        <mat-panel-title>Registration Form</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ng-container *ngIf="registrationForm; else elseTemplate">
+        <h3>Preview Form</h3>
+        <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
+          <mat-icon>edit</mat-icon> Edit
+        </button>
+
+        <h4>Basic Information</h4>
+        <app-standard-form-field [field]="{ name: 'name', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'email', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"></app-standard-form-field>
+
+        <div *ngIf="registrationForm.fields.length > 0">
+          <h4>Detail Information</h4>
+          <div *ngFor="let field of registrationForm?.fields">
+            <app-standard-form-field [field]="field"></app-standard-form-field>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        Registration Form no ready yet, <a [routerLink]="['/registration-form/new']">configure now</a>.
+      </ng-template>
+
+    </mat-expansion-panel>
 
     <mat-expansion-panel expanded>
       <mat-expansion-panel-header class="bg-primary">

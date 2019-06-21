@@ -120,6 +120,27 @@ table { width: 100%; }
   height: 100%;
 }
 
-.action-group > * {
+.action-group > .mat-raised-button {
   margin: 0 5px;
+}
+
+.view-page .mat-expansion-panel {
+  margin-bottom: 10px;
+}
+
+.view-page .bg-primary,
+.view-page .bg-primary.mat-expanded:hover,
+.view-page .bg-primary.mat-expanded:focus,
+.view-page .mat-expansion-panel:not(.mat-expanded) .bg-primary,
+.view-page .mat-expansion-panel:not(.mat-expanded) .bg-primary:hover {
+  background-color: #007bff;
+}
+
+.view-page .bg-primary .mat-expansion-panel-header-title,
+.view-page .bg-primary .mat-expansion-indicator:after {
+  color: #fff;
+}
+
+.view-page .view-field p {
+  font-size: 16px;
 }
