@@ -1,172 +1,190 @@
 <mat-card class="card-md view-page">
-  <mat-card-header>
-    <mat-card-title>View Event</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="action-group">
-      <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
-        <mat-icon>arrow_back_ios</mat-icon> Back
-      </button>
-      <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
-        <mat-icon>edit</mat-icon> Edit
-      </a>
-    </div>
-    <mat-expansion-panel expanded>
-      <mat-expansion-panel-header class="bg-primary">
-        <mat-panel-title>
-          <span class="c-primary">Basic Information</span>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <div class="view-field">
-        <h3>Name</h3>
-        <p>{{ formData.name }}</p>
-      </div>
-      <div class="view-field">
-        <h3>Status</h3>
-        <p>{{ formData.status }}</p>
-      </div>
-      <div class="view-field">
-        <h3>Total Budget (RM)</h3>
-        <p>{{ formData.totalBudgetAmount | currency }}</p>
-      </div>
-      <div class="view-field">
-        <h3>Total Budget (RM)</h3>
-        <p>{{ formData.totalBudgetAmount | currency }}</p>
-      </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel expanded>
-      <mat-expansion-panel-header class="bg-primary">
-        <mat-panel-title>
-          Detail Information
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <div class="view-field">
-        <h3>
-          Services
-          <a mat-icon-button (click)="addItemToEvent('providerService', 'services')">
-            <mat-icon>edit</mat-icon>
-          </a>
-        </h3>
-        <p *ngIf="formData.services && formData.services.length === 0">
-          No service yet.
-        </p>
-        <ng-container *ngIf="formData.services && formData.services.length > 0">
-          <p *ngFor="let service of formData.services">
-            {{ service?.providerService?.name }} x {{ service?.quantity }}
-            {{ service?.providerService?.unit }}
-          </p>
-        </ng-container>
-      </div>
-      <div class="view-field">
-        <h3>
-          Facilities
-          <a mat-icon-button (click)="addItemToEvent('providerFacility', 'facilities')">
-            <mat-icon>edit</mat-icon>
-          </a>
-        </h3>
-        <p *ngIf="formData.facilities && formData.facilities.length === 0">
-          No facility yet.
-        </p>
-        <ng-container *ngIf="formData.facilities && formData.facilities.length > 0">
-          <p *ngFor="let facility of formData.facilities">
-            {{ facility?.providerFacility?.name }} x {{ facility?.quantity }}
-            {{ facility?.providerFacility?.unit }}
-          </p>
-        </ng-container>
-      </div>
-      <div class="view-field">
-        <h3>
-          Stock Items
-          <a mat-icon-button (click)="addItemToEvent('stockItem', 'stockItems')">
-            <mat-icon>edit</mat-icon>
-          </a>
-        </h3>
-        <p *ngIf="formData.stockItems && formData.stockItems.length === 0">
-          No stock item yet.
-        </p>
-        <ng-container *ngIf="formData.stockItems && formData.stockItems.length > 0">
-          <p *ngFor="let stockItem of formData.stockItems">
-            {{ stockItem?.stockItem?.name }} x {{ stockItem?.quantity }}
-            {{ stockItem?.stockItem?.unit }}
-          </p>
-        </ng-container>
-      </div>
-      <div class="view-field">
-        <h3>
-          Event Processes
-          <a mat-icon-button (click)="addEventProcessToEvent()">
-            <mat-icon>edit</mat-icon>
-          </a>
-        </h3>
-        <p *ngIf="formData.processes && formData.processes.length === 0">
-          No stock item yet.
-        </p>
-        <ng-container *ngIf="formData.processes && formData.processes.length > 0">
-          <p *ngFor="let process of formData.processes">{{ process?.name }}
-            ({{ process?.startFrom | date: 'dd MMMM yyyy' }} - {{ process?.endTo | date: 'dd MMMM yyyy' }})</p>
-        </ng-container>
-      </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel expanded>
-      <mat-expansion-panel-header class="bg-primary">
-        <mat-panel-title>Registration Form</mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <ng-container *ngIf="registrationForm; else elseTemplate">
-        <h3>Preview Form</h3>
+    <mat-card-header>
+        <mat-card-title>View Event</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <div class="action-group">
-          <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
-            <mat-icon>edit</mat-icon> Edit
-          </button>
-          <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
-            <mat-icon>public</mat-icon> Publish
-          </a>
+            <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
+                <mat-icon>arrow_back_ios</mat-icon> Back
+            </button>
+            <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button> <mat-icon>edit</mat-icon> Edit </a>
         </div>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header class="bg-primary">
+                <mat-panel-title>
+                    <span class="c-primary">Basic Information</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-        <h4>Basic Information</h4>
-        <app-standard-form-field [field]="{ name: 'name', type: 'string' }" *ngIf="registrationForm.settings.name">
-        </app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" *ngIf="registrationForm.settings.gender">
-        </app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"
-          *ngIf="registrationForm.settings.identityNumber"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'email', type: 'string' }" *ngIf="registrationForm.settings.email">
-        </app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"
-          *ngIf="registrationForm.settings.phoneNumber"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"
-          *ngIf="registrationForm.settings.organization"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"
-          *ngIf="registrationForm.settings.address"></app-standard-form-field>
+            <div class="view-field">
+                <h3>Name</h3>
+                <p>{{ formData.name }}</p>
+            </div>
+            <div class="view-field">
+                <h3>Status</h3>
+                <p>{{ formData.status }}</p>
+            </div>
+            <div class="view-field">
+                <h3>Total Budget (RM)</h3>
+                <p>{{ formData.totalBudgetAmount | currency }}</p>
+            </div>
+            <div class="view-field">
+                <h3>Total Budget (RM)</h3>
+                <p>{{ formData.totalBudgetAmount | currency }}</p>
+            </div>
+        </mat-expansion-panel>
 
-        <div *ngIf="registrationForm.fields.length > 0">
-          <h4>Detail Information</h4>
-          <div *ngFor="let field of registrationForm?.fields">
-            <app-standard-form-field [field]="field"></app-standard-form-field>
-          </div>
-        </div>
-      </ng-container>
-      <ng-template #elseTemplate>
-        Registration Form no ready yet, <a [routerLink]="['/registration-form/add']">configure now</a>.
-      </ng-template>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header class="bg-primary">
+                <mat-panel-title>
+                    Event Resources
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-    </mat-expansion-panel>
+            <div class="view-field">
+                <h3>
+                    Services
+                    <a mat-icon-button (click)="addItemToEvent('providerService', 'services')">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </h3>
+                <p *ngIf="formData.services && formData.services.length === 0">
+                    No service yet.
+                </p>
+                <ng-container *ngIf="formData.services && formData.services.length > 0">
+                    <p *ngFor="let service of formData.services">
+                        {{ service?.providerService?.name }} x {{ service?.quantity }}
+                        {{ service?.providerService?.unit }}
+                    </p>
+                </ng-container>
+            </div>
+            <div class="view-field">
+                <h3>
+                    Facilities
+                    <a mat-icon-button (click)="addItemToEvent('providerFacility', 'facilities')">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </h3>
+                <p *ngIf="formData.facilities && formData.facilities.length === 0">
+                    No facility yet.
+                </p>
+                <ng-container *ngIf="formData.facilities && formData.facilities.length > 0">
+                    <p *ngFor="let facility of formData.facilities">
+                        {{ facility?.providerFacility?.name }} x {{ facility?.quantity }}
+                        {{ facility?.providerFacility?.unit }}
+                    </p>
+                </ng-container>
+            </div>
+            <div class="view-field">
+                <h3>
+                    Stock Items
+                    <a mat-icon-button (click)="addItemToEvent('stockItem', 'stockItems')">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </h3>
+                <p *ngIf="formData.stockItems && formData.stockItems.length === 0">
+                    No stock item yet.
+                </p>
+                <ng-container *ngIf="formData.stockItems && formData.stockItems.length > 0">
+                    <p *ngFor="let stockItem of formData.stockItems">
+                        {{ stockItem?.stockItem?.name }} x {{ stockItem?.quantity }}
+                        {{ stockItem?.stockItem?.unit }}
+                    </p>
+                </ng-container>
+            </div>
+        </mat-expansion-panel>
 
-    <mat-expansion-panel expanded>
-      <mat-expansion-panel-header class="bg-primary">
-        <mat-panel-title>
-          Attendee Information
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header class="bg-primary">
+                <mat-panel-title>Event Processes</mat-panel-title>
+            </mat-expansion-panel-header>
 
-      <app-standard-list title="Attendee" domainName="attendee" [columns]="columns" [filterList]="filterList" [actions]="actions"
-        [includes]="['attendeeGroup', 'event']" [queryModel]="queryModel"></app-standard-list>
+            <div class="view-field">
+                <h3>
+                    Event Processes
+                    <a mat-icon-button (click)="addEventProcessToEvent()">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </h3>
+                <p *ngIf="formData.processes && formData.processes.length === 0">
+                    No stock item yet.
+                </p>
+                <ng-container *ngIf="formData.processes && formData.processes.length > 0">
+                    <p *ngFor="let process of formData.processes">
+                        {{ process?.name }} ({{ process?.startFromDate | date: 'dd MMMM yyyy' }} {{ process?.startFromTime | date: 'hh:mm a' }} - {{ process?.endToDate | date: 'dd MMMM yyyy' }} {{ process?.endToTime | date: 'hh:mm a' }})
+                    </p>
+                </ng-container>
+            </div>
+        </mat-expansion-panel>
 
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header class="bg-primary">
+                <mat-panel-title>Registration Form</mat-panel-title>
+            </mat-expansion-panel-header>
 
-    </mat-expansion-panel>
-  </mat-card-content>
+            <ng-container *ngIf="registrationForm; else elseTemplate">
+                <h3>Preview Form</h3>
+                <div class="action-group">
+                    <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
+                        <mat-icon>edit</mat-icon> Edit
+                    </button>
+                    <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
+                        <mat-icon>public</mat-icon> Publish
+                    </a>
+                </div>
+
+                <h4>Basic Information</h4>
+                <app-standard-form-field [field]="{ name: 'name', type: 'string' }" *ngIf="registrationForm.settings.name">
+                </app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" *ngIf="registrationForm.settings.gender">
+                </app-standard-form-field>
+                <app-standard-form-field
+                    [field]="{ name: 'identityNumber', type: 'string' }"
+                    *ngIf="registrationForm.settings.identityNumber"
+                ></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'email', type: 'string' }" *ngIf="registrationForm.settings.email">
+                </app-standard-form-field>
+                <app-standard-form-field
+                    [field]="{ name: 'phoneNumber', type: 'string' }"
+                    *ngIf="registrationForm.settings.phoneNumber"
+                ></app-standard-form-field>
+                <app-standard-form-field
+                    [field]="{ name: 'organization', type: 'string' }"
+                    *ngIf="registrationForm.settings.organization"
+                ></app-standard-form-field>
+                <app-standard-form-field
+                    [field]="{ name: 'address', type: 'textarea' }"
+                    *ngIf="registrationForm.settings.address"
+                ></app-standard-form-field>
+
+                <div *ngIf="registrationForm.fields.length > 0">
+                    <h4>Detail Information</h4>
+                    <div *ngFor="let field of registrationForm?.fields">
+                        <app-standard-form-field [field]="field"></app-standard-form-field>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+                Registration Form no ready yet, <a [routerLink]="['/registration-form/add']">configure now</a>.
+            </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header class="bg-primary">
+                <mat-panel-title>
+                    Attendee Information
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-standard-list
+                title="Attendee"
+                domainName="attendee"
+                [columns]="columns"
+                [filterList]="filterList"
+                [actions]="actions"
+                [includes]="['attendeeGroup', 'event']"
+                [queryModel]="queryModel"
+            ></app-standard-list>
+        </mat-expansion-panel>
+    </mat-card-content>
 </mat-card>

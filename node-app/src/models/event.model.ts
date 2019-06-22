@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
+import { Timestamp } from 'bson';
 
 const eventServiceSchema = new mongoose.Schema({
     providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderService' },
@@ -30,8 +31,10 @@ const eventProcessSchema = new mongoose.Schema({
     name: String,
     status: { type: String, enum: ['Open', 'Paid', 'Cancelled'], default: 'Open' },
     type: { type: String, enum: ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'], default: 'Initial' },
-    startFrom: { type: Date, required: true },
-    endTo: { type: Date, required: true },
+    startFromDate: { type: Date, required: true },
+    startFromTime: { type: Date, required: true },
+    endToDate: { type: Date, required: true },
+    endToTime: { type: Date, required: true },
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
     services: { type: [eventServiceSchema], default: [] },
     facilities: { type: [eventFacilitySchema], default: [] },
