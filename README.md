@@ -3,6 +3,9 @@
 # TS-NODE App
 > It's a application with MEAN Stack that means MongoDB, ExpressJs, Angular, and NodeJs. In case, it just a demostration.
 
+# Export Database from MongoDB Atlas
+> mongodump --host node-app-shard-0/node-app-shard-00-00-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-01-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-02-yfxfw.gcp.mongodb.net:27017 --ssl --username <username> --password <password> --authenticationDatabase admin --db <database> -o <output_path>
+
 # WebApp Architecture & System Design
 > I decided use split the Web Application to server & client as 2 different server that means it's might locate in a server (i.e. Cloud Server or your local computer) but it's start with different service. For example, in expertation I'll deploy the application to AWS Amazon EC2 Web Server with Window Server OS, so I decided use IIS as my service to start and running the client side server, for backend side it will use the nodejs pattern to run, but in design just imagine the scenario but not the reality case i decided to using for.
 
