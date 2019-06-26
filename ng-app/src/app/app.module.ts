@@ -155,6 +155,7 @@ import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.co
     RegistrationViewComponent,
     RegisterEventComponent,
     AttendeeViewComponent,
+    TitleDisplayPipe,
   ],
   imports: [
     BrowserModule,
@@ -200,4 +201,4 @@ import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.co
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
