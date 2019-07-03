@@ -13,7 +13,6 @@ export class PageLoaderService {
     toggle(value?: boolean) {
         this.isLoad = value !== undefined ? value : !this.isLoad;
         this.loaderListener.next(this.isLoad);
-        console.log(value);
     }
 
     getLoaderListener() {
