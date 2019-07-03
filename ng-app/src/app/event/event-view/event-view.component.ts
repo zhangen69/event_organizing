@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
 import { HttpClient } from '@angular/common/http';
 import { IQueryModel } from 'src/app/interfaces/query-model';
+import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 
 @Component({
   selector: 'app-event-view',
@@ -50,7 +51,8 @@ export class EventViewComponent implements OnInit {
     public functions: StandardFunctionsService,
     private http: HttpClient,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private pageLoaderService: PageLoaderService,
   ) {
     this.service.init('event');
     this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
@@ -64,9 +66,11 @@ export class EventViewComponent implements OnInit {
   refresh() {
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
+        this.pageLoaderService.toggle(true);
         this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
           this.fetchRegistrationForm(this.formData._id);
+          this.pageLoaderService.toggle(false);
         });
 
         this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });

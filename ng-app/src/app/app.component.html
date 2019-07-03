@@ -1,5 +1,5 @@
 <app-header (navToggle)="snav.toggle($event)"></app-header>
-
+<app-page-loader></app-page-loader>
 <div class="main-content">
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
     [ngClass]="{'is-auth': isAuth, 'is-opened': sidenavOpened}">

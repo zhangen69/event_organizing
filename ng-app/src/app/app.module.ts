@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
@@ -92,6 +93,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
+import { PageLoaderComponent } from './templates/page-loader/page-loader.component';
 
 @NgModule({
   declarations: [
@@ -156,6 +158,7 @@ import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.co
     RegisterEventComponent,
     AttendeeViewComponent,
     TitleDisplayPipe,
+    PageLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -191,6 +194,7 @@ import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.co
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule,
   ],
   entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
   providers: [

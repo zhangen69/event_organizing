@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StandardService } from 'src/app/standard/standard.service';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
+import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 
 @Component({
   selector: 'app-standard-form',
@@ -27,7 +28,8 @@ export class StandardFormComponent implements OnInit {
     private service: StandardService,
     private router: Router,
     public toastr: ToastrService,
-    private location: Location
+    private location: Location,
+    private pageLoaderService: PageLoaderService,
   ) { }
 
   ngOnInit() {
@@ -35,9 +37,11 @@ export class StandardFormComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
         this.mode = 'update';
+        this.pageLoaderService.toggle(true);
         this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
           this.initialDefaultValues();
+          this.pageLoaderService.toggle(false);
         });
       }
     });
