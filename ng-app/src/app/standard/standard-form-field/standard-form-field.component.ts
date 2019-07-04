@@ -124,21 +124,17 @@ export class StandardFormFieldComponent implements OnInit {
                 break;
             case 'time':
                 let date = new Date();
-                let time;
 
                 if (this.formData[this.field.name]) {
                     date = new Date(this.formData[this.field.name]);
                 }
 
-                if (date.getMinutes() > 9) {
-                    time = date.getMinutes();
-                } else {
-                    time = date.getMinutes().toString() + '0';
-                }
+                const hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours().toString();
+                const minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes().toString();
 
-                this.selectedTime = `${date.getHours()}:${time}`;
+                this.selectedTime = `${hours}:${minutes}`;
 
-                console.log('time', this.selectedTime);
+                // console.log('time', this.selectedTime);
 
                 break;
             case 'boolean':
