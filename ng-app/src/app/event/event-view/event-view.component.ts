@@ -8,6 +8,7 @@ import { IStandardFormField } from 'src/app/standard/standard-form-field.interfa
 import { HttpClient } from '@angular/common/http';
 import { IQueryModel } from 'src/app/interfaces/query-model';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-event-view',
@@ -19,7 +20,14 @@ export class EventViewComponent implements OnInit {
     registrationForm: any;
     formService: StandardService;
 
-    includes: string[] = ['services.providerService', 'facilities.providerFacility', 'stockItems.stockItem', 'processes.provider', 'processes.providerService', 'processes.providerFacility'];
+    includes: string[] = [
+        'services.providerService',
+        'facilities.providerFacility',
+        'stockItems.stockItem',
+        'processes.provider',
+        'processes.providerService',
+        'processes.providerFacility'
+    ];
 
     actions = [
         {
@@ -147,6 +155,22 @@ export class EventViewComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             this.refresh();
         });
+    }
+
+    getDuration(process) {
+        let from;
+        let to;
+        const durationMonths = moment(process.endToDate).diff(moment(process.startFromDate), 'months');
+
+        if (durationMonths > 0) {
+            from = moment(process.startFromDate).format('DD MMM');
+            to = moment(process.endToDate).format('DD MMM YY');
+        } else {
+            from = moment(process.startFromDate).format('DD');
+            to = moment(process.endToDate).format('DD MMM YY');
+        }
+
+        return `${from}-${to}`;
     }
 
     private reformItem({ name, displayName, childName, fieldName }) {

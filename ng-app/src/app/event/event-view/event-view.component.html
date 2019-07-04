@@ -110,11 +110,11 @@
                     No stock item yet.
                 </p>
                 <ng-container *ngIf="formData.processes && formData.processes.length > 0">
-                    <p *ngFor="let process of formData.processes">
-                        {{ process?.name }} ({{ process?.startFromDate | date: 'dd MMMM yyyy' }}
-                        {{ process?.startFromTime | date: 'hh:mm a' }} - {{ process?.endToDate | date: 'dd MMMM yyyy' }}
-                        {{ process?.endToTime | date: 'hh:mm a' }})
-                    </p>
+                    <div class="process-items" *ngFor="let process of formData.processes">
+                      <p class="mat-headline">{{ getDuration(process) }}</p>
+                      <p class="mat-title">{{ process?.name }}: {{ process.type === 'Service' ? process.providerService.name : process.providerFacility.name }} by {{ process.provider.name }}</p>
+                      <p class="mat-body">{{ process.remarks }}</p>
+                    </div>
                 </ng-container>
             </div>
         </mat-expansion-panel>
