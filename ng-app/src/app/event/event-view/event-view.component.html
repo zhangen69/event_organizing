@@ -111,7 +111,7 @@
                 </p>
                 <ng-container *ngIf="formData.processes && formData.processes.length > 0">
                     <div class="process-items" *ngFor="let process of formData.processes">
-                      <p class="mat-headline">{{ getDuration(process) }}</p>
+                      <p class="mat-headline">{{ getDuration(process) }} <i>{{ process.processType }}</i></p>
                       <p class="mat-title">{{ process?.name }}: {{ process.type === 'Service' ? process.providerService.name : process.providerFacility.name }} by {{ process.provider.name }}</p>
                       <p class="mat-body">{{ process.remarks }}</p>
                     </div>

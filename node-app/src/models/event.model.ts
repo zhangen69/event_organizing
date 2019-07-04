@@ -38,11 +38,12 @@ const eventProcessSchema = new mongoose.Schema({
     enum: ['Open', 'Paid', 'Cancelled'],
     default: 'Open',
   },
-  type: {
+  processType: {
     type: String,
     enum: ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'],
     default: 'Initial',
   },
+  type: String,
   startFromDate: { type: Date, required: true },
   startFromTime: { type: Date, required: true },
   endToDate: { type: Date, required: true },

@@ -10,6 +10,14 @@ import { IQueryModel } from 'src/app/interfaces/query-model';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import * as moment from 'moment';
 
+enum EventProcessType {
+    Initial,
+    Preparation,
+    Schedule,
+    Closure,
+    Other
+}
+
 @Component({
     selector: 'app-event-view',
     templateUrl: './event-view.component.html',
@@ -129,6 +137,7 @@ export class EventViewComponent implements OnInit {
                 childName: 'Process Item',
                 fields: [
                     { name: 'name', type: 'string', required: true },
+                    { name: 'processType', type: 'enum', enum: EventProcessType, default: EventProcessType[EventProcessType.Schedule] },
                     {
                         name: 'type',
                         type: 'enum',
@@ -159,15 +168,25 @@ export class EventViewComponent implements OnInit {
 
     getDuration(process) {
         let from;
+        let fromTime;
         let to;
+        let toTime;
         const durationMonths = moment(process.endToDate).diff(moment(process.startFromDate), 'months');
 
         if (durationMonths > 0) {
             from = moment(process.startFromDate).format('DD MMM');
+            fromTime = moment(process.startFromTime).format('HH:mm A');
             to = moment(process.endToDate).format('DD MMM YY');
+            toTime = moment(process.endToTime).format('HH:mm A');
         } else {
             from = moment(process.startFromDate).format('DD');
+            fromTime = moment(process.startFromTime).format('HH:mm A');
             to = moment(process.endToDate).format('DD MMM YY');
+            toTime = moment(process.endToTime).format('HH:mm A');
+        }
+
+        if (process.processType === EventProcessType[EventProcessType.Schedule]) {
+            return `${from}-${to} [${fromTime} - ${toTime}]`;
         }
 
         return `${from}-${to}`;
