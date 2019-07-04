@@ -116,9 +116,11 @@ export class StandardFormComponent implements OnInit {
         }
       });
 
+      this.pageLoaderService.toggle(true);
       this.service.submit(this.formData).subscribe((res: any) => {
         this.toastr.success(res.message);
         this.onCancel(`/${this.domainName}/list`);
+        this.pageLoaderService.toggle(false);
       });
     }
   }
