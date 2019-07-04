@@ -111,7 +111,9 @@
                 </p>
                 <ng-container *ngIf="formData.processes && formData.processes.length > 0">
                     <p *ngFor="let process of formData.processes">
-                        {{ process?.name }} ({{ process?.startFromDate | date: 'dd MMMM yyyy' }} {{ process?.startFromTime | date: 'hh:mm a' }} - {{ process?.endToDate | date: 'dd MMMM yyyy' }} {{ process?.endToTime | date: 'hh:mm a' }})
+                        {{ process?.name }} ({{ process?.startFromDate | date: 'dd MMMM yyyy' }}
+                        {{ process?.startFromTime | date: 'hh:mm a' }} - {{ process?.endToDate | date: 'dd MMMM yyyy' }}
+                        {{ process?.endToTime | date: 'hh:mm a' }})
                     </p>
                 </ng-container>
             </div>

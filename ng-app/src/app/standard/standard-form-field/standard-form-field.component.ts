@@ -223,4 +223,12 @@ export class StandardFormFieldComponent implements OnInit {
             console.log('formData > ' + this.field.displayName, date);
         }
     }
+
+    isShow(field): boolean {
+        if (!field.isShow) {
+            return true;
+        }
+
+        return field.isShow(this.formData);
+    }
 }

@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="field.type">
+<ng-container [ngSwitch]="field.type" *ngIf="isShow(field)">
     <mat-form-field *ngSwitchCase="'string'">
         <input
             matInput
@@ -49,17 +49,17 @@
     </div>
 
     <div *ngSwitchCase="'time'">
-      <mat-form-field>
-        <input
-            matInput
-            [(ngModel)]="selectedTime"
-            [placeholder]="field.displayName"
-            (change)="onUpdateTimeData()"
-            [required]="field.required"
-            type="time"
-            class="time"
-        />
-    </mat-form-field>
+        <mat-form-field>
+            <input
+                matInput
+                [(ngModel)]="selectedTime"
+                [placeholder]="field.displayName"
+                (change)="onUpdateTimeData()"
+                [required]="field.required"
+                type="time"
+                class="time"
+            />
+        </mat-form-field>
     </div>
 
     <mat-form-field *ngSwitchCase="'enum'">

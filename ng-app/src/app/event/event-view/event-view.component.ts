@@ -121,6 +121,12 @@ export class EventViewComponent implements OnInit {
                 childName: 'Process Item',
                 fields: [
                     { name: 'name', type: 'string', required: true },
+                    { name: 'type', type: 'enum', enumList: [
+                      { key: 'Service', value: 'Service' },
+                      { key: 'Facility', value: 'Facility' },
+                    ] },
+                    { name: 'providerService', type: 'ref', isShow: (formData) => formData.type === 'Service' },
+                    { name: 'providerFacility', type: 'ref', isShow: (formData) => formData.type === 'Facility' },
                     { name: 'startFromDate', type: 'date', required: true },
                     { name: 'startFromTime', type: 'time', required: true },
                     { name: 'endToDate', type: 'date', required: true },
