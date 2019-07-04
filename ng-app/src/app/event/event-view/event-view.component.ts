@@ -19,7 +19,7 @@ export class EventViewComponent implements OnInit {
     registrationForm: any;
     formService: StandardService;
 
-    includes: string[] = ['services.providerService', 'facilities.providerFacility', 'stockItems.stockItem'];
+    includes: string[] = ['services.providerService', 'facilities.providerFacility', 'stockItems.stockItem', 'processes.provider', 'processes.providerService', 'processes.providerFacility'];
 
     actions = [
         {
@@ -121,12 +121,14 @@ export class EventViewComponent implements OnInit {
                 childName: 'Process Item',
                 fields: [
                     { name: 'name', type: 'string', required: true },
-                    { name: 'type', type: 'enum', enumList: [
-                      { key: 'Service', value: 'Service' },
-                      { key: 'Facility', value: 'Facility' },
-                    ] },
-                    { name: 'providerService', type: 'ref', isShow: (formData) => formData.type === 'Service' },
-                    { name: 'providerFacility', type: 'ref', isShow: (formData) => formData.type === 'Facility' },
+                    {
+                        name: 'type',
+                        type: 'enum',
+                        enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }]
+                    },
+                    { name: 'provider', type: 'ref' },
+                    { name: 'providerService', type: 'ref', isShow: (formData: any) => formData.type === 'Service' },
+                    { name: 'providerFacility', type: 'ref', isShow: (formData: any) => formData.type === 'Facility' },
                     { name: 'startFromDate', type: 'date', required: true },
                     { name: 'startFromTime', type: 'time', required: true },
                     { name: 'endToDate', type: 'date', required: true },
