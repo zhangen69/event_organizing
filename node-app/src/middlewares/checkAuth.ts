@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
 
+const getMiddleware = (bypass) => {
+    return bypass ? (req, res, next) => next() : checkAuth;
+};
+
 const checkAuth = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -11,4 +15,4 @@ const checkAuth = (req, res, next) => {
     }
 };
 
-export { checkAuth };
+export { checkAuth, getMiddleware };

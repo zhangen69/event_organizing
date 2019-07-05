@@ -35,4 +35,8 @@ router.post(`/${service}/sendEmail`, (req, res, next) => {
     });
 });
 
+router.post(`${service}/register`, (req, res, next) => {
+    console.log('event register is processing...');
+});
+
 export default router;
