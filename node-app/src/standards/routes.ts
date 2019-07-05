@@ -42,7 +42,11 @@ export default class StandardRoutes {
 
     private create = (router, bypass = false) => {
         router.post(`/${this.modelName}`, getMiddleware(bypass), (req, res) => {
-            this.resHandling(res, this.modelService.create(req.body, req['auth']));
+            let auth = {};
+            if (req.hasOwnProperty('auth')) {
+                auth = req['auth'];
+            }
+            this.resHandling(res, this.modelService.create(req.body, auth));
         });
     }
 
