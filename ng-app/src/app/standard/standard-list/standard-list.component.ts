@@ -10,6 +10,7 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 import { Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-standard-list',
@@ -48,7 +49,8 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         private router: Router,
         private pageLoaderService: PageLoaderService,
         private titleDisplayPipe: TitleDisplayPipe,
-        private currencyPipe: CurrencyPipe
+        private currencyPipe: CurrencyPipe,
+        private toastr: ToastrService
     ) {
         this.isAuth = this.authService.getIsAuth();
         this.authService.getAuthStatusListener().subscribe(isAuth => (this.isAuth = isAuth));
@@ -98,11 +100,17 @@ export class StandardListComponent implements OnInit, AfterViewInit {
 
     fetchAll() {
         this.pageLoaderService.toggle(true);
-        return this.service.fetchAll(this.queryModel).subscribe((res: any) => {
-            this.dataSource = new MatTableDataSource<any>(res.data);
-            this.totalItems = res.totalItems;
-            this.pageLoaderService.toggle(false);
-        });
+        return this.service.fetchAll(this.queryModel).subscribe(
+            (res: any) => {
+                this.dataSource = new MatTableDataSource<any>(res.data);
+                this.totalItems = res.totalItems;
+                this.pageLoaderService.toggle(false);
+            },
+            (res: any) => {
+                this.pageLoaderService.toggle(false);
+                this.toastr.error(res.error.message);
+            }
+        );
     }
 
     delete(item) {

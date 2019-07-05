@@ -42,6 +42,9 @@ export class StandardFormComponent implements OnInit {
                     this.formData = res.data;
                     this.initialDefaultValues();
                     this.pageLoaderService.toggle(false);
+                }, (res: any) => {
+                  this.pageLoaderService.toggle(false);
+                  this.toastr.error(res.error.message);
                 });
             }
         });
@@ -123,6 +126,9 @@ export class StandardFormComponent implements OnInit {
                 this.toastr.success(res.message);
                 this.onCancel(`/${this.domainName}/list`);
                 this.pageLoaderService.toggle(false);
+            }, (res: any) => {
+              this.pageLoaderService.toggle(false);
+              this.toastr.error(res.error.message);
             });
         }
     }

@@ -91,6 +91,9 @@ export class EventViewComponent implements OnInit {
 
                 this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });
             }
+        }, (res: any) => {
+          this.pageLoaderService.toggle(false);
+          this.toastr.error(res.error.message);
         });
     }
 
