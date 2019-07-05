@@ -8,4 +8,16 @@ const cloudinary = {
     api_secret: '6JeSp8D94uXUfMx9a-vH-KyiQ6I',
 };
 
-export default { cloudinary, mongoose };
+const mailAuth = {
+    user: 'noreply.evtorgms@gmail.com',
+    pass: 'evtorgms123',
+};
+
+const mail = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: mailAuth,
+};
+
+export default { cloudinary, mongoose, mail, mailAuth };

@@ -1,9 +1,20 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import nodeMailer from 'nodemailer';
 import { v4 as uuid } from 'uuid';
+import appConfigs from '../configs/app.configs';
 import { mapColletionToUserDTO, mapDocToUserDTO } from '../DTOs/user.dto';
 import IMongooseQueryModel from '../interfaces/mongoose/mongooseQueryModel.interface';
-import { IChangePasswordRequest, IEmailConfirmRequest, IForgotPasswordRequest, IResetPasswordRequest, IUser, IUserLogin, IUserRegister, IVerifyTokenRequest } from '../interfaces/user.interface';
+import {
+    IChangePasswordRequest,
+    IEmailConfirmRequest,
+    IForgotPasswordRequest,
+    IResetPasswordRequest,
+    IUser,
+    IUserLogin,
+    IUserRegister,
+    IVerifyTokenRequest,
+} from '../interfaces/user.interface';
 import QueryModel from '../models/query.model';
 import User from '../models/user.model';
 
@@ -50,7 +61,7 @@ class Controller {
         const { succeeded, status, message } = this.userLockHandler(user);
 
         if (!succeeded) {
-            return ({ status, message });
+            return { status, message };
         }
 
         const result = {
@@ -64,7 +75,7 @@ class Controller {
             await this.updateUser(user, { accessFailedCount: 0 });
         }
 
-        return (result);
+        return result;
     }
 
     async changePassword(model: IChangePasswordRequest, auth) {
@@ -101,7 +112,42 @@ class Controller {
 
         const set = { isResetPasswordLocked: true, resetPasswordToken: uuid() };
         const url = `http://localhost:4200/auth/resetPassword/${set.resetPasswordToken}`;
-        return await this.updateUser(user, set, `sent reset password email to ${model.email}, account will temperarily locked until user changed password.`);
+
+        const result = await this.sendEmail(user, url);
+
+        console.log('result', result);
+
+        return await this.updateUser(
+            user,
+            set,
+            `sent reset password email to ${model.email}, account will temperarily locked until user changed password.`,
+        );
+    }
+
+    async sendEmail(user, url) {
+        const transporter = nodeMailer.createTransport(appConfigs.mail);
+
+        const mailTemplate = `
+            <h1>Reset Password</h1>
+            <p>Dear ${user.displayName},</p>
+            <h3><a href="${url}">Click here</a> to reset your password</h3>
+        `;
+        const mailOptions = {
+            from: `EvtOrgMs <${appConfigs.mailAuth.user}>`,
+            to: user.email,
+            subject: 'Reset Password',
+            html: mailTemplate,
+        };
+
+        await transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message %s sent: %s', info.messageId, info.response);
+            // res.render('index');
+        });
+
+        return { message: 'successfully sent', suceeded: true };
     }
 
     async verifyResetPasswordToken(model: IVerifyTokenRequest) {
@@ -159,7 +205,11 @@ class Controller {
         }
 
         if (user.isResetPasswordLocked) {
-            return { status: 500, message: 'failed to unlock account, because it is locked by reset password. either user changed password or retry send a new reset password email to unlock the account.' };
+            return {
+                status: 500,
+                message:
+                    'failed to unlock account, because it is locked by reset password. either user changed password or retry send a new reset password email to unlock the account.',
+            };
         }
 
         return await this.updateUser(user, set, `user locked successfully!`);
@@ -184,7 +234,11 @@ class Controller {
     private findUsers(conditions, options?) {
         return new Promise<any>((resolve, reject) => {
             const sortQuery = (options.sortDirection === 'ASC' ? '' : '-') + options.sort;
-            User.find(conditions).sort(sortQuery).skip(options.skip).limit(options.limit).exec((err, docs) => this.resHandler({ resolve, reject }, { err, res: docs }));
+            User.find(conditions)
+                .sort(sortQuery)
+                .skip(options.skip)
+                .limit(options.limit)
+                .exec((err, docs) => this.resHandler({ resolve, reject }, { err, res: docs }));
         });
     }
 
@@ -229,7 +283,7 @@ class Controller {
         });
     }
 
-    private userLockHandler(user): { succeeded: boolean, status: number, message: string } {
+    private userLockHandler(user): { succeeded: boolean; status: number; message: string } {
         const result: any = {
             succeeded: true,
             status: 200,
@@ -260,7 +314,7 @@ class Controller {
                 model.audit.updatedBy = auth.user._id;
             }
 
-            Object.keys(model.audit).forEach((key) => updateModel.$set[`audit.${key}`] = model.audit[key]);
+            Object.keys(model.audit).forEach((key) => (updateModel.$set[`audit.${key}`] = model.audit[key]));
             delete updateModel.$set.audit;
             delete updateModel.$set['audit.updatedDate'];
             updateModel.$currentDate = { 'audit.updatedDate': { $type: 'date' } };

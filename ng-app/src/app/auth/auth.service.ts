@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PageLoaderService } from '../templates/page-loader/page-loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
   private authStatusListerner = new Subject<boolean>();
   private apiUrl = environment.apiUrl + '/service/user';
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService, private pageLoaderService: PageLoaderService) { }
 
   register(formData) {
     this.http.post(this.apiUrl + '/register', formData).subscribe((res: any) => {
@@ -27,6 +28,7 @@ export class AuthService {
   }
 
   login(formData) {
+    this.pageLoaderService.toggle(true);
     this.http.post(this.apiUrl + '/login', formData).subscribe((res: any) => {
       this.token = res.token;
       this.isAuth = true;
@@ -39,6 +41,7 @@ export class AuthService {
         this.saveAuthData(this.token, expiration);
         this.toastr.success(res.message);
         this.router.navigate(['/']);
+        this.pageLoaderService.toggle(false);
       }
     }, (res: any) => {
       this.toastr.error(res.error.message);

@@ -1,5 +1,6 @@
 import express from 'express';
 import nodeMailer from 'nodemailer';
+import appConfigs from '../configs/app.configs';
 import Controller from '../standards/controller';
 import StandardRoutes from '../standards/routes';
 
@@ -9,16 +10,7 @@ const router = routes.router(express.Router());
 
 router.post(`/${service}/sendEmail`, (req, res, next) => {
     console.log('sending email...');
-    const auth = {
-        user: 'noreply.evtorgms@gmail.com',
-        pass: 'evtorgms123',
-    };
-    const transporter = nodeMailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth,
-    });
+    const transporter = nodeMailer.createTransport(appConfigs.mail);
     const mailTemplate = `
         <h1>Congradulations!</h1>
         <p>Dear ${req.body.name},</p>
@@ -27,7 +19,7 @@ router.post(`/${service}/sendEmail`, (req, res, next) => {
         <p>We are looking foward your attend, thank you.</p>
     `;
     const mailOptions = {
-        from: `EvtOrgMs <${auth.user}>`,
+        from: `EvtOrgMs <${appConfigs.mailAuth.user}>`,
         to: req.body.email,
         subject: `Event Register Confirmation: ${req.body.eventName}`,
         html: mailTemplate,
