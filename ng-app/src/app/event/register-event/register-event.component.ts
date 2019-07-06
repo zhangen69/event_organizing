@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { StandardService } from 'src/app/standard/standard.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 
 @Component({
     selector: 'app-register-event',
@@ -23,7 +24,8 @@ export class RegisterEventComponent implements OnInit {
         public http: HttpClient,
         public dialog: MatDialog,
         public router: Router,
-        public toastr: ToastrService
+        public toastr: ToastrService,
+        private pageLoaderService: PageLoaderService
     ) {
         this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.attendeeService = new StandardService(this.http, this.dialog, this.router, this.toastr);
@@ -50,9 +52,9 @@ export class RegisterEventComponent implements OnInit {
             attendeeData[key] = this.attendeeData[key];
         });
 
-        const url = this.attendeeService.apiUrl + '/register';
-
-        this.attendeeService.submit(attendeeData, url).subscribe((res: any) => {
+        this.pageLoaderService.toggle(true);
+        this.attendeeService.submit(attendeeData, this.attendeeService.apiUrl + '/register').subscribe((res: any) => {
+          this.pageLoaderService.toggle(false);
             this.toastr.success(res.message);
             this.mode = 'submitted';
         });

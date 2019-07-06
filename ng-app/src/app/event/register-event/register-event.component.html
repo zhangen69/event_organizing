@@ -11,13 +11,13 @@
           <mat-panel-title><h4>Basic Information</h4></mat-panel-title>
         </mat-expansion-panel-header>
 
-        <app-standard-form-field [field]="{ name: 'name', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.name"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.gender"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.identityNumber"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'email', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.email"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.phoneNumber"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.organization"></app-standard-form-field>
-        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }" [(formData)]="attendeeData" *ngIf="registrationForm.settings.address"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'name', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.name"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.gender"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.identityNumber"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'email', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.email"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.phoneNumber"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'organization', type: 'string' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.organization"></app-standard-form-field>
+        <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }" [(formData)]="attendeeData" *ngIf="registrationForm?.settings.address"></app-standard-form-field>
       </mat-expansion-panel>
 
       <mat-expansion-panel expanded *ngIf="registrationForm?.fields.length > 0">
@@ -37,7 +37,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" form="form">
+    <button mat-raised-button color="primary" type="submit" form="form" *ngIf="mode === 'new'">
       <mat-icon>done</mat-icon> Register Now
     </button>
   </mat-card-actions>

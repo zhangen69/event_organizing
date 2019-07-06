@@ -65,11 +65,7 @@ export class StandardService {
             mode = 'put';
         }
 
-        if (url) {
-            this.apiUrl = url;
-        }
-
-        return this.http[mode](this.apiUrl, formData);
+        return this.http[mode](url || this.apiUrl, formData);
     }
 
     fetch(id, formData = null, includes = []) {

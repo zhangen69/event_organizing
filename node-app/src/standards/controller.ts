@@ -16,7 +16,7 @@ export default class StandardController {
 
     // CRUD functions - create, fetch, fetchAll, update, delete
 
-    public create(model, auth) {
+    public create(model, auth: any = {}) {
         if (auth.isAuth) {
             model.audit = { updatedBy: auth.user._id, createdBy: auth.user._id };
         }
@@ -27,21 +27,24 @@ export default class StandardController {
         // });
         const newModel = new this.model(model);
         return new Promise((resolve, reject) => {
-            newModel.save().then((data) => {
-                const result = {
-                    status: 201,
-                    message: `${this.modelName} created successfully!`,
-                    data,
-                };
-                resolve(result);
-            }).catch((error) => {
-                const result = {
-                    status: 500,
-                    message: `${this.modelName} failed to create!`,
-                    error: error.toString(),
-                };
-                reject(result);
-            });
+            newModel
+                .save()
+                .then((data) => {
+                    const result = {
+                        status: 201,
+                        message: `${this.modelName} created successfully!`,
+                        data,
+                    };
+                    resolve(result);
+                })
+                .catch((error) => {
+                    const result = {
+                        status: 500,
+                        message: `${this.modelName} failed to create!`,
+                        error: error.toString(),
+                    };
+                    reject(result);
+                });
         });
     }
 
@@ -62,7 +65,9 @@ export default class StandardController {
             }
 
             func.then((data) => {
-                if (data == null) { throw new Error('Product not found!'); }
+                if (data == null) {
+                    throw new Error('Product not found!');
+                }
 
                 const result = {
                     status: 200,
@@ -88,7 +93,11 @@ export default class StandardController {
             const sortQuery = (options.sortDirection === 0 ? '' : '-') + options.sort;
 
             this.model.countDocuments(conditions).then((count) => {
-                let func = this.model.find(conditions).sort(sortQuery).skip(options.skip).limit(options.limit);
+                let func = this.model
+                    .find(conditions)
+                    .sort(sortQuery)
+                    .skip(options.skip)
+                    .limit(options.limit);
 
                 if (queryModel.includes && queryModel.includes.length > 0) {
                     queryModel.includes.forEach((include) => {
@@ -113,48 +122,58 @@ export default class StandardController {
 
     public update(model, auth) {
         return new Promise((resolve, reject) => {
-            this.model.findById(model._id).then((doc) => {
-                if (doc == null) { throw new Error(`${this.modelName} not found!`); }
+            this.model
+                .findById(model._id)
+                .then((doc) => {
+                    if (doc == null) {
+                        throw new Error(`${this.modelName} not found!`);
+                    }
 
-                doc.updateOne(this._getUpdateConditions(model, auth)).then(() => {
-                    this.model.findById(model._id).then((data) => {
-                        const result = {
-                            status: 201,
-                            message: `${this.modelName} updated successfully!`,
-                            data,
-                        };
-                        resolve(result);
+                    doc.updateOne(this._getUpdateConditions(model, auth)).then(() => {
+                        this.model.findById(model._id).then((data) => {
+                            const result = {
+                                status: 201,
+                                message: `${this.modelName} updated successfully!`,
+                                data,
+                            };
+                            resolve(result);
+                        });
                     });
+                })
+                .catch((error) => {
+                    const result = {
+                        status: 500,
+                        message: `${this.modelName} failed to update!`,
+                        error: error.toString(),
+                    };
+                    reject(result);
                 });
-            }).catch((error) => {
-                const result = {
-                    status: 500,
-                    message: `${this.modelName} failed to update!`,
-                    error: error.toString(),
-                };
-                reject(result);
-            });
         });
     }
 
     public delete(id) {
         return new Promise((resolve, reject) => {
-            this.model.findByIdAndDelete(id).then((data) => {
-                if (data == null) { throw new Error(`${this.modelName} not found!`); }
+            this.model
+                .findByIdAndDelete(id)
+                .then((data) => {
+                    if (data == null) {
+                        throw new Error(`${this.modelName} not found!`);
+                    }
 
-                const result = {
-                    status: 200,
-                    message: `${this.modelName} deleted successfully!`,
-                };
-                resolve(result);
-            }).catch((error) => {
-                const result = {
-                    status: 500,
-                    message: `${this.modelName} failed to delete!`,
-                    error: error.toString(),
-                };
-                reject(result);
-            });
+                    const result = {
+                        status: 200,
+                        message: `${this.modelName} deleted successfully!`,
+                    };
+                    resolve(result);
+                })
+                .catch((error) => {
+                    const result = {
+                        status: 500,
+                        message: `${this.modelName} failed to delete!`,
+                        error: error.toString(),
+                    };
+                    reject(result);
+                });
         });
     }
 
@@ -166,7 +185,7 @@ export default class StandardController {
                 model.audit.updatedBy = auth.user._id;
             }
 
-            Object.keys(model.audit).forEach((key) => updateModel.$set[`audit.${key}`] = model.audit[key]);
+            Object.keys(model.audit).forEach((key) => (updateModel.$set[`audit.${key}`] = model.audit[key]));
             delete updateModel.$set.audit;
             delete updateModel.$set['audit.updatedDate'];
             updateModel.$currentDate = { 'audit.updatedDate': { $type: 'date' } };
