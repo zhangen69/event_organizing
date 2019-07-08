@@ -1,7 +1,7 @@
 # Tasks Scheduling
 
 ## General
-[x] Filter selected items while select [provider/service/facility]
+- [ ] Filter selected items while select [provider/service/facility]
 
 ## Registration & Check-in
 - [ ] Allow users copy the registration link
