@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { IQueryModel } from 'src/app/interfaces/query-model';
 import { merge } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -66,6 +65,9 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         this.columns.forEach(column => {
             if (!column.displayName) {
                 column.displayName = this.titleDisplayPipe.transform(column.name);
+            }
+            if (!column.format) {
+                column.format = 'display';
             }
         });
 
@@ -188,5 +190,10 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         }
 
         return true;
+    }
+
+    renderTemplate(column, item) {
+        const html = column.template(item);
+        return html;
     }
 }

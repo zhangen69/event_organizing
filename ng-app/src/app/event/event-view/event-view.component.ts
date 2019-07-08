@@ -49,6 +49,7 @@ export class EventViewComponent implements OnInit {
     ];
     columns = [
         { name: 'code', format: 'link', link: '/attendee/view/' },
+        { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
         { name: 'name' },
         { name: 'attendeeGroup.name', displayName: 'Group' },
         // { name: 'event.name', displayName: 'Event' },
@@ -80,21 +81,24 @@ export class EventViewComponent implements OnInit {
     }
 
     refresh() {
-        this.route.params.subscribe((params: Params) => {
-            if (params['id']) {
-                this.pageLoaderService.toggle(true);
-                this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
-                    this.formData = res.data;
-                    this.fetchRegistrationForm(this.formData._id);
-                    this.pageLoaderService.toggle(false);
-                });
+        this.route.params.subscribe(
+            (params: Params) => {
+                if (params['id']) {
+                    this.pageLoaderService.toggle(true);
+                    this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
+                        this.formData = res.data;
+                        this.fetchRegistrationForm(this.formData._id);
+                        this.pageLoaderService.toggle(false);
+                    });
 
-                this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });
+                    this.queryModel.filters.push({ type: 'event', queryType: 'match', searchText: params['id'] });
+                }
+            },
+            (res: any) => {
+                this.pageLoaderService.toggle(false);
+                this.toastr.error(res.error.message);
             }
-        }, (res: any) => {
-          this.pageLoaderService.toggle(false);
-          this.toastr.error(res.error.message);
-        });
+        );
     }
 
     fetchRegistrationForm(eventId: string) {

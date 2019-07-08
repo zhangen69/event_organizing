@@ -94,6 +94,7 @@ import { RegistrationViewComponent } from './event/registration-view/registratio
 import { RegisterEventComponent } from './event/register-event/register-event.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { PageLoaderComponent } from './templates/page-loader/page-loader.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -195,6 +196,7 @@ import { PageLoaderComponent } from './templates/page-loader/page-loader.compone
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    QRCodeModule,
   ],
   entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
   providers: [

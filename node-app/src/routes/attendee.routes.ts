@@ -66,7 +66,7 @@ router.post(`/${service}/register`, (req, res, next) => {
                     return console.log(error);
                 }
                 console.log('Message %s sent: %s', info.messageId, info.response);
-                res.status(200).json({ succeeded: true, message: 'Email sent.' });
+                res.status(200).json({ succeeded: true, message: 'Email sent.', data: attendee });
             });
         }
     });

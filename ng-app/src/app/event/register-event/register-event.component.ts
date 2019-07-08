@@ -16,6 +16,8 @@ export class RegisterEventComponent implements OnInit {
     registrationForm: any;
     formData: any = {};
     attendeeData: any = {};
+    attendee: any;
+    qrcodeLink: string;
     private formService: StandardService;
     private attendeeService: StandardService;
 
@@ -54,9 +56,15 @@ export class RegisterEventComponent implements OnInit {
 
         this.pageLoaderService.toggle(true);
         this.attendeeService.submit(attendeeData, this.attendeeService.apiUrl + '/register').subscribe((res: any) => {
-          this.pageLoaderService.toggle(false);
+            this.pageLoaderService.toggle(false);
             this.toastr.success(res.message);
             this.mode = 'submitted';
+            this.attendee = res.data;
         });
+    }
+
+    dlDataUrlBin() {
+        const y = document.querySelector('img');
+        this.qrcodeLink = y.src;
     }
 }
