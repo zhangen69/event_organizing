@@ -95,6 +95,8 @@ import { RegisterEventComponent } from './event/register-event/register-event.co
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { PageLoaderComponent } from './templates/page-loader/page-loader.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -197,6 +199,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     MatNativeDateModule,
     MatProgressSpinnerModule,
     QRCodeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
   providers: [
