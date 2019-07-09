@@ -11,4 +11,5 @@ export interface IStandardFormField {
   default?: any;
   enum?: any;
   fields?: any[];
+  add?: any;
 }

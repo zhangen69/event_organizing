@@ -19,6 +19,7 @@ interface IFieldOptions {
     refValue: string;
     refOptions?: any[];
     refChange?: IRefChange;
+    add?: any;
 }
 
 type IRefChange = (refData: any, data: any) => any;
@@ -78,6 +79,7 @@ class FieldModel implements IFieldOptions {
     refValue: string;
     refOptions?: any[];
     refChange?: IRefChange;
+    add?: any;
 }
 
 @Component({
@@ -198,7 +200,11 @@ export class StandardFormFieldComponent implements OnInit {
             array = [];
         }
 
-        array.push({});
+        if (this.field.add) {
+          this.field.add(array);
+        } else {
+          array.push({});
+        }
     }
 
     onRemoveItemFromArray(array, index) {

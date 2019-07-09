@@ -28,6 +28,7 @@ export class StandardService {
         this.apiUrl = `${environment.apiUrl}/service/${this.domain}`;
         this.queryModel = queryModel;
         this.paginator = paginator;
+        return this;
     }
 
     getRefreshListerner() {

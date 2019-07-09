@@ -1,5 +1,9 @@
+import { DialogFormComponent } from './../../templates/dialog-form/dialog-form.component';
 import { Component, OnInit } from '@angular/core';
 import { IStandardFormField } from '../../standard/standard-form-field.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-receipt-form',
@@ -7,13 +11,14 @@ import { IStandardFormField } from '../../standard/standard-form-field.interface
   styleUrls: ['./receipt-form.component.css']
 })
 export class ReceiptFormComponent implements OnInit {
+  formData: any;
   fields: IStandardFormField[] = [
     { name: 'code', type: 'string', required: true },
     { name: 'provider', type: 'ref', required: true },
     { name: 'supplierInvoice', type: 'ref' },
     { name: 'remarks', type: 'textarea' },
     {
-      name: 'lines', type: 'table', displayName: 'Receipt Items', childName: 'Receipt Item', fields: [
+      name: 'lines', type: 'table', add: (array) => { this.addReceiptItem(array); }, displayName: 'Receipt Items', childName: 'Receipt Item', fields: [
         { name: 'name', type: 'string', reuqired: true },
         { name: 'unit', type: 'string', reuqired: true },
         { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'number', reuqired: true },
@@ -22,9 +27,35 @@ export class ReceiptFormComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  addReceiptItem(array) {
+    const formData = { ...this.formData };
+    const fields = [
+      {
+        name: 'stockItem',
+        displayName: 'Enter stock item name',
+        type: 'ref',
+      }
+    ];
+
+    const dialogRef = this.dialog.open(DialogFormComponent, {
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+      data: { data: formData, fields, title: 'Add Stock Item', callback: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // do something here
+      of(result).pipe(
+        map(item => item.stockItem),
+        tap(({ name, unit, unitPrice }) => array.push({ name, unit, unitPrice }))
+      ).subscribe();
+    });
   }
 
 }
