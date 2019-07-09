@@ -88,7 +88,7 @@ import { StandardFormComponent } from './standard/standard-form/standard-form.co
 import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
-import { EventViewComponent, EventAddItemDialogComponent } from './event/event-view/event-view.component';
+import { EventViewComponent } from './event/event-view/event-view.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
@@ -97,6 +97,7 @@ import { PageLoaderComponent } from './templates/page-loader/page-loader.compone
 import { QRCodeModule } from 'angularx-qrcode';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { DialogFormComponent } from './templates/dialog-form/dialog-form.component';
 
 @NgModule({
   declarations: [
@@ -156,12 +157,12 @@ import { environment } from '../environments/environment';
     StandardFormFieldComponent,
     StandardFilterComponent,
     EventViewComponent,
-    EventAddItemDialogComponent,
     RegistrationViewComponent,
     RegisterEventComponent,
     AttendeeViewComponent,
     TitleDisplayPipe,
     PageLoaderComponent,
+    DialogFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -201,7 +202,7 @@ import { environment } from '../environments/environment';
     QRCodeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  entryComponents: [ConfirmationDialogComponent, EventAddItemDialogComponent],
+  entryComponents: [ConfirmationDialogComponent, DialogFormComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DatePipe,
