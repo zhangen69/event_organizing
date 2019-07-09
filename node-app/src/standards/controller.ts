@@ -1,10 +1,11 @@
+import mongoose from 'mongoose';
 import Promise from 'promise';
 import IMongooseQueryModel from '../interfaces/mongoose/mongooseQueryModel.interface';
 import QueryModel from '../models/query.model';
 
 export default class StandardController {
     private modelName: string;
-    private model = null;
+    private model: mongoose.Model<mongoose.Document, {}> = null;
 
     constructor(modelName: string) {
         this.modelName = modelName;

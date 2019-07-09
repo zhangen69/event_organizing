@@ -13,12 +13,12 @@ import { map, tap } from 'rxjs/operators';
 export class ReceiptFormComponent implements OnInit {
   formData: any;
   fields: IStandardFormField[] = [
-    { name: 'code', type: 'string', required: true },
+    // { name: 'code', type: 'string', required: true },
     { name: 'provider', type: 'ref', required: true },
     { name: 'supplierInvoice', type: 'ref' },
     { name: 'remarks', type: 'textarea' },
     {
-      name: 'lines', type: 'table', add: (array) => { this.addReceiptItem(array); }, displayName: 'Receipt Items', childName: 'Receipt Item', fields: [
+      name: 'lines', type: 'table', add: (array) => { this.addReceiptItem(array); }, displayName: 'Receipt Items', childName: 'Receipt Item', default: [], fields: [
         { name: 'name', type: 'string', reuqired: true },
         { name: 'unit', type: 'string', reuqired: true },
         { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'number', reuqired: true },
