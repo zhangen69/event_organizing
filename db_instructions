@@ -1,5 +1,5 @@
 # Export data from Mongo Atlas
-> mongodump --host node-app-shard-0/node-app-shard-00-00-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-01-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-02-yfxfw.gcp.mongodb.net:27017 --ssl --username jacob --password RRgqCzxv5stwDPvZ --authenticationDatabase admin --db demo_db -o <output_path>
+> mongodump --host "node-app-shard-0/node-app-shard-00-00-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-01-yfxfw.gcp.mongodb.net:27017,node-app-shard-00-02-yfxfw.gcp.mongodb.net:27017" --ssl --username jacob --password RRgqCzxv5stwDPvZ --authenticationDatabase admin --db demo_db -o <output_path>
 
 # Import data to Local MongoDB from Directory/Folder (data exported from mongo atlas)
 > mongorestore --db demo_db --dir <directory>
