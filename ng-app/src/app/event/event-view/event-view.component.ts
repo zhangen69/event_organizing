@@ -167,7 +167,7 @@ export class EventViewComponent implements OnInit {
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
-      data: { event: formData, fields, title: 'Event Processes' }
+      data: { domain: 'event', data: formData, fields, title: 'Event Processes' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
