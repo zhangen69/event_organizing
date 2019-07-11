@@ -186,7 +186,6 @@ export default class StandardController {
 
         if (model.hasOwnProperty('audit')) {
             if (auth.isAuth) {
-                console.log(auth.user);
                 model.audit.updatedBy = auth.user.username;
             }
 
