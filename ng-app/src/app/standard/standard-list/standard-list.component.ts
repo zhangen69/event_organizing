@@ -143,7 +143,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
 
         switch (column.type) {
             case 'date':
-                value = this.datePipe.transform(value, column.format || 'hh:mm a, dd-MM-yyyy');
+                value = this.datePipe.transform(value, column.dateFormat || 'hh:mm a, dd-MM-yyyy');
                 break;
             case 'currency':
                 value = this.currencyPipe.transform(value);

@@ -10,7 +10,7 @@ export default class StandardController {
     constructor(modelName: string) {
         this.modelName = modelName;
         // this.model = require(`../models/${this.modelName}.model`);
-        import(`../models/${this.modelName}.model`).then((module) => {
+        import(`../models/${this.modelName}.model`).then(module => {
             this.model = module.default;
         });
     }
@@ -19,7 +19,7 @@ export default class StandardController {
 
     public create(model, auth: any = {}) {
         if (auth.isAuth) {
-            model.audit = { updatedBy: auth.user._id, createdBy: auth.user._id };
+            model.audit = { updatedBy: auth.user.username, createdBy: auth.user.username };
         }
         // const Product = require('../models/product.model');
         // const newProduct = new Product();
@@ -30,19 +30,19 @@ export default class StandardController {
         return new Promise((resolve, reject) => {
             newModel
                 .save()
-                .then((data) => {
+                .then(data => {
                     const result = {
                         status: 201,
                         message: `${this.modelName} created successfully!`,
-                        data,
+                        data
                     };
                     resolve(result);
                 })
-                .catch((error) => {
+                .catch(error => {
                     const result = {
                         status: 500,
                         message: `${this.modelName} failed to create!`,
-                        error: error.toString(),
+                        error: error.toString()
                     };
                     reject(result);
                 });
@@ -60,12 +60,12 @@ export default class StandardController {
             let func = this.model.findById(id);
 
             if (includes.length > 0) {
-                includes.forEach((include) => {
+                includes.forEach(include => {
                     func = func.populate(include);
                 });
             }
 
-            func.then((data) => {
+            func.then(data => {
                 if (data == null) {
                     throw new Error('Product not found!');
                 }
@@ -73,14 +73,14 @@ export default class StandardController {
                 const result = {
                     status: 200,
                     message: `${this.modelName} fetched successfully!`,
-                    data,
+                    data
                 };
                 resolve(result);
-            }).catch((error) => {
+            }).catch(error => {
                 const result = {
                     status: 500,
                     message: `${this.modelName} not found!`,
-                    error: error.toString(),
+                    error: error.toString()
                 };
                 reject(result);
             });
@@ -129,6 +129,9 @@ export default class StandardController {
                     if (doc == null) {
                         throw new Error(`${this.modelName} not found!`);
                     }
+
+                    // model.audit.updatedBy = auth.user.username;
+                    // model.audit.updatedDate = new Date();
 
                     doc.updateOne(this._getUpdateConditions(model, auth)).then(() => {
                         this.model.findById(model._id).then((data) => {
@@ -183,7 +186,8 @@ export default class StandardController {
 
         if (model.hasOwnProperty('audit')) {
             if (auth.isAuth) {
-                model.audit.updatedBy = auth.user._id;
+                console.log(auth.user);
+                model.audit.updatedBy = auth.user.username;
             }
 
             Object.keys(model.audit).forEach((key) => (updateModel.$set[`audit.${key}`] = model.audit[key]));
