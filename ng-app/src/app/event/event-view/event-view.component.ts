@@ -226,6 +226,7 @@ export class EventViewComponent implements OnInit {
         });
     }
 
+    // source: https://stackoverflow.com/questions/49102724/angular-5-copy-to-clipboard
     copyRegistrationFormLink(formId) {
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
