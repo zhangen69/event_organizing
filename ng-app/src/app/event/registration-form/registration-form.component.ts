@@ -23,7 +23,7 @@ export class RegistrationFormComponent implements OnInit {
        { name: 'organization', type: 'boolean' },
        { name: 'address', type: 'boolean' },
      ] },
-     { name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', fields: [
+     { name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', default: [], fields: [
        { name: 'name', type: 'string' },
        { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },
        { name: 'displayName', type: 'string'},
