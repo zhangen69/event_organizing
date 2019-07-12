@@ -129,6 +129,8 @@ export class StandardFormFieldComponent implements OnInit {
 
                 if (this.formData[this.field.name]) {
                     date = new Date(this.formData[this.field.name]);
+                } else {
+                    this.formData[this.field.name] = date;
                 }
 
                 const hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours().toString();

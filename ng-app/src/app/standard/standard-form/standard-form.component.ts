@@ -83,6 +83,7 @@ export class StandardFormComponent implements OnInit {
           defaultValue = [{}];
           break;
         case 'date':
+        case 'time':
           defaultValue = new Date();
           break;
         case 'boolean':
