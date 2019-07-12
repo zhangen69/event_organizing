@@ -35,7 +35,7 @@ const eventProcessSchema = new mongoose.Schema({
   name: String,
   status: {
     type: String,
-    enum: ['Open', 'Paid', 'Cancelled'],
+    enum: ['Open', 'Progress', 'Done', 'Paid', 'Cancelled', 'Closed'],
     default: 'Open',
   },
   processType: {

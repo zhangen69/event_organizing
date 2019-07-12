@@ -1,7 +1,7 @@
 import { DialogFormComponent } from '../../templates/dialog-form/dialog-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { StandardFunctionsService } from './../../standard/standard-functions.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StandardService } from 'src/app/standard/standard.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -61,8 +61,9 @@ export class EventViewComponent implements OnInit {
     filters: []
   };
 
+  eventService: StandardService;
+
   constructor(
-    private service: StandardService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     public functions: StandardFunctionsService,
@@ -71,9 +72,11 @@ export class EventViewComponent implements OnInit {
     private toastr: ToastrService,
     private pageLoaderService: PageLoaderService
   ) {
-    this.service.init('event');
+    // this.service.init('event');
+    this.eventService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.formService.init('registration-form');
+    this.eventService.init('event');
   }
 
   ngOnInit() {
@@ -85,7 +88,7 @@ export class EventViewComponent implements OnInit {
       (params: Params) => {
         if (params['id']) {
           this.pageLoaderService.toggle(true);
-          this.service.fetch(params['id'], null, this.includes).subscribe((res: any) => {
+          this.eventService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
             this.formData = res.data;
             this.fetchRegistrationForm(this.formData._id);
             this.pageLoaderService.toggle(false);
@@ -213,6 +216,14 @@ export class EventViewComponent implements OnInit {
         { name: 'remarks', type: 'textarea' }
       ]
     };
+  }
+
+  changeStatus(process, status) {
+    process.status = status;
+    this.eventService.submit(this.formData).subscribe(_ => {
+      this.toastr.info('Updated Status Succesfully!');
+      this.refresh();
+    });
   }
 }
 

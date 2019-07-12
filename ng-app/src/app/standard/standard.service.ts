@@ -9,7 +9,7 @@ import { ConfirmationDialogComponent } from '../templates/confirmation-dialog/co
 import { IQueryModel } from '../interfaces/query-model';
 import { UploadType } from '../enums/upload-type.enum';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -59,7 +59,7 @@ export class StandardService {
         );
     }
 
-    submit(formData, url = null) {
+    submit(formData, url = null): Observable<any> {
         let mode = 'post';
 
         if (formData._id) {
