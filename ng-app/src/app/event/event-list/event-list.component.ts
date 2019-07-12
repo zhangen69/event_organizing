@@ -8,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class EventListComponent implements OnInit {
   columns = [
     { name: 'name', displayName: 'Name', format: 'link', link: '/event/view' },
-    { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
+    { name: 'dateFrom', type: 'date', dateFormat: 'dd MMM yyyy' },
+    { name: 'dateTo', type: 'date', dateFormat: 'dd MMM yyyy' },
+    { name: 'timeFrom', type: 'time', dateFormat: 'hh:mm a' },
+    { name: 'timeTo', type: 'time', dateFormat: 'hh:mm a' },
+    // { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
     { name: 'status', displayName: 'Status' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];

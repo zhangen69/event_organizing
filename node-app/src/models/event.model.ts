@@ -85,6 +85,10 @@ const schema = new mongoose.Schema({
     ],
     defualt: 'Open',
   },
+  dateFrom: { type: Date, required: true },
+  dateTo: { type: Date, required: true },
+  timeFrom: { type: Date, required: true },
+  timeTo: { type: Date, required: true },
 });
 
 schema.add(auditable);
