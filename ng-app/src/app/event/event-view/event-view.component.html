@@ -155,14 +155,11 @@
                     <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
                         <mat-icon>public</mat-icon> Publish
                     </a>
-                    <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
-                        <mat-icon>public</mat-icon> Publish
-                    </a>
                     <button mat-raised-button (click)="copyRegistrationFormLink(registrationForm?._id)" value="click to copy">
                         <mat-icon>link</mat-icon> Copy Link
                     </button>
                     <button mat-raised-button (click)="sendRegistrationFormLink(registrationForm?._id)" value="click to send">
-                        <mat-icon>link</mat-icon> Send Link
+                        <mat-icon>send</mat-icon> Send Link
                     </button>
                 </div>
 
