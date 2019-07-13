@@ -16,7 +16,7 @@ routes.bypass.create = true;
 const router = routes.router(express.Router());
 
 router.post(`/${service}/register`, (req, res, next) => {
-    let attendee;
+    let attendee: { name: any; code: string | QRCode.QRCodeSegment[]; email: any; event: string; };
 
     const sendEmail = ([event, qrcode]) => {
         console.log('sending email...');

@@ -253,9 +253,23 @@ export class EventViewComponent implements OnInit {
     }
 
     sendRegistrationFormLink(formId) {
-        const url = this.formService.apiUrl + '/sendRegistrationFormLink';
-        this.formService.submit({ formId, email: 'zhangen69@gmail.com' }, url).subscribe(_ => {
-            this.toastr.info('Sent link to the email!');
+        const formData = {};
+        const fields = [{ name: 'email', type: 'string', required: true }];
+
+        const dialogRef = this.dialog.open(DialogFormComponent, {
+            width: 'auto',
+            minWidth: '50vw',
+            maxHeight: '99vh',
+            data: { domain: 'registration-form', data: formData, fields, title: 'Send Registration Form Link', callback: true }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.pageLoaderService.toggle(true);
+            const url = this.formService.apiUrl + '/sendRegistrationFormLink';
+            this.formService.submit({ formId, email: result.email }, url).subscribe(_ => {
+                this.pageLoaderService.toggle(false);
+                this.toastr.info('Sent link to the email!');
+            });
         });
     }
 }
