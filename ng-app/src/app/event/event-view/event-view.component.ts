@@ -155,8 +155,18 @@ export class EventViewComponent implements OnInit {
                         enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }]
                     },
                     { name: 'provider', type: 'ref' },
-                    { name: 'providerService', displayName: 'Service', type: 'ref', isShow: (formData: any) => formData.type === 'Service' },
-                    { name: 'providerFacility', displayName: 'Facility', type: 'ref', isShow: (formData: any) => formData.type === 'Facility' },
+                    {
+                        name: 'providerService',
+                        displayName: 'Service',
+                        type: 'ref',
+                        isShow: (formData: any) => formData.type === 'Service'
+                    },
+                    {
+                        name: 'providerFacility',
+                        displayName: 'Facility',
+                        type: 'ref',
+                        isShow: (formData: any) => formData.type === 'Facility'
+                    },
                     { name: 'startFromDate', type: 'date', required: true },
                     { name: 'startFromTime', type: 'time', required: true },
                     { name: 'endToDate', type: 'date', required: true },
@@ -240,5 +250,12 @@ export class EventViewComponent implements OnInit {
         document.execCommand('copy');
         document.body.removeChild(selBox);
         this.toastr.info('Copied to clipboard!');
+    }
+
+    sendRegistrationFormLink(formId) {
+        const url = this.formService.apiUrl + '/sendRegistrationFormLink';
+        this.formService.submit({ formId, email: 'zhangen69@gmail.com' }, url).subscribe(_ => {
+            this.toastr.info('Sent link to the email!');
+        });
     }
 }
