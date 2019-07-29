@@ -98,6 +98,11 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { DialogFormComponent } from './templates/dialog-form/dialog-form.component';
+import { EntityDataModule } from '@ngrx/data';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 @NgModule({
   declarations: [
@@ -201,6 +206,15 @@ import { DialogFormComponent } from './templates/dialog-form/dialog-form.compone
     MatProgressSpinnerModule,
     QRCodeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    EntityDataModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    EffectsModule.forRoot([AppEffects]),
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent],
   providers: [
