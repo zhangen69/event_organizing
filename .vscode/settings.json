@@ -5,6 +5,8 @@
         "activityBar.background": "#000011",
         "sideBar.foreground": "#fff",
         "sideBar.background": "#1f1f1f",
-        "statusBar.background": "#000011"
+        "statusBar.background": "#000011",
+        "breadcrumb.background": "#000011",
+        "breadcrumb.foreground": "#fff",
     }
 }
