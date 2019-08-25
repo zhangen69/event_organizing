@@ -104,6 +104,7 @@ import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FilterOptionsPipe } from './standard/filter-options.pipe';
 
 @NgModule({
   declarations: [
@@ -169,6 +170,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     TitleDisplayPipe,
     PageLoaderComponent,
     DialogFormComponent,
+    FilterOptionsPipe,
   ],
   imports: [
     BrowserModule,

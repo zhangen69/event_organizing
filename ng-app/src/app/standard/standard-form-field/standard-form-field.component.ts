@@ -3,6 +3,8 @@ import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { from, Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 interface IFieldOptions {
     name: string;
@@ -18,6 +20,7 @@ interface IFieldOptions {
     refName?: string;
     refValue: string;
     refOptions?: any[];
+    refFilteredOptions?: Observable<any[]>;
     refChange?: IRefChange;
     add?: any;
 }
@@ -30,6 +33,23 @@ interface IFieldEnumList {
 }
 
 class FieldModel implements IFieldOptions {
+    name: string;
+    type: string;
+    displayName?: string;
+    required?: boolean;
+    default?: any;
+    enum?: any;
+    enumList?: IFieldEnumList[];
+    fields?: any[];
+    childName?: string;
+    ref?: string;
+    refName?: string;
+    refValue: string;
+    refOptions?: any[];
+    refFilteredOptions?: Observable<any[]>;
+    refChange?: IRefChange;
+    add?: any;
+
     constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {
         Object.keys(options).forEach((option: string) => {
             this[option] = options[option];
@@ -51,7 +71,9 @@ class FieldModel implements IFieldOptions {
                 this.refName = 'name';
             }
 
-            this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => (this.refOptions = res.data));
+            this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => {
+                this.refOptions = res.data;
+            });
         } else if (this.type === 'table') {
             this.fields.forEach(field => {
                 if (!field.displayName) {
@@ -65,21 +87,11 @@ class FieldModel implements IFieldOptions {
         }
     }
 
-    name: string;
-    type: string;
-    displayName?: string;
-    required?: boolean;
-    default?: any;
-    enum?: any;
-    enumList?: IFieldEnumList[];
-    fields?: any[];
-    childName?: string;
-    ref?: string;
-    refName?: string;
-    refValue: string;
-    refOptions?: any[];
-    refChange?: IRefChange;
-    add?: any;
+    private _filterOptions(value: any): any[] {
+        const filterValue = typeof value === 'string' ? value.toLowerCase() : value[this.refName].toLowerCase();
+
+        return this.refOptions.filter(option => option[this.refName].toLowerCase().includes(filterValue));
+    }
 }
 
 @Component({
