@@ -4,9 +4,9 @@
 - [ ] Filter selected items while select [provider/service/facility]
 
 ## Registration & Check-in
-- [ ] Allow users copy the registration link
+- [x] Allow users copy the registration link
 - [ ] Allow users send the registration link to people
-  - [ ] Send Email
+  - [x] Send Email
   - [ ] Preview before send email
 - [ ] Scan QRCode for check-in
   - [ ] Simple Scan
@@ -16,9 +16,9 @@
 ## Event & Process
 - [ ] Lookup the event schedule
 - [ ] Set the venue, date, time for the event
-  - [ ] Simple Setup
+  - [x] Simple Setup
   - [ ] Venue search by google maps
-  - [ ] Datepicker
+  - [x] Datepicker
   - [ ] Timepicker
 - [ ] Manage staff in the event
   - [ ] Manage role
