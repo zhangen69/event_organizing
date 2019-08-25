@@ -1,4 +1,3 @@
-import { Timestamp } from 'bson';
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 
@@ -89,6 +88,7 @@ const schema = new mongoose.Schema({
   dateTo: { type: Date, required: true },
   timeFrom: { type: Date, required: true },
   timeTo: { type: Date, required: true },
+  venue: { type: String },
 });
 
 schema.add(auditable);
