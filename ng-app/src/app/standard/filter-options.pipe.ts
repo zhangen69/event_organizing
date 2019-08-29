@@ -14,6 +14,10 @@ export class FilterOptionsPipe implements PipeTransform {
       return options;
     }
 
+    if (typeof value === 'object') {
+      value = value.name;
+    }
+
     return options.filter(option => option.name.toLowerCase().includes(value.toLowerCase()));
   }
 

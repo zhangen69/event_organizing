@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventFormComponent implements OnInit {
   enumList = [];
+  includes = ['customer'];
   fields = [
     { name: 'name', type: 'string', displayName: 'Name', required: true },
+    { name: 'customer', type: 'ref', required: true },
     { name: 'status', type: 'enum', displayName: 'Status', enum: EventStatus, default: EventStatus[EventStatus.Open], required: true },
     { name: 'dateFrom', type: 'date', required: true },
     { name: 'dateTo', type: 'date', required: true },

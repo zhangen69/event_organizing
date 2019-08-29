@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-service-form.component.css']
 })
 export class ProviderServiceFormComponent implements OnInit {
+  includes = ['provider'];
   fields = [
      { name: 'name', type: 'string', required: true },
      { name: 'unit', type: 'string', required: true },
