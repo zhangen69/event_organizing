@@ -105,6 +105,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FilterOptionsPipe } from './standard/filter-options.pipe';
+import { GetTotalPipe } from './pipes/get-total.pipe';
 
 @NgModule({
   declarations: [
@@ -171,6 +172,7 @@ import { FilterOptionsPipe } from './standard/filter-options.pipe';
     PageLoaderComponent,
     DialogFormComponent,
     FilterOptionsPipe,
+    GetTotalPipe,
   ],
   imports: [
     BrowserModule,

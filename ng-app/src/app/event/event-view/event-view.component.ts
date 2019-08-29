@@ -34,7 +34,8 @@ export class EventViewComponent implements OnInit {
         'stockItems.stockItem',
         'processes.provider',
         'processes.providerService',
-        'processes.providerFacility'
+        'processes.providerFacility',
+        'customer'
     ];
 
     actions = [

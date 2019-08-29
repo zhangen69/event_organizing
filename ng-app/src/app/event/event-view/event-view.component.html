@@ -23,6 +23,9 @@
                     Name: <span>{{ formData.name }}</span>
                 </h3>
                 <h3>
+                    Customer: <span>{{ formData.customer?.name }}</span>
+                </h3>
+                <h3>
                     Status: <span>{{ formData.status }}</span>
                 </h3>
                 <h3>
@@ -58,7 +61,9 @@
                     <p *ngFor="let service of formData.services">
                         {{ service?.providerService?.name }} x {{ service?.quantity }}
                         {{ service?.providerService?.unit }}
+                        ({{ (service?.providerService?.unitPrice * service?.quantity) | currency: 'RM' }})
                     </p>
+                    <b>Subtotal: {{ formData.services | getTotal: 'providerService.unitPrice': 'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -75,7 +80,9 @@
                     <p *ngFor="let facility of formData.facilities">
                         {{ facility?.providerFacility?.name }} x {{ facility?.quantity }}
                         {{ facility?.providerFacility?.unit }}
+                        ({{ (facility?.providerFacility?.unitPrice * facility?.quantity) | currency: 'RM' }})
                     </p>
+                    <b>Subtotal: {{ formData.facilities | getTotal: 'providerFacility.unitPrice': 'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -92,7 +99,9 @@
                     <p *ngFor="let stockItem of formData.stockItems">
                         {{ stockItem?.stockItem?.name }} x {{ stockItem?.quantity }}
                         {{ stockItem?.stockItem?.unit }}
+                        ({{ (stockItem?.stockItem?.unitPrice * stockItem?.quantity) | currency: 'RM' }})
                     </p>
+                    <b>Subtotal: {{ formData.stockItems | getTotal: 'stockItem.unitPrice': 'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
         </mat-expansion-panel>
