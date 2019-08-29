@@ -1,7 +1,7 @@
 # Tasks Scheduling
 
 ## General
-- [ ] Filter selected items while select [provider/service/facility]
+- [x] Filter selected items while select [provider/service/facility] (autocomplete)
 
 ## Registration & Check-in
 - [x] Allow users copy the registration link
@@ -24,7 +24,8 @@
   - [ ] Manage role
   - [ ] Assign role to staff
   - [ ] Manage staff handling specific process
-- [ ] Calculate the total cost and budget in the event
+- [x] Calculate the total price in the event
+- [x] Link customer to the event
 
 ## Receipt & Invoice
 - [ ] Receipt and Invoice can choose stock items in the table/list
