@@ -2,6 +2,7 @@
 
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
+- [x] Add `getTotal` custom pipe
 
 ## Registration & Check-in
 - [x] Allow users copy the registration link
