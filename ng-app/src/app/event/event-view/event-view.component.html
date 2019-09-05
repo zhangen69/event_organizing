@@ -61,9 +61,9 @@
                     <p *ngFor="let service of formData.services">
                         {{ service?.providerService?.name }} x {{ service?.quantity }}
                         {{ service?.providerService?.unit }}
-                        ({{ (service?.providerService?.unitPrice * service?.quantity) | currency: 'RM' }})
+                        ({{ service?.providerService?.unitPrice * service?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.services | getTotal: 'providerService.unitPrice': 'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal: {{ formData.services | getTotal: 'providerService.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -80,9 +80,9 @@
                     <p *ngFor="let facility of formData.facilities">
                         {{ facility?.providerFacility?.name }} x {{ facility?.quantity }}
                         {{ facility?.providerFacility?.unit }}
-                        ({{ (facility?.providerFacility?.unitPrice * facility?.quantity) | currency: 'RM' }})
+                        ({{ facility?.providerFacility?.unitPrice * facility?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.facilities | getTotal: 'providerFacility.unitPrice': 'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal: {{ formData.facilities | getTotal: 'providerFacility.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -99,9 +99,9 @@
                     <p *ngFor="let stockItem of formData.stockItems">
                         {{ stockItem?.stockItem?.name }} x {{ stockItem?.quantity }}
                         {{ stockItem?.stockItem?.unit }}
-                        ({{ (stockItem?.stockItem?.unitPrice * stockItem?.quantity) | currency: 'RM' }})
+                        ({{ stockItem?.stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.stockItems | getTotal: 'stockItem.unitPrice': 'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal: {{ formData.stockItems | getTotal: 'stockItem.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
         </mat-expansion-panel>
@@ -121,10 +121,18 @@
                     </a>
                 </h3>
                 <p *ngIf="formData.processes && formData.processes.length === 0">
-                    No stock item yet.
+                    No process yet.
                 </p>
                 <ng-container *ngIf="formData.processes && formData.processes.length > 0">
-                    <div class="process-items" *ngFor="let process of formData.processes">
+                    <div class="process-items" *ngFor="let process of formData.processes; let i = index; let l = count">
+                        <p>index: {{ i }}</p>
+                        <p>count: {{ l }}</p>
+                        <p>
+                            {{ process.order }}
+                            <button mat-button (click)="movePosition(process, -1)" ng-if="i === l-1">
+                                <mat-icon>keyboard_arrow_down</mat-icon></button
+                            ><button mat-button (click)="movePosition(process, 1)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                        </p>
                         <p class="mat-headline">
                             {{ getDuration(process) }} <i>{{ process.processType }}</i>
                         </p>

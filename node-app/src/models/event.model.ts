@@ -55,6 +55,7 @@ const eventProcessSchema = new mongoose.Schema({
     personInCharged: { type: Object, default: null },
     budgetAmount: Number,
     remarks: String,
+    order: { type: Number, default: 0 },
 });
 
 const schema = new mongoose.Schema({

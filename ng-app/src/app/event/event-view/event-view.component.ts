@@ -91,6 +91,8 @@ export class EventViewComponent implements OnInit {
                     this.pageLoaderService.toggle(true);
                     this.eventService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
                         this.formData = res.data;
+                        // sort: formData.processes
+                        this.formData.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                         this.fetchRegistrationForm(this.formData._id);
                         this.pageLoaderService.toggle(false);
                     });
@@ -271,6 +273,14 @@ export class EventViewComponent implements OnInit {
                 this.pageLoaderService.toggle(false);
                 this.toastr.info('Sent link to the email!');
             });
+        });
+    }
+
+    movePosition(item, moveIndex) {
+        item.order += moveIndex;
+        this.eventService.submit(this.formData).subscribe(_ => {
+            this.toastr.info('Moved Process ' + item.name);
+            this.refresh();
         });
     }
 }
