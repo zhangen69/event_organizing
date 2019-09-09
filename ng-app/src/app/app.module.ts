@@ -228,6 +228,7 @@ import { GetTotalPipe } from './pipes/get-total.pipe';
     DatePipe,
     CurrencyPipe,
     TitleDisplayPipe,
+    GetTotalPipe,
   ],
   bootstrap: [AppComponent]
 })

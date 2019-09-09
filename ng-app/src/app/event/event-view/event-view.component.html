@@ -9,7 +9,9 @@
             <button mat-raised-button type="button" (click)="functions.onBack('/event/list')">
                 <mat-icon>arrow_back_ios</mat-icon> Back
             </button>
-            <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button> <mat-icon>edit</mat-icon> Edit </a>
+            <a [routerLink]="['/event/edit/' + formData._id]" mat-raised-button>
+                <mat-icon>edit</mat-icon> Edit
+            </a>
         </div>
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header class="bg-primary">
@@ -29,10 +31,12 @@
                     Status: <span>{{ formData.status }}</span>
                 </h3>
                 <h3>
-                    Date: <span>{{ formData.dateFrom | date: 'dd MMM yyyy' }} - {{ formData.dateTo | date: 'dd MMM yyyy' }}</span>
+                    Date: <span>{{ formData.dateFrom | date: 'dd MMM yyyy' }} -
+                        {{ formData.dateTo | date: 'dd MMM yyyy' }}</span>
                 </h3>
                 <h3>
-                    Time: <span>{{ formData.timeFrom | date: 'hh:mm a' }} - {{ formData.timeTo | date: 'hh:mm a' }}</span>
+                    Time: <span>{{ formData.timeFrom | date: 'hh:mm a' }} -
+                        {{ formData.timeTo | date: 'hh:mm a' }}</span>
                 </h3>
                 <h3>
                     Venue: <span>{{ formData.venue }}</span>
@@ -63,7 +67,8 @@
                         {{ service?.providerService?.unit }}
                         ({{ service?.providerService?.unitPrice * service?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.services | getTotal: 'providerService.unitPrice':'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal:
+                        {{ formData.services | getTotal: 'providerService.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -82,7 +87,8 @@
                         {{ facility?.providerFacility?.unit }}
                         ({{ facility?.providerFacility?.unitPrice * facility?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.facilities | getTotal: 'providerFacility.unitPrice':'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal:
+                        {{ formData.facilities | getTotal: 'providerFacility.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
             <div class="view-field">
@@ -101,7 +107,8 @@
                         {{ stockItem?.stockItem?.unit }}
                         ({{ stockItem?.stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
                     </p>
-                    <b>Subtotal: {{ formData.stockItems | getTotal: 'stockItem.unitPrice':'quantity' | currency: 'RM' }}</b>
+                    <b>Subtotal:
+                        {{ formData.stockItems | getTotal: 'stockItem.unitPrice':'quantity' | currency: 'RM' }}</b>
                 </ng-container>
             </div>
         </mat-expansion-panel>
@@ -120,41 +127,118 @@
                         <mat-icon>edit</mat-icon>
                     </a>
                 </h3>
-                <p *ngIf="formData.processes && formData.processes.length === 0">
+                <p *ngIf="formData.processes && formData.processes.length === 0; else eventProcesses">
                     No process yet.
                 </p>
-                <ng-container *ngIf="formData.processes && formData.processes.length > 0">
-                    <div class="process-items" *ngFor="let process of formData.processes; let i = index; let l = count">
-                        <p>index: {{ i }}</p>
+                <ng-template #eventProcesses>
+                    <div class="btn-group" fxLayout="row">
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': !selectProcessStatus}" (click)="filterProcesses()">All</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Open'}"
+                            (click)="filterProcesses('Open')">Open</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Progress'}"
+                            (click)="filterProcesses('Progress')">Progress</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Done'}"
+                            (click)="filterProcesses('Done')">Done</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Cancelled'}"
+                            (click)="filterProcesses('Cancelled')">Cancel</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Paid'}"
+                            (click)="filterProcesses('Paid')">Pay</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            [ngClass]="{'active': selectProcessStatus === 'Closed'}"
+                            (click)="filterProcesses('Closed')">Close</button>
+                    </div>
+                    <div class="process-items"
+                        *ngFor="let process of filteredEventProcesses; let i = index; let l = count">
+                        <!-- <p>index: {{ i }}</p>
                         <p>count: {{ l }}</p>
-                        <p>
-                            {{ process.order }}
-                            <button mat-button (click)="movePosition(process, -1)" ng-if="i === l-1">
-                                <mat-icon>keyboard_arrow_down</mat-icon></button
-                            ><button mat-button (click)="movePosition(process, 1)"><mat-icon>keyboard_arrow_up</mat-icon></button>
-                        </p>
+                        <p>order: {{ process.order }}</p> -->
+                        <div *ngIf="!selectProcessStatus">
+                            <button mat-button (click)="onMoveDownPosition(process, i)" *ngIf="i !== l-1">
+                                <mat-icon>keyboard_arrow_down</mat-icon>
+                            </button>
+                            <button mat-button (click)="onMoveUpPosition(process, i)" *ngIf="i !== 0">
+                                <mat-icon>keyboard_arrow_up</mat-icon>
+                            </button>
+                        </div>
                         <p class="mat-headline">
                             {{ getDuration(process) }} <i>{{ process.processType }}</i>
                         </p>
                         <pre fxLayout="column">
-              <span>Status: {{ process?.status }}</span>
-              <div class="btn-group" fxLayout="row">
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Open')" *ngIf="process.status !== 'Open'">Open</button>
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Progress')" *ngIf="process.status !== 'Progress'">Progress</button>
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status !== 'Done'">Done</button>
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status !== 'Cancelled'">Cancel</button>
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Paid')" *ngIf="process.status !== 'Paid'">Pay</button>
-                  <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status !== 'Closed'">Close</button>
-              </div>
-            </pre>
+                            <span>Status: {{ process?.status }}</span>
+                            <div class="btn-group" fxLayout="row">
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Open')" *ngIf="process.status !== 'Open'">Open</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Progress')" *ngIf="process.status !== 'Progress'">Progress</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status !== 'Done'">Done</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status !== 'Cancelled'">Cancel</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Paid')" *ngIf="process.status !== 'Paid'">Pay</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status !== 'Closed'">Close</button>
+                            </div>
+                        </pre>
                         <p class="mat-title">
                             {{ process?.name }}:
-                            {{ process.type === 'Service' ? process.providerService.name : process.providerFacility.name }} by
+                            {{ process.type === 'Service' ? process.providerService.name : process.providerFacility.name }}
+                            by
                             {{ process.provider.name }}
                         </p>
                         <p class="mat-body">{{ process.remarks }}</p>
                     </div>
-                </ng-container>
+                </ng-template>
+                <!-- <ng-container *ngIf="formData.processes && formData.processes.length > 0">
+                    <div class="btn-group" fxLayout="row">
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="filterProcesses()">All</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Open')">Open</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Progress')">Progress</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Done')">Done</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Cancelled')">Cancel</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Paid')">Pay</button>
+                        <button mat-stroked-button class="btn-sm" type="button"
+                            (click)="filterProcesses('Closed')">Close</button>
+                    </div>
+                    <div class="process-items"
+                        *ngFor="let process of filteredEventProcesses; let i = index; let l = count">
+                        <p>index: {{ i }}</p>
+                        <p>count: {{ l }}</p>
+                        <p>order: {{ process.order }}</p>
+                        <button mat-button (click)="movePosition(process, i, -1)" *ngIf="i !== l-1">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                        </button>
+                        <button mat-button (click)="movePosition(process, i, 1)" *ngIf="i !== 0">
+                            <mat-icon>keyboard_arrow_up</mat-icon>
+                        </button>
+                        <p class="mat-headline">
+                            {{ getDuration(process) }} <i>{{ process.processType }}</i>
+                        </p>
+                        <pre fxLayout="column">
+                            <span>Status: {{ process?.status }}</span>
+                            <div class="btn-group" fxLayout="row">
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Open')" *ngIf="process.status !== 'Open'">Open</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Progress')" *ngIf="process.status !== 'Progress'">Progress</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status !== 'Done'">Done</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status !== 'Cancelled'">Cancel</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Paid')" *ngIf="process.status !== 'Paid'">Pay</button>
+                                <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status !== 'Closed'">Close</button>
+                            </div>
+                        </pre>
+                        <p class="mat-title">
+                            {{ process?.name }}:
+                            {{ process.type === 'Service' ? process.providerService.name : process.providerFacility.name }}
+                            by
+                            {{ process.provider.name }}
+                        </p>
+                        <p class="mat-body">{{ process.remarks }}</p>
+                    </div>
+                </ng-container> -->
             </div>
         </mat-expansion-panel>
 
@@ -168,43 +252,41 @@
             <ng-container *ngIf="registrationForm; else elseTemplate">
                 <h3>Preview Form</h3>
                 <div class="action-group">
-                    <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]" mat-raised-button>
+                    <button type="button" [routerLink]="['/registration-form/edit/' + registrationForm._id]"
+                        mat-raised-button>
                         <mat-icon>edit</mat-icon> Edit
                     </button>
                     <a [routerLink]="['/register/' + registrationForm?._id]" target="_blank" mat-raised-button>
                         <mat-icon>public</mat-icon> Publish
                     </a>
-                    <button mat-raised-button (click)="copyRegistrationFormLink(registrationForm?._id)" value="click to copy">
+                    <button mat-raised-button (click)="copyRegistrationFormLink(registrationForm?._id)"
+                        value="click to copy">
                         <mat-icon>link</mat-icon> Copy Link
                     </button>
-                    <button mat-raised-button (click)="sendRegistrationFormLink(registrationForm?._id)" value="click to send">
+                    <button mat-raised-button (click)="sendRegistrationFormLink(registrationForm?._id)"
+                        value="click to send">
                         <mat-icon>send</mat-icon> Send Link
                     </button>
                 </div>
 
                 <h4>Basic Information</h4>
-                <app-standard-form-field [field]="{ name: 'name', type: 'string' }" *ngIf="registrationForm.settings.name">
+                <app-standard-form-field [field]="{ name: 'name', type: 'string' }"
+                    *ngIf="registrationForm.settings.name">
                 </app-standard-form-field>
-                <app-standard-form-field [field]="{ name: 'gender', type: 'string' }" *ngIf="registrationForm.settings.gender">
+                <app-standard-form-field [field]="{ name: 'gender', type: 'string' }"
+                    *ngIf="registrationForm.settings.gender">
                 </app-standard-form-field>
-                <app-standard-form-field
-                    [field]="{ name: 'identityNumber', type: 'string' }"
-                    *ngIf="registrationForm.settings.identityNumber"
-                ></app-standard-form-field>
-                <app-standard-form-field [field]="{ name: 'email', type: 'string' }" *ngIf="registrationForm.settings.email">
+                <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string' }"
+                    *ngIf="registrationForm.settings.identityNumber"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'email', type: 'string' }"
+                    *ngIf="registrationForm.settings.email">
                 </app-standard-form-field>
-                <app-standard-form-field
-                    [field]="{ name: 'phoneNumber', type: 'string' }"
-                    *ngIf="registrationForm.settings.phoneNumber"
-                ></app-standard-form-field>
-                <app-standard-form-field
-                    [field]="{ name: 'organization', type: 'string' }"
-                    *ngIf="registrationForm.settings.organization"
-                ></app-standard-form-field>
-                <app-standard-form-field
-                    [field]="{ name: 'address', type: 'textarea' }"
-                    *ngIf="registrationForm.settings.address"
-                ></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string' }"
+                    *ngIf="registrationForm.settings.phoneNumber"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'organization', type: 'string' }"
+                    *ngIf="registrationForm.settings.organization"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'address', type: 'textarea' }"
+                    *ngIf="registrationForm.settings.address"></app-standard-form-field>
 
                 <div *ngIf="registrationForm.fields.length > 0">
                     <h4>Detail Information</h4>
@@ -225,15 +307,9 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <app-standard-list
-                title="Attendee"
-                domainName="attendee"
-                [columns]="columns"
-                [filterList]="filterList"
-                [actions]="actions"
-                [includes]="['attendeeGroup', 'event']"
-                [queryModel]="queryModel"
-            ></app-standard-list>
+            <app-standard-list title="Attendee" domainName="attendee" [columns]="columns" [filterList]="filterList"
+                [actions]="actions" [includes]="['attendeeGroup', 'event']" [queryModel]="queryModel">
+            </app-standard-list>
         </mat-expansion-panel>
     </mat-card-content>
 </mat-card>

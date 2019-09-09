@@ -27,6 +27,8 @@ export class EventViewComponent implements OnInit {
     formData: any = {};
     registrationForm: any;
     formService: StandardService;
+    filteredEventProcesses: any[] = [];
+    selectProcessStatus = '';
 
     includes: string[] = [
         'services.providerService',
@@ -93,6 +95,7 @@ export class EventViewComponent implements OnInit {
                         this.formData = res.data;
                         // sort: formData.processes
                         this.formData.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+                        this.filterProcesses(this.selectProcessStatus);
                         this.fetchRegistrationForm(this.formData._id);
                         this.pageLoaderService.toggle(false);
                     });
@@ -276,11 +279,39 @@ export class EventViewComponent implements OnInit {
         });
     }
 
-    movePosition(item, moveIndex) {
-        item.order += moveIndex;
+    onMoveUpPosition(item, itemIndex) {
+        const targetItem = this.formData.processes[itemIndex];
+        const swapItem = this.formData.processes[itemIndex - 1];
+
+        targetItem.order += targetItem.order <= swapItem.order ? 1 : 0;
+        swapItem.order -= targetItem.order === swapItem.order ? 1 : 0;
+
         this.eventService.submit(this.formData).subscribe(_ => {
             this.toastr.info('Moved Process ' + item.name);
             this.refresh();
         });
+    }
+
+    onMoveDownPosition(item, itemIndex) {
+        const targetItem = this.formData.processes[itemIndex];
+        const swapItem = this.formData.processes[itemIndex + 1];
+
+        targetItem.order = targetItem.order >= swapItem.order ? swapItem.order : targetItem.order;
+        swapItem.order = targetItem.order <= swapItem.order ? swapItem.order + 1 : targetItem.order - 1;
+
+        this.eventService.submit(this.formData).subscribe(_ => {
+            this.toastr.info('Moved Process ' + item.name);
+            this.refresh();
+        });
+    }
+
+    filterProcesses(status?: string) {
+        this.selectProcessStatus = status;
+        if (!status) {
+            this.filteredEventProcesses = this.formData.processes;
+        } else {
+            this.filteredEventProcesses = this.formData.processes.filter((val) => val.status === status);
+        }
+        this.filteredEventProcesses.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
     }
 }
