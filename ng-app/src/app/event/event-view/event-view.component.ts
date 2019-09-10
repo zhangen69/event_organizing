@@ -45,7 +45,12 @@ export class EventViewComponent implements OnInit {
             name: 'Group Attendees',
             format: 'function',
             function: selectedItems => {
-                console.log('triggered function', selectedItems);
+                const input = prompt('Enter Group Name');
+                selectedItems.forEach(element => {
+                    element.groupName = input;
+                    this.attendeeService.submit(element).subscribe();
+                });
+                this.refresh();
             },
             isMultiple: true
         }
@@ -54,7 +59,8 @@ export class EventViewComponent implements OnInit {
         { name: 'code', format: 'link', link: '/attendee/view/' },
         { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
         { name: 'name' },
-        { name: 'attendeeGroup.name', displayName: 'Group' },
+        // { name: 'attendeeGroup.name', displayName: 'Group' },
+        { name: 'groupName', displayName: 'Group' },
         // { name: 'event.name', displayName: 'Event' },
         { name: 'remarks' }
     ];
@@ -65,6 +71,7 @@ export class EventViewComponent implements OnInit {
     };
 
     eventService: StandardService;
+    attendeeService: StandardService;
 
     constructor(
         private route: ActivatedRoute,
@@ -78,8 +85,10 @@ export class EventViewComponent implements OnInit {
         // this.service.init('event');
         this.eventService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
+        this.attendeeService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.formService.init('registration-form');
         this.eventService.init('event');
+        this.attendeeService.init('attendee');
     }
 
     ngOnInit() {

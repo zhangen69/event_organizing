@@ -18,6 +18,7 @@ const schema = new mongoose.Schema({
         ref: 'AttendeeGroup',
         default: null,
     },
+    groupName: { type: String },
     formData: Object,
     remarks: String,
 });

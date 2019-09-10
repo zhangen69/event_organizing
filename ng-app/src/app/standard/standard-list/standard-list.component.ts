@@ -23,6 +23,7 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     @Input() title: string;
     @Input() actions: any[];
     @Input() queryModel: any;
+    @Input() domainService: StandardService;
     @Input()
     set includes(includes: string[]) {
         if (!this.queryModel) {
