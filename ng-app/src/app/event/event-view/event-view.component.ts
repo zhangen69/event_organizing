@@ -145,11 +145,17 @@ export class EventViewComponent implements OnInit {
             width: 'auto',
             minWidth: '50vw',
             maxHeight: '99vh',
-            data: { domain: 'event', data: formData, fields, title: dName }
+            data: { domain: 'event', data: formData, callback: true, fields, title: dName }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            this.refresh();
+        dialogRef.afterClosed().subscribe(event => {
+            event[name].forEach(element => {
+                element.unit = element[type].unit;
+                element.unitPrice = element[type].unitPrice;
+            });
+            this.eventService.submit(event).subscribe(_ => {
+                this.refresh();
+            });
         });
     }
 
@@ -319,7 +325,7 @@ export class EventViewComponent implements OnInit {
         if (!status) {
             this.filteredEventProcesses = this.formData.processes;
         } else {
-            this.filteredEventProcesses = this.formData.processes.filter((val) => val.status === status);
+            this.filteredEventProcesses = this.formData.processes.filter(val => val.status === status);
         }
         this.filteredEventProcesses.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
     }
