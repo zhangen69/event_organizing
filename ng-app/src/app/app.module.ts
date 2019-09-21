@@ -106,6 +106,8 @@ import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FilterOptionsPipe } from './standard/filter-options.pipe';
 import { GetTotalPipe } from './pipes/get-total.pipe';
+import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
+import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +175,7 @@ import { GetTotalPipe } from './pipes/get-total.pipe';
     DialogFormComponent,
     FilterOptionsPipe,
     GetTotalPipe,
+    DemoXlsxComponent,
   ],
   imports: [
     BrowserModule,
@@ -221,6 +224,7 @@ import { GetTotalPipe } from './pipes/get-total.pipe';
     }),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    SpreadSheetsModule,
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent],
   providers: [
