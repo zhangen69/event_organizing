@@ -19,6 +19,14 @@ export enum IStandardFormFieldType {
   number,
   table,
   ref,
+  textarea,
+  date,
+  time,
+  boolean,
+  enum,
+  object,
+  array,
+  image,
 }
 
 export enum IStandardColumnType {

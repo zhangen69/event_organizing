@@ -5,3 +5,18 @@
     [filterList]="filterList"
     [actions]="actions">
 </app-standard-list>
+
+<ng-template #generateEventForm>
+    <p>Customer</p>
+    <p>Date From</p>
+    <p>Date To</p>
+    <p>Venue</p>
+    <app-standard-form-field
+        [field]="formField"
+        [formData]="generateEventFormData"
+        *ngFor="let formField of generateEventFormFields"
+    ></app-standard-form-field>
+    <button mat-raised-button color="primary" [mat-dialog-close]="generateEventFormData">Confirm</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+</ng-template>
+

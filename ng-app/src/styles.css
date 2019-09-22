@@ -44,6 +44,7 @@ table {
     max-width: 1200px;
 }
 
+.mat-dialog-container mat-form-field,
 .mat-card[class*='card-'] mat-form-field {
     width: 100%;
 }
