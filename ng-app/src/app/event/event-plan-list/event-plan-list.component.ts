@@ -7,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-plan-list.component.css']
 })
 export class EventPlanListComponent implements OnInit {
-  // actions:
+  actions = [
+      {
+          name: 'Group Attendees',
+          format: 'function',
+          function: item => {
+            console.log(item);
+            if (confirm('Do u confirm deplicate a new event with this plan?')) {
+              console.log('confirm', 'yes');
+            }
+          }
+      }
+  ];
   columns: IStandardColumn[] = [
     { name: 'name', displayName: 'Name' },
     { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
