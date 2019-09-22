@@ -7,6 +7,11 @@ import { IStandardFormField } from 'src/app/standard/standard-form-field.interfa
   styleUrls: ['./event-plan-form.component.css']
 })
 export class EventPlanFormComponent implements OnInit {
+  includes = [
+    'services.providerService',
+    'facilities.providerFacility',
+    'stockItems.stockItem',
+  ];
   fields: IStandardFormField[] = [
     { name: 'name', type: 'string', displayName: 'Name', required: true },
     {

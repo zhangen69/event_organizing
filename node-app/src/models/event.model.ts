@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 
-const eventServiceSchema = new mongoose.Schema({
+export const eventServiceSchema = new mongoose.Schema({
     providerService: { type: mongoose.Types.ObjectId, ref: 'ProviderService' },
     name: String,
     quantity: Number,
@@ -10,7 +10,7 @@ const eventServiceSchema = new mongoose.Schema({
     remarks: String,
 });
 
-const eventFacilitySchema = new mongoose.Schema({
+export const eventFacilitySchema = new mongoose.Schema({
     providerFacility: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility' },
     name: String,
     quantity: Number,
@@ -19,7 +19,7 @@ const eventFacilitySchema = new mongoose.Schema({
     remarks: String,
 });
 
-const eventStockItemSchema = new mongoose.Schema({
+export const eventStockItemSchema = new mongoose.Schema({
     stockItem: { type: mongoose.Types.ObjectId, ref: 'StockItem' },
     name: String,
     quantity: Number,
