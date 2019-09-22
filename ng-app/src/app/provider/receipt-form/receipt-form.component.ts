@@ -12,10 +12,11 @@ import { map, tap } from 'rxjs/operators';
 })
 export class ReceiptFormComponent implements OnInit {
   formData: any;
+  includes = ['provider', 'supplierInvoice'];
   fields: IStandardFormField[] = [
     // { name: 'code', type: 'string', required: true },
     { name: 'provider', type: 'ref', required: true },
-    { name: 'supplierInvoice', type: 'ref' },
+    { name: 'supplierInvoice', type: 'ref', refName: 'code' },
     { name: 'remarks', type: 'textarea' },
     {
       name: 'lines', type: 'table', add: (array) => { this.addReceiptItem(array); }, displayName: 'Receipt Items', childName: 'Receipt Item', default: [], fields: [

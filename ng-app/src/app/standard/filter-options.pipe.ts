@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterOptionsPipe implements PipeTransform {
 
-  transform(options: any[], value: any): any {
+  transform(options: any[], value: any, refName: string): any {
     if (!options) {
       return;
     }
@@ -15,10 +15,10 @@ export class FilterOptionsPipe implements PipeTransform {
     }
 
     if (typeof value === 'object') {
-      value = value.name;
+      value = value[refName];
     }
 
-    return options.filter(option => option.name.toLowerCase().includes(value.toLowerCase()));
+    return options.filter(option => option[refName].toLowerCase().includes(value.toLowerCase()));
   }
 
 }
