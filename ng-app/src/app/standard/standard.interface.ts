@@ -12,6 +12,7 @@ export interface IStandardFormField {
   enum?: any;
   fields?: IStandardFormField[];
   add?: any;
+  reuqired?: boolean;
 }
 
 export enum IStandardFormFieldType {
