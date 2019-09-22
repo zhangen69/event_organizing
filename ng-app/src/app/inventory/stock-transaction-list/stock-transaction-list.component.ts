@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-transaction-list.component.css']
 })
 export class StockTransactionListComponent implements OnInit {
-  columns = [
+  columns: IStandardColumn[] = [
      { name: 'name', displayName: 'Name' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];

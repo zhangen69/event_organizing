@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreListComponent implements OnInit {
   storeStatusEnumList = [];
-  columns = [
+  columns: IStandardColumn[] = [
      { name: 'name' },
      { name: 'description' },
      { name: 'status' },

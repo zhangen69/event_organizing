@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AttendeeListComponent implements OnInit {
   includes = ['attendeeGroup', 'event'];
-  columns = [
+  columns: IStandardColumn[] = [
     { name: 'code', format: 'link', link: '/attendee/view/' },
     { name: 'name' },
     { name: 'attendeeGroup.name', displayName: 'Group' },

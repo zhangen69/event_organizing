@@ -1,3 +1,4 @@
+import { IStandardColumn } from './../../standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

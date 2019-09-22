@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-service-list.component.css']
 })
 export class ProviderServiceListComponent implements OnInit {
-  columns = [
+  columns: IStandardColumn[] = [
      { name: 'name' },
      { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'currency' },
      { name: 'description' },

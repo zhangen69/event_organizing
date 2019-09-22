@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invoice-list.component.css']
 })
 export class InvoiceListComponent implements OnInit {
-  columns = [
+  columns: IStandardColumn[] = [
      { name: 'customer.name', displayName: 'Customer' },
      { name: 'event.name', displayName: 'Event' },
      { name: 'status' },

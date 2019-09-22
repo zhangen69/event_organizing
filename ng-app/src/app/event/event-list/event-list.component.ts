@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-  columns = [
+  columns: IStandardColumn[] = [
     { name: 'name', displayName: 'Name', format: 'link', link: '/event/view' },
     { name: 'dateFrom', type: 'date', dateFormat: 'dd MMM yyyy' },
     { name: 'dateTo', type: 'date', dateFormat: 'dd MMM yyyy' },

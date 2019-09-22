@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +10,7 @@ export class RegistrationListComponent implements OnInit {
   actions = [
     { name: 'Publish', format: 'link', link: '/register/', icon: 'public' }
   ]
-  columns = [
+  columns: IStandardColumn[] = [
      { name: 'name', format: 'link', link: '/registration-form/view' },
      { name: 'remarks' },
      { name: 'status',  },

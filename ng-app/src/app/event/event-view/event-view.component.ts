@@ -1,3 +1,4 @@
+import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { DialogFormComponent } from '../../templates/dialog-form/dialog-form.component';
 import { ToastrService } from 'ngx-toastr';
 import { StandardFunctionsService } from './../../standard/standard-functions.service';
@@ -55,7 +56,7 @@ export class EventViewComponent implements OnInit {
             isMultiple: true
         }
     ];
-    columns = [
+    columns: IStandardColumn[] = [
         { name: 'code', format: 'link', link: '/attendee/view/' },
         { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
         { name: 'name' },

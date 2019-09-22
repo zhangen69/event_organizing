@@ -10,6 +10,7 @@ import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 import { Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { ToastrService } from 'ngx-toastr';
+import { IStandardColumn } from '../standard.interface';
 
 @Component({
     selector: 'app-standard-list',
@@ -17,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./standard-list.component.css']
 })
 export class StandardListComponent implements OnInit, AfterViewInit {
-    @Input() columns: any[];
+    @Input() columns: IStandardColumn[];
     @Input() filterList: any[];
     @Input() domainName: string;
     @Input() title: string;
