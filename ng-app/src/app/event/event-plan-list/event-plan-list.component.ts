@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-plan-list.component.css']
 })
 export class EventPlanListComponent implements OnInit {
-  columns = [
+  // actions:
+  columns: IStandardColumn[] = [
     { name: 'name', displayName: 'Name' },
     { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
     { name: 'remarks', displayName: 'Remarks' },

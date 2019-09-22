@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
+import { IStandardFormField } from 'src/app/standard/standard.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StandardService } from 'src/app/standard/standard.service';
 

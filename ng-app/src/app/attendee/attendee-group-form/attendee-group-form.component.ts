@@ -1,4 +1,4 @@
-import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
+import { IStandardFormField } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

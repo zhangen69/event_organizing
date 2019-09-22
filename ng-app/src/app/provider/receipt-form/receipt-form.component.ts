@@ -1,6 +1,6 @@
 import { DialogFormComponent } from './../../templates/dialog-form/dialog-form.component';
 import { Component, OnInit } from '@angular/core';
-import { IStandardFormField } from '../../standard/standard-form-field.interface';
+import { IStandardFormField } from '../../standard/standard.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IStandardFormField } from 'src/app/standard/standard-form-field.interface';
+import { IStandardFormField } from 'src/app/standard/standard.interface';
 import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
 
 @Component({
