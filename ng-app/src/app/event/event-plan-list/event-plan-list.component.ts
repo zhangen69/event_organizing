@@ -31,7 +31,7 @@ export class EventPlanListComponent implements OnInit {
 
         dialogForm.afterClosed().subscribe((val) => {
           if (val) {
-            this.http.post(environment.apiUrl + '/service/event', this, this.generateEventFormData).pipe(
+            this.http.post(environment.apiUrl + '/service/event', this.generateEventFormData).pipe(
               map((res: any) => res.data)
             ).subscribe(() => {
               this.generateEventFormData = null;
