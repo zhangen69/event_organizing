@@ -2,8 +2,11 @@ import { DialogFormComponent } from './../../templates/dialog-form/dialog-form.c
 import { Component, OnInit } from '@angular/core';
 import { IStandardFormField } from '../../standard/standard.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, merge, forkJoin } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-receipt-form',
@@ -37,7 +40,7 @@ export class ReceiptFormComponent implements OnInit {
         }
     ];
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog, private http: HttpClient, private router: Router) {}
 
     ngOnInit() {}
 
@@ -48,7 +51,7 @@ export class ReceiptFormComponent implements OnInit {
                 name: 'stockItem',
                 displayName: 'Enter stock item name',
                 type: 'ref',
-                refIncludes: ['category'],
+                refIncludes: ['category']
             }
         ];
 
@@ -67,31 +70,31 @@ export class ReceiptFormComponent implements OnInit {
             of(result)
                 .pipe(
                     map(item => item.stockItem),
-                    tap((stockItem) => array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice }))
+                    tap(stockItem =>
+                        array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice })
+                    )
                 )
                 .subscribe();
         });
     }
 
     afterSubmit(receipt) {
-      console.log('formData', this.formData);
+        const apis = [];
         receipt.lines.forEach(line => {
-          const stockTransactionModel = {
-            quantity: 0,
-            stockItem: line.stockItem._id,
-            store: receipt.store,
-            event: null,
-            receipt: receipt._id,
-            type: 'StockIn',
-            stockItemName: line.stockItem.name,
-            stockItemUnit: line.stockItem.unit,
-            stockItemUnitPrice: line.stockItem.unitPrice,
-            stockItemCategory: line.stockItem.category,
-          };
-          console.log(stockTransactionModel);
-          debugger;
+            const stockTransactionModel = {
+                quantity: line.quantity,
+                stockItem: line.stockItem._id,
+                store: receipt.store,
+                event: null,
+                receipt: receipt._id,
+                type: 'StockIn',
+                stockItemName: line.stockItem.name,
+                stockItemUnit: line.stockItem.unit,
+                stockItemUnitPrice: line.stockItem.unitPrice,
+                stockItemCategory: line.stockItem.category
+            };
+            apis.push(this.http.post(environment.apiUrl + '/service/stock-transaction', stockTransactionModel));
         });
-
-        // this.http.post('/service/stockTransaction', )
+        forkJoin(apis).subscribe((results) => this.router.navigate(['/receipt/list']));
     }
 }
