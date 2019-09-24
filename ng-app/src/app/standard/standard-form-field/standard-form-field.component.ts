@@ -20,6 +20,7 @@ interface IFieldOptions {
     refName?: string;
     refValue: string;
     refOptions?: any[];
+    refIncludes?: string[];
     refFilteredOptions?: Observable<any[]>;
     refChange?: IRefChange;
     add?: any;
@@ -46,6 +47,7 @@ class FieldModel implements IFieldOptions {
     refName?: string;
     refValue: string;
     refOptions?: any[];
+    refIncludes?: string[];
     refFilteredOptions?: Observable<any[]>;
     refChange?: IRefChange;
     add?: any;
@@ -71,7 +73,14 @@ class FieldModel implements IFieldOptions {
                 this.refName = 'name';
             }
 
-            this.http.get(`${environment.apiUrl}/service/${this.ref}`).subscribe((res: any) => {
+            let api = `${environment.apiUrl}/service/${this.ref}`;
+            if (this.refIncludes && this.refIncludes.length > 0) {
+                const queryModel = {
+                    includes: this.refIncludes,
+                };
+                api += `?queryModel=${JSON.stringify(queryModel)}`;
+            }
+            this.http.get(api).subscribe((res: any) => {
                 this.refOptions = res.data;
             });
         } else if (this.type === 'table') {

@@ -5,6 +5,7 @@ import auditable from './auditable.model';
 import Counter from './counter.model';
 
 const line = new mongoose.Schema({
+    stockItem: { type: mongoose.Types.ObjectId, ref: 'StockItem' },
     name: String,
     quantity: Number,
     unit: String,
@@ -15,6 +16,7 @@ const line = new mongoose.Schema({
 const schema = new mongoose.Schema({
     code: { type: String },
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
+    store: { type: mongoose.Types.ObjectId, ref: 'Store' },
     supplierInvoice: { type: mongoose.Types.ObjectId, ref: 'SupplierInvoice' },
     lines: { type: [line], default: [] },
     remarks: String,

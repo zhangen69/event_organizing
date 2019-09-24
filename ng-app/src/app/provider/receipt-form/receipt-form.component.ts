@@ -16,6 +16,7 @@ export class ReceiptFormComponent implements OnInit {
     fields: IStandardFormField[] = [
         // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
+        { name: 'store', type: 'ref', required: true },
         { name: 'supplierInvoice', type: 'ref', refName: 'code' },
         { name: 'remarks', type: 'textarea' },
         {
@@ -46,7 +47,8 @@ export class ReceiptFormComponent implements OnInit {
             {
                 name: 'stockItem',
                 displayName: 'Enter stock item name',
-                type: 'ref'
+                type: 'ref',
+                refIncludes: ['category'],
             }
         ];
 
@@ -65,14 +67,30 @@ export class ReceiptFormComponent implements OnInit {
             of(result)
                 .pipe(
                     map(item => item.stockItem),
-                    tap(({ name, unit, unitPrice }) => array.push({ name, unit, unitPrice }))
+                    tap((stockItem) => array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice }))
                 )
                 .subscribe();
         });
     }
 
-    afterSubmit(formData) {
-        const stockTransactionModel = {};
+    afterSubmit(receipt) {
+      console.log('formData', this.formData);
+        receipt.lines.forEach(line => {
+          const stockTransactionModel = {
+            quantity: 0,
+            stockItem: line.stockItem._id,
+            store: receipt.store,
+            event: null,
+            receipt: receipt._id,
+            type: 'StockIn',
+            stockItemName: line.stockItem.name,
+            stockItemUnit: line.stockItem.unit,
+            stockItemUnitPrice: line.stockItem.unitPrice,
+            stockItemCategory: line.stockItem.category,
+          };
+          console.log(stockTransactionModel);
+          debugger;
+        });
 
         // this.http.post('/service/stockTransaction', )
     }

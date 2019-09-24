@@ -22,6 +22,7 @@ export class StandardFormComponent implements OnInit {
   @Input() callback: boolean;
   @Output() cancel = new EventEmitter<any>();
   @Output() submitFunc = new EventEmitter<any>();
+  @Output() afterSubmit = new EventEmitter<any>();
 
   mode = 'create';
   formData: any = {};
@@ -138,8 +139,12 @@ export class StandardFormComponent implements OnInit {
       this.pageLoaderService.toggle(true);
       this.standardService.submit(this.formData).subscribe((res: any) => {
         this.toastr.success(res.message);
-        this.onCancel(`/${this.domainName}/list`);
         this.pageLoaderService.toggle(false);
+        if (this.afterSubmit.observers.length > 0) {
+          this.afterSubmit.emit(this.formData);
+        } else {
+          this.onCancel(`/${this.domainName}/list`);
+        }
       }, (res: any) => {
         this.pageLoaderService.toggle(false);
         this.toastr.error(res.error.message);
