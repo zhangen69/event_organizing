@@ -16,7 +16,7 @@ export class StockTransactionListComponent implements OnInit {
      { name: 'type' },
      { name: 'store.name', displayName: 'Store' },
      { name: 'event.name', displayName: 'Event' },
-     { name: 'receipt.name', displayName: 'Receipt' },
+     { name: 'receipt.code', displayName: 'Receipt' },
      { name: 'remarks' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];

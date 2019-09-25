@@ -141,6 +141,7 @@ export class StandardFormComponent implements OnInit {
         this.toastr.success(res.message);
         this.pageLoaderService.toggle(false);
         if (this.afterSubmit.observers.length > 0) {
+          this.formData._id = res.data._id;
           this.afterSubmit.emit(this.formData);
         } else {
           this.onCancel(`/${this.domainName}/list`);
