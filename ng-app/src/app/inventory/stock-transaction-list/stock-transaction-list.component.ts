@@ -7,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-transaction-list.component.css']
 })
 export class StockTransactionListComponent implements OnInit {
+  includes = ['store', 'event', 'receipt'];
   columns: IStandardColumn[] = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'stockItemName', displayName: 'Stock Item' },
+     { name: 'stockItemUnit', displayName: 'Unit' },
+     { name: 'stockItemUnitPrice', displayName: 'Price' },
+     { name: 'stockItemCategory.name', displayName: 'Category' },
+     { name: 'type' },
+     { name: 'store.name', displayName: 'Store' },
+     { name: 'event.name', displayName: 'Event' },
+     { name: 'receipt.name', displayName: 'Receipt' },
+     { name: 'remarks' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
