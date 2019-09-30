@@ -1,5 +1,9 @@
 # Tasks Scheduling
 
+## Backlogs
+[ ] Venue autocomplete when enter the venue field in edit/add event form
+[ ] Import excel file to entry the attendee data
+
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
 - [x] Add `getTotal` custom pipe
