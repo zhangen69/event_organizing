@@ -64,12 +64,12 @@ class FieldModel implements IFieldOptions {
                 .forEach((key: string) => {
                     this.enumList.push({ key: key, value: this.enum[key] });
                 });
-        } else if (this.type === 'ref') {
+        } else if (this.type === 'ref' || this.type === 'textarea-autocomplete') {
             if (!this.ref) {
                 this.ref = this.name.replace(/([A-Z])/g, '-$1').toLowerCase();
             }
 
-            if (!this.refName) {
+            if (!this.refName && this.refName !== '') {
                 this.refName = 'name';
             }
 
@@ -269,5 +269,13 @@ export class StandardFormFieldComponent implements OnInit {
         }
 
         return field.isShow(this.formData);
+    }
+
+    displayValue(value, prop) {
+        if (!prop) {
+            return value;
+        }
+
+        return value[prop];
     }
 }

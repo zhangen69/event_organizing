@@ -18,7 +18,7 @@ export class EventFormComponent implements OnInit {
     { name: 'timeFrom', type: 'time', required: true },
     { name: 'timeTo', type: 'time', required: true },
     // { name: 'totalBudgetAmount', type: 'number', displayName: 'Total Budget (RM)', required: true },
-    { name: 'venue', type: 'textarea' },
+    { name: 'venue', type: 'textarea-autocomplete', ref: 'event/venue/list', refName: '' },
   ];
 
   constructor() { }

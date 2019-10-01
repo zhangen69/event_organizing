@@ -10,15 +10,13 @@
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="'textarea-autocomplete'">
-    <input type="text" matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
-      [required]="field.required" [matAutocomplete]="auto" />
     <textarea matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" [matAutocomplete]="textareaAutocomplete"></textarea>
 
     <mat-autocomplete #textareaAutocomplete="matAutocomplete" [displayWith]="displayFn"
       (optionSelected)="field.refChange && field.refChange($event, formData)">
       <mat-option *ngFor="let option of (field.refOptions | filterOptions: formData[field.name]: field.refName)"
-        [value]="option">{{ option[field.refName] }}</mat-option>
+        [value]="option">{{ displayValue(option, field.refName) }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
@@ -61,7 +59,7 @@
     <mat-autocomplete #textboxAutocomplete="matAutocomplete" [displayWith]="displayFn"
       (optionSelected)="field.refChange && field.refChange($event, formData)">
       <mat-option *ngFor="let option of (field.refOptions | filterOptions: formData[field.name]: field.refName)"
-        [value]="option">{{ option[field.refName] }}</mat-option>
+        [value]="option">{{ displayValue(option, field.refName) }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
