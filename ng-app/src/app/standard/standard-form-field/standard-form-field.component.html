@@ -37,7 +37,7 @@
   <mat-form-field *ngSwitchCase="'enum'">
     <mat-label>{{ field.displayName }}</mat-label>
     <mat-select [(ngModel)]="formData[field.name]" [name]="field.name" [required]="field.required">
-      <mat-option *ngFor="let enum of field.enumList" [value]="enum.value">{{ enum.value }}</mat-option>
+      <mat-option *ngFor="let enum of field.enumList" [value]="enum.value">{{ enum.value | titleDisplay }}</mat-option>
     </mat-select>
   </mat-form-field>
 

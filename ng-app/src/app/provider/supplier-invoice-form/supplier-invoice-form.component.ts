@@ -14,8 +14,8 @@ enum SupplierInvoiceStatus {
 }
 
 enum SupplierInvoiceType {
-    Service,
-    Facility
+    ServiceInvoice,
+    RentFacility,
 }
 
 @Component({
@@ -29,6 +29,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
         // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
         { name: 'store', type: 'ref', required: true },
+        { name: 'type', type: 'enum', enum: SupplierInvoiceType, required: true },
         {
             name: 'status',
             type: 'enum',
@@ -41,7 +42,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
             name: 'lines',
             type: 'table',
             add: array => {
-              this.addReceiptItem(array);
+                this.addReceiptItem(array);
             },
             displayName: 'Supplier Invoice Items',
             childName: 'Supplier Invoice Item',
@@ -55,42 +56,42 @@ export class SupplierInvoiceFormComponent implements OnInit {
         }
     ];
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) { }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     addReceiptItem(array) {
-      const formData = { ...this.formData };
-      const fields = [
-          {
-              name: 'stockItem',
-              displayName: 'Enter stock item name',
-              type: 'ref',
-              refIncludes: ['category']
-          }
-      ];
+        const formData = { ...this.formData };
+        const fields = [
+            {
+                name: 'stockItem',
+                displayName: 'Enter stock item name',
+                type: 'ref',
+                refIncludes: ['category']
+            }
+        ];
 
-      const dialogRef = this.dialog.open(DialogFormComponent, {
-          width: 'auto',
-          minWidth: '50vw',
-          maxHeight: '99vh',
-          data: { data: formData, fields, title: 'Add Stock Item', callback: true }
-      });
+        const dialogRef = this.dialog.open(DialogFormComponent, {
+            width: 'auto',
+            minWidth: '50vw',
+            maxHeight: '99vh',
+            data: { data: formData, fields, title: 'Add Stock Item', callback: true }
+        });
 
-      dialogRef.afterClosed().subscribe(result => {
-          if (!result) {
-              return;
-          }
-          // do something here
-          of(result)
-              .pipe(
-                  map(item => item.stockItem),
-                  tap(stockItem =>
-                      array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice })
-                  )
-              )
-              .subscribe();
-      });
-  }
+        dialogRef.afterClosed().subscribe(result => {
+            if (!result) {
+                return;
+            }
+            // do something here
+            of(result)
+                .pipe(
+                    map(item => item.stockItem),
+                    tap(stockItem =>
+                        array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice })
+                    )
+                )
+                .subscribe();
+        });
+    }
 
 }
