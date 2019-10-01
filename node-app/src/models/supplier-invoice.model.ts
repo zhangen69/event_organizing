@@ -3,7 +3,8 @@ import auditable from './auditable.model';
 import Counter from './counter.model';
 
 const line = new mongoose.Schema({
-    stockItem: { type: mongoose.Types.ObjectId, ref: 'StockItem', required: true },
+    service: { type: mongoose.Types.ObjectId, ref: 'StockItem', default: null },
+    facility: { type: mongoose.Types.ObjectId, ref: 'StockItem', default: null },
     name: String,
     quantity: Number,
     unit: String,

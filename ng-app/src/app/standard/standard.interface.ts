@@ -12,6 +12,7 @@ export interface IStandardFormField {
   enum?: any;
   fields?: IStandardFormField[];
   add?: any;
+  isShow?: any;
   reuqired?: boolean;
 }
 

@@ -42,8 +42,9 @@ export class SupplierInvoiceFormComponent implements OnInit {
             name: 'lines',
             type: 'table',
             add: array => {
-                this.addReceiptItem(array);
+                this.addServiceItem(array);
             },
+            isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice],
             displayName: 'Supplier Invoice Items',
             childName: 'Supplier Invoice Item',
             default: [],
@@ -53,19 +54,36 @@ export class SupplierInvoiceFormComponent implements OnInit {
                 { name: 'unitPrice', type: 'number', required: true },
                 { name: 'quantity', type: 'number', required: true }
             ]
-        }
+        },
+        {
+            name: 'lines',
+            type: 'table',
+            add: array => {
+                this.addFacilityItem(array);
+            },
+            isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.RentFacility],
+            displayName: 'Supplier Invoice Items',
+            childName: 'Supplier Invoice Item',
+            default: [],
+            fields: [
+                { name: 'name', type: 'string', required: true },
+                { name: 'unit', type: 'string', required: true },
+                { name: 'unitPrice', type: 'number', required: true },
+                { name: 'quantity', type: 'number', required: true }
+            ]
+        },
     ];
 
     constructor(private dialog: MatDialog) { }
 
     ngOnInit() { }
 
-    addReceiptItem(array) {
+    addServiceItem(array) {
         const formData = { ...this.formData };
         const fields = [
             {
-                name: 'stockItem',
-                displayName: 'Enter stock item name',
+                name: 'service',
+                displayName: 'Enter service name',
                 type: 'ref',
                 refIncludes: ['category']
             }
@@ -75,7 +93,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
             width: 'auto',
             minWidth: '50vw',
             maxHeight: '99vh',
-            data: { data: formData, fields, title: 'Add Stock Item', callback: true }
+            data: { data: formData, fields, title: 'Add Service Item', callback: true }
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -85,9 +103,43 @@ export class SupplierInvoiceFormComponent implements OnInit {
             // do something here
             of(result)
                 .pipe(
-                    map(item => item.stockItem),
-                    tap(stockItem =>
-                        array.push({ stockItem: stockItem, name: stockItem.name, unit: stockItem.unit, unitPrice: stockItem.unitPrice })
+                    map(item => item.service),
+                    tap(service =>
+                        array.push({ service: service, name: service.name, unit: service.unit, unitPrice: service.unitPrice })
+                    )
+                )
+                .subscribe();
+        });
+    }
+
+    addFacilityItem(array) {
+        const formData = { ...this.formData };
+        const fields = [
+            {
+                name: 'facility',
+                displayName: 'Enter facility name',
+                type: 'ref',
+                refIncludes: ['category']
+            }
+        ];
+
+        const dialogRef = this.dialog.open(DialogFormComponent, {
+            width: 'auto',
+            minWidth: '50vw',
+            maxHeight: '99vh',
+            data: { data: formData, fields, title: 'Add Facility Item', callback: true }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (!result) {
+                return;
+            }
+            // do something here
+            of(result)
+                .pipe(
+                    map(item => item.facility),
+                    tap(facility =>
+                        array.push({ facility: facility, name: facility.name, unit: facility.unit, unitPrice: facility.unitPrice })
                     )
                 )
                 .subscribe();
