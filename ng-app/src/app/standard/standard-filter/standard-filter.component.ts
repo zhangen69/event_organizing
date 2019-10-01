@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subject } from 'rxjs';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
@@ -6,7 +6,8 @@ import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 @Component({
   selector: 'app-standard-filter',
   templateUrl: './standard-filter.component.html',
-  styleUrls: ['./standard-filter.component.css']
+  styleUrls: ['./standard-filter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StandardFilterComponent implements OnInit {
   @Input() filterList: any;

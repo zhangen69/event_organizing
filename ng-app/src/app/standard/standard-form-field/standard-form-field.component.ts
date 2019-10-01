@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { from, Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { from, Observable, Subscription } from 'rxjs';
+import { startWith, map, throttleTime } from 'rxjs/operators';
 
 interface IFieldOptions {
     name: string;
@@ -33,7 +33,7 @@ interface IFieldEnumList {
     value: string;
 }
 
-class FieldModel implements IFieldOptions {
+class FieldModel implements IFieldOptions, OnDestroy {
     name: string;
     type: string;
     displayName?: string;
@@ -51,6 +51,13 @@ class FieldModel implements IFieldOptions {
     refFilteredOptions?: Observable<any[]>;
     refChange?: IRefChange;
     add?: any;
+    request$: Subscription;
+
+    ngOnDestroy(): void {
+        if (this.request$) {
+            this.request$.unsubscribe();
+        }
+    }
 
     constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {
         Object.keys(options).forEach((option: string) => {
@@ -80,8 +87,11 @@ class FieldModel implements IFieldOptions {
                 };
                 api += `?queryModel=${JSON.stringify(queryModel)}`;
             }
-            this.http.get(api).subscribe((res: any) => {
-                this.refOptions = res.data;
+            this.request$ = this.http.get(api).pipe(
+                throttleTime(500),
+                map((res: any) => res.data),
+            ).subscribe((options) => {
+                this.refOptions = options;
             });
         } else if (this.type === 'table') {
             this.fields.forEach(field => {
@@ -106,7 +116,8 @@ class FieldModel implements IFieldOptions {
 @Component({
     selector: 'app-standard-form-field',
     templateUrl: './standard-form-field.component.html',
-    styleUrls: ['./standard-form-field.component.css']
+    styleUrls: ['./standard-form-field.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StandardFormFieldComponent implements OnInit {
     @Input() parentField: any;

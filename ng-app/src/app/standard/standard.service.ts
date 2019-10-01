@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,17 +9,28 @@ import { ConfirmationDialogComponent } from '../templates/confirmation-dialog/co
 import { IQueryModel } from '../interfaces/query-model';
 import { UploadType } from '../enums/upload-type.enum';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StandardService {
+export class StandardService implements OnDestroy {
     domain: string;
     apiUrl: string;
     queryModel: IQueryModel;
     paginator: MatPaginator;
     refreshListerner = new Subject();
+    subscribedRequests$: Subscription[] = [];
+
+    ngOnDestroy(): void {
+        if (this.subscribedRequests$.length > 0) {
+            this.subscribedRequests$.forEach((subscription) => {
+                subscription.unsubscribe();
+                subscription.remove(subscription);
+            });
+        }
+    }
 
     constructor(public http: HttpClient, public dialog: MatDialog, public router: Router, public toastr: ToastrService) {}
 
@@ -40,23 +51,25 @@ export class StandardService {
     }
 
     create(formData) {
-        this.http.post(this.apiUrl, formData).subscribe(
+        const request$ = this.http.post(this.apiUrl, formData).subscribe(
             (res: any) => {
                 this.toastr.success(res.message);
                 this.router.navigate([`/${this.domain}/list`]);
             },
             (res: any) => this.toastr.error(res.error.message)
         );
+        this.subscribedRequests$.push(request$);
     }
 
     update(formData) {
-        this.http.put(this.apiUrl, formData).subscribe(
+        const request$ = this.http.put(this.apiUrl, formData).subscribe(
             (res: any) => {
                 this.toastr.success(res.message);
                 this.router.navigate([`/${this.domain}/list`]);
             },
             (res: any) => this.toastr.error(res.error.message)
         );
+        this.subscribedRequests$.push(request$);
     }
 
     submit(formData, url = null): Observable<any> {
@@ -79,7 +92,8 @@ export class StandardService {
         const fetchData = this.http.get(url);
 
         if (formData !== null) {
-            fetchData.subscribe((res: any) => (formData = res.data), (res: any) => this.toastr.error(res.error.message));
+            const request$ = fetchData.subscribe((res: any) => (formData = res.data), (res: any) => this.toastr.error(res.error.message));
+            this.subscribedRequests$.push(request$);
             return;
         }
 
@@ -94,7 +108,7 @@ export class StandardService {
             };
         }
 
-        return this.http.get(this.apiUrl + '?queryModel=' + JSON.stringify(queryModel));
+        return this.http.get(this.apiUrl + '?queryModel=' + JSON.stringify(queryModel)).pipe(throttleTime(500));
     }
 
     delete(item) {
@@ -104,13 +118,14 @@ export class StandardService {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.http.delete(this.apiUrl + '/' + result._id).subscribe(
+                const request$ = this.http.delete(this.apiUrl + '/' + result._id).subscribe(
                     (res: any) => {
                         this.toastr.success(res.message);
                         this.setRefreshListerner();
                     },
                     (res: any) => this.toastr.error(res.error.message)
                 );
+                this.subscribedRequests$.push(request$);
             }
         });
     }

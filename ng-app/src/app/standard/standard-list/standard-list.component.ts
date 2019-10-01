@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { merge } from 'rxjs';
+import { merge, Subscription, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -11,13 +11,15 @@ import { Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { ToastrService } from 'ngx-toastr';
 import { IStandardColumn } from '../standard.interface';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-standard-list',
     templateUrl: './standard-list.component.html',
-    styleUrls: ['./standard-list.component.css']
+    styleUrls: ['./standard-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StandardListComponent implements OnInit, AfterViewInit {
+export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() columns: IStandardColumn[];
     @Input() filterList: any[];
     @Input() domainName: string;
@@ -42,6 +44,8 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<any>;
     displayedColumns: string[];
     totalItems = 0;
+    requests$: Observable<any>[] = [];
+    subscribedRequests$: Subscription[] = [];
 
     constructor(
         private service: StandardService,
@@ -79,6 +83,19 @@ export class StandardListComponent implements OnInit, AfterViewInit {
         this.service.setRefreshListerner();
     }
 
+    ngOnDestroy(): void {
+        this.unsubscribe();
+    }
+
+    unsubscribe() {
+        if (this.subscribedRequests$.length > 0) {
+            this.subscribedRequests$.forEach((subscription) => {
+                subscription.unsubscribe();
+                subscription.remove(subscription);
+            });
+        }
+    }
+
     ngAfterViewInit() {
         this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
         merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
@@ -103,18 +120,31 @@ export class StandardListComponent implements OnInit, AfterViewInit {
     }
 
     fetchAll() {
+        // debugger;
         this.pageLoaderService.toggle(true);
-        return this.service.fetchAll(this.queryModel).subscribe(
-            (res: any) => {
+
+        const req$ = this.service.fetchAll(this.queryModel).pipe();
+
+        this.unsubscribe();
+
+        const sub$ = req$.subscribe({
+            next: (res: any) => {
                 this.dataSource = new MatTableDataSource<any>(res.data);
                 this.totalItems = res.totalItems;
                 this.pageLoaderService.toggle(false);
             },
-            (res: any) => {
+            error: (res: any) => {
                 this.pageLoaderService.toggle(false);
                 this.toastr.error(res.error.message);
+            },
+            complete: () => {
+                // sub$.unsubscribe();
+                // console.log('should unsubscribe');
             }
-        );
+        });
+        this.requests$.push(req$);
+        this.subscribedRequests$.push(sub$);
+        return sub$;
     }
 
     delete(item) {
