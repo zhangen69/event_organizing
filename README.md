@@ -5,6 +5,7 @@
 - [ ] Import excel file to entry the attendee data
 - [ ] Event should add STATUS
 - [ ] Event Processes should group by the Event's Status
+- [ ] Add Purchase Order and Delivery Order, Merge into Receipt 
 
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
