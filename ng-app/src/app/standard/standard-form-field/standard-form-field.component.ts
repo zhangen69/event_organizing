@@ -139,6 +139,11 @@ export class StandardFormFieldComponent implements OnInit {
                 if (!this.formData[this.field.name]) {
                     this.formData[this.field.name] = [{}];
                 }
+
+                if (this.field.default) {
+                    this.formData[this.field.name] = this.field.default;
+                }
+
                 break;
             case 'date':
                 if (!this.formData[this.field.name]) {

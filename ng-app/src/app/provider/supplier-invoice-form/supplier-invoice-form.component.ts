@@ -85,6 +85,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
                 name: 'service',
                 displayName: 'Enter service name',
                 type: 'ref',
+                ref: 'provider-service',
                 refIncludes: ['category']
             }
         ];
@@ -119,6 +120,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
                 name: 'facility',
                 displayName: 'Enter facility name',
                 type: 'ref',
+                ref: 'provider-facility',
                 refIncludes: ['category']
             }
         ];
