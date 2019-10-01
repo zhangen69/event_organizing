@@ -29,7 +29,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
         // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
         { name: 'store', type: 'ref', required: true },
-        { name: 'type', type: 'enum', enum: SupplierInvoiceType, required: true },
+        // { name: 'type', type: 'enum', enum: SupplierInvoiceType, required: true },
         {
             name: 'status',
             type: 'enum',
@@ -42,26 +42,8 @@ export class SupplierInvoiceFormComponent implements OnInit {
             name: 'lines',
             type: 'table',
             add: array => {
-                this.addServiceItem(array);
+                this.addItem(array);
             },
-            isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice],
-            displayName: 'Supplier Invoice Items',
-            childName: 'Supplier Invoice Item',
-            default: [],
-            fields: [
-                { name: 'name', type: 'string', required: true },
-                { name: 'unit', type: 'string', required: true },
-                { name: 'unitPrice', type: 'number', required: true },
-                { name: 'quantity', type: 'number', required: true }
-            ]
-        },
-        {
-            name: 'lines',
-            type: 'table',
-            add: array => {
-                this.addFacilityItem(array);
-            },
-            isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.RentFacility],
             displayName: 'Supplier Invoice Items',
             childName: 'Supplier Invoice Item',
             default: [],
@@ -78,15 +60,25 @@ export class SupplierInvoiceFormComponent implements OnInit {
 
     ngOnInit() { }
 
-    addServiceItem(array) {
+    addItem(array) {
         const formData = { ...this.formData };
         const fields = [
+            { name: 'type', type: 'enum', enum: SupplierInvoiceType, default: SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice], required: true },
             {
                 name: 'service',
                 displayName: 'Enter service name',
                 type: 'ref',
                 ref: 'provider-service',
-                refIncludes: ['category']
+                refIncludes: ['category'],
+                isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice],
+            },
+            {
+                name: 'facility',
+                displayName: 'Enter facility name',
+                type: 'ref',
+                ref: 'provider-facility',
+                refIncludes: ['category'],
+                isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.RentFacility],
             }
         ];
 
@@ -104,47 +96,19 @@ export class SupplierInvoiceFormComponent implements OnInit {
             // do something here
             of(result)
                 .pipe(
-                    map(item => item.service),
-                    tap(service =>
-                        array.push({ service: service, name: service.name, unit: service.unit, unitPrice: service.unitPrice })
-                    )
+                    map(item => {
+                        if (item.type === SupplierInvoiceType[SupplierInvoiceType.RentFacility]) {
+                            return [item.facility, 'facility'];
+                        } else if (item.type === SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice]) {
+                            return [item.service, 'service'];
+                        }
+                    })
                 )
-                .subscribe();
-        });
-    }
-
-    addFacilityItem(array) {
-        const formData = { ...this.formData };
-        const fields = [
-            {
-                name: 'facility',
-                displayName: 'Enter facility name',
-                type: 'ref',
-                ref: 'provider-facility',
-                refIncludes: ['category']
-            }
-        ];
-
-        const dialogRef = this.dialog.open(DialogFormComponent, {
-            width: 'auto',
-            minWidth: '50vw',
-            maxHeight: '99vh',
-            data: { data: formData, fields, title: 'Add Facility Item', callback: true }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (!result) {
-                return;
-            }
-            // do something here
-            of(result)
-                .pipe(
-                    map(item => item.facility),
-                    tap(facility =>
-                        array.push({ facility: facility, name: facility.name, unit: facility.unit, unitPrice: facility.unitPrice })
-                    )
-                )
-                .subscribe();
+                .subscribe(([item, propName]) => {
+                    const line: any = { name: item.name, unit: item.unit, unitPrice: item.unitPrice };
+                    line[propName] = item;
+                    array.push(line);
+                });
         });
     }
 

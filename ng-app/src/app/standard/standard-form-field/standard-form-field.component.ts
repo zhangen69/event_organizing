@@ -116,7 +116,7 @@ export class StandardFormFieldComponent implements OnInit {
     pickedImage: any = null;
     selectedTime: string;
 
-    constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {}
+    constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) { }
 
     ngOnInit() {
         this.initial();
@@ -136,7 +136,7 @@ export class StandardFormFieldComponent implements OnInit {
                 break;
             case 'array':
             case 'table':
-                if (!this.formData[this.field.name]) {
+                if (!this.formData[this.field.name] && !this.field.default) {
                     this.formData[this.field.name] = [{}];
                 }
 
@@ -176,6 +176,11 @@ export class StandardFormFieldComponent implements OnInit {
                 if (this.parentField && this.parentField.type === 'array' && !this.formData) {
                     this.formData = {};
                 }
+
+                if (this.field.default) {
+                    this.formData[this.field.name] = this.field.default;
+                }
+
                 break;
         }
     }
@@ -229,9 +234,9 @@ export class StandardFormFieldComponent implements OnInit {
         }
 
         if (this.field.add) {
-          this.field.add(array);
+            this.field.add(array);
         } else {
-          array.push({});
+            array.push({});
         }
     }
 
