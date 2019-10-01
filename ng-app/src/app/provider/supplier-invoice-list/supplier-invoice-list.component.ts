@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { EventEmitter } from 'events';
 import { StandardListComponent } from 'src/app/standard/standard-list/standard-list.component';
 
