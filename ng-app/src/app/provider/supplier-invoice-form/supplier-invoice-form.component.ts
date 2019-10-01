@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 enum SupplierInvoiceStatus {
     Open,
     Sent,
+    Received,
     Paid,
     Closed
 }
@@ -25,8 +26,9 @@ enum SupplierInvoiceType {
 export class SupplierInvoiceFormComponent implements OnInit {
     formData: any = {};
     fields: IStandardFormField[] = [
-        { name: 'code', type: 'string', required: true },
+        // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
+        { name: 'store', type: 'ref', required: true },
         {
             name: 'status',
             type: 'enum',
@@ -43,6 +45,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
             },
             displayName: 'Supplier Invoice Items',
             childName: 'Supplier Invoice Item',
+            default: [],
             fields: [
                 { name: 'name', type: 'string', required: true },
                 { name: 'unit', type: 'string', required: true },
