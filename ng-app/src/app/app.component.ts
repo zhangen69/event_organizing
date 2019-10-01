@@ -28,14 +28,17 @@ export class AppComponent implements OnInit, OnDestroy {
                 { url: '/attendee/list', name: 'Attendees' },
                 { url: '/attendee-group/list', name: 'Attendee Groups' },
                 { url: '/payment/list', name: 'Payments' },
-                { url: '/supplier-invoice/list', name: 'Supplier Invoices' },
                 { url: '/payment-voucher/list', name: 'Payment Vouchers' }
             ]
         },
         { url: '/customer/list', name: 'Customers' },
         {
             name: 'Invoice & Receipt',
-            children: [{ url: '/invoice/list', name: 'Invoice List' }, { url: '/receipt/list', name: 'Receipt List' }]
+            children: [
+                { url: '/invoice/list', name: 'Invoice List' },
+                { url: '/supplier-invoice/list', name: 'Supplier Invoice List' },
+                { url: '/receipt/list', name: 'Receipt List' }
+            ]
         },
         {
             name: 'Inventory',

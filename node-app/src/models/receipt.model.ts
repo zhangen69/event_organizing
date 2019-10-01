@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import { of } from 'rxjs';
-import { skipWhile, tap } from 'rxjs/operators';
 import auditable from './auditable.model';
 import Counter from './counter.model';
 

@@ -188,8 +188,12 @@ export class StandardListComponent implements OnInit, AfterViewInit {
             return false;
         }
 
-        if (this.selectedItems.length > 1 && !action.isMultiple) {
-            return false;
+        if (this.selectedItems.length > 0 && !action.isMultiple) {
+            if (action.show) {
+                return action.show(this.selectedItems[0]);
+            } else {
+                return true;
+            }
         }
 
         return true;

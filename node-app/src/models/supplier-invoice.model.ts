@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import auditable from './auditable.model';
 
 const line = new mongoose.Schema({
-    type: { type: String, enum: ['Service', 'Facility'] },
+    stockItem: { type: mongoose.Types.ObjectId, ref: 'StockItem', required: true },
     name: String,
     quantity: Number,
     unit: String,
@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
     supplierInvoice: { type: mongoose.Types.ObjectId, ref: 'SupplierInvoice', default: null },
     lines: { type: [line], default: [] },
-    status: { type: String, enum: ['Open', 'Sent', 'Paid', 'Closed'] },
+    status: { type: String, enum: ['Open', 'Sent', 'Received', 'Paid', 'Closed'] },
     remarks: String,
 });
 
