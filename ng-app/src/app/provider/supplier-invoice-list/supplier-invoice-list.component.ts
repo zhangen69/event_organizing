@@ -56,41 +56,12 @@ export class SupplierInvoiceListComponent implements OnInit {
 
     ngOnInit() {}
 
-    updateStatus(item, status: string) {
+    updateStatus(item: any, status: string) {
         const formData = { ...item };
         formData.status = status;
 
-        const update$ = this.http.put(environment.apiUrl + '/service/supplier-invoice', formData);
-        const transactionApis$ = [];
-
-        if (formData.status === 'Received') {
-            item.lines.forEach(line => {
-                const stockTransactionModel = {
-                    quantity: line.quantity,
-                    stockItem: line.stockItem._id,
-                    store: item.store,
-                    event: null,
-                    receipt: item._id,
-                    type: 'StockIn',
-                    stockItemName: line.stockItem.name,
-                    stockItemUnit: line.stockItem.unit,
-                    stockItemUnitPrice: line.stockItem.unitPrice,
-                    stockItemCategory: line.stockItem.category
-                };
-                transactionApis$.push(this.http.post(environment.apiUrl + '/service/stock-transaction', stockTransactionModel));
-            });
-        }
-
-        update$.subscribe(() => {
-            if (transactionApis$.length > 0) {
-                forkJoin(transactionApis$).subscribe(() => {
-                    // window.location.reload();
-                    this.AppStandardList.fetchAll();
-                });
-            } else {
-                // window.location.reload();
-                this.AppStandardList.fetchAll();
-            }
+        this.http.put(environment.apiUrl + '/service/supplier-invoice', formData).subscribe(() => {
+            this.AppStandardList.fetchAll();
         });
     }
 }
