@@ -1,7 +1,7 @@
 # Tasks Scheduling
 
 ## Backlogs
-- [ ] Venue autocomplete when enter the venue field in edit/add event form
+- [x] Venue autocomplete when enter the venue field in edit/add event form
 - [ ] Import excel file to entry the attendee data
 - [ ] Event should add STATUS
 - [ ] Event Processes should group by the Event's Status
