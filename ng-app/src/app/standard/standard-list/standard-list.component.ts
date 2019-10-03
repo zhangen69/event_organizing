@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subscription, Observable } from 'rxjs';
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { ToastrService } from 'ngx-toastr';
 import { IStandardColumn } from '../standard.interface';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-standard-list',
@@ -45,16 +47,18 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     totalItems = 0;
     requests$: Observable<any>[] = [];
     subscribedRequests$: Subscription[] = [];
+    private service = new StandardService(this.http, this.dialog, this.router, this.toastr);
 
     constructor(
-        private service: StandardService,
         private authService: AuthService,
         private datePipe: DatePipe,
         private router: Router,
         private pageLoaderService: PageLoaderService,
         private titleDisplayPipe: TitleDisplayPipe,
         private currencyPipe: CurrencyPipe,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private http: HttpClient,
+        private dialog: MatDialog,
     ) {
         this.isAuth = this.authService.getIsAuth();
         this.authService.getAuthStatusListener().subscribe(isAuth => (this.isAuth = isAuth));
@@ -83,15 +87,15 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnDestroy(): void {
-        this.unsubscribe();
+        this.unsubscribeRequests();
     }
 
-    unsubscribe() {
+    unsubscribeRequests() {
         if (this.subscribedRequests$.length > 0) {
             this.subscribedRequests$.forEach((subscription) => {
                 subscription.unsubscribe();
                 subscription.remove(subscription);
-                console.log('unsubscribed');
+                console.log(`${this.domainName} is unsubscribed`);
             });
         }
     }
@@ -120,14 +124,9 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     fetchAll() {
-        // debugger;
         this.pageLoaderService.toggle(true);
 
-        const req$ = this.service.fetchAll(this.queryModel).pipe();
-
-        // this.unsubscribe();
-
-        const sub$ = req$.subscribe({
+        const req$ = this.service.fetchAll(this.queryModel).pipe().subscribe({
             next: (res: any) => {
                 this.dataSource = new MatTableDataSource<any>(res.data);
                 this.totalItems = res.totalItems;
@@ -137,15 +136,10 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.pageLoaderService.toggle(false);
                 this.toastr.error(res.error.message);
             },
-            complete: () => {
-                // sub$.unsubscribe();
-                // console.log('should unsubscribe');
-                console.log('completed');
-            }
+            complete: () => req$.unsubscribe(),
         });
-        this.requests$.push(req$);
-        this.subscribedRequests$.push(sub$);
-        return sub$;
+
+        return req$;
     }
 
     delete(item) {

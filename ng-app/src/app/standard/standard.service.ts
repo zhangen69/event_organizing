@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,28 +9,18 @@ import { ConfirmationDialogComponent } from '../templates/confirmation-dialog/co
 import { IQueryModel } from '../interfaces/query-model';
 import { UploadType } from '../enums/upload-type.enum';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StandardService implements OnDestroy {
+export class StandardService {
     domain: string;
     apiUrl: string;
     queryModel: IQueryModel;
     paginator: MatPaginator;
     refreshListerner = new Subject();
-    subscribedRequests$: Subscription[] = [];
-
-    ngOnDestroy(): void {
-        if (this.subscribedRequests$.length > 0) {
-            this.subscribedRequests$.forEach((subscription) => {
-                subscription.unsubscribe();
-                subscription.remove(subscription);
-            });
-        }
-    }
 
     constructor(public http: HttpClient, public dialog: MatDialog, public router: Router, public toastr: ToastrService) {}
 
@@ -51,25 +41,25 @@ export class StandardService implements OnDestroy {
     }
 
     create(formData) {
-        const request$ = this.http.post(this.apiUrl, formData).subscribe(
-            (res: any) => {
+        const req$ = this.http.post(this.apiUrl, formData).subscribe({
+            next: (res: any) => {
                 this.toastr.success(res.message);
                 this.router.navigate([`/${this.domain}/list`]);
             },
-            (res: any) => this.toastr.error(res.error.message)
-        );
-        this.subscribedRequests$.push(request$);
+            error: (res: any) => this.toastr.error(res.error.message),
+            complete: () => req$.unsubscribe(),
+        });
     }
 
     update(formData) {
-        const request$ = this.http.put(this.apiUrl, formData).subscribe(
-            (res: any) => {
+        const req$ = this.http.put(this.apiUrl, formData).subscribe({
+            next: (res: any) => {
                 this.toastr.success(res.message);
                 this.router.navigate([`/${this.domain}/list`]);
             },
-            (res: any) => this.toastr.error(res.error.message)
-        );
-        this.subscribedRequests$.push(request$);
+            error: (res: any) => this.toastr.error(res.error.message),
+            complete: () => req$.unsubscribe(),
+        });
     }
 
     submit(formData, url = null): Observable<any> {
@@ -79,7 +69,8 @@ export class StandardService implements OnDestroy {
             mode = 'put';
         }
 
-        return this.http[mode](url || this.apiUrl, formData);
+        const req$ = this.http[mode](url || this.apiUrl, formData).pipe(throttleTime(500));
+        return req$;
     }
 
     fetch(id, formData = null, includes = []) {
@@ -92,8 +83,11 @@ export class StandardService implements OnDestroy {
         const fetchData = this.http.get(url);
 
         if (formData !== null) {
-            const request$ = fetchData.subscribe((res: any) => (formData = res.data), (res: any) => this.toastr.error(res.error.message));
-            this.subscribedRequests$.push(request$);
+            const req$ = fetchData.subscribe({
+                next: (res: any) => (formData = res.data),
+                error: (res: any) => this.toastr.error(res.error.message),
+                complete: () => req$.unsubscribe(),
+            });
             return;
         }
 
@@ -108,7 +102,8 @@ export class StandardService implements OnDestroy {
             };
         }
 
-        return this.http.get(this.apiUrl + '?queryModel=' + JSON.stringify(queryModel)).pipe(throttleTime(500));
+        const req$ = this.http.get(this.apiUrl + '?queryModel=' + JSON.stringify(queryModel)).pipe(throttleTime(500));
+        return req$;
     }
 
     delete(item) {
@@ -118,14 +113,14 @@ export class StandardService implements OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                const request$ = this.http.delete(this.apiUrl + '/' + result._id).subscribe(
-                    (res: any) => {
+                const req$ = this.http.delete(this.apiUrl + '/' + result._id).subscribe({
+                    next: (res: any) => {
                         this.toastr.success(res.message);
                         this.setRefreshListerner();
                     },
-                    (res: any) => this.toastr.error(res.error.message)
-                );
-                this.subscribedRequests$.push(request$);
+                    error: (res: any) => this.toastr.error(res.error.message),
+                    complete: () => req$.unsubscribe(),
+                });
             }
         });
     }
