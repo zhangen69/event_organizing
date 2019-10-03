@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invoice-list.component.css']
 })
 export class InvoiceListComponent implements OnInit {
+  includes: string[] = ['customer','event'];
   columns: IStandardColumn[] = [
      { name: 'customer.name', displayName: 'Customer' },
      { name: 'event.name', displayName: 'Event' },

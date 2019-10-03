@@ -2,25 +2,22 @@ import { IStandardColumn } from 'src/app/standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-receipt-list',
-  templateUrl: './receipt-list.component.html',
-  styleUrls: ['./receipt-list.component.css']
+    selector: 'app-receipt-list',
+    templateUrl: './receipt-list.component.html',
+    styleUrls: ['./receipt-list.component.css']
 })
 export class ReceiptListComponent implements OnInit {
-  columns: IStandardColumn[] = [
-    { name: 'code' },
-    { name: 'provider.name', displayName: 'Provider' },
-    { name: 'supplierInvoice.name', displayName: 'Supplier Invoice' },
-    { name: 'remarks' },
-    { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
-  ];
-  filterList = [
-    { type: 'name', display: 'Name', queryType: 'string' },
-  ];
+    includes: string[] = ['provider', 'supplierInvoice'];
+    columns: IStandardColumn[] = [
+        { name: 'code' },
+        { name: 'provider.name', displayName: 'Provider' },
+        { name: 'supplierInvoice.name', displayName: 'Supplier Invoice' },
+        { name: 'remarks' },
+        { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
+    ];
+    filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
 
-  constructor() { }
+    constructor() {}
 
-  ngOnInit() {
-  }
-
+    ngOnInit() {}
 }

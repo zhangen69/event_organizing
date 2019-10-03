@@ -16,6 +16,7 @@ const schema = new mongoose.Schema({
     code: String,
     totalAmount: Number,
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
+    store: { type: mongoose.Types.ObjectId, ref: 'Store' },
     supplierInvoice: { type: mongoose.Types.ObjectId, ref: 'SupplierInvoice', default: null },
     lines: { type: [line], default: [] },
     status: { type: String, enum: ['Open', 'Sent', 'Received', 'Paid', 'Closed'] },

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { from, Observable, Subscription } from 'rxjs';
-import { startWith, map, throttleTime } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, throttleTime } from 'rxjs/operators';
 
 interface IFieldOptions {
     name: string;
@@ -117,7 +117,7 @@ class FieldModel implements IFieldOptions, OnDestroy {
     selector: 'app-standard-form-field',
     templateUrl: './standard-form-field.component.html',
     styleUrls: ['./standard-form-field.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StandardFormFieldComponent implements OnInit {
     @Input() parentField: any;

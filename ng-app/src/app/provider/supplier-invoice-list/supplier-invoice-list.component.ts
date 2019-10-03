@@ -12,6 +12,7 @@ import { StandardListComponent } from 'src/app/standard/standard-list/standard-l
     styleUrls: ['./supplier-invoice-list.component.css']
 })
 export class SupplierInvoiceListComponent implements OnInit {
+    includes: string[] = ['provider', 'supplierInvoice'];
     actions = [
         {
             name: 'Send',

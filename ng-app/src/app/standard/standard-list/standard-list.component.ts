@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subscription, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,13 +11,12 @@ import { Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { ToastrService } from 'ngx-toastr';
 import { IStandardColumn } from '../standard.interface';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-standard-list',
     templateUrl: './standard-list.component.html',
     styleUrls: ['./standard-list.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() columns: IStandardColumn[];
@@ -92,6 +91,7 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
             this.subscribedRequests$.forEach((subscription) => {
                 subscription.unsubscribe();
                 subscription.remove(subscription);
+                console.log('unsubscribed');
             });
         }
     }
@@ -125,7 +125,7 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const req$ = this.service.fetchAll(this.queryModel).pipe();
 
-        this.unsubscribe();
+        // this.unsubscribe();
 
         const sub$ = req$.subscribe({
             next: (res: any) => {
@@ -140,6 +140,7 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
             complete: () => {
                 // sub$.unsubscribe();
                 // console.log('should unsubscribe');
+                console.log('completed');
             }
         });
         this.requests$.push(req$);

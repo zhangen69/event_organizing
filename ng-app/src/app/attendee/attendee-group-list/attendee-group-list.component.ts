@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./attendee-group-list.component.css']
 })
 export class AttendeeGroupListComponent implements OnInit {
+  includes: string[] = ['event'];
   columns: IStandardColumn[] = [
      { name: 'name' },
      { name: 'description' },

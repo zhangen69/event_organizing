@@ -7,6 +7,7 @@ import { IStandardFormField } from 'src/app/standard/standard.interface';
   styleUrls: ['./stock-item-form.component.css']
 })
 export class StockItemFormComponent implements OnInit {
+  includes: string[] = ['category'];
   fields: IStandardFormField[] = [
      { name: 'name', type: 'string', displayName: 'Name', required: true },
      { name: 'category', type: 'ref', ref: 'category', refName: 'name', displayName: 'Category', required: true },

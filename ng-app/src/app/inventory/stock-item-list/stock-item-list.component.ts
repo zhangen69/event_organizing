@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-item-list.component.css']
 })
 export class StockItemListComponent implements OnInit {
+  includes: string[] = ['category'];
   columns: IStandardColumn[] = [
      { name: 'name' },
      { name: 'category.name', displayName: 'Category' },
