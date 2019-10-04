@@ -151,6 +151,7 @@ export class EventViewComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(event => {
             event[name].forEach(element => {
+                element.name = element[type].name;
                 element.unit = element[type].unit;
                 element.unitPrice = element[type].unitPrice;
             });

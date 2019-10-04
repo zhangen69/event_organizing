@@ -25,10 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 { url: '/event-plan/list', name: 'Event Plans' },
                 { url: '/event/list', name: 'Events' },
                 // { url: '/registration-form/list', name: 'Registration Forms' },
-                { url: '/attendee/list', name: 'Attendees' },
-                { url: '/attendee-group/list', name: 'Attendee Groups' },
-                { url: '/payment/list', name: 'Payments' },
-                { url: '/payment-voucher/list', name: 'Payment Vouchers' }
+                // { url: '/attendee/list', name: 'Attendees' },
+                // { url: '/attendee-group/list', name: 'Attendee Groups' },
             ]
         },
         { url: '/customer/list', name: 'Customers' },
@@ -36,7 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
             name: 'Invoice & Receipt',
             children: [
                 { url: '/invoice/list', name: 'Invoice List' },
+                { url: '/payment/list', name: 'Payments' },
                 { url: '/supplier-invoice/list', name: 'Supplier Invoice List' },
+                { url: '/payment-voucher/list', name: 'Payment Vouchers' },
                 { url: '/receipt/list', name: 'Receipt List' }
             ]
         },
