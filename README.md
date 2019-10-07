@@ -14,6 +14,28 @@
 - [ ] Supplier Invoice Workflow
     - Open > Cancelled
     - Open > Confirmed > Paid > Closed
+    
+## Scenarios
+- Supplier Invoices
+    1. Generate Supplier Invoices from Event
+        - Admin/Staff can generate Event through the Event Resource Session
+        - When they are done the setup of Event Resource, they can generate Supplier Inovices following the setup
+    2. View Event's Supplier Invoices
+        - When Admin/Staff view Event Info, they can also check/track the supplier invoices of the Event
+        - They can directly perform some actions in the View Event Page, such as Generate Supplier Invoice, Update Supplier Invoice's Status, Edit Supplier Inovice's Info, 
+    3. For Service
+        - Create Supplier Invoice with Services
+        - Update Supplier Invoice's Status when Confirmed and Paid
+    4. For Rent Facility
+        - Create Supplier Invoice with Rent Facilities
+        - Update Supplier Invoice's Status When Confirmed, Paid and Received Facilities
+        - Record the facilities should stored in which Store when delivered **(Delivery Order?)**
+        - After event, there should return **(Return Voucher?)**
+        - After returned facilities, admin/staff should update the Supplier Invoice's Status
+- Payment Vouchers
+- Invoices
+- Receipts
+- Payments
 
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
