@@ -6,6 +6,14 @@
 - [ ] Event should add STATUS
 - [ ] Event Processes should group by the Event's Status
 - [ ] Add Purchase Order and Delivery Order, Merge into Receipt 
+- [ ] Genenrate **Payment Voucher** and **Supplier Invoice** from Event
+- [ ] Payment Voucher Workflow
+    - Open > Cancelled
+    - Open > Prepared > Cancelled
+    - Open > Prepared > Signed > Closed
+- [ ] Supplier Invoice Workflow
+    - Open > Cancelled
+    - Open > Confirmed > Paid > Closed
 
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
