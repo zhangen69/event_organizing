@@ -24,6 +24,7 @@ interface IFieldOptions {
     refFilteredOptions?: Observable<any[]>;
     refChange?: IRefChange;
     add?: any;
+    queryModel?: any;
 }
 
 type IRefChange = (refData: any, data: any) => any;
@@ -52,6 +53,7 @@ class FieldModel implements IFieldOptions, OnDestroy {
     refChange?: IRefChange;
     add?: any;
     request$: Subscription;
+    queryModel?: any;
 
     ngOnDestroy(): void {
         if (this.request$) {
@@ -82,10 +84,17 @@ class FieldModel implements IFieldOptions, OnDestroy {
 
             let api = `${environment.apiUrl}/service/${this.ref}`;
             if (this.refIncludes && this.refIncludes.length > 0) {
-                const queryModel = {
-                    includes: this.refIncludes,
-                };
+                let queryModel: any = {};
+                
+                if (this.queryModel) {
+                    queryModel = this.queryModel;
+                }
+                
+                queryModel.includes = this.refIncludes;
+                    
                 api += `?queryModel=${JSON.stringify(queryModel)}`;
+            } else if (this.queryModel) {
+                api += `?queryModel=${JSON.stringify(this.queryModel)}`;
             }
             this.request$ = this.http.get(api).pipe(
                 throttleTime(500),

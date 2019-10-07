@@ -15,22 +15,22 @@ export class SupplierInvoiceListComponent implements OnInit {
     includes: string[] = ['provider', 'supplierInvoice'];
     actions = [
         {
-            name: 'Send',
+            name: 'Confirm',
             format: 'function',
-            function: item => this.updateStatus(item, 'Sent'),
-            show: item => item.status === 'Open' && item.status !== 'Sent'
+            function: item => this.updateStatus(item, 'Confirmed'),
+            show: item => item.status === 'Open' && item.status !== 'Confirmed'
         },
         {
-            name: 'Receive',
+            name: 'Cancel',
             format: 'function',
-            function: item => this.updateStatus(item, 'Received'),
-            show: item => item.status === 'Sent' && item.status !== 'Received'
+            function: item => this.updateStatus(item, 'Cancelled'),
+            show: item => item.status === 'Open' && item.status !== 'Cancelled'
         },
         {
             name: 'Paid',
             format: 'function',
             function: item => this.updateStatus(item, 'Paid'),
-            show: item => item.status === 'Received' && item.status !== 'Paid'
+            show: item => item.status === 'Confirmed' && item.status !== 'Paid'
         },
         {
             name: 'Close',

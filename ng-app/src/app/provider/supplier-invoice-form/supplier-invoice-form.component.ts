@@ -7,10 +7,17 @@ import { MatDialog } from '@angular/material/dialog';
 
 enum SupplierInvoiceStatus {
     Open,
-    Sent,
-    Received,
+    Confirmed,
     Paid,
-    Closed
+    Closed,
+    Cancelled
+}
+
+enum SupplierInvoicePeriod {
+    Immediate,
+    ThirtyDays,
+    SixtyDays,
+    NinetyDays,
 }
 
 enum SupplierInvoiceType {
@@ -36,6 +43,13 @@ export class SupplierInvoiceFormComponent implements OnInit {
             type: 'enum',
             enum: SupplierInvoiceStatus,
             default: SupplierInvoiceStatus[SupplierInvoiceStatus.Open],
+            required: true
+        },
+        {
+            name: 'period',
+            type: 'enum',
+            enum: SupplierInvoicePeriod,
+            default: SupplierInvoicePeriod[SupplierInvoicePeriod.ThirtyDays],
             required: true
         },
         { name: 'remarks', type: 'textarea' },

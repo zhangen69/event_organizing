@@ -3,24 +3,25 @@ import auditable from './auditable.model';
 import Counter from './counter.model';
 
 const line = new mongoose.Schema({
-    service: { type: mongoose.Types.ObjectId, ref: 'StockItem', default: null },
-    facility: { type: mongoose.Types.ObjectId, ref: 'StockItem', default: null },
-    name: String,
-    quantity: Number,
-    unit: String,
-    unitPrice: Number,
-    subTotal: Number,
+    service: { type: mongoose.Types.ObjectId, ref: 'ProviderService', default: null },
+    facility: { type: mongoose.Types.ObjectId, ref: 'ProviderFacility', default: null },
+    name: { type: String, required: true },
+    quantity: { type: Number, default: 0 },
+    unit: { type: String, required: true },
+    unitPrice: { type: Number, default: 0.0 },
+    subTotal: { type: Number, default: 0.0 },
 });
 
 const schema = new mongoose.Schema({
-    code: String,
-    totalAmount: Number,
+    code: { type: String, default: null },
+    totalAmount: { type: Number, default: 0.0 },
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
     store: { type: mongoose.Types.ObjectId, ref: 'Store' },
     supplierInvoice: { type: mongoose.Types.ObjectId, ref: 'SupplierInvoice', default: null },
     lines: { type: [line], default: [] },
-    status: { type: String, enum: ['Open', 'Sent', 'Received', 'Paid', 'Closed'] },
-    remarks: String,
+    status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Cancelled'], default: 'Open' },
+    period: { type: String, enum: ['Immediate', 'ThirtyDays', 'SixtyDays', 'NinetyDays'], default: 'ThirtyDays' },
+    remarks: { type: String, default: null },
 });
 
 schema.add(auditable);
