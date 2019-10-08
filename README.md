@@ -14,6 +14,15 @@
 - [ ] Supplier Invoice Workflow
     - Open > Cancelled
     - Open > Confirmed > Paid > Closed
+- [ ] Receipt Workflow
+- [ ] Invoice Workflow
+    - Open > Cancelled
+    - Open > Revised > Confirmed > Paid > Closed
+    - Open > Confirmed > Paid > Closed
+- [ ] Payment Workflow
+    - Open > Cancelled
+    - Open > In Progress > Verified > Closed
+    - Open > In Progress > Failed
     
 ## Scenarios
 - Supplier Invoices
