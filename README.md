@@ -33,9 +33,32 @@
         - After event, there should return **(Return Voucher?)**
         - After returned facilities, admin/staff should update the Supplier Invoice's Status
 - Payment Vouchers
+    1. Freelance Performers / CREWs
+        - Admin/Staff configure the provider and service items
+        - Create Payment Vouncher for each Provider with Open Status
+        - After prepare Cheque/Cash update Payment Voucher Status and Info
+        - Admin/Staff can generate and download Payment Voucher with PDF format
+        - After Provider signed the Payment Voucher (offline), Admin/Staff will update Status as Signed/Closed
 - Invoices
+    1. Generate Inovice from Event
+        - Admin/Staff configure the Event Info
+        - Admin/Staff can based on the Event generate Invoice
+        - Admin/Staff can set the **Markup Rate(Profit)** based on the Total Costs (RM)
+    2. Update Inovice Info
+        - Admin/Staff can update Inovice Status as Confirmed, Revised, Paid, and Cancelled
 - Receipts
+    1. Purchase Stock Items from Shopping Malls/Super Market
+        - Admin/Staff purchased stock items, they must configure the stock items for each items which they purchased
+        - After configuration, they can create new Receipt
+        - They can record the items store into which Store
+        - After they created Receipt, system will auto generate the stock transactions for each items
 - Payments
+    1. Pay the Invoices
+        - Admin/Staff can create Payment for certain/specific Invoice (there may have more than 1 Payment for 1 Invoice)
+        - After customer says, they are paid Admin/Staff will create a new Payment
+        - The Payment will created with Open
+        - After Admin/Staff verified the Payment, they can update the Payment's Status
+        - Untill the payment will clear the Invoice's Amount, System will auto update Invoice's Status as Paid
 
 ## General
 - [x] Filter selected items while select [provider/service/facility] (autocomplete)
