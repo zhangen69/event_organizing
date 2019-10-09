@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 
-const schema = new mongoose.Schema({
+export const RegistrationFormSchema = new mongoose.Schema({
     name: String,
     fields: [Object],
     settings: Object,
@@ -10,6 +10,6 @@ const schema = new mongoose.Schema({
     remarks: String,
 });
 
-schema.add(auditable);
+RegistrationFormSchema.add(auditable);
 
-export default mongoose.model('RegistrationForm', schema);
+export default mongoose.model('RegistrationForm', RegistrationFormSchema);

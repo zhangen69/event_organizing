@@ -46,6 +46,21 @@ export const MongooseHelper = {
                 required,
             };
         },
+        RefObjectIds: (ref: string, defaultValue = null, required = false) => {
+            return [{
+                type: mongoose.Types.ObjectId,
+                ref,
+                default: defaultValue,
+                required,
+            }];
+        },
+        Schema: (schema: mongoose.Schema, defaultValue = null, required = false) => {
+            return {
+                type: schema,
+                default: defaultValue,
+                required,
+            };
+        },
         SchemaList: (schema: mongoose.Schema, defaultValue = [], required = false) => {
             return {
                 type: [schema],

@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 import { MongooseHelper } from '../helpers/mongoose.helper';
+import { RegistrationFormSchema } from './registration-form.model';
+
+const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'Ready', 'Closed', 'Cancelled'];
+const EventProcessStatus = ['Open', 'InProgress', 'Done', 'Verified', 'Closure'];
+const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'];
+const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
 
 const EventServiceSchema = new mongoose.Schema({
     providerService: MongooseHelper.Types.RefObjectId('ProviderService'),
@@ -29,17 +35,12 @@ const EventStockItemSchema = new mongoose.Schema({
     remarks: MongooseHelper.Types.String(),
 });
 
-const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
-
 const AttendeeSchema = new mongoose.Schema({
     name: MongooseHelper.Types.String(),
     status: MongooseHelper.Types.Enum(AttendeeStatus, 'Open'),
     attendeeGroup: MongooseHelper.Types.String(),
     remarks: MongooseHelper.Types.String(),
 });
-
-const EventProcessStatus = ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'];
-const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'];
 
 const EventProcessSchema = new mongoose.Schema({
     name: MongooseHelper.Types.String(),
@@ -67,8 +68,6 @@ const EventPlanNoteSchema = new mongoose.Schema({
     date: MongooseHelper.Types.Date(),
 });
 
-const EventPlanStatus = ['Draft', 'Confirmed', 'InProgress', 'Closed', 'Cancelled'];
-
 const EventPlanSchema = new mongoose.Schema({
     name: MongooseHelper.Types.String(true),
     venue: MongooseHelper.Types.String(),
@@ -79,12 +78,17 @@ const EventPlanSchema = new mongoose.Schema({
     stockItems: MongooseHelper.Types.SchemaList(EventStockItemSchema),
     attendees: MongooseHelper.Types.SchemaList(AttendeeSchema),
     processes: MongooseHelper.Types.SchemaList(EventProcessSchema),
+    paymentVouchers: MongooseHelper.Types.RefObjectIds('PaymentVoucher'),
+    supplierInvoices: MongooseHelper.Types.RefObjectIds('SupplierInvoice'),
+    invoices: MongooseHelper.Types.RefObjectIds('Invoice'),
+    stockTransactions: MongooseHelper.Types.RefObjectIds('StockTransaction'),
     markupRate: MongooseHelper.Types.Number(),
     markupPrice: MongooseHelper.Types.Number(),
     totalCostPrice: MongooseHelper.Types.Number(),
     totalPrice: MongooseHelper.Types.Number(),
     remarks: MongooseHelper.Types.String(),
     notes: MongooseHelper.Types.SchemaList(EventPlanNoteSchema),
+    registrationForm: MongooseHelper.Types.Schema(RegistrationFormSchema),
 });
 
 EventPlanSchema.add(auditable);

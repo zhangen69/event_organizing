@@ -11,7 +11,7 @@ const line = new mongoose.Schema({
     subTotal: { type: Number, default: 0.0 },
 });
 
-const schema = new mongoose.Schema({
+export const PaymentVoucherSchema = new mongoose.Schema({
     code: { type: String, default: null },
     totalAmount: { type: Number, default: 0.0 },
     provider: { type: mongoose.Types.ObjectId, ref: 'Provider', required: true },
@@ -23,14 +23,15 @@ const schema = new mongoose.Schema({
     remarks: { type: String, default: null },
 });
 
-schema.add(auditable);
+PaymentVoucherSchema.add(auditable);
 
-schema.pre('save', function(next) {
+PaymentVoucherSchema.pre('save', function(next) {
     console.log('pre:save');
     const item = this;
     const query = Counter.findOne({ domain: 'PaymentVoucher' });
     query.then((doc) => {
         const str = '000';
+        const code = 'PV';
         if (!doc) {
             console.log('create new counter: PaymentVoucher');
             const newCounter = new Counter({ domain: 'PaymentVoucher', serial: 1 });
@@ -39,7 +40,7 @@ schema.pre('save', function(next) {
                 const docSerial = newDoc.get('serial');
                 console.log('newDoc.serial.length', docSerial.toString().length);
                 const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
-                item.set('code', `SI-${serialnumber}`);
+                item.set('code', `${code}-${serialnumber}`);
                 next();
             });
         } else {
@@ -50,11 +51,11 @@ schema.pre('save', function(next) {
                 const docSerial = updatedDoc.get('serial');
                 console.log('updatedDoc.serial.length', docSerial.toString().length);
                 const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
-                item.set('code', `SI-${serialnumber}`);
+                item.set('code', `${code}-${serialnumber}`);
                 next();
             });
         }
     });
 });
 
-export default mongoose.model('PaymentVoucher', schema);
+export default mongoose.model('PaymentVoucher', PaymentVoucherSchema);
