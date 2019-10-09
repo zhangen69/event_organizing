@@ -23,6 +23,14 @@
     - Open > Cancelled
     - Open > In Progress > Verified > Closed
     - Open > In Progress > Failed
+- [ ] Event Plan as Quotation
+    - Markup Price & Rate
+    - Calculate Total Price
+    - Link to Invoice
+- [ ] Invoice & Payment
+    - In general, one event only have one invoice
+    - One Invoice can have more than 1 payment
+    - Generally, for each event have deposit payment, so there at least have 2 payment
     
 ## Scenarios
 - Supplier Invoices
