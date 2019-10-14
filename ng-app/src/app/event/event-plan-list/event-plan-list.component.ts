@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event-plan-list',
@@ -43,8 +44,18 @@ export class EventPlanListComponent implements OnInit {
     }
   ];
   columns: IStandardColumn[] = [
-    { name: 'name', displayName: 'Name' },
-    { name: 'totalBudgetAmount', displayName: 'Total Budget (RM)', type: 'currency' },
+    { name: 'code' },
+    { name: 'name' },
+    { name: 'date', format: 'template', template: (item) => {
+      const from = moment(item.dateFrom);
+      const to = moment(item.dateTo);
+      const diff = to.diff(from, 'days');
+      if (diff > 0) {
+        return `${from.format('DD/MM/YYYY')} - ${to.format('DD/MM/YYYY')} (${diff + 1} days)`;
+      } else {
+        return from.format('DD/MM/YYYY');
+      }
+    }},
     { name: 'remarks', displayName: 'Remarks' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import auditable from './auditable.model';
 import { MongooseHelper } from '../helpers/mongoose.helper';
 import { RegistrationFormSchema } from './registration-form.model';
+import Counter from './counter.model';
 
 const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'Ready', 'Closed', 'Cancelled'];
 const EventProcessStatus = ['Open', 'InProgress', 'Done', 'Verified', 'Closure'];
@@ -69,8 +70,13 @@ const EventPlanNoteSchema = new mongoose.Schema({
 });
 
 const EventPlanSchema = new mongoose.Schema({
+    code: MongooseHelper.Types.String(),
     name: MongooseHelper.Types.String(true),
     venue: MongooseHelper.Types.String(),
+    dateFrom: MongooseHelper.Types.Date(),
+    timeFrom: MongooseHelper.Types.Date(),
+    dateTo: MongooseHelper.Types.Date(),
+    timeTo: MongooseHelper.Types.Date(),
     customer: MongooseHelper.Types.RefObjectId('Customer'),
     status: MongooseHelper.Types.Enum(EventPlanStatus, 'Draft'),
     services: MongooseHelper.Types.SchemaList(EventServiceSchema),
@@ -92,5 +98,38 @@ const EventPlanSchema = new mongoose.Schema({
 });
 
 EventPlanSchema.add(auditable);
+
+EventPlanSchema.pre('save', function(next) {
+    console.log('pre:save');
+    const receipt = this;
+    const query = Counter.findOne({ domain: 'EventPlan' });
+    query.then((doc) => {
+        const str = '000';
+        const code = 'EP';
+        if (!doc) {
+            console.log('create new counter: EventPlan');
+            const newCounter = new Counter({ domain: 'EventPlan', serial: 1 });
+            const saveQuery = newCounter.save();
+            saveQuery.then((newDoc) => {
+                const docSerial = newDoc.get('serial');
+                console.log('newDoc.serial.length', docSerial.toString().length);
+                const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
+                receipt.set('code', `${code}-${serialnumber}`);
+                next();
+            });
+        } else {
+            console.log('update serial: EventPlan');
+            doc.set('serial', doc.get('serial') + 1);
+            const updateQuery = doc.save();
+            updateQuery.then((updatedDoc) => {
+                const docSerial = updatedDoc.get('serial');
+                console.log('updatedDoc.serial.length', docSerial.toString().length);
+                const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
+                receipt.set('code', `${code}-${serialnumber}`);
+                next();
+            });
+        }
+    });
+});
 
 export default mongoose.model('EventPlan', EventPlanSchema);

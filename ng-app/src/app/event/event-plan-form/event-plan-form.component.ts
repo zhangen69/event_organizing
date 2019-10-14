@@ -1,41 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { IStandardFormField } from 'src/app/standard/standard.interface';
 
+enum EventPlanStatus {
+  'Draft', 'Confirmed', 'Initial', 'Preparation', 'Ready', 'Closed', 'Cancelled'
+}
+
 @Component({
   selector: 'app-event-plan-form',
   templateUrl: './event-plan-form.component.html',
   styleUrls: ['./event-plan-form.component.css']
 })
+
 export class EventPlanFormComponent implements OnInit {
-  includes = [
-    'services.providerService',
-    'facilities.providerFacility',
-    'stockItems.stockItem',
-  ];
+  includes = ['customer'];
   fields: IStandardFormField[] = [
-    { name: 'name', type: 'string', displayName: 'Name', required: true },
-    {
-      name: 'services', type: 'table', fields: [
-        { name: 'providerService', type: 'ref' },
-        { name: 'quantity', type: 'number' },
-        { name: 'remarks', type: 'textarea' },
-      ]
-    },
-    {
-      name: 'facilities', type: 'table', fields: [
-        { name: 'providerFacility', type: 'ref' },
-        { name: 'quantity', type: 'number' },
-        { name: 'remarks', type: 'textarea' },
-      ]
-    },
-    {
-      name: 'stockItems', type: 'table', fields: [
-        { name: 'stockItem', type: 'ref' },
-        { name: 'quantity', type: 'number' },
-        { name: 'remarks', type: 'textarea' },
-      ]
-    },
-    { name: 'totalBudgetAmount', type: 'number', displayName: 'Total Budget (RM)', required: true },
+    { name: 'name', type: 'string', required: true },
+    { name: 'customer', type: 'ref', required: true },
+    { name: 'status', type: 'enum', enum: EventPlanStatus, default: EventPlanStatus[EventPlanStatus.Draft] },
+    { name: 'dateFrom', type: 'date', required: true },
+    { name: 'dateTo', type: 'date', required: true },
+    { name: 'timeFrom', type: 'time', required: true },
+    { name: 'timeTo', type: 'time', required: true },
+    { name: 'venue', type: 'textarea-autocomplete', ref: 'event-plan/venue/list', refName: '', required: true },
     { name: 'remarks', type: 'textarea', displayName: 'Remarks' },
   ];
 
