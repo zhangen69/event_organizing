@@ -108,6 +108,7 @@ import { FilterOptionsPipe } from './standard/filter-options.pipe';
 import { GetTotalPipe } from './pipes/get-total.pipe';
 import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
 import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
+import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +177,7 @@ import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
     FilterOptionsPipe,
     GetTotalPipe,
     DemoXlsxComponent,
+    EventPlanViewComponent,
   ],
   imports: [
     BrowserModule,
