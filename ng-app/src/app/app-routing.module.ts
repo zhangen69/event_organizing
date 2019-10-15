@@ -1,3 +1,4 @@
+import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserChangePasswordComponent } from './user/user-change-password/user-change-password.component';
@@ -57,6 +58,7 @@ const routes: Routes = [
       { path: 'list', component: EventPlanListComponent },
       { path: 'add', component: EventPlanFormComponent },
       { path: 'edit/:id', component: EventPlanFormComponent },
+      { path: 'view/:id', component: EventPlanViewComponent },
     ]
   },
   {

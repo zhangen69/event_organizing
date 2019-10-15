@@ -1,3 +1,4 @@
+import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { UserService } from './../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -20,11 +21,13 @@ export class UserProfileComponent implements OnInit {
   });
   imagesPreview: any = {};
 
-  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private userService: UserService, private pageLoaderService: PageLoaderService) { }
 
   ngOnInit() {
+    this.pageLoaderService.toggle();
     this.userService.fetchProfile().subscribe((res: any) => {
       this.formData.patchValue(res.data);
+      this.pageLoaderService.toggle();
     });
   }
 

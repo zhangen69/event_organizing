@@ -13,7 +13,6 @@ export class PageLoaderComponent implements OnInit {
         this.pageLoaderService.getLoaderListener().subscribe(value => {
             this.isShow = value;
         });
-        this.pageLoaderService.toggle(false);
     }
 
     ngOnInit() {}

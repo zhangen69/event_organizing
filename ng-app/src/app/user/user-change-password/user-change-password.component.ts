@@ -1,8 +1,7 @@
-import { AuthService } from '../../auth/auth.service';
+import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import { UserService } from './../../services/user.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-change-password',
@@ -15,8 +14,10 @@ export class UserChangePasswordComponent implements OnInit {
     newPassword: [null, Validators.required],
   });
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private pageLoaderService: PageLoaderService) {
+    this.pageLoaderService.toggle();
     this.userService.init('user');
+    this.pageLoaderService.toggle();
   }
 
   ngOnInit() {

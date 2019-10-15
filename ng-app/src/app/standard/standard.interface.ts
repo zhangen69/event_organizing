@@ -49,4 +49,10 @@ export interface IStandardColumn {
   template?: IStandardColumnTemplateFunc;
 }
 
+export interface HttpResponse {
+  data: any;
+  message: string;
+  status: number;
+}
+
 type IStandardColumnTemplateFunc = (item: any) => string;

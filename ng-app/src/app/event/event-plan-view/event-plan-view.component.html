@@ -1,3 +1,37 @@
-<p>
-  event-plan-view works!
-</p>
+<span class="mat-display-1">View Event Plan ({{ eventPlan.code }})</span>
+
+<mat-tab-group>
+  <mat-tab label="Basis Info">
+    <div class="tab-body">
+      <div class="view-field">
+        <label class="mat-body-strong">Name</label>
+        <div class="mat-body">{{ eventPlan.name }}</div>
+      </div>
+      <div class="view-field">
+        <label class="mat-body-strong">Customer</label>
+        <div class="mat-body">{{ eventPlan.customer?.name }}</div>
+      </div>
+      <div class="view-field">
+        <label class="mat-body-strong">Date/Time</label>
+        <div class="mat-body">{{ eventPlan.dateFrom | date: 'dd-MM-yyyy' }} - {{ eventPlan.dateTo | date: 'dd-MM-yyyy' }}</div>
+        <div class="mat-body">{{ eventPlan.timeFrom | date: 'HH:mm a' }} - {{ eventPlan.timeTo | date: 'HH:mm a' }}</div>
+      </div>
+      <div class="view-field">
+        <label class="mat-body-strong">Venue</label>
+        <div class="mat-body">{{ eventPlan.venue }}</div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Resources">
+    <div class="tab-body">
+      <p>Event Resource Info</p>
+    </div>
+  </mat-tab>
+  <mat-tab label="Processes">
+    <div class="tab-body">
+      <p>Event Process Info</p>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<pre>{{ eventPlan | json }}</pre>

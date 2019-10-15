@@ -1,3 +1,4 @@
+import { PageLoaderService } from './../../templates/page-loader/page-loader.service';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,7 +27,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private userService: UserService, private authService: AuthService) {
+  constructor(private userService: UserService, private authService: AuthService, private pageLoaderService: PageLoaderService) {
     this.userService.init('user', this.queryModel, this.paginator);
     this.isAuth = this.authService.getIsAuth();
     this.authService.getAuthStatusListener().subscribe(isAuth => this.isAuth = isAuth);
@@ -46,9 +47,11 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   fetchAll() {
+    this.pageLoaderService.toggle();
     return this.userService.fetchAll(this.queryModel).subscribe((res: any) => {
       this.dataSource = new MatTableDataSource<User>(res.data);
       this.totalItems = res.totalItems;
+      this.pageLoaderService.toggle();
     });
   }
 
