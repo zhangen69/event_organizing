@@ -8,25 +8,27 @@ import * as moment from 'moment';
 export class PageLoaderService {
     isLoad: boolean;
     private loaderListener = new Subject<boolean>();
-    private onLoadDate: Date;
+    private lastUpdate: Date;
 
     constructor() { }
 
     toggle(value?: boolean): void {
         this.isLoad = value !== undefined ? value : !this.isLoad;
         if (this.isLoad === true) {
-            this.onLoadDate = new Date();
+            this.lastUpdate = new Date();
         } else {
-            const diff = moment().diff(moment(this.onLoadDate), 'milliseconds');
+            const diff = moment().diff(moment(this.lastUpdate), 'milliseconds');
             const throttleTime = 1000;
             if (diff <= throttleTime) {
+                const timeout = throttleTime - diff;
                 setTimeout(() => {
-                    this.onLoadDate = new Date();
+                    this.lastUpdate = new Date();
                     this.loaderListener.next(this.isLoad);
-                }, throttleTime - diff);
+                }, timeout);
                 return;
             }
         }
+
         this.loaderListener.next(this.isLoad);
     }
 
