@@ -9,3 +9,7 @@
 .view-field .mat-body {
     white-space: pre;
 }
+
+.btn-sm {
+    line-height: 30px;
+}
