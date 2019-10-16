@@ -24,10 +24,10 @@ export class UserProfileComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private userService: UserService, private pageLoaderService: PageLoaderService) { }
 
   ngOnInit() {
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(true);
     this.userService.fetchProfile().subscribe((res: any) => {
       this.formData.patchValue(res.data);
-      this.pageLoaderService.toggle();
+      this.pageLoaderService.toggle(false);
     });
   }
 

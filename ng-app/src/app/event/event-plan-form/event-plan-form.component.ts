@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IStandardFormField } from 'src/app/standard/standard.interface';
 
-enum EventPlanStatus {
-  'Draft', 'Confirmed', 'Initial', 'Preparation', 'Ready', 'Closed', 'Cancelled'
+export enum EventPlanStatus {
+  'Draft', 'Confirmed', 'Initial', 'Preparation', 'In Progress', 'Closed', 'Cancelled'
 }
 
 @Component({

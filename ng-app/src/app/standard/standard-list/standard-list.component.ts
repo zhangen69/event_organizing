@@ -124,16 +124,16 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     fetchAll() {
-        this.pageLoaderService.toggle();
+        this.pageLoaderService.toggle(true);
 
         const req$ = this.service.fetchAll(this.queryModel).pipe().subscribe({
             next: (res: any) => {
                 this.dataSource = new MatTableDataSource<any>(res.data);
                 this.totalItems = res.totalItems;
-                this.pageLoaderService.toggle();
+                this.pageLoaderService.toggle(false);
             },
             error: (res: any) => {
-                this.pageLoaderService.toggle();
+                this.pageLoaderService.toggle(false);
                 this.toastr.error(res.error.message);
             },
             complete: () => req$.unsubscribe(),

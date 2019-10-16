@@ -28,9 +28,9 @@ export class AuthService {
   }
 
   login(formData) {
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(true);
     this.http.post(this.apiUrl + '/login', formData).subscribe((res: any) => {
-      this.pageLoaderService.toggle();
+      this.pageLoaderService.toggle(false);
       this.token = res.token;
       this.isAuth = true;
       if (this.token) {
@@ -44,7 +44,7 @@ export class AuthService {
         this.router.navigate(['/']);
       }
     }, (res: any) => {
-      this.pageLoaderService.toggle();
+      this.pageLoaderService.toggle(false);
       this.toastr.error(res.error.message);
     });
   }

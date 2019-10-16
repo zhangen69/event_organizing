@@ -4,8 +4,8 @@ import { MongooseHelper } from '../helpers/mongoose.helper';
 import { RegistrationFormSchema } from './registration-form.model';
 import Counter from './counter.model';
 
-const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'Ready', 'Closed', 'Cancelled'];
-const EventProcessStatus = ['Open', 'InProgress', 'Done', 'Verified', 'Closure'];
+const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'In Progress', 'Closed', 'Cancelled'];
+const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closure'];
 const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'];
 const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
 
@@ -46,8 +46,8 @@ const AttendeeSchema = new mongoose.Schema({
 const EventProcessSchema = new mongoose.Schema({
     name: MongooseHelper.Types.String(),
     status: MongooseHelper.Types.Enum(EventProcessStatus, 'Open'),
-    processType: MongooseHelper.Types.Enum(EventProcessTypes, 'Initial'),
-    type: MongooseHelper.Types.String(),
+    type: MongooseHelper.Types.Enum(EventProcessTypes, 'Initial'),
+    processType: MongooseHelper.Types.String(),
     startFromDate: MongooseHelper.Types.Date(null, true),
     startFromTime: MongooseHelper.Types.Date(null, true),
     endToDate: MongooseHelper.Types.Date(null, true),

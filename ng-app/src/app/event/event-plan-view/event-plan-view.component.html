@@ -48,45 +48,45 @@
         <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
           <mat-icon>edit</mat-icon>
         </button>
-        <p *ngIf="eventPlan.services && eventPlan.services.length === 0">
+        <div class="mat-body" *ngIf="eventPlan.services && eventPlan.services.length === 0">
           No service yet.
-        </p>
+        </div>
         <ng-container *ngIf="eventPlan.services && eventPlan.services.length > 0">
-          <p *ngFor="let service of eventPlan.services">
+          <div class="mat-body" *ngFor="let service of eventPlan.services">
             {{ service?.name }} x {{ service?.quantity }}
             {{ service?.unit }}
             ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
-          </p>
+          </div>
         </ng-container>
       </div>
       <div class="mat-subheading-1">Facilities
         <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
           <mat-icon>edit</mat-icon>
         </button>
-        <p *ngIf="eventPlan.facilities && eventPlan.facilities.length === 0">
+        <div class="mat-body" *ngIf="eventPlan.facilities && eventPlan.facilities.length === 0">
           No facility yet.
-        </p>
+        </div>
         <ng-container *ngIf="eventPlan.facilities && eventPlan.facilities.length > 0">
-          <p *ngFor="let facility of eventPlan.facilities">
+          <div class="mat-body" *ngFor="let facility of eventPlan.facilities">
             {{ facility?.name }} x {{ facility?.quantity }}
             {{ facility?.unit }}
             ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
-          </p>
+          </div>
         </ng-container>
       </div>
       <div class="mat-subheading-1">Stock Items
         <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
           <mat-icon>edit</mat-icon>
         </button>
-        <p *ngIf="eventPlan.stockItems && eventPlan.stockItems.length === 0">
+        <div class="mat-body" *ngIf="eventPlan.stockItems && eventPlan.stockItems.length === 0">
           No stock item yet.
-        </p>
+        </div>
         <ng-container *ngIf="eventPlan.stockItems && eventPlan.stockItems.length > 0">
-          <p *ngFor="let stockItem of eventPlan.stockItems">
+          <div class="mat-body" *ngFor="let stockItem of eventPlan.stockItems">
             {{ stockItem?.name }} x {{ stockItem?.quantity }}
             {{ stockItem?.unit }}
             ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
-          </p>
+          </div>
         </ng-container>
       </div>
     </div>
@@ -94,7 +94,67 @@
   <!-- Tab3: Processes -->
   <mat-tab label="Processes">
     <div class="tab-body">
-      <p>Event Process Info</p>
+      <div class="mat-subheading-1">Processes
+        <button mat-icon-button color="primary" (click)="addEventProcessToEvent()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <mat-tab-group>
+          <mat-tab *ngFor="let status of eventPlanStatus" [label]="status">
+            <div class="mat-body" *ngIf="eventPlan.processes && eventPlan.processes.length === 0; else eventProcesses">
+              No process yet.
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <ng-template #eventProcesses>
+          <div class="btn-group" fxLayout="row">
+            <button mat-stroked-button class="btn-sm" type="button" [ngClass]="{'active': !selectProcessStatus}"
+              (click)="filterProcesses()">All</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Open'}" (click)="filterProcesses('Open')">Open</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Progress'}"
+              (click)="filterProcesses('Progress')">Progress</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Done'}" (click)="filterProcesses('Done')">Done</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Cancelled'}"
+              (click)="filterProcesses('Cancelled')">Cancel</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Paid'}" (click)="filterProcesses('Paid')">Pay</button>
+            <button mat-stroked-button class="btn-sm" type="button"
+              [ngClass]="{'active': selectProcessStatus === 'Closed'}"
+              (click)="filterProcesses('Closed')">Close</button>
+          </div>
+          <!-- <pre>{{ filteredEventProcesses | json }}</pre> -->
+          <div class="process-items" *ngFor="let process of filteredEventProcesses; let i = index; let l = count">
+            <div *ngIf="!selectProcessStatus">
+              <button mat-button (click)="onMoveDownPosition(process, i)" *ngIf="i !== l-1">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </button>
+              <button mat-button (click)="onMoveUpPosition(process, i)" *ngIf="i !== 0">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+              </button>
+            </div>
+            <div class="mat-body-strong">
+              {{ getDuration(process) }} <i>{{ process.type }}</i>
+            </div>
+            <pre fxLayout="column">
+                      <span>Status: {{ process.status }}</span>
+                      <div class="btn-group" fxLayout="row">
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Open')" *ngIf="process.status !== 'Open'">Open</button>
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Progress')" *ngIf="process.status !== 'Progress'">Progress</button>
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status !== 'Done'">Done</button>
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status !== 'Cancelled'">Cancel</button>
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Paid')" *ngIf="process.status !== 'Paid'">Pay</button>
+                          <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status !== 'Closed'">Close</button>
+                      </div>
+                  </pre>
+            <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>
+            <div class="mat-small">{{ process?.provider?.name }}</div>
+            <div class="mat-body">{{ process.remarks }}</div>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </mat-tab>
   <!-- Tab4: Form -->

@@ -15,9 +15,9 @@ export class UserChangePasswordComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private pageLoaderService: PageLoaderService) {
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(true);
     this.userService.init('user');
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(false);
   }
 
   ngOnInit() {

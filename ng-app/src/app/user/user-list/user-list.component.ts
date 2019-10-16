@@ -47,11 +47,11 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   fetchAll() {
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(true);
     return this.userService.fetchAll(this.queryModel).subscribe((res: any) => {
       this.dataSource = new MatTableDataSource<User>(res.data);
       this.totalItems = res.totalItems;
-      this.pageLoaderService.toggle();
+      this.pageLoaderService.toggle(false);
     });
   }
 

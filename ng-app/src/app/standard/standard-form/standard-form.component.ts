@@ -46,20 +46,20 @@ export class StandardFormComponent implements OnInit {
   ngOnInit() {
     this.formId = 'form_' + moment().format('x');
     this.standardService.init(this.domainName);
-    this.pageLoaderService.toggle();
+    this.pageLoaderService.toggle(true);
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
         this.mode = 'update';
         this.standardService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
           this.initialDefaultValues();
-          this.pageLoaderService.toggle();
+          this.pageLoaderService.toggle(false);
         }, (res: any) => {
-          this.pageLoaderService.toggle();
+          this.pageLoaderService.toggle(false);
           this.toastr.error(res.error.message);
         });
       } else {
-        this.pageLoaderService.toggle();
+        this.pageLoaderService.toggle(false);
       }
     });
     this.fields.forEach(field => {
@@ -138,10 +138,10 @@ export class StandardFormComponent implements OnInit {
           }
         });
 
-      this.pageLoaderService.toggle();
+      this.pageLoaderService.toggle(true);
       this.standardService.submit(this.formData).subscribe((res: any) => {
         this.toastr.success(res.message);
-        this.pageLoaderService.toggle();
+        this.pageLoaderService.toggle(false);
         if (this.afterSubmit.observers.length > 0) {
           this.formData._id = res.data._id;
           this.afterSubmit.emit(this.formData);
@@ -149,7 +149,7 @@ export class StandardFormComponent implements OnInit {
           this.onCancel(`/${this.domainName}/list`);
         }
       }, (res: any) => {
-        this.pageLoaderService.toggle();
+        this.pageLoaderService.toggle(false);
         this.toastr.error(res.error.message);
       });
     }
