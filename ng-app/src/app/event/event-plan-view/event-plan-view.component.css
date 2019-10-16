@@ -22,3 +22,18 @@ button.active {
     background-color: #595959;
     color: #ffffff;
 }
+
+.info-group {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-group > * {
+    margin-top: 10px;
+    display: flex;
+}
+
+.info-group > * > *:first-of-type {
+    flex-basis: 150px;
+}

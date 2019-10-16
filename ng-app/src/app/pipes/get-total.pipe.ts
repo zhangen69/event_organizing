@@ -7,7 +7,7 @@ import { map, reduce } from 'rxjs/operators';
 })
 export class GetTotalPipe implements PipeTransform {
     transform(list: any[], pricePropName: string, quantityPropName: string): number {
-        if (list.length <= 0) {
+        if (!list || list.length <= 0) {
             return 0;
         }
 

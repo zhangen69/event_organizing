@@ -22,6 +22,7 @@ export class EventPlanFormComponent implements OnInit {
     { name: 'timeFrom', type: 'time', required: true },
     { name: 'timeTo', type: 'time', required: true },
     { name: 'venue', type: 'textarea-autocomplete', ref: 'event-plan/venue/list', refName: '', required: true },
+    { name: 'markupRate', displayName: 'Markup Rate (%)', type: 'number', required: true },
     { name: 'remarks', type: 'textarea', displayName: 'Remarks' },
   ];
 
