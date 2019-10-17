@@ -89,6 +89,7 @@ import { GetTotalPipe } from './pipes/get-total.pipe';
 import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
 import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
+import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -158,6 +159,7 @@ import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.
     GetTotalPipe,
     DemoXlsxComponent,
     EventPlanViewComponent,
+    ProcessesFilterPipe,
   ],
   imports: [
     BrowserModule,

@@ -38,3 +38,11 @@ button.active {
 .info-group > * > *:first-of-type {
     flex-basis: 150px;
 }
+
+.btn-group {
+    margin-top: 10px;
+}
+
+.process-item {
+    margin: 5px;
+}

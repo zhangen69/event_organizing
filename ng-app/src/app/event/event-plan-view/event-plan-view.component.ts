@@ -1,4 +1,3 @@
-import { EventPlan } from './../../models/event-plan.model';
 import { HttpResponse } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -13,11 +12,11 @@ import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.c
 import * as moment from 'moment';
 
 enum EventProcessType {
-  'Initial', 'Preparation', 'Schedule', 'Closure', 'Other'
+  'Initial', 'Preparation', 'Setup', 'Schedule', 'Closed'
 }
 
 enum EventProcessStatus {
-  'Open', 'In Progress', 'Done', 'Verified', 'Closure'
+  'Open', 'In Progress', 'Done', 'Verified', 'Closed'
 }
 
 @Component({
@@ -30,7 +29,7 @@ export class EventPlanViewComponent {
   eventPlanService: StandardService;
   filteredEventProcesses: any[] = [];
   selectProcessStatus = '';
-  eventPlanStatus: string[] = ['Initial', 'Preparation', 'InProgress', 'Closed'];
+  eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private pageLoaderService: PageLoaderService, private dialog: MatDialog, private router: Router, private toastr: ToastrService) {
     this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);

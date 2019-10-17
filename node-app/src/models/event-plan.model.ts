@@ -5,8 +5,8 @@ import { RegistrationFormSchema } from './registration-form.model';
 import Counter from './counter.model';
 
 const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'In Progress', 'Closed', 'Cancelled'];
-const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closure'];
-const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closure', 'Other'];
+const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closed'];
+const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closed'];
 const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
 
 const EventServiceSchema = new mongoose.Schema({
