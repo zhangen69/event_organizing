@@ -190,7 +190,6 @@ export class StandardFormFieldComponent implements OnInit {
         this.selectedTime = `${hours}:${minutes}`;
 
         // console.log('time', this.selectedTime);
-
         break;
       case 'boolean':
         if (!this.formData[this.field.name]) {
@@ -202,7 +201,7 @@ export class StandardFormFieldComponent implements OnInit {
           this.formData = {};
         }
 
-        if (this.field.default) {
+        if (this.field.default && this.formData[this.field.name]) {
           this.formData[this.field.name] = this.field.default;
         }
 
