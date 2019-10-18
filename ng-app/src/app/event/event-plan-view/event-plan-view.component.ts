@@ -1,4 +1,4 @@
-import { HttpResponse } from './../../standard/standard.interface';
+import { HttpResponse, IStandardFormField } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
@@ -93,7 +93,7 @@ export class EventPlanViewComponent {
 
   addEventProcessToEvent() {
     const eventPlan = JSON.parse(JSON.stringify(this.eventPlan));
-    const fields = [
+    const fields: IStandardFormField[] = [
       {
         name: 'processes',
         type: 'table',
@@ -105,26 +105,27 @@ export class EventPlanViewComponent {
           {
             name: 'processType',
             type: 'enum',
-            enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }]
+            enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }],
           },
-          { name: 'provider', type: 'ref' },
+          { name: 'provider', type: 'ref', isShow: (eventPlan: any) => !!eventPlan.processType },
           {
             name: 'providerService',
             displayName: 'Service',
             type: 'ref',
-            isShow: (eventPlan: any) => eventPlan.processType === 'Service'
+            filterOption: { type: 'provider', fieldName: '_id' },
+            isShow: (eventPlan: any) => eventPlan.processType === 'Service',
           },
           {
             name: 'providerFacility',
             displayName: 'Facility',
             type: 'ref',
-            isShow: (eventPlan: any) => eventPlan.processType === 'Facility'
+            isShow: (eventPlan: any) => eventPlan.processType === 'Facility',
           },
           { name: 'startFromDate', type: 'date', required: true },
           { name: 'startFromTime', type: 'time', required: true },
           { name: 'endToDate', type: 'date', required: true },
           { name: 'endToTime', type: 'time', required: true },
-          { name: 'remarks', type: 'textarea' }
+          { name: 'remarks', type: 'textarea' },
         ]
       }
     ];
@@ -133,7 +134,7 @@ export class EventPlanViewComponent {
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
-      data: { domain: 'event-plan', data: eventPlan, fields, title: 'Event Processes' }
+      data: { domain: 'event-plan', data: eventPlan, fields, title: 'Event Processes' },
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -14,6 +14,8 @@ export interface IStandardFormField {
   add?: any;
   isShow?: any;
   reuqired?: boolean;
+  enumList?: any[];
+  filterOption?: any;
 }
 
 export enum IStandardFormFieldType {

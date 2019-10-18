@@ -58,8 +58,7 @@
 
     <mat-autocomplete #textboxAutocomplete="matAutocomplete" [displayWith]="displayFn"
       (optionSelected)="field.refChange && field.refChange($event, formData)">
-      <mat-option *ngFor="let option of (field.refOptions | filterOptions: formData[field.name]: field.refName)"
-        [value]="option">{{ displayValue(option, field.refName) }}</mat-option>
+      <mat-option *ngFor="let option of getRefOptions(field.refOptions, field.filterOption) | filterOptions: formData[field.name]: field.refName" [value]="option">{{ displayValue(option, field.refName) }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
