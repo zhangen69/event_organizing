@@ -46,9 +46,9 @@ export class StandardFormComponent implements OnInit {
   ngOnInit() {
     this.formId = 'form_' + moment().format('x');
     this.standardService.init(this.domainName);
-    this.pageLoaderService.toggle(true);
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
+        this.pageLoaderService.toggle(true);
         this.mode = 'update';
         this.standardService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
           this.formData = res.data;
@@ -58,8 +58,6 @@ export class StandardFormComponent implements OnInit {
           this.pageLoaderService.toggle(false);
           this.toastr.error(res.error.message);
         });
-      } else {
-        this.pageLoaderService.toggle(false);
       }
     });
     this.fields.forEach(field => {
@@ -114,7 +112,7 @@ export class StandardFormComponent implements OnInit {
 
   onCancel(url) {
     if (this.cancel.observers.length > 0) {
-      this.cancel.emit();
+      this.cancel.emit({ dismiss: true });
     } else if (window.history.length > 1) {
       this.location.back();
     } else {

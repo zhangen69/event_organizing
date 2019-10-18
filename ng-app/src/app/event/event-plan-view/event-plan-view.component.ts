@@ -45,7 +45,7 @@ export class EventPlanViewComponent {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.pageLoaderService.toggle(true);
-        const includes = ['customer', 'services.provider', 'services.providerService', 'facilities.provider', 'facilities.providerFacility', 'processes.provider'];
+        const includes = ['customer', 'services.provider', 'services.providerService', 'facilities.provider', 'facilities.providerFacility', 'processes.provider', 'stockItems.stockItem'];
         this.http.get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join()).pipe(
           map(res => res.data),
         ).subscribe(data => {
@@ -73,21 +73,25 @@ export class EventPlanViewComponent {
 
     // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(DialogFormComponent, {
+      disableClose: true,
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
       data: { domain: 'event-plan', data: eventPlan, callback: true, fields, title: dName }
     });
 
-    dialogRef.afterClosed().subscribe(event => {
-      event[name].forEach(element => {
-        element.name = element[type].name;
-        element.unit = element[type].unit;
-        element.unitPrice = element[type].unitPrice;
-      });
-      this.eventPlanService.submit(event).subscribe(_ => {
-        this.refresh();
-      });
+    dialogRef.afterClosed().subscribe(data => {
+      if (!data.dismiss) {
+        data[name].forEach(element => {
+          element.name = element[type].name;
+          element.unit = element[type].unit;
+          element.unitPrice = element[type].unitPrice;
+        });
+
+        this.eventPlanService.submit(data).subscribe(_ => {
+          this.refresh();
+        });
+      }
     });
   }
 
@@ -131,14 +135,19 @@ export class EventPlanViewComponent {
     ];
 
     const dialogRef = this.dialog.open(DialogFormComponent, {
+      disableClose: true,
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
       data: { domain: 'event-plan', data: eventPlan, fields, title: 'Event Processes' },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.refresh();
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+        if (!res.dimiss) {
+          this.refresh();
+        }
+      },
     });
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 
 @Injectable({
@@ -7,12 +7,15 @@ import * as moment from 'moment';
 })
 export class PageLoaderService {
     isLoad: boolean;
-    private loaderListener = new Subject<boolean>();
+    private loaderListener = new BehaviorSubject(false);
     private lastUpdate: Date;
 
     constructor() { }
 
     toggle(value?: boolean): void {
+        if (value && this.isLoad === value) {
+            return;
+        }
         this.isLoad = value !== undefined ? value : !this.isLoad;
         if (this.isLoad === true) {
             this.lastUpdate = new Date();
@@ -33,6 +36,6 @@ export class PageLoaderService {
     }
 
     getLoaderListener() {
-        return this.loaderListener;
+        return this.loaderListener.asObservable();
     }
 }

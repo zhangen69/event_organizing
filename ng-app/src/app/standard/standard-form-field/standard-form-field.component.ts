@@ -165,7 +165,7 @@ export class StandardFormFieldComponent implements OnInit {
           this.formData[this.field.name] = [{}];
         }
 
-        if (this.field.default) {
+        if (this.field.default && !this.formData[this.field.name]) {
           this.formData[this.field.name] = this.field.default;
         }
 
@@ -201,7 +201,7 @@ export class StandardFormFieldComponent implements OnInit {
           this.formData = {};
         }
 
-        if (this.field.default && this.formData[this.field.name]) {
+        if (this.field.default && !this.formData[this.field.name]) {
           this.formData[this.field.name] = this.field.default;
         }
 
