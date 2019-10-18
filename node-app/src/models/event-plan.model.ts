@@ -5,7 +5,7 @@ import { RegistrationFormSchema } from './registration-form.model';
 import Counter from './counter.model';
 
 const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'In Progress', 'Closed', 'Cancelled'];
-const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closed'];
+const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closed', 'Cancelled'];
 const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closed'];
 const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
 

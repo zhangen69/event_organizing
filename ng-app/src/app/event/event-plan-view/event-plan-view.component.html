@@ -121,18 +121,19 @@
               <button mat-stroked-button class="btn-sm" type="button"
                 [ngClass]="{'active': selectProcessStatus === 'Open'}" (click)="filterProcesses('Open')">Open</button>
               <button mat-stroked-button class="btn-sm" type="button"
-                [ngClass]="{'active': selectProcessStatus === 'Progress'}"
-                (click)="filterProcesses('Progress')">Progress</button>
+                [ngClass]="{'active': selectProcessStatus === 'In Progress'}"
+                (click)="filterProcesses('In Progress')">In Progress</button>
               <button mat-stroked-button class="btn-sm" type="button"
                 [ngClass]="{'active': selectProcessStatus === 'Done'}" (click)="filterProcesses('Done')">Done</button>
               <button mat-stroked-button class="btn-sm" type="button"
-                [ngClass]="{'active': selectProcessStatus === 'Cancelled'}"
-                (click)="filterProcesses('Cancelled')">Cancel</button>
-              <button mat-stroked-button class="btn-sm" type="button"
-                [ngClass]="{'active': selectProcessStatus === 'Paid'}" (click)="filterProcesses('Paid')">Pay</button>
+                [ngClass]="{'active': selectProcessStatus === 'Verified'}"
+                (click)="filterProcesses('Verified')">Verified</button>
               <button mat-stroked-button class="btn-sm" type="button"
                 [ngClass]="{'active': selectProcessStatus === 'Closed'}"
-                (click)="filterProcesses('Closed')">Close</button>
+                (click)="filterProcesses('Closed')">Closed</button>
+              <button mat-stroked-button class="btn-sm" type="button"
+                [ngClass]="{'active': selectProcessStatus === 'Cancelled'}"
+                (click)="filterProcesses('Cancelled')">Cancelled</button>
             </div>
             <!-- <pre>{{ filteredEventProcesses | json }}</pre> -->
             <div class="process-item"
@@ -152,12 +153,11 @@
                 <pre fxLayout="column">
                     <span>Status: {{ process.status }}</span>
                     <div class="btn-group" fxLayout="row">
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Open')" *ngIf="process.status !== 'Open'">Open</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Progress')" *ngIf="process.status !== 'Progress'">Progress</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status !== 'Done'">Done</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status !== 'Cancelled'">Cancel</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Paid')" *ngIf="process.status !== 'Paid'">Pay</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status !== 'Closed'">Close</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'In Progress')" *ngIf="process.status === 'Open'">Proceed</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status === 'In Progress'">Done</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Verified')" *ngIf="process.status === 'Done'">Verify</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status === 'Done' || process.status === 'Verified'">Close</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status === 'Open'">Cancel</button>
                     </div>
                   </pre>
                 <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>

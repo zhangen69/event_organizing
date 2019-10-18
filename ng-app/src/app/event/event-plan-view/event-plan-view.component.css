@@ -43,6 +43,10 @@ button.active {
     margin-top: 10px;
 }
 
+.btn-group button {
+    margin-right: 10px;
+}
+
 .process-item {
     margin: 5px;
 }
