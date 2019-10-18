@@ -9,6 +9,7 @@ interface IDialogFormData {
   data: any;
   title: string;
   callback?: boolean;
+  includes?: string[];
 }
 
 @Component({
@@ -21,6 +22,7 @@ export class DialogFormComponent implements OnInit {
   fields: IStandardFormField[];
   title: string;
   callback = false;
+  includes: string[];
 
   constructor(
     private dialogRef: MatDialogRef<any>,
@@ -34,6 +36,7 @@ export class DialogFormComponent implements OnInit {
     this.formData = this.params.data;
     this.callback = this.params.callback;
     this.title = this.params.title;
+    this.includes = this.params.includes || [];
   }
 
   onNoClick(data = null): void {

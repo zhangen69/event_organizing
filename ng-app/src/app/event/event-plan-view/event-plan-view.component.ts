@@ -45,7 +45,7 @@ export class EventPlanViewComponent {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.pageLoaderService.toggle(true);
-        const includes = ['customer', 'services.provider', 'facility.provider', 'processes.provider'];
+        const includes = ['customer', 'services.provider', 'services.providerService', 'facilities.provider', 'facilities.providerFacility', 'processes.provider'];
         this.http.get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join()).pipe(
           map(res => res.data),
         ).subscribe(data => {

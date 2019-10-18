@@ -53,10 +53,13 @@
           No service yet.
         </div>
         <ng-container *ngIf="eventPlan.services && eventPlan.services.length > 0">
-          <div class="mat-body" *ngFor="let service of eventPlan.services">
-            {{ service?.name }} x {{ service?.quantity }}
-            {{ service?.unit }}
-            ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
+          <div *ngFor="let service of eventPlan.services">
+            <div class="mat-body">
+              {{ service?.name }} x {{ service?.quantity }}
+              {{ service?.unit }}
+              ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
+            </div>
+            <div class="mat-small">{{ service.remarks }}</div>
           </div>
         </ng-container>
       </div>
@@ -68,10 +71,13 @@
           No facility yet.
         </div>
         <ng-container *ngIf="eventPlan.facilities && eventPlan.facilities.length > 0">
-          <div class="mat-body" *ngFor="let facility of eventPlan.facilities">
-            {{ facility?.name }} x {{ facility?.quantity }}
-            {{ facility?.unit }}
-            ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
+          <div *ngFor="let facility of eventPlan.facilities">
+            <div class="mat-body">
+              {{ facility?.name }} x {{ facility?.quantity }}
+              {{ facility?.unit }}
+              ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
+            </div>
+            <div class="mat-small">{{ facility.remarks }}</div>
           </div>
         </ng-container>
       </div>
@@ -83,10 +89,13 @@
           No stock item yet.
         </div>
         <ng-container *ngIf="eventPlan.stockItems && eventPlan.stockItems.length > 0">
-          <div class="mat-body" *ngFor="let stockItem of eventPlan.stockItems">
-            {{ stockItem?.name }} x {{ stockItem?.quantity }}
-            {{ stockItem?.unit }}
-            ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
+          <div *ngFor="let stockItem of eventPlan.stockItems">
+            <div class="mat-body">
+              {{ stockItem?.name }} x {{ stockItem?.quantity }}
+              {{ stockItem?.unit }}
+              ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
+            </div>
+            <div class="mat-small">{{ stockItem.remarks }}</div>
           </div>
         </ng-container>
       </div>
