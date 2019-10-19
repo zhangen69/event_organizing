@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import * as moment from 'moment';
+import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
 
 enum EventProcessType {
   'Initial', 'Preparation', 'Setup', 'Schedule', 'Closed'
@@ -151,6 +152,51 @@ export class EventPlanViewComponent {
     });
   }
 
+  configForm(eventPlan) {
+    const eventPlanData = JSON.parse(JSON.stringify(eventPlan));
+    const fields = [
+      { name: 'name', type: 'string', required: true },
+      { name: 'status', type: 'enum', enum: RegistrationFormStatus, default: RegistrationFormStatus[RegistrationFormStatus.Open] },
+      { name: 'remarks', type: 'textarea' },
+      {
+        name: 'settings', type: 'object', fields: [
+          { name: 'name', type: 'boolean' },
+          { name: 'gender', type: 'boolean' },
+          { name: 'identityNumber', type: 'boolean' },
+          { name: 'email', type: 'boolean' },
+          { name: 'phoneNumber', type: 'boolean' },
+          { name: 'organization', type: 'boolean' },
+          { name: 'address', type: 'boolean' },
+        ]
+      },
+      {
+        name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', default: [], fields: [
+          { name: 'name', type: 'string' },
+          { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },
+          { name: 'displayName', type: 'string' },
+        ]
+      },
+    ];
+
+    // tslint:disable-next-line: no-use-before-declare
+    const dialogRef = this.dialog.open(DialogFormComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+      data: { domain: 'event-plan', data: eventPlanData, callback: true, fields, title: 'Registration Form' }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (!data.dismiss) {
+        this.eventPlanService.submit(data).subscribe({
+          next: (res) => {
+            this.refresh();
+          }
+        });
+      }
+    });
+  }
 
   changeStatus(process, status) {
     process.status = status;

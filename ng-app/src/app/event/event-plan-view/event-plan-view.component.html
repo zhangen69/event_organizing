@@ -45,65 +45,65 @@
   <!-- Tab2: Resources -->
   <mat-tab label="Resources">
     <div class="tab-body">
-      <div class="mat-subheading-1">Services
-        <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <div class="mat-body" *ngIf="eventPlan.services && eventPlan.services.length === 0">
-          No service yet.
-        </div>
-        <ng-container *ngIf="eventPlan.services && eventPlan.services.length > 0">
-          <div *ngFor="let service of eventPlan.services">
-            <div class="mat-body">
-              {{ service?.name }} x {{ service?.quantity }}
-              {{ service?.unit }}
-              ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
-            </div>
-            <div class="mat-small">{{ service.remarks }}</div>
-          </div>
-        </ng-container>
+      <div class="mat-subheading-1">Services</div>
+      <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <div class="mat-body" *ngIf="eventPlan.services && eventPlan.services.length === 0">
+        No service yet.
       </div>
-      <div class="mat-subheading-1">Facilities
-        <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <div class="mat-body" *ngIf="eventPlan.facilities && eventPlan.facilities.length === 0">
-          No facility yet.
-        </div>
-        <ng-container *ngIf="eventPlan.facilities && eventPlan.facilities.length > 0">
-          <div *ngFor="let facility of eventPlan.facilities">
-            <div class="mat-body">
-              {{ facility?.name }} x {{ facility?.quantity }}
-              {{ facility?.unit }}
-              ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
-            </div>
-            <div class="mat-small">{{ facility.remarks }}</div>
+      <ng-container *ngIf="eventPlan.services && eventPlan.services.length > 0">
+        <div *ngFor="let service of eventPlan.services">
+          <div class="mat-body">
+            {{ service?.name }} x {{ service?.quantity }}
+            {{ service?.unit }}
+            ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
           </div>
-        </ng-container>
-      </div>
-      <div class="mat-subheading-1">Stock Items
-        <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <div class="mat-body" *ngIf="eventPlan.stockItems && eventPlan.stockItems.length === 0">
-          No stock item yet.
+          <div class="mat-small">{{ service.remarks }}</div>
         </div>
-        <ng-container *ngIf="eventPlan.stockItems && eventPlan.stockItems.length > 0">
-          <div *ngFor="let stockItem of eventPlan.stockItems">
-            <div class="mat-body">
-              {{ stockItem?.name }} x {{ stockItem?.quantity }}
-              {{ stockItem?.unit }}
-              ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
-            </div>
-            <div class="mat-small">{{ stockItem.remarks }}</div>
-          </div>
-        </ng-container>
+      </ng-container>
+
+      <div class="mat-subheading-1">Facilities</div>
+      <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <div class="mat-body" *ngIf="eventPlan.facilities && eventPlan.facilities.length === 0">
+        No facility yet.
       </div>
+      <ng-container *ngIf="eventPlan.facilities && eventPlan.facilities.length > 0">
+        <div *ngFor="let facility of eventPlan.facilities">
+          <div class="mat-body">
+            {{ facility?.name }} x {{ facility?.quantity }}
+            {{ facility?.unit }}
+            ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
+          </div>
+          <div class="mat-small">{{ facility.remarks }}</div>
+        </div>
+      </ng-container>
+
+      <div class="mat-subheading-1">Stock Items</div>
+      <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <div class="mat-body" *ngIf="eventPlan.stockItems && eventPlan.stockItems.length === 0">
+        No stock item yet.
+      </div>
+      <ng-container *ngIf="eventPlan.stockItems && eventPlan.stockItems.length > 0">
+        <div *ngFor="let stockItem of eventPlan.stockItems">
+          <div class="mat-body">
+            {{ stockItem?.name }} x {{ stockItem?.quantity }}
+            {{ stockItem?.unit }}
+            ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
+          </div>
+          <div class="mat-small">{{ stockItem.remarks }}</div>
+        </div>
+      </ng-container>
     </div>
   </mat-tab>
   <!-- Tab3: Processes -->
   <mat-tab label="Processes">
     <div class="tab-body">
+
       <div class="mat-subheading-1">Processes
         <button mat-icon-button class="process-btn-group" color="primary" (click)="addEventProcessToEvent()">
           <mat-icon>edit</mat-icon>
@@ -122,7 +122,8 @@
                 [ngClass]="{'active': selectProcessStatus === 'Open'}" (click)="filterProcesses('Open')">Open</button>
               <button mat-stroked-button class="btn-sm" type="button"
                 [ngClass]="{'active': selectProcessStatus === 'In Progress'}"
-                (click)="filterProcesses('In Progress')">In Progress</button>
+                (click)="filterProcesses('In Progress')">In
+                Progress</button>
               <button mat-stroked-button class="btn-sm" type="button"
                 [ngClass]="{'active': selectProcessStatus === 'Done'}" (click)="filterProcesses('Done')">Done</button>
               <button mat-stroked-button class="btn-sm" type="button"
@@ -177,45 +178,44 @@
   <mat-tab label="Form">
     <div class="tab-body">
       <p>Event Form Info</p>
+      <p *ngIf="!eventPlan.registrationFrom">No form yet, <button mat-button class="btn-link" color="primary" (click)="configForm(eventPlan)">click</button> here config form</p>
     </div>
   </mat-tab>
   <!-- Tab5: Cost & Profit -->
   <mat-tab label="Cost & Profit">
-    <div class="tab-body">
-      <p>Event Cost & Profit Info</p>
-      <div class="mat-subheading-1 info-group">Costs Summary
-        <mat-divider></mat-divider>
-        <div class="info-item">
-          <div class="mat-body">Services:</div>
-          <div class="mat-body">{{ eventPlan.services | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
+    <div class="tab-body info-group">
+      <div class="mat-title">Costs Summary</div>
+      <mat-divider></mat-divider>
+      <div class="info-item">
+        <div class="mat-body">Services:</div>
+        <div class="mat-body">{{ eventPlan.services | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
+      </div>
+      <div class="info-item">
+        <div class="mat-body">Facilities:</div>
+        <div class="mat-body">{{ eventPlan.facilities | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
+      </div>
+      <div class="info-item">
+        <div class="mat-body">Stock Items:</div>
+        <div class="mat-body">{{ eventPlan.stockItems | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-item">
+        <div class="mat-body-strong">Total Costs:</div>
+        <div class="mat-body-strong">
+          {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) | currency: 'RM ' }}
         </div>
-        <div class="info-item">
-          <div class="mat-body">Facilities:</div>
-          <div class="mat-body">{{ eventPlan.facilities | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
+      </div>
+      <div class="info-item">
+        <div class="mat-body-strong">Total Profit ({{ eventPlan.markupRate | number: '1.0-2' }}%):</div>
+        <div class="mat-body-strong">
+          {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) * eventPlan.markupRate / 100 | currency: 'RM ' }}
         </div>
-        <div class="info-item">
-          <div class="mat-body">Stock Items:</div>
-          <div class="mat-body">{{ eventPlan.stockItems | getTotal: 'unitPrice': 'quantity' | currency: 'RM ' }}</div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="info-item">
-          <div class="mat-body-strong">Total Costs:</div>
-          <div class="mat-body-strong">
-            {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) | currency: 'RM ' }}
-          </div>
-        </div>
-        <div class="info-item">
-          <div class="mat-body-strong">Total Profit ({{ eventPlan.markupRate | number: '1.0-2' }}%):</div>
-          <div class="mat-body-strong">
-            {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) * eventPlan.markupRate / 100 | currency: 'RM ' }}
-          </div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="info-item">
-          <div class="mat-body-strong">Total Price:</div>
-          <div class="mat-body-strong">
-            {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) * ((eventPlan.markupRate / 100) + 1) | currency: 'RM ' }}
-          </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="info-item">
+        <div class="mat-body-strong">Total Price:</div>
+        <div class="mat-body-strong">
+          {{ ((eventPlan.services | getTotal: 'unitPrice': 'quantity') + (eventPlan.facilities | getTotal: 'unitPrice': 'quantity') + (eventPlan.stockItems | getTotal: 'unitPrice': 'quantity')) * ((eventPlan.markupRate / 100) + 1) | currency: 'RM ' }}
         </div>
       </div>
       <mat-divider></mat-divider>

@@ -50,3 +50,9 @@ button.active {
 .process-item {
     margin: 5px;
 }
+
+.btn-link {
+    padding: 5px;
+    min-width: auto;
+    line-height: 15px;
+}
