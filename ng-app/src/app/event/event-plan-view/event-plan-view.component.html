@@ -45,6 +45,7 @@
   <!-- Tab2: Resources -->
   <mat-tab label="Resources">
     <div class="tab-body">
+      <!-- Section1: Services -->
       <div class="mat-subheading-1">Services</div>
       <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
         <mat-icon>edit</mat-icon>
@@ -62,7 +63,7 @@
           <div class="mat-small">{{ service.remarks }}</div>
         </div>
       </ng-container>
-
+      <!-- Section2: Facilities -->
       <div class="mat-subheading-1">Facilities</div>
       <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
         <mat-icon>edit</mat-icon>
@@ -80,7 +81,7 @@
           <div class="mat-small">{{ facility.remarks }}</div>
         </div>
       </ng-container>
-
+      <!-- Section3: Stock Items -->
       <div class="mat-subheading-1">Stock Items</div>
       <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
         <mat-icon>edit</mat-icon>
@@ -186,6 +187,9 @@
           <button mat-icon-button class="process-btn-group" color="primary" (click)="addEventProcessToEvent()">
             <mat-icon>edit</mat-icon>
           </button>
+        </div>
+        <div *ngFor="let setting of eventPlan.registrationForm?.settings">
+          Setting:{{ setting }}
         </div>
         <pre>{{ eventPlan.registrationForm | json }}</pre>
       </ng-template>
