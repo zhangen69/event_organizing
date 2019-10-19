@@ -154,26 +154,28 @@ export class EventPlanViewComponent {
 
   configForm(eventPlan) {
     const eventPlanData = JSON.parse(JSON.stringify(eventPlan));
-    const fields = [
-      { name: 'name', type: 'string', required: true },
-      { name: 'status', type: 'enum', enum: RegistrationFormStatus, default: RegistrationFormStatus[RegistrationFormStatus.Open] },
-      { name: 'remarks', type: 'textarea' },
+    const fields: IStandardFormField[] = [
       {
-        name: 'settings', type: 'object', fields: [
-          { name: 'name', type: 'boolean' },
-          { name: 'gender', type: 'boolean' },
-          { name: 'identityNumber', type: 'boolean' },
-          { name: 'email', type: 'boolean' },
-          { name: 'phoneNumber', type: 'boolean' },
-          { name: 'organization', type: 'boolean' },
-          { name: 'address', type: 'boolean' },
-        ]
-      },
-      {
-        name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', default: [], fields: [
-          { name: 'name', type: 'string' },
-          { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },
-          { name: 'displayName', type: 'string' },
+        name: 'registrationForm', type: 'object', fields: [
+          {
+            name: 'settings', type: 'object', fields: [
+              { name: 'name', type: 'boolean' },
+              { name: 'gender', type: 'boolean' },
+              { name: 'identityNumber', type: 'boolean' },
+              { name: 'email', type: 'boolean' },
+              { name: 'phoneNumber', type: 'boolean' },
+              { name: 'organization', type: 'boolean' },
+              { name: 'address', type: 'boolean' },
+            ]
+          },
+          {
+            name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', default: [], fields: [
+              { name: 'name', type: 'string' },
+              { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },
+              { name: 'displayName', type: 'string' },
+            ]
+          },
+          { name: 'remarks', type: 'textarea' },
         ]
       },
     ];

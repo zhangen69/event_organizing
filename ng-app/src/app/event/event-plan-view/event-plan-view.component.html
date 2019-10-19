@@ -103,7 +103,6 @@
   <!-- Tab3: Processes -->
   <mat-tab label="Processes">
     <div class="tab-body">
-
       <div class="mat-subheading-1">Processes
         <button mat-icon-button class="process-btn-group" color="primary" (click)="addEventProcessToEvent()">
           <mat-icon>edit</mat-icon>
@@ -178,7 +177,13 @@
   <mat-tab label="Form">
     <div class="tab-body">
       <p>Event Form Info</p>
-      <p *ngIf="!eventPlan.registrationFrom">No form yet, <button mat-button class="btn-link" color="primary" (click)="configForm(eventPlan)">click</button> here config form</p>
+      <div [ngTemplateOutlet]="eventPlan.registrationForm ? showFormInfo : noFormMessage"></div>
+      <ng-template #noFormMessage>
+          <p>No form yet, <button mat-button class="btn-link" color="primary" (click)="configForm(eventPlan)">click</button> here config form</p>
+      </ng-template>
+      <ng-template #showFormInfo>
+        <pre>{{ eventPlan.registrationForm | json }}</pre>
+      </ng-template>
     </div>
   </mat-tab>
   <!-- Tab5: Cost & Profit -->
