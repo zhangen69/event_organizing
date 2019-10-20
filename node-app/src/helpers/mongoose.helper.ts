@@ -9,6 +9,13 @@ export const MongooseHelper = {
                 required,
             };
         },
+        Boolean: (required = false, defaultValue = false) => {
+            return {
+                type: Boolean,
+                default: defaultValue,
+                required,
+            };
+        },
         Number: (defaultValue = 0.0, required = false) => {
             return {
                 type: Number,

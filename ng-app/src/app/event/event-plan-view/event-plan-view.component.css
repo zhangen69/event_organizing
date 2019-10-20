@@ -1,62 +1,68 @@
 .tab-body {
-    padding: 10px;
+  padding: 10px;
 }
 
 .view-field:nth-of-type(n + 2) {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .view-field .mat-body {
-    white-space: pre;
+  white-space: pre;
 }
 
 .btn-sm {
-    line-height: 25px;
-    font-size: 12px;
+  line-height: 25px;
+  font-size: 12px;
+}
+
+.btn-sm mat-icon {
+  height: 12px;
+  font-size: 16px;
+  line-height: 10px;
 }
 
 .action-group button {
-    margin: 0 5px;
+  margin: 0 5px;
 }
 
 button.active {
-    background-color: #595959;
-    color: #ffffff;
+  background-color: #595959;
+  color: #ffffff;
 }
 
 .info-group {
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .info-group > * {
-    margin-top: 10px;
-    display: flex;
+  margin-top: 10px;
+  display: flex;
 }
 
 .info-group > * > *:first-of-type {
-    flex-basis: 150px;
+  flex-basis: 150px;
 }
 
 .btn-group {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .btn-group button {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .process-item {
-    margin: 5px;
+  margin: 5px;
 }
 
 .btn-link {
-    padding: 5px;
-    min-width: auto;
-    line-height: 15px;
+  padding: 5px;
+  min-width: auto;
+  line-height: 15px;
 }
 
 .form {
-    max-width: 50%;
+  max-width: 50%;
 }

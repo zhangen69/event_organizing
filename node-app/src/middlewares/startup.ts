@@ -32,6 +32,7 @@ import storeRoutes from '../routes/store.routes';
 import supplierInvoiceRoutes from '../routes/supplier-invoice.routes';
 import uploaderRoutes from '../routes/uploader.routes';
 import userRoutes from '../routes/user.routes';
+import { emailQueueCheckJob } from '../task_schedulers/email-queue.scheduler';
 
 const router = express.Router();
 
@@ -53,15 +54,45 @@ router.use(uploaderRoutes);
 //         })
 //     });
 // });
-router.use('/service', productRoutes, eventPlanRoutes, eventRoutes, providerRoutes, stockTransactionRoutes, attendeeRoutes, attendeeGroupRoutes, attendanceRoutes, categoryRoutes, customerRoutes, invoiceRoutes, supplierInvoiceRoutes, paymentRoutes, paymentVoucherRoutes, stockItemRoutes, providerServiceRoutes, providerFacilityRoutes, receiptRoutes, registrationFormRoutes, storeRoutes);
+router.use(
+  '/service',
+  productRoutes,
+  eventPlanRoutes,
+  eventRoutes,
+  providerRoutes,
+  stockTransactionRoutes,
+  attendeeRoutes,
+  attendeeGroupRoutes,
+  attendanceRoutes,
+  categoryRoutes,
+  customerRoutes,
+  invoiceRoutes,
+  supplierInvoiceRoutes,
+  paymentRoutes,
+  paymentVoucherRoutes,
+  stockItemRoutes,
+  providerServiceRoutes,
+  providerFacilityRoutes,
+  receiptRoutes,
+  registrationFormRoutes,
+  storeRoutes,
+);
 router.use('/service/user', userRoutes);
 
 // apply ng-app routes, public folders
 router.use(NgAppRoutes);
 
+// Start: Task Schedulers
+emailQueueCheckJob.triggeredJobs();
+
 // mongodb connection
-mongoose.connect(configs.mongoose.connection, { useNewUrlParser: true })
-    .then((res: typeof mongoose) => { console.log('Connected to MongoDB!'); })
-    .catch((reason: any) => { console.log('Connection failed!', reason); });
+mongoose
+  .connect(configs.mongoose.connection, { useNewUrlParser: true })
+  .then((res: typeof mongoose) => {
+    console.log('Connected to MongoDB!');
+  })
+  .catch((reason: any) => {
+    console.log('Connection failed!', reason);
+  });
 
 export default router;

@@ -191,6 +191,21 @@
             <mat-icon>edit</mat-icon>
           </button>
         </div>
+
+        <div class="action-group">
+            <a class="btn-sm" [routerLink]="['/register/' + eventPlan.registrationForm._id]" target="_blank" mat-raised-button>
+                <mat-icon>public</mat-icon> Publish
+            </a>
+            <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan.registrationForm._id)"
+                value="click to copy">
+                <mat-icon>link</mat-icon> Copy Link
+            </button>
+            <button class="btn-sm" mat-raised-button (click)="sendRegistrationFormLink(eventPlan.registrationForm._id)"
+                value="click to send">
+                <mat-icon>send</mat-icon> Send Link
+            </button>
+        </div>
+
         <div class="form">
           <h4>Basic Information</h4>
           <div *ngFor="let setting of (eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value')">

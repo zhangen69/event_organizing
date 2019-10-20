@@ -1,4 +1,3 @@
-
 import express from 'express';
 
 // import middlewares
@@ -9,5 +8,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(startup); // apply startup configurations
-app.listen(port);
- 
+app.listen(port, () => {
+  console.log('Server is Started: http://localhost:3000')
+});

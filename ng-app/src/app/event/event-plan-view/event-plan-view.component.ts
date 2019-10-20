@@ -222,6 +222,47 @@ export class EventPlanViewComponent {
     dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
   }
 
+  // source: https://stackoverflow.com/questions/49102724/angular-5-copy-to-clipboard
+  copyRegistrationFormLink(formId) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = `http:/localhost:4200/register/${formId}`;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.toastr.info('Copied to clipboard!');
+  }
+
+  sendRegistrationFormLink(formId) {
+    const formData = {};
+    const fields = [{ name: 'email', type: 'string', required: true }];
+
+    const dialogRef = this.dialog.open(DialogFormComponent, {
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+      data: { domain: 'registration-form', data: formData, fields, title: 'Send Registration Form Link', callback: true }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (!data.dismiss) {
+        this.pageLoaderService.toggle(true);
+        const url = this.eventPlanService.apiUrl + '/sendRegistrationFormLink';
+        this.eventPlanService.submit({ formId, email: data.email }, url).subscribe({
+          next: () => {
+            this.pageLoaderService.toggle(false);
+            this.toastr.info('Sent link to the email!');
+          }
+        });
+      }
+    });
+  }
+
   changeStatus(process, status) {
     process.status = status;
     this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
