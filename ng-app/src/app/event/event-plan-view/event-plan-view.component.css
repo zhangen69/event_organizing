@@ -56,3 +56,7 @@ button.active {
     min-width: auto;
     line-height: 15px;
 }
+
+.form {
+    max-width: 50%;
+}

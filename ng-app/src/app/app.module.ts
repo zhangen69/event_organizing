@@ -90,6 +90,7 @@ import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
 import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
+import { ObjectToArrayPipe } from './standard/to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -160,6 +161,7 @@ import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pi
     DemoXlsxComponent,
     EventPlanViewComponent,
     ProcessesFilterPipe,
+    ObjectToArrayPipe,
   ],
   imports: [
     BrowserModule,

@@ -13,11 +13,19 @@ import * as moment from 'moment';
 import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
 
 enum EventProcessType {
-  'Initial', 'Preparation', 'Setup', 'Schedule', 'Closed'
+  'Initial',
+  'Preparation',
+  'Setup',
+  'Schedule',
+  'Closed'
 }
 
 enum EventProcessStatus {
-  'Open', 'In Progress', 'Done', 'Verified', 'Closed'
+  'Open',
+  'In Progress',
+  'Done',
+  'Verified',
+  'Closed'
 }
 
 @Component({
@@ -32,7 +40,14 @@ export class EventPlanViewComponent {
   selectProcessStatus = '';
   eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private pageLoaderService: PageLoaderService, private dialog: MatDialog, private router: Router, private toastr: ToastrService) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private pageLoaderService: PageLoaderService,
+    private dialog: MatDialog,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.eventPlanService.init('event-plan');
     this.refresh();
@@ -46,16 +61,25 @@ export class EventPlanViewComponent {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.pageLoaderService.toggle(true);
-        const includes = ['customer', 'services.provider', 'services.providerService', 'facilities.provider', 'facilities.providerFacility', 'processes.provider', 'stockItems.stockItem'];
-        this.http.get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join()).pipe(
-          map(res => res.data),
-        ).subscribe(data => {
-          this.eventPlan = data;
-          // sort: formData.processes
-          this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
-          this.filterProcesses(this.selectProcessStatus);
-          this.pageLoaderService.toggle(false);
-        });
+        const includes = [
+          'customer',
+          'services.provider',
+          'services.providerService',
+          'facilities.provider',
+          'facilities.providerFacility',
+          'processes.provider',
+          'stockItems.stockItem'
+        ];
+        this.http
+          .get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join())
+          .pipe(map(res => res.data))
+          .subscribe(data => {
+            this.eventPlan = data;
+            // sort: formData.processes
+            this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+            this.filterProcesses(this.selectProcessStatus);
+            this.pageLoaderService.toggle(false);
+          });
       }
     });
   }
@@ -82,17 +106,15 @@ export class EventPlanViewComponent {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if (!data.dismiss) {
+      const funcBeforeSubmit = data => {
         data[name].forEach(element => {
           element.name = element[type].name;
           element.unit = element[type].unit;
           element.unitPrice = element[type].unitPrice;
         });
+      };
 
-        this.eventPlanService.submit(data).subscribe(_ => {
-          this.refresh();
-        });
-      }
+      this.updateEventPlan(data, funcBeforeSubmit);
     });
   }
 
@@ -110,7 +132,7 @@ export class EventPlanViewComponent {
           {
             name: 'processType',
             type: 'enum',
-            enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }],
+            enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }]
           },
           { name: 'provider', type: 'ref', isShow: (eventPlan: any) => !!eventPlan.processType },
           {
@@ -118,19 +140,19 @@ export class EventPlanViewComponent {
             displayName: 'Service',
             type: 'ref',
             filterOption: { type: 'provider', fieldName: '_id' },
-            isShow: (eventPlan: any) => eventPlan.processType === 'Service',
+            isShow: (eventPlan: any) => eventPlan.processType === 'Service'
           },
           {
             name: 'providerFacility',
             displayName: 'Facility',
             type: 'ref',
-            isShow: (eventPlan: any) => eventPlan.processType === 'Facility',
+            isShow: (eventPlan: any) => eventPlan.processType === 'Facility'
           },
           { name: 'startFromDate', type: 'date', required: true },
           { name: 'startFromTime', type: 'time', required: true },
           { name: 'endToDate', type: 'date', required: true },
           { name: 'endToTime', type: 'time', required: true },
-          { name: 'remarks', type: 'textarea' },
+          { name: 'remarks', type: 'textarea' }
         ]
       }
     ];
@@ -140,44 +162,52 @@ export class EventPlanViewComponent {
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
-      data: { domain: 'event-plan', data: eventPlan, fields, title: 'Event Processes' },
+      data: { domain: 'event-plan', data: eventPlan, callback: true, fields, title: 'Event Processes' }
     });
 
-    dialogRef.afterClosed().subscribe({
-      next: (res) => {
-        if (!res.dimiss) {
-          this.refresh();
-        }
-      },
-    });
+    dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
   }
 
   configForm(eventPlan) {
     const eventPlanData = JSON.parse(JSON.stringify(eventPlan));
     const fields: IStandardFormField[] = [
       {
-        name: 'registrationForm', type: 'object', fields: [
+        name: 'registrationForm',
+        type: 'object',
+        fields: [
           {
-            name: 'settings', type: 'object', fields: [
+            name: 'settings',
+            type: 'object',
+            fields: [
               { name: 'name', type: 'boolean' },
               { name: 'gender', type: 'boolean' },
               { name: 'identityNumber', type: 'boolean' },
               { name: 'email', type: 'boolean' },
               { name: 'phoneNumber', type: 'boolean' },
               { name: 'organization', type: 'boolean' },
-              { name: 'address', type: 'boolean' },
+              { name: 'address', type: 'boolean' }
             ]
           },
           {
-            name: 'fields', type: 'table', displayName: 'Form Fields', childName: 'Field', default: [], fields: [
+            name: 'fields',
+            type: 'table',
+            displayName: 'Form Fields',
+            childName: 'Field',
+            default: [],
+            fields: [
               { name: 'name', type: 'string' },
-              { name: 'type', type: 'enum', enum: RegistrationFormFieldType, default: RegistrationFormFieldType[RegistrationFormFieldType.string] },
-              { name: 'displayName', type: 'string' },
+              {
+                name: 'type',
+                type: 'enum',
+                enum: RegistrationFormFieldType,
+                default: RegistrationFormFieldType[RegistrationFormFieldType.string]
+              },
+              { name: 'displayName', type: 'string' }
             ]
           },
-          { name: 'remarks', type: 'textarea' },
+          { name: 'remarks', type: 'textarea' }
         ]
-      },
+      }
     ];
 
     // tslint:disable-next-line: no-use-before-declare
@@ -189,30 +219,22 @@ export class EventPlanViewComponent {
       data: { domain: 'event-plan', data: eventPlanData, callback: true, fields, title: 'Registration Form' }
     });
 
-    dialogRef.afterClosed().subscribe(data => {
-      if (!data.dismiss) {
-        this.eventPlanService.submit(data).subscribe({
-          next: (res) => {
-            this.refresh();
-          }
-        });
-      }
-    });
+    dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
   }
 
   changeStatus(process, status) {
     process.status = status;
     this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
       this.toastr.info('Updated Status Succesfully!');
-      this.refresh();
+      // this.refresh();
     });
   }
 
   filterProcesses(status?: string) {
-    this.selectProcessStatus = status;
     if (!status) {
       this.filteredEventProcesses = this.eventPlan.processes;
     } else {
+      this.selectProcessStatus = status;
       this.filteredEventProcesses = this.eventPlan.processes.filter(val => val.status === status);
     }
     this.filteredEventProcesses.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
@@ -227,7 +249,7 @@ export class EventPlanViewComponent {
 
     this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
       this.toastr.info('Moved Process ' + item.name);
-      this.refresh();
+      // this.refresh();
     });
   }
 
@@ -240,7 +262,7 @@ export class EventPlanViewComponent {
 
     this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
       this.toastr.info('Moved Process ' + item.name);
-      this.refresh();
+      // this.refresh();
     });
   }
 
@@ -284,6 +306,18 @@ export class EventPlanViewComponent {
     };
   }
 
+  private updateEventPlan(data: any, funcBeforeSubmit?: any) {
+    if (!data.dismiss) {
+      if (funcBeforeSubmit) {
+        funcBeforeSubmit(data);
+      }
 
-
+      this.eventPlanService.submit(data).subscribe({
+        next: () => {
+          this.eventPlan = data;
+          this.filterProcesses(this.selectProcessStatus);
+        }
+      });
+    }
+  }
 }

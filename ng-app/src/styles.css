@@ -45,7 +45,8 @@ table {
 }
 
 .mat-dialog-container mat-form-field,
-.mat-card[class*='card-'] mat-form-field {
+.mat-card[class*='card-'] mat-form-field,
+.form mat-form-field {
     width: 100%;
 }
 

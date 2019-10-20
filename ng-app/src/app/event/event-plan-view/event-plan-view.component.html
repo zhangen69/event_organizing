@@ -46,10 +46,11 @@
   <mat-tab label="Resources">
     <div class="tab-body">
       <!-- Section1: Services -->
-      <div class="mat-subheading-1">Services</div>
-      <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <div class="mat-subheading-1">Services
+        <button mat-icon-button color="primary" (click)="addItemToEvent('providerService', 'services')">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
       <div class="mat-body" *ngIf="eventPlan.services && eventPlan.services.length === 0">
         No service yet.
       </div>
@@ -64,10 +65,11 @@
         </div>
       </ng-container>
       <!-- Section2: Facilities -->
-      <div class="mat-subheading-1">Facilities</div>
-      <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <div class="mat-subheading-1">Facilities
+        <button mat-icon-button color="primary" (click)="addItemToEvent('providerFacility', 'facilities')">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
       <div class="mat-body" *ngIf="eventPlan.facilities && eventPlan.facilities.length === 0">
         No facility yet.
       </div>
@@ -82,10 +84,11 @@
         </div>
       </ng-container>
       <!-- Section3: Stock Items -->
-      <div class="mat-subheading-1">Stock Items</div>
-      <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <div class="mat-subheading-1">Stock Items
+        <button mat-icon-button color="primary" (click)="addItemToEvent('stockItem', 'stockItems')">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
       <div class="mat-body" *ngIf="eventPlan.stockItems && eventPlan.stockItems.length === 0">
         No stock item yet.
       </div>
@@ -184,14 +187,20 @@
       </ng-template>
       <ng-template #showFormInfo>
         <div class="mat-title">Preview Form
-          <button mat-icon-button class="process-btn-group" color="primary" (click)="addEventProcessToEvent()">
+          <button mat-icon-button class="process-btn-group" color="primary" (click)="configForm(eventPlan)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
-        <div *ngFor="let setting of eventPlan.registrationForm?.settings">
-          Setting:{{ setting }}
+        <div class="form">
+          <h4>Basic Information</h4>
+          <div *ngFor="let setting of (eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value')">
+            <app-standard-form-field [field]="{ name: setting.key, type: 'string' }"></app-standard-form-field>
+          </div>
+          <h4 *ngIf="eventPlan.registrationForm.fields.length > 0">Detail Information</h4>
+          <div *ngFor="let field of eventPlan.registrationForm.fields">
+            <app-standard-form-field [field]="field"></app-standard-form-field>
+          </div>
         </div>
-        <pre>{{ eventPlan.registrationForm | json }}</pre>
       </ng-template>
     </div>
   </mat-tab>
