@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy, DoCheck } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subscription, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./standard-list.component.css']
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
+export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   @Input() columns: IStandardColumn[];
   @Input() filterList: any[];
   @Input() domainName: string;
@@ -91,6 +91,12 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.unsubscribeRequests();
   }
 
+  ngDoCheck() {
+    const changes = this.customList !== this.dataSource.data;
+    if (changes) {
+        this.applyFilter();
+    }
+}
   unsubscribeRequests() {
     if (this.subscribedRequests$.length > 0) {
       this.subscribedRequests$.forEach(subscription => {
@@ -125,11 +131,10 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fetchAll() {
-    this.pageLoaderService.toggle(true);
-
     if (this.customList !== undefined) {
       this.dataSource = new MatTableDataSource<any>(this.customList);
     } else {
+      this.pageLoaderService.toggle(true);
       const req$ = this.service
         .fetchAll(this.queryModel)
         .pipe()
@@ -159,7 +164,13 @@ export class StandardListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   applyFilter() {
-    this.fetchAll().add(() => this.paginator.firstPage());
+    debugger;
+    if (this.customList !== undefined) {
+      this.fetchAll();
+      this.paginator.firstPage();
+    } else {
+      this.fetchAll().add(() => this.paginator.firstPage());
+    }
   }
 
   getValue(item, column) {

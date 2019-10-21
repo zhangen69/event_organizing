@@ -49,7 +49,7 @@ const AttendeeSchema = new mongoose.Schema({
   status: MongooseHelper.Types.Enum(AttendeeStatus, 'Open'),
   group: MongooseHelper.Types.String(),
   remarks: MongooseHelper.Types.String(),
-  formData: MongooseHelper.Types.Object({}),
+  formData: MongooseHelper.Types.Object(new Object()),
 });
 
 const EventProcessSchema = new mongoose.Schema({

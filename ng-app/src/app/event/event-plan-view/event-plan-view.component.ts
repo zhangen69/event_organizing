@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import * as moment from 'moment';
 import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
+import { from } from 'rxjs';
 
 enum EventProcessType {
   'Initial',
@@ -199,6 +200,41 @@ export class EventPlanViewComponent {
     dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
   }
 
+  addAttendee() {
+    const getFormFieldsFromSettings = (settings: Object, fields: any[]): any[] => {
+      const settingFields = Object.keys(settings).map(key => {
+        return {
+          key,
+          value: settings[key],
+        };
+      })
+      .filter(setting => setting.value)
+      .map((setting) => {
+        return {
+          name: setting.key,
+          type: 'string',
+        };
+      });
+      fields.forEach(field => settingFields.push(field));
+      return settingFields;
+    };
+
+    const fields: IStandardFormField[] = getFormFieldsFromSettings(this.eventPlan.registrationForm.settings, this.eventPlan.registrationForm.fields);
+
+    const dialogRef = this.dialog.open(DialogFormComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+      data: { callback: true, fields, title: 'Attendee' }
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      this.eventPlan.attendees.push(data);
+      this.updateEventPlan(this.eventPlan, null, true);
+    });
+  }
+
   configForm(eventPlan) {
     const eventPlanData = JSON.parse(JSON.stringify(eventPlan));
     const fields: IStandardFormField[] = [
@@ -378,7 +414,7 @@ export class EventPlanViewComponent {
     };
   }
 
-  private updateEventPlan(data: any, funcBeforeSubmit?: any) {
+  private updateEventPlan(data: any, funcBeforeSubmit?: any, shouldRefresh?: boolean) {
     if (!data.dismiss) {
       if (funcBeforeSubmit) {
         funcBeforeSubmit(data);
@@ -388,6 +424,9 @@ export class EventPlanViewComponent {
         next: () => {
           this.eventPlan = data;
           this.filterProcesses(this.selectProcessStatus);
+          if (shouldRefresh) {
+            this.refresh();
+          }
         }
       });
     }
