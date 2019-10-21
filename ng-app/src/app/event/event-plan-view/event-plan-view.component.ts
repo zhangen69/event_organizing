@@ -1,4 +1,4 @@
-import { HttpResponse, IStandardFormField } from './../../standard/standard.interface';
+import { HttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
@@ -36,9 +36,40 @@ enum EventProcessStatus {
 export class EventPlanViewComponent {
   eventPlan: any = {};
   eventPlanService: StandardService;
+  attendeeService: StandardService;
   filteredEventProcesses: any[] = [];
   selectProcessStatus = '';
   eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
+  attendeeColumns: IStandardColumn[] = [
+    { name: 'code', format: 'link', link: '/attendee/view/' },
+    { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
+    { name: 'name' },
+    { name: 'groupName', displayName: 'Group' },
+    { name: 'remarks' }
+  ];
+  attendeeFilterList = [
+    { type: 'code', queryType: 'string' },
+    { type: 'name', queryType: 'string' },
+    { type: 'remarks', queryType: 'string' }
+  ];
+  attendeeActions = [
+    {
+      name: 'Group Attendees',
+      format: 'function',
+      function: selectedItems => {
+        const input = prompt('Enter Group Name');
+        selectedItems.forEach(element => {
+          element.groupName = input;
+          this.attendeeService.submit(element).subscribe();
+        });
+        this.refresh();
+      },
+      isMultiple: true
+    }
+  ];
+  attendeeQueryModel = {
+    filters: []
+  };
 
   constructor(
     private route: ActivatedRoute,

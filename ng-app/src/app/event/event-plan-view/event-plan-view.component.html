@@ -193,17 +193,18 @@
         </div>
 
         <div class="action-group">
-            <a class="btn-sm" [routerLink]="['/register/' + eventPlan.registrationForm._id]" target="_blank" mat-raised-button>
-                <mat-icon>public</mat-icon> Publish
-            </a>
-            <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan.registrationForm._id)"
-                value="click to copy">
-                <mat-icon>link</mat-icon> Copy Link
-            </button>
-            <button class="btn-sm" mat-raised-button (click)="sendRegistrationFormLink(eventPlan.registrationForm._id)"
-                value="click to send">
-                <mat-icon>send</mat-icon> Send Link
-            </button>
+          <a class="btn-sm" [routerLink]="['/register/' + eventPlan.registrationForm._id]" target="_blank"
+            mat-raised-button>
+            <mat-icon>public</mat-icon> Publish
+          </a>
+          <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan.registrationForm._id)"
+            value="click to copy">
+            <mat-icon>link</mat-icon> Copy Link
+          </button>
+          <button class="btn-sm" mat-raised-button (click)="sendRegistrationFormLink(eventPlan.registrationForm._id)"
+            value="click to send">
+            <mat-icon>send</mat-icon> Send Link
+          </button>
         </div>
 
         <div class="form">
@@ -219,7 +220,18 @@
       </ng-template>
     </div>
   </mat-tab>
-  <!-- Tab5: Cost & Profit -->
+  <mat-tab label="Attendee">
+    <div class="tab-body">
+      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees"></div>
+      <ng-template #attendeeList>
+          <app-standard-list title="Attendee" [columns]="attendeeColumns" [filterList]="attendeeFilterList" [actions]="attendeeActions" [customList]="eventPlan.attendees"></app-standard-list>
+      </ng-template>
+      <ng-template #noFoundAttendees>
+        <p>No attendee yet.</p>
+      </ng-template>
+    </div>
+  </mat-tab>
+  <!-- Tab6: Cost & Profit -->
   <mat-tab label="Cost & Profit">
     <div class="tab-body info-group">
       <div class="mat-title">Costs Summary</div>
