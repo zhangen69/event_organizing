@@ -16,7 +16,7 @@ const EventServiceSchema = new mongoose.Schema({
   quantity: MongooseHelper.Types.Number(),
   unit: MongooseHelper.Types.String(),
   unitPrice: MongooseHelper.Types.Number(),
-  remarks: MongooseHelper.Types.String()
+  remarks: MongooseHelper.Types.String(),
 });
 
 const EventFacilitySchema = new mongoose.Schema({
@@ -25,7 +25,7 @@ const EventFacilitySchema = new mongoose.Schema({
   quantity: MongooseHelper.Types.Number(),
   unit: MongooseHelper.Types.String(),
   unitPrice: MongooseHelper.Types.Number(),
-  remarks: MongooseHelper.Types.String()
+  remarks: MongooseHelper.Types.String(),
 });
 
 const EventStockItemSchema = new mongoose.Schema({
@@ -34,7 +34,7 @@ const EventStockItemSchema = new mongoose.Schema({
   quantity: MongooseHelper.Types.Number(),
   unit: MongooseHelper.Types.String(),
   unitPrice: MongooseHelper.Types.Number(),
-  remarks: MongooseHelper.Types.String()
+  remarks: MongooseHelper.Types.String(),
 });
 
 const AttendeeSchema = new mongoose.Schema({
@@ -69,13 +69,13 @@ const EventProcessSchema = new mongoose.Schema({
   personInCharged: MongooseHelper.Types.Object(),
   budgetAmount: MongooseHelper.Types.Number(),
   remarks: MongooseHelper.Types.String(),
-  order: MongooseHelper.Types.Number()
+  order: MongooseHelper.Types.Number(),
 });
 
 const EventPlanNoteSchema = new mongoose.Schema({
   title: MongooseHelper.Types.String(true),
   note: MongooseHelper.Types.String(true),
-  date: MongooseHelper.Types.Date()
+  date: MongooseHelper.Types.Date(),
 });
 
 const EventPlanSchema = new mongoose.Schema({
@@ -103,7 +103,7 @@ const EventPlanSchema = new mongoose.Schema({
   totalPrice: MongooseHelper.Types.Number(),
   remarks: MongooseHelper.Types.String(),
   notes: MongooseHelper.Types.SchemaList(EventPlanNoteSchema),
-  registrationForm: MongooseHelper.Types.Schema(RegistrationFormSchema)
+  registrationForm: MongooseHelper.Types.Schema(RegistrationFormSchema),
 });
 
 EventPlanSchema.add(auditable);
@@ -112,14 +112,14 @@ EventPlanSchema.pre('save', function(next) {
   console.log('pre:save');
   const receipt = this;
   const query = Counter.findOne({ domain: 'EventPlan' });
-  query.then(doc => {
+  query.then((doc) => {
     const str = '000';
     const code = 'EP';
     if (!doc) {
       console.log('create new counter: EventPlan');
       const newCounter = new Counter({ domain: 'EventPlan', serial: 1 });
       const saveQuery = newCounter.save();
-      saveQuery.then(newDoc => {
+      saveQuery.then((newDoc) => {
         const docSerial = newDoc.get('serial');
         console.log('newDoc.serial.length', docSerial.toString().length);
         const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
@@ -130,7 +130,7 @@ EventPlanSchema.pre('save', function(next) {
       console.log('update serial: EventPlan');
       doc.set('serial', doc.get('serial') + 1);
       const updateQuery = doc.save();
-      updateQuery.then(updatedDoc => {
+      updateQuery.then((updatedDoc) => {
         const docSerial = updatedDoc.get('serial');
         console.log('updatedDoc.serial.length', docSerial.toString().length);
         const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;

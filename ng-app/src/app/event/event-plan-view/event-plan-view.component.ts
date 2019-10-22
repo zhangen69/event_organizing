@@ -230,6 +230,11 @@ export class EventPlanViewComponent {
     });
 
     dialogRef.afterClosed().subscribe(data => {
+      const formData = {};
+      this.eventPlan.registrationForm.fields.forEach(field => {
+        formData[field.name] = data[field.name];
+      });
+      data.formData = formData;
       this.eventPlan.attendees.push(data);
       this.updateEventPlan(this.eventPlan, null, true);
     });

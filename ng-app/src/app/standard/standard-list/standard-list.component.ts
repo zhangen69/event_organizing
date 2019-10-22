@@ -92,9 +92,11 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
   }
 
   ngDoCheck() {
-    const changes = this.customList !== this.dataSource.data;
-    if (changes) {
-        this.applyFilter();
+    if (this.customList !== undefined && this.dataSource !== undefined) {
+      const changes = this.customList !== this.dataSource.data;
+      if (changes) {
+          this.applyFilter();
+      }
     }
 }
   unsubscribeRequests() {
@@ -164,7 +166,6 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
   }
 
   applyFilter() {
-    debugger;
     if (this.customList !== undefined) {
       this.fetchAll();
       this.paginator.firstPage();

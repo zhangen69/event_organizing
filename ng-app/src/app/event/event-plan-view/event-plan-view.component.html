@@ -227,9 +227,37 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees"></div>
+      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
+      </div>
       <ng-template #attendeeList>
-          <app-standard-list title="Attendee" [columns]="attendeeColumns" [filterList]="attendeeFilterList" [actions]="attendeeActions" [(customList)]="eventPlan.attendees"></app-standard-list>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ setting.key | titleDisplay }}</th>
+              <th *ngFor="let field of eventPlan.registrationForm.fields">{{ field.displayName }}</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of eventPlan.attendees">
+              <td>{{ item.code }}</td>
+              <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ item[setting.key] }}</td>
+              <td *ngFor="let field of eventPlan.registrationForm.fields">
+                <div *ngIf="item.formData && item.formData[field.name]">{{ item.formData[field.name] }}</div>
+              </td>
+              <td>
+                <button mat-raised-button class="btn-sm" color="primary">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+                <button mat-button class="btn-sm">
+                  <mat-icon>delete</mat-icon> Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pre>{{ eventPlan.attendees | json }}</pre>
       </ng-template>
       <ng-template #noFoundAttendees>
         <p>No attendee yet.</p>
