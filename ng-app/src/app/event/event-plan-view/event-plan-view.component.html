@@ -230,7 +230,7 @@
       <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
       </div>
       <ng-template #attendeeList>
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>Code</th>
@@ -257,7 +257,7 @@
             </tr>
           </tbody>
         </table>
-        <pre>{{ eventPlan.attendees | json }}</pre>
+        <!-- <pre>{{ eventPlan.attendees | json }}</pre> -->
       </ng-template>
       <ng-template #noFoundAttendees>
         <p>No attendee yet.</p>
@@ -306,4 +306,4 @@
   </mat-tab>
 </mat-tab-group>
 
-<pre>{{ eventPlan | json }}</pre>
+<!-- <pre>{{ eventPlan | json }}</pre> -->

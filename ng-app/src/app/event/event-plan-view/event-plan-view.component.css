@@ -66,3 +66,14 @@ button.active {
 .form {
   max-width: 50%;
 }
+
+.table.table-bordered {
+  border: 1px #eee solid;
+}
+
+.table td,
+.table th {
+  text-align: center;
+  border-bottom: 1px #eee solid;
+  padding: 10px 0;
+}

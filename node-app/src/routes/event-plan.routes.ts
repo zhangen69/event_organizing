@@ -63,4 +63,16 @@ router.post(`/${service}/sendRegistrationFormLink`, checkAuth, (req, res, next) 
     // });
 });
 
+router.get(`/${service}/getRegistrationForm/:id`, (req, res, next) => {
+    eventPlanModel.findById(req.params.id).then((doc) => {
+        const form = doc['registrationForm'];
+
+        if (form) {
+            res.status(200).json({ form });
+        } else {
+            res.status(500).json({ message: 'form not found' });
+        }
+    });
+});
+
 export default router;
