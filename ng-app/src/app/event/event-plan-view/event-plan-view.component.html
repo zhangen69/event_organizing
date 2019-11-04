@@ -193,15 +193,15 @@
         </div>
 
         <div class="action-group">
-          <a class="btn-sm" [routerLink]="['/register/' + eventPlan.registrationForm._id]" target="_blank"
+          <a class="btn-sm" [routerLink]="['/register/' + eventPlan._id]" target="_blank"
             mat-raised-button>
             <mat-icon>public</mat-icon> Publish
           </a>
-          <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan.registrationForm._id)"
+          <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan._id)"
             value="click to copy">
             <mat-icon>link</mat-icon> Copy Link
           </button>
-          <button class="btn-sm" mat-raised-button (click)="sendRegistrationFormLink(eventPlan.registrationForm._id)"
+          <button class="btn-sm" mat-raised-button (click)="sendRegistrationFormLink(eventPlan._id)"
             value="click to send">
             <mat-icon>send</mat-icon> Send Link
           </button>
