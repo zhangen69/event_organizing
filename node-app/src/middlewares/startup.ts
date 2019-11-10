@@ -25,7 +25,7 @@ import providerFacilityRoutes from '../routes/provider-facility.routes';
 import providerServiceRoutes from '../routes/provider-service.routes';
 import providerRoutes from '../routes/provider.routes';
 import receiptRoutes from '../routes/receipt.routes';
-import registrationFormRoutes from '../routes/registration-form.routes';
+// import registrationFormRoutes from '../routes/registration-form.routes';
 import stockItemRoutes from '../routes/stock-item.routes';
 import stockTransactionRoutes from '../routes/stock-transaction.routes';
 import storeRoutes from '../routes/store.routes';
@@ -74,8 +74,8 @@ router.use(
   providerServiceRoutes,
   providerFacilityRoutes,
   receiptRoutes,
-  registrationFormRoutes,
-  storeRoutes,
+  // registrationFormRoutes,
+  storeRoutes
 );
 router.use('/service/user', userRoutes);
 
