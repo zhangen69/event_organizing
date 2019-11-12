@@ -69,7 +69,7 @@ import { StandardFormFieldComponent } from './standard/standard-form-field/stand
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
 import { EventViewComponent } from './event/event-view/event-view.component';
-import { MatNativeDateModule } from '@angular/material/core';
+// import { MatNativeDateModule } from '@angular/material/core';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
@@ -86,7 +86,7 @@ import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { FilterOptionsPipe } from './standard/filter-options.pipe';
 import { GetTotalPipe } from './pipes/get-total.pipe';
-import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
+// import { SpreadSheetsModule } from './components/spread-sheets-angular/gc.spread.sheets.angular';
 import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
@@ -161,7 +161,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     DemoXlsxComponent,
     EventPlanViewComponent,
     ProcessesFilterPipe,
-    ObjectToArrayPipe,
+    ObjectToArrayPipe
   ],
   imports: [
     BrowserModule,
@@ -174,7 +174,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     FileUploadModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-bottom-right'
     }),
     MaterialModule,
     QRCodeModule,
@@ -189,7 +189,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     }),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    SpreadSheetsModule,
+    // SpreadSheetsModule
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent],
   providers: [
@@ -197,8 +197,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     DatePipe,
     CurrencyPipe,
     TitleDisplayPipe,
-    GetTotalPipe,
+    GetTotalPipe
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
