@@ -68,8 +68,39 @@ router.get(`/${service}/getRegistrationForm/:id`, (req, res, next) => {
 });
 
 router.post(`/${service}/attendee-register`, (req, res, next) => {
-    console.log(req.body);
-    res.status(200).json({ message: 'ok' });
+    // console.log(req.body);
+    // res.status(200).json({ message: 'ok' });
+    eventPlanModel.findById(req.body.event).then((doc) => {
+      const attendees = doc['attendees'];
+      const newAttendee: any = {
+        formData: req.body.formData || {},
+      };
+      if (req.body.name) {
+        newAttendee.name = req.body.name;
+      }
+      if (req.body.identityNumber) {
+        newAttendee.identityNumber = req.body.identityNumber;
+      }
+      if (req.body.email) {
+        newAttendee.email = req.body.email;
+      }
+      if (req.body.address) {
+        newAttendee.address = req.body.address;
+      }
+      if (req.body.phoneNumber) {
+        newAttendee.phoneNumber = req.body.phoneNumber;
+      }
+      if (req.body.organization) {
+        newAttendee.organization = req.body.organization;
+      }
+      if (req.body.gender) {
+        newAttendee.gender = req.body.gender;
+      }
+      attendees.push(newAttendee);
+      doc.save().then(() => {
+        res.status(200).json({ message: 'ok' });
+      });
+    });
 });
 
 export default router;

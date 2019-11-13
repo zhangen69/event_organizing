@@ -233,6 +233,7 @@
         <table class="table table-bordered">
           <thead>
             <tr>
+              <th></th>
               <th>Code</th>
               <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ setting.key | titleDisplay }}</th>
               <th *ngFor="let field of eventPlan.registrationForm.fields">{{ field.displayName }}</th>
@@ -241,6 +242,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of eventPlan.attendees">
+              <td>
+                <mat-checkbox [(ngModel)]="item.isSelected"></mat-checkbox>
+              </td>
               <td>{{ item.code }}</td>
               <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ item[setting.key] }}</td>
               <td *ngFor="let field of eventPlan.registrationForm.fields">
