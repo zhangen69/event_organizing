@@ -67,6 +67,13 @@ router.get(`/${service}/getRegistrationForm/:id`, (req, res, next) => {
   });
 });
 
+router.get(`/${service}/get-attendee-list/:id`, checkAuth, (req, res, next) => {
+  eventPlanModel.findById(req.params.id).then((doc) => {
+    const attendees = doc['attendees'];
+    res.status(200).json({ attendees });
+  });
+});
+
 router.post(`/${service}/attendee-register`, (req, res, next) => {
     // console.log(req.body);
     // res.status(200).json({ message: 'ok' });

@@ -405,6 +405,12 @@ export class EventPlanViewComponent {
     return `${from}-${to}`;
   }
 
+  getAttendees() {
+    this.http.get(environment.apiUrl + '/service/event-plan/get-attendee-list/' + this.eventPlan._id).subscribe((res: any) => {
+      this.eventPlan.attendees = res.attendees;
+    });
+  }
+
   private reformItem({ name, displayName, childName, fieldName }) {
     return {
       name,

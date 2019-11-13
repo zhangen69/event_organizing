@@ -77,3 +77,7 @@ button.active {
   border-bottom: 1px #eee solid;
   padding: 10px 0;
 }
+
+.btn-right {
+  margin-left: auto;
+}

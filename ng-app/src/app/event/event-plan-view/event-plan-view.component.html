@@ -226,6 +226,9 @@
         <button mat-icon-button class="process-btn-group" color="primary" (click)="addAttendee()">
           <mat-icon>add</mat-icon>
         </button>
+        <button mat-icon-button class="process-btn-group btn-right" color="primary" (click)="getAttendees()">
+          <mat-icon>refresh</mat-icon>
+        </button>
       </div>
       <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
       </div>
