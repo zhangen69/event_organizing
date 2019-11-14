@@ -193,8 +193,7 @@
         </div>
 
         <div class="action-group">
-          <a class="btn-sm" [routerLink]="['/register/' + eventPlan._id]" target="_blank"
-            mat-raised-button>
+          <a class="btn-sm" [routerLink]="['/register/' + eventPlan._id]" target="_blank" mat-raised-button>
             <mat-icon>public</mat-icon> Publish
           </a>
           <button class="btn-sm" mat-raised-button (click)="copyRegistrationFormLink(eventPlan._id)"
@@ -226,19 +225,24 @@
         <button mat-icon-button class="process-btn-group" color="primary" (click)="addAttendee()">
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-icon-button class="process-btn-group btn-right" color="primary" (click)="getAttendees()">
-          <mat-icon>refresh</mat-icon>
+      </div>
+      <div class="action-group">
+        <button mat-raised-button class="btn-sm" color="primary" (click)="groupAttendees()" *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
+          Group Attendees
+        </button>
+        <button mat-raised-button class="btn-end" color="primary" (click)="getAttendees()">
+          <mat-icon>refresh</mat-icon> Refresh
         </button>
       </div>
-      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
-      </div>
+      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees"></div>
       <ng-template #attendeeList>
         <table class="table table-bordered">
           <thead>
             <tr>
               <th></th>
               <th>Code</th>
-              <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ setting.key | titleDisplay }}</th>
+              <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
+                {{ setting.key | titleDisplay }}</th>
               <th *ngFor="let field of eventPlan.registrationForm.fields">{{ field.displayName }}</th>
               <th>Action</th>
             </tr>
@@ -249,7 +253,8 @@
                 <mat-checkbox [(ngModel)]="item.isSelected"></mat-checkbox>
               </td>
               <td>{{ item.code }}</td>
-              <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">{{ item[setting.key] }}</td>
+              <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
+                {{ item[setting.key] }}</td>
               <td *ngFor="let field of eventPlan.registrationForm.fields">
                 <div *ngIf="item.formData && item.formData[field.name]">{{ item.formData[field.name] }}</div>
               </td>

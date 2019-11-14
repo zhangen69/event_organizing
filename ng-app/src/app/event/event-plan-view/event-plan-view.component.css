@@ -78,6 +78,10 @@ button.active {
   padding: 10px 0;
 }
 
-.btn-right {
+.action-group {
+  display: flex;
+}
+
+.action-group .btn-end {
   margin-left: auto;
 }

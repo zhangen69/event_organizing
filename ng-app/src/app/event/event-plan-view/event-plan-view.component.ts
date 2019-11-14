@@ -61,7 +61,11 @@ export class EventPlanViewComponent {
         const input = prompt('Enter Group Name');
         selectedItems.forEach(element => {
           element.groupName = input;
-          this.attendeeService.submit(element).subscribe();
+          const attendeeReq = this.attendeeService.submit(element).subscribe({
+            complete: () => {
+              attendeeReq.unsubscribe();
+            }
+          });
         });
         this.refresh();
       },
@@ -90,28 +94,38 @@ export class EventPlanViewComponent {
   }
 
   refresh() {
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.pageLoaderService.toggle(true);
-        const includes = [
-          'customer',
-          'services.provider',
-          'services.providerService',
-          'facilities.provider',
-          'facilities.providerFacility',
-          'processes.provider',
-          'stockItems.stockItem'
-        ];
-        this.http
-          .get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join())
-          .pipe(map(res => res.data))
-          .subscribe(data => {
-            this.eventPlan = data;
-            // sort: formData.processes
-            this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
-            this.filterProcesses(this.selectProcessStatus);
-            this.pageLoaderService.toggle(false);
-          });
+    const routeParamsReq = this.route.params.subscribe({
+      next: params => {
+        if (params['id']) {
+          this.pageLoaderService.toggle(true);
+          const includes = [
+            'customer',
+            'services.provider',
+            'services.providerService',
+            'facilities.provider',
+            'facilities.providerFacility',
+            'processes.provider',
+            'stockItems.stockItem'
+          ];
+          const getEventPlanReq = this.http
+            .get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join())
+            .pipe(map(res => res.data))
+            .subscribe({
+              next: data => {
+                this.eventPlan = data;
+                // sort: formData.processes
+                this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+                this.filterProcesses(this.selectProcessStatus);
+                this.pageLoaderService.toggle(false);
+              },
+              complete: () => {
+                getEventPlanReq.unsubscribe();
+              }
+            });
+        }
+      },
+      complete: () => {
+        routeParamsReq.unsubscribe();
       }
     });
   }
@@ -137,16 +151,21 @@ export class EventPlanViewComponent {
       data: { domain: 'event-plan', data: eventPlan, callback: true, fields, title: dName }
     });
 
-    dialogRef.afterClosed().subscribe(data => {
-      const funcBeforeSubmit = data => {
-        data[name].forEach(element => {
-          element.name = element[type].name;
-          element.unit = element[type].unit;
-          element.unitPrice = element[type].unitPrice;
-        });
-      };
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => {
+        const funcBeforeSubmit = data => {
+          data[name].forEach(element => {
+            element.name = element[type].name;
+            element.unit = element[type].unit;
+            element.unitPrice = element[type].unitPrice;
+          });
+        };
 
-      this.updateEventPlan(data, funcBeforeSubmit);
+        this.updateEventPlan(data, funcBeforeSubmit);
+      },
+      complete: () => {
+        dialogClosedReq.unsubscribe();
+      }
     });
   }
 
@@ -197,29 +216,38 @@ export class EventPlanViewComponent {
       data: { domain: 'event-plan', data: eventPlan, callback: true, fields, title: 'Event Processes' }
     });
 
-    dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => this.updateEventPlan(data),
+      complete: () => {
+        dialogClosedReq.unsubscribe();
+      }
+    });
   }
 
   addAttendee() {
     const getFormFieldsFromSettings = (settings: Object, fields: any[]): any[] => {
-      const settingFields = Object.keys(settings).map(key => {
-        return {
-          key,
-          value: settings[key],
-        };
-      })
-      .filter(setting => setting.value)
-      .map((setting) => {
-        return {
-          name: setting.key,
-          type: 'string',
-        };
-      });
+      const settingFields = Object.keys(settings)
+        .map(key => {
+          return {
+            key,
+            value: settings[key]
+          };
+        })
+        .filter(setting => setting.value)
+        .map(setting => {
+          return {
+            name: setting.key,
+            type: 'string'
+          };
+        });
       fields.forEach(field => settingFields.push(field));
       return settingFields;
     };
 
-    const fields: IStandardFormField[] = getFormFieldsFromSettings(this.eventPlan.registrationForm.settings, this.eventPlan.registrationForm.fields);
+    const fields: IStandardFormField[] = getFormFieldsFromSettings(
+      this.eventPlan.registrationForm.settings,
+      this.eventPlan.registrationForm.fields
+    );
 
     const dialogRef = this.dialog.open(DialogFormComponent, {
       disableClose: true,
@@ -229,14 +257,19 @@ export class EventPlanViewComponent {
       data: { callback: true, fields, title: 'Attendee' }
     });
 
-    dialogRef.afterClosed().subscribe(data => {
-      const formData = {};
-      this.eventPlan.registrationForm.fields.forEach(field => {
-        formData[field.name] = data[field.name];
-      });
-      data.formData = formData;
-      this.eventPlan.attendees.push(data);
-      this.updateEventPlan(this.eventPlan, null, true);
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => {
+        const formData = {};
+        this.eventPlan.registrationForm.fields.forEach(field => {
+          formData[field.name] = data[field.name];
+        });
+        data.formData = formData;
+        this.eventPlan.attendees.push(data);
+        this.updateEventPlan(this.eventPlan, null, true);
+      },
+      complete: () => {
+        dialogClosedReq.unsubscribe();
+      }
     });
   }
 
@@ -291,7 +324,12 @@ export class EventPlanViewComponent {
       data: { domain: 'event-plan', data: eventPlanData, callback: true, fields, title: 'Registration Form' }
     });
 
-    dialogRef.afterClosed().subscribe(data => this.updateEventPlan(data));
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => this.updateEventPlan(data),
+      complete: () => {
+        dialogClosedReq.unsubscribe();
+      }
+    });
   }
 
   // source: https://stackoverflow.com/questions/49102724/angular-5-copy-to-clipboard
@@ -321,25 +359,37 @@ export class EventPlanViewComponent {
       data: { domain: 'registration-form', data: formData, fields, title: 'Send Registration Form Link', callback: true }
     });
 
-    dialogRef.afterClosed().subscribe(data => {
-      if (!data.dismiss) {
-        this.pageLoaderService.toggle(true);
-        const url = this.eventPlanService.apiUrl + '/sendRegistrationFormLink';
-        this.eventPlanService.submit({ formId, email: data.email }, url).subscribe({
-          next: () => {
-            this.pageLoaderService.toggle(false);
-            this.toastr.info('Sent link to the email!');
-          }
-        });
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => {
+        if (!data.dismiss) {
+          this.pageLoaderService.toggle(true);
+          const url = this.eventPlanService.apiUrl + '/sendRegistrationFormLink';
+          const eventPlanReq = this.eventPlanService.submit({ formId, email: data.email }, url).subscribe({
+            next: () => {
+              this.pageLoaderService.toggle(false);
+              this.toastr.info('Sent link to the email!');
+            },
+            complete: () => {
+              eventPlanReq.unsubscribe();
+            }
+          });
+        }
+      },
+      complete: () => {
+        dialogClosedReq.unsubscribe();
       }
     });
   }
 
   changeStatus(process, status) {
     process.status = status;
-    this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
-      this.toastr.info('Updated Status Succesfully!');
-      // this.refresh();
+    const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+      next: () => {
+        this.toastr.info('Updated Status Succesfully!');
+      },
+      complete: () => {
+        eventPlanReq.unsubscribe();
+      }
     });
   }
 
@@ -360,9 +410,13 @@ export class EventPlanViewComponent {
     targetItem.order += targetItem.order <= swapItem.order ? 1 : 0;
     swapItem.order -= targetItem.order === swapItem.order ? 1 : 0;
 
-    this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
-      this.toastr.info('Moved Process ' + item.name);
-      // this.refresh();
+    const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+      next: () => {
+        this.toastr.info('Moved Process ' + item.name);
+      },
+      complete: () => {
+        eventPlanReq.unsubscribe();
+      }
     });
   }
 
@@ -373,9 +427,13 @@ export class EventPlanViewComponent {
     targetItem.order = targetItem.order >= swapItem.order ? swapItem.order : targetItem.order;
     swapItem.order = targetItem.order <= swapItem.order ? swapItem.order + 1 : targetItem.order - 1;
 
-    this.eventPlanService.submit(this.eventPlan).subscribe(_ => {
-      this.toastr.info('Moved Process ' + item.name);
-      // this.refresh();
+    const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+      next: () => {
+        this.toastr.info('Moved Process ' + item.name);
+      },
+      complete: () => {
+        eventPlanReq.unsubscribe();
+      }
     });
   }
 
@@ -406,8 +464,43 @@ export class EventPlanViewComponent {
   }
 
   getAttendees() {
-    this.http.get(environment.apiUrl + '/service/event-plan/get-attendee-list/' + this.eventPlan._id).subscribe((res: any) => {
-      this.eventPlan.attendees = res.attendees;
+    const getAttendeesReq = this.http.get(environment.apiUrl + '/service/event-plan/get-attendee-list/' + this.eventPlan._id).subscribe({
+      next: (res: any) => {
+        this.eventPlan.attendees = res.attendees;
+      },
+      complete: () => {
+        getAttendeesReq.unsubscribe();
+      }
+    });
+  }
+
+  hasAttendeeIsSelected(attendees): boolean {
+    if (!attendees || attendees.length <= 0) {
+      return false;
+    }
+    return attendees.some(attendee => attendee.isSelected);
+  }
+
+  groupAttendees() {
+    const selectedAttendees = this.eventPlan.attendees.filter(attendee => attendee.isSelected);
+    const groupName = prompt('Please Enter the Group Name');
+
+    if (!groupName && groupName !== null) {
+      this.toastr.error('Group Name cannot be empty');
+    }
+
+    if (!groupName) {
+      return;
+    }
+
+    selectedAttendees.forEach(attendee => (attendee.group = groupName));
+
+    console.log('Attendees', this.eventPlan.attendees);
+
+    const updateGroupAttenddesReq = this.http.post(environment.apiUrl + '/service/event-plan', this.eventPlan).subscribe({
+      complete: () => {
+        updateGroupAttenddesReq.unsubscribe();
+      }
     });
   }
 
@@ -431,13 +524,16 @@ export class EventPlanViewComponent {
         funcBeforeSubmit(data);
       }
 
-      this.eventPlanService.submit(data).subscribe({
+      const eventPlanReq = this.eventPlanService.submit(data).subscribe({
         next: () => {
           this.eventPlan = data;
           this.filterProcesses(this.selectProcessStatus);
           if (shouldRefresh) {
             this.refresh();
           }
+        },
+        complete: () => {
+          eventPlanReq.unsubscribe();
         }
       });
     }
