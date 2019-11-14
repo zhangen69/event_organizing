@@ -34,10 +34,9 @@ export class SupplierInvoiceFormComponent implements OnInit {
     formData: any = {};
     includes: string[] = ['store', 'provider'];
     fields: IStandardFormField[] = [
-        // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
         { name: 'store', type: 'ref', required: true },
-        // { name: 'type', type: 'enum', enum: SupplierInvoiceType, required: true },
+        { name: 'eventPlan', type: 'ref', required: true },
         {
             name: 'status',
             type: 'enum',
