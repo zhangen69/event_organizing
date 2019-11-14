@@ -16,7 +16,7 @@ export class InvoiceFormComponent implements OnInit {
   fields = [
     { name: 'code', type: 'string', required: true },
     { name: 'customer', type: 'ref', required: true },
-    { name: 'event', type: 'ref' },
+    { name: 'event-plan', type: 'ref' },
     { name: 'status', type: 'enum', enum: InvoiceStatus, default: InvoiceStatus[InvoiceStatus.Open], required: true },
     { name: 'remarks', type: 'textarea' },
     {
