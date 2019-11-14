@@ -221,20 +221,20 @@
   </mat-tab>
   <mat-tab label="Attendees">
     <div class="tab-body">
-      <div class="mat-subheading-1">Attendees
-        <button mat-icon-button class="process-btn-group" color="primary" (click)="addAttendee()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
+      <button mat-button class="process-btn-group" color="primary" (click)="addAttendee()">
+        <mat-icon>add</mat-icon> Attendees
+      </button>
       <div class="action-group">
-        <button mat-raised-button class="btn-sm" color="primary" (click)="groupAttendees()" *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
+        <button mat-raised-button class="btn-sm" color="primary" (click)="groupAttendees()"
+          *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
           Group Attendees
         </button>
         <button mat-raised-button class="btn-end" color="primary" (click)="getAttendees()">
           <mat-icon>refresh</mat-icon> Refresh
         </button>
       </div>
-      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees"></div>
+      <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
+      </div>
       <ng-template #attendeeList>
         <table class="table table-bordered">
           <thead>
