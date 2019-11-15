@@ -259,10 +259,10 @@
                 <div *ngIf="item.formData && item.formData[field.name]">{{ item.formData[field.name] }}</div>
               </td>
               <td>
-                <button mat-raised-button class="btn-sm" color="primary">
+                <button mat-raised-button class="btn-sm" color="primary" (click)="editAttendee(item)">
                   <mat-icon>edit</mat-icon> Edit
                 </button>
-                <button mat-button class="btn-sm">
+                <button mat-button class="btn-sm" (click)="removeAttendee(item)">
                   <mat-icon>delete</mat-icon> Remove
                 </button>
               </td>
