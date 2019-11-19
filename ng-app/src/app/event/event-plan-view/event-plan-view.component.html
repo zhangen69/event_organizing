@@ -344,6 +344,10 @@
             </tr>
           </tbody>
         </table>
+        <div class="action-group">
+          <button class="btn-sm" [routerLink]="['/invoice/edit/' + eventPlan._id]" mat-raised-button
+            color="primary">Edit</button>
+        </div>
         <pre>{{ invoice | json }}</pre>
       </ng-template>
     </div>
