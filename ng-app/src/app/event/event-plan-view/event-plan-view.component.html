@@ -321,15 +321,15 @@
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeInvoiceStatus('Confirmed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Confirmed')" mat-raised-button color="primary"
             *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Confirm</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Revised')" mat-raised-button color="primary"
             *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Revise</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Cancelled')" mat-raised-button color="primary"
             *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Cancel</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus('Paid')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Paid')" mat-raised-button color="primary"
             *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Pay</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Closed')" mat-raised-button color="primary"
             *ngIf="checkInvoiceButton(invoice, ['Paid'])">Close</button>
         </div>
         <div class="view-field">

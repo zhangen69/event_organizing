@@ -479,7 +479,7 @@ export class EventPlanViewComponent {
   }
 
   updateInvoice(invoice): void {
-    const updateEventPlanReq = this.http.post(environment.apiUrl + '/service/invoice', invoice).subscribe({
+    const updateEventPlanReq = this.http.put(environment.apiUrl + '/service/invoice', invoice).subscribe({
       next: () => {
         this.toastr.info('Updated Succesfully!');
       },
