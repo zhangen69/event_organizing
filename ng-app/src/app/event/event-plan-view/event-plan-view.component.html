@@ -157,11 +157,11 @@
                 <pre fxLayout="column">
                     <span>Status: {{ process.status }}</span>
                     <div class="btn-group" fxLayout="row">
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'In Progress')" *ngIf="process.status === 'Open'">Proceed</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Done')" *ngIf="process.status === 'In Progress'">Done</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Verified')" *ngIf="process.status === 'Done'">Verify</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Closed')" *ngIf="process.status === 'Done' || process.status === 'Verified'">Close</button>
-                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeStatus(process, 'Cancelled')" *ngIf="process.status === 'Open'">Cancel</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'In Progress')" *ngIf="process.status === 'Open'">Proceed</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'Done')" *ngIf="process.status === 'In Progress'">Done</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'Verified')" *ngIf="process.status === 'Done'">Verify</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'Closed')" *ngIf="process.status === 'Done' || process.status === 'Verified'">Close</button>
+                        <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'Cancelled')" *ngIf="process.status === 'Open'">Cancel</button>
                     </div>
                   </pre>
                 <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>
@@ -319,6 +319,14 @@
         <div class="view-field">
           <label class="mat-body-strong">Status</label>
           <div class="mat-body">{{ invoice.status }}</div>
+        </div>
+        <div class="action-group">
+          <button class="btn-sm" (click)="changeInvoiceStatus('Open')" mat-raised-button color="primary">Open</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Confirmed')" mat-raised-button
+            color="primary">Confirmed</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Paid')" mat-raised-button color="primary">Paid</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button
+            color="primary">Closed</button>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Remarks</label>

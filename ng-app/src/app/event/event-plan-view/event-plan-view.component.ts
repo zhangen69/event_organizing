@@ -127,16 +127,7 @@ export class EventPlanViewComponent {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
                 // get invoice
-                const getInvoiceReq = this.http
-                  .get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + this.eventPlan._id)
-                  .subscribe({
-                    next: ({ data }: any) => {
-                      this.invoice = data;
-                    },
-                    complete: () => {
-                      getInvoiceReq.unsubscribe();
-                    }
-                  });
+                this.getInvoiceByEventPlanId(this.eventPlan._id);
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -476,7 +467,34 @@ export class EventPlanViewComponent {
     });
   }
 
-  changeStatus(process, status) {
+  getInvoiceByEventPlanId(eventPlanId: string): void {
+    const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + eventPlanId).subscribe({
+      next: ({ data }: any) => {
+        this.invoice = data;
+      },
+      complete: () => {
+        getInvoiceReq.unsubscribe();
+      }
+    });
+  }
+
+  updateInvoice(invoice): void {
+    const updateEventPlanReq = this.http.post(environment.apiUrl + '/service/invoice', invoice).subscribe({
+      next: () => {
+        this.toastr.info('Updated Succesfully!');
+      },
+      complete: () => {
+        updateEventPlanReq.unsubscribe();
+      }
+    });
+  }
+
+  changeInvoiceStatus(invoice, status) {
+    invoice.status = status;
+    this.updateInvoice(invoice);
+  }
+
+  changeProcessStatus(process, status) {
     process.status = status;
     const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
       next: () => {
