@@ -314,7 +314,7 @@
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Total Amount</label>
-          <div class="mat-body">{{ getInvoiceTotalAmount(invoice.lines) }}</div>
+          <div class="mat-body">{{ getInvoiceTotalAmount(invoice.lines) | currency: 'MYR ' }}</div>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Status</label>
@@ -350,9 +350,9 @@
             <tr *ngFor="let line of invoice.lines">
               <td>{{ line.name }}</td>
               <td>{{ line.unit }}</td>
-              <td>{{ line.unitPrice }}</td>
+              <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
               <td>{{ line.quantity }}</td>
-              <td>{{ line.quantity * line.unitPrice }}</td>
+              <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
             </tr>
           </tbody>
         </table>
