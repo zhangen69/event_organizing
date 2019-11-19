@@ -494,6 +494,14 @@ export class EventPlanViewComponent {
     this.updateInvoice(invoice);
   }
 
+  checkInvoiceButton(invoice: any, validStatuses: string[]): boolean {
+    if (validStatuses && validStatuses.length > 0) {
+      return validStatuses.includes(invoice.status);
+    }
+
+    return false;
+  }
+
   changeProcessStatus(process, status) {
     process.status = status;
     const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({

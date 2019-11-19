@@ -321,14 +321,16 @@
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeInvoiceStatus('Open')" mat-raised-button color="primary"
-            *ngIf="invoice.status !== 'Open'">Open</button>
           <button class="btn-sm" (click)="changeInvoiceStatus('Confirmed')" mat-raised-button color="primary"
-            *ngIf="invoice.status !== 'Confirmed'">Confirmed</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus('Paid')" mat-raised-button color="primary"
-            *ngIf="invoice.status !== 'Paid'">Paid</button>
+            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Confirm</button>
           <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
-            *ngIf="invoice.status !== 'Closed'">Closed</button>
+            *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Revise</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
+            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Cancel</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Paid')" mat-raised-button color="primary"
+            *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Pay</button>
+          <button class="btn-sm" (click)="changeInvoiceStatus('Closed')" mat-raised-button color="primary"
+            *ngIf="checkInvoiceButton(invoice, ['Paid'])">Close</button>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Remarks</label>
@@ -355,8 +357,8 @@
           </tbody>
         </table>
         <div class="action-group">
-          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button
-            color="primary">Edit</button>
+          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
+            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Edit</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>
