@@ -7,19 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-facility-list.component.css']
 })
 export class ProviderFacilityListComponent implements OnInit {
+  includes = ['provider'];
   columns: IStandardColumn[] = [
+    { name: 'provider.name', displayName: 'Provider' },
     { name: 'name' },
+    { name: 'unit' },
     { name: 'unitPrice', displayName: 'U/Price (RM)' },
     { name: 'description' },
-    { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
+    { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
   ];
-  filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
-  ];
+  filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

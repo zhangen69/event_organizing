@@ -10,10 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import * as moment from 'moment';
-import { RegistrationFormStatus, RegistrationFormFieldType } from '../registration-form-status.enum';
-import { from } from 'rxjs';
+import { RegistrationFormFieldType } from '../registration-form-status.enum';
 
-enum EventProcessType {
+export enum EventProcessType {
   'Initial',
   'Preparation',
   'Setup',
