@@ -76,7 +76,7 @@ export class EventPlanViewComponent {
     searchText: '',
     type: '',
     list: [],
-    typeOptions: [],
+    typeOptions: []
   };
   invoice = null;
 
@@ -121,19 +121,23 @@ export class EventPlanViewComponent {
                 this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
                 this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
-                this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(settingKey => this.eventPlan.registrationForm.settings[settingKey]);
+                this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(
+                  settingKey => this.eventPlan.registrationForm.settings[settingKey]
+                );
                 if (this.attendeeQueryModel.typeOptions.length > 0) {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
                 // get invoice
-                const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + this.eventPlan._id).subscribe({
-                  next: ({ data }: any) => {
-                    this.invoice = data;
-                  },
-                  complete: () => {
-                    getInvoiceReq.unsubscribe();
-                  }
-                });
+                const getInvoiceReq = this.http
+                  .get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + this.eventPlan._id)
+                  .subscribe({
+                    next: ({ data }: any) => {
+                      this.invoice = data;
+                    },
+                    complete: () => {
+                      getInvoiceReq.unsubscribe();
+                    }
+                  });
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -348,10 +352,12 @@ export class EventPlanViewComponent {
     const confirmedDelete = confirm('Are you sure to delete the attendee "' + attendee.name + '"');
     if (confirmedDelete) {
       this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
-      const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({ complete: () => {
-        this.toastr.info('Attendee has been removed');
-        eventPlanReq.unsubscribe();
-      }});
+      const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+        complete: () => {
+          this.toastr.info('Attendee has been removed');
+          eventPlanReq.unsubscribe();
+        }
+      });
     }
   }
 
@@ -592,6 +598,10 @@ export class EventPlanViewComponent {
         updateGroupAttenddesReq.unsubscribe();
       }
     });
+  }
+
+  getInvoiceTotalAmount(list: any[]) {
+    return list.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
   }
 
   private reformItem({ name, displayName, childName, fieldName }) {

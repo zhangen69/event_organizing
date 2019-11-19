@@ -1,3 +1,4 @@
+import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { MaterialModule } from './material.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
@@ -161,7 +162,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     DemoXlsxComponent,
     EventPlanViewComponent,
     ProcessesFilterPipe,
-    ObjectToArrayPipe
+    ObjectToArrayPipe,
+    CustomerViewComponent
   ],
   imports: [
     BrowserModule,
@@ -188,7 +190,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
       }
     }),
     EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
     // SpreadSheetsModule
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent],

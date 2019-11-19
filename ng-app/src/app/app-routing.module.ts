@@ -1,3 +1,4 @@
+import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
@@ -54,157 +55,195 @@ import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 
 const routes: Routes = [
   {
-    path: 'event-plan', canActivate: [AuthGuard], children: [
+    path: 'event-plan',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: EventPlanListComponent },
       { path: 'add', component: EventPlanFormComponent },
       { path: 'edit/:id', component: EventPlanFormComponent },
-      { path: 'view/:id', component: EventPlanViewComponent },
+      { path: 'view/:id', component: EventPlanViewComponent }
     ]
   },
   {
-    path: 'event', canActivate: [AuthGuard], children: [
+    path: 'event',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: EventListComponent },
       { path: 'add', component: EventFormComponent },
       { path: 'edit/:id', component: EventFormComponent },
-      { path: 'view/:id', component: EventViewComponent },
+      { path: 'view/:id', component: EventViewComponent }
     ]
   },
   {
-    path: 'store', canActivate: [AuthGuard], children: [
+    path: 'store',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: StoreListComponent },
       { path: 'add', component: StoreFormComponent },
-      { path: 'edit/:id', component: StoreFormComponent },
+      { path: 'edit/:id', component: StoreFormComponent }
     ]
   },
   {
-    path: 'stock-item', canActivate: [AuthGuard], children: [
+    path: 'stock-item',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: StockItemListComponent },
       { path: 'add', component: StockItemFormComponent },
-      { path: 'edit/:id', component: StockItemFormComponent },
+      { path: 'edit/:id', component: StockItemFormComponent }
     ]
   },
   {
-    path: 'stock-transaction', canActivate: [AuthGuard], children: [
-      { path: 'list', component: StockTransactionListComponent },
-    ]
+    path: 'stock-transaction',
+    canActivate: [AuthGuard],
+    children: [{ path: 'list', component: StockTransactionListComponent }]
   },
   {
-    path: 'invoice', canActivate: [AuthGuard], children: [
+    path: 'invoice',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: InvoiceListComponent },
       { path: 'add', component: InvoiceFormComponent },
-      { path: 'edit/:id', component: InvoiceFormComponent },
+      { path: 'edit/:id', component: InvoiceFormComponent }
     ]
   },
   {
-    path: 'supplier-invoice', canActivate: [AuthGuard], children: [
+    path: 'supplier-invoice',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: SupplierInvoiceListComponent },
       { path: 'add', component: SupplierInvoiceFormComponent },
-      { path: 'edit/:id', component: SupplierInvoiceFormComponent },
+      { path: 'edit/:id', component: SupplierInvoiceFormComponent }
     ]
   },
   {
-    path: 'receipt', canActivate: [AuthGuard], children: [
+    path: 'receipt',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: ReceiptListComponent },
       { path: 'add', component: ReceiptFormComponent },
-      { path: 'edit/:id', component: ReceiptFormComponent },
+      { path: 'edit/:id', component: ReceiptFormComponent }
     ]
   },
   {
-    path: 'provider', canActivate: [AuthGuard], children: [
+    path: 'provider',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: ProviderListComponent },
       { path: 'add', component: ProviderFormComponent },
-      { path: 'edit/:id', component: ProviderFormComponent },
+      { path: 'edit/:id', component: ProviderFormComponent }
     ]
   },
   {
-    path: 'provider-service', canActivate: [AuthGuard], children: [
+    path: 'provider-service',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: ProviderServiceListComponent },
       { path: 'add', component: ProviderServiceFormComponent },
-      { path: 'edit/:id', component: ProviderServiceFormComponent },
+      { path: 'edit/:id', component: ProviderServiceFormComponent }
     ]
   },
   {
-    path: 'provider-facility', canActivate: [AuthGuard], children: [
+    path: 'provider-facility',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: ProviderFacilityListComponent },
       { path: 'add', component: ProviderFacilityFormComponent },
-      { path: 'edit/:id', component: ProviderFacilityFormComponent },
+      { path: 'edit/:id', component: ProviderFacilityFormComponent }
     ]
   },
   {
-    path: 'attendee', canActivate: [AuthGuard], children: [
+    path: 'attendee',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: AttendeeListComponent },
       { path: 'add', component: AttendeeFormComponent },
       { path: 'edit/:id', component: AttendeeFormComponent },
-      { path: 'view/:id', component: AttendeeViewComponent },
+      { path: 'view/:id', component: AttendeeViewComponent }
     ]
   },
   {
-    path: 'attendee-group', canActivate: [AuthGuard], children: [
+    path: 'attendee-group',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: AttendeeGroupListComponent },
       { path: 'add', component: AttendeeGroupFormComponent },
-      { path: 'edit/:id', component: AttendeeGroupFormComponent },
+      { path: 'edit/:id', component: AttendeeGroupFormComponent }
     ]
   },
   {
-    path: 'attendance', canActivate: [AuthGuard], children: [
+    path: 'attendance',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: AttendanceListComponent },
       { path: 'add', component: AttendanceFormComponent },
-      { path: 'edit/:id', component: AttendanceFormComponent },
+      { path: 'edit/:id', component: AttendanceFormComponent }
     ]
   },
   {
-    path: 'payment-voucher', canActivate: [AuthGuard], children: [
+    path: 'payment-voucher',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: PaymentVoucherListComponent },
       { path: 'add', component: PaymentVoucherFormComponent },
-      { path: 'edit/:id', component: PaymentVoucherFormComponent },
+      { path: 'edit/:id', component: PaymentVoucherFormComponent }
     ]
   },
   {
-    path: 'payment', canActivate: [AuthGuard], children: [
-      { path: 'list', component: PaymentListComponent },
-    ]
+    path: 'payment',
+    canActivate: [AuthGuard],
+    children: [{ path: 'list', component: PaymentListComponent }]
   },
   {
-    path: 'registration-form', canActivate: [AuthGuard], children: [
+    path: 'registration-form',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: RegistrationListComponent },
       { path: 'add', component: RegistrationFormComponent },
       { path: 'edit/:id', component: RegistrationFormComponent },
-      { path: 'view/:id', component: RegistrationViewComponent },
+      { path: 'view/:id', component: RegistrationViewComponent }
     ]
   },
   {
-    path: 'customer', canActivate: [AuthGuard], children: [
+    path: 'customer',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: CustomerListComponent },
       { path: 'add', component: CustomerFormComponent },
       { path: 'edit/:id', component: CustomerFormComponent },
+      { path: 'view/:id', component: CustomerViewComponent }
     ]
   },
   {
-    path: 'category', canActivate: [AuthGuard], children: [
+    path: 'category',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: CategoryListComponent },
       { path: 'add', component: CategoryFormComponent },
-      { path: 'edit/:id', component: CategoryFormComponent },
+      { path: 'edit/:id', component: CategoryFormComponent }
     ]
   },
   {
-    path: 'user', canActivate: [AuthGuard], children: [
+    path: 'user',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'list', component: UserListComponent },
       { path: 'add', component: UserFormComponent },
       { path: 'edit/:id', component: UserFormComponent },
       { path: 'changePassword', component: UserChangePasswordComponent },
-      { path: 'profile', component: UserProfileComponent },
+      { path: 'profile', component: UserProfileComponent }
     ]
   },
   {
-    path: 'auth', children: [
+    path: 'auth',
+    children: [
       { path: 'login', component: LoginComponent },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
-      { path: 'resetPassword/:token', component: ResetPasswordComponent },
+      { path: 'resetPassword/:token', component: ResetPasswordComponent }
     ]
   },
   { path: '', component: HomeComponent },
   { path: 'register/:formId', component: RegisterEventComponent },
-  { path: 'demo-xlsx', component: DemoXlsxComponent },
+  { path: 'demo-xlsx', component: DemoXlsxComponent }
 ];
 
 @NgModule({
@@ -212,4 +251,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

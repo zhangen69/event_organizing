@@ -10,11 +10,14 @@ const router = routes.router(express.Router());
 
 router.get('/invoice/getByEventPlanId/:id', checkAuth, (req, res, next) => {
   if (req.params.id) {
-    invoiceModel.findOne({ eventPlan: req.params.id }).then((doc) => {
-      res.status(200).json({
-        data: doc,
+    invoiceModel
+      .findOne({ eventPlan: req.params.id })
+      .populate('customer')
+      .then(doc => {
+        res.status(200).json({
+          data: doc
+        });
       });
-    });
   }
 });
 

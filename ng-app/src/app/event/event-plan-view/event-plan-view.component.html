@@ -306,6 +306,24 @@
       </ng-template>
       <ng-template #showInvoiceInfo>
         <div class="mat-title">Invoice ({{ invoice.code }})</div>
+        <div class="view-field">
+          <label class="mat-body-strong">Customer</label>
+          <div class="mat-body">
+            <a [routerLink]="['/customer/view/' + invoice.customer._id]">{{ invoice.customer.name }}</a>
+          </div>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Total Amount</label>
+          <div class="mat-body">{{ getInvoiceTotalAmount(invoice.lines) }}</div>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Status</label>
+          <div class="mat-body">{{ invoice.status }}</div>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Remarks</label>
+          <div class="mat-body">{{ invoice.remarks }}</div>
+        </div>
         <table class="table table-bordered">
           <thead>
             <tr>
