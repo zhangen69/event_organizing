@@ -224,6 +224,22 @@
       <button mat-button class="process-btn-group" color="primary" (click)="addAttendee()">
         <mat-icon>add</mat-icon> Attendees
       </button>
+      <div class="filter-wrapper">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Enter keyword" type="text" [(ngModel)]="attendeeQueryModel.searchText"
+            (keyup.enter)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Type</mat-label>
+          <mat-select [(ngModel)]="attendeeQueryModel.type">
+            <mat-option value="{{ option }}" *ngFor="let option of attendeeQueryModel.typeOptions">
+              {{option | titleDisplay }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="button" class="btn-sm" (click)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">Search</button>
+      </div>
       <div class="action-group">
         <button mat-raised-button class="btn-sm" color="primary" (click)="groupAttendees()"
           *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
@@ -236,22 +252,6 @@
       <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
       </div>
       <ng-template #attendeeList>
-        <div class="filter-wrapper">
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Enter keyword" type="text" [(ngModel)]="attendeeQueryModel.searchText"
-              (keyup.enter)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Type</mat-label>
-            <mat-select [(ngModel)]="attendeeQueryModel.type">
-              <mat-option value="{{ option }}" *ngFor="let option of attendeeQueryModel.typeOptions">
-                {{option | titleDisplay }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <button mat-raised-button color="primary" type="button" class="btn-sm" (click)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">Search</button>
-        </div>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -295,6 +295,14 @@
       </ng-template>
     </div>
   </mat-tab>
+  <!-- Tab for Invoice (to Customer) -->
+  <mat-tab label="Invoice">
+    
+  </mat-tab>
+  <!-- Tab for Related Supplier Invoices -->
+  <mat-tab label="Supplier Invoice"></mat-tab>
+  <!-- Tab for Related Payment Vouchers -->
+  <mat-tab label="Payment Voucher"></mat-tab>
   <!-- Tab6: Cost & Profit -->
   <mat-tab label="Cost & Profit">
     <div class="tab-body info-group">

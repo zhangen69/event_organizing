@@ -78,6 +78,7 @@ export class EventPlanViewComponent {
     list: [],
     typeOptions: [],
   };
+  invoice = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -124,6 +125,8 @@ export class EventPlanViewComponent {
                 if (this.attendeeQueryModel.typeOptions.length > 0) {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
+                // get invoice
+                
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
