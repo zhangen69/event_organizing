@@ -238,7 +238,8 @@
           </mat-select>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="button" class="btn-sm" (click)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">Search</button>
+        <button mat-raised-button color="primary" type="button" class="btn-sm"
+          (click)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">Search</button>
       </div>
       <div class="action-group">
         <button mat-raised-button class="btn-sm" color="primary" (click)="groupAttendees()"
@@ -297,12 +298,50 @@
   </mat-tab>
   <!-- Tab for Invoice (to Customer) -->
   <mat-tab label="Invoice">
-    
+    <div class="tab-body">
+      <div [ngTemplateOutlet]="invoice ? showInvoiceInfo : noInvoiceMessage"></div>
+      <ng-template #noInvoiceMessage>
+        <p>No Invoice Yet, Please create an invoice for this event plan.</p>
+        <p>Click <a [routerLink]="['/invoice/add']">here</a> redirect to new invoice form page.</p>
+      </ng-template>
+      <ng-template #showInvoiceInfo>
+        <div class="mat-title">Invoice ({{ invoice.code }})</div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Unit</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Sub Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of invoice.lines">
+              <td>{{ line.name }}</td>
+              <td>{{ line.unit }}</td>
+              <td>{{ line.unitPrice }}</td>
+              <td>{{ line.quantity }}</td>
+              <td>{{ line.quantity * line.unitPrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre>{{ invoice | json }}</pre>
+      </ng-template>
+    </div>
   </mat-tab>
   <!-- Tab for Related Supplier Invoices -->
-  <mat-tab label="Supplier Invoice"></mat-tab>
+  <mat-tab label="Supplier Invoice">
+    <div class="tab-body">
+
+    </div>
+  </mat-tab>
   <!-- Tab for Related Payment Vouchers -->
-  <mat-tab label="Payment Voucher"></mat-tab>
+  <mat-tab label="Payment Voucher">
+    <div class="tab-body">
+
+    </div>
+  </mat-tab>
   <!-- Tab6: Cost & Profit -->
   <mat-tab label="Cost & Profit">
     <div class="tab-body info-group">

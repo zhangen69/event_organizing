@@ -126,7 +126,14 @@ export class EventPlanViewComponent {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
                 // get invoice
-                
+                const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + this.eventPlan._id).subscribe({
+                  next: ({ data }: any) => {
+                    this.invoice = data;
+                  },
+                  complete: () => {
+                    getInvoiceReq.unsubscribe();
+                  }
+                });
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
