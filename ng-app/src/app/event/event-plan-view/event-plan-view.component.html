@@ -236,6 +236,22 @@
       <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
       </div>
       <ng-template #attendeeList>
+        <div class="filter-wrapper">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Enter keyword" type="text" [(ngModel)]="attendeeQueryModel.searchText"
+              (keyup.enter)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="attendeeQueryModel.type">
+              <mat-option value="{{ option }}" *ngFor="let option of attendeeQueryModel.typeOptions">
+                {{option | titleDisplay }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="button" class="btn-sm" (click)="filterAttendees(eventPlan.attendees, attendeeQueryModel)">Search</button>
+        </div>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -244,25 +260,28 @@
               <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
                 {{ setting.key | titleDisplay }}</th>
               <th *ngFor="let field of eventPlan.registrationForm.fields">{{ field.displayName }}</th>
+              <th>Group</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of eventPlan.attendees">
+            <tr *ngFor="let attendee of attendeeQueryModel.list">
               <td>
-                <mat-checkbox [(ngModel)]="item.isSelected"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="attendee.isSelected"></mat-checkbox>
               </td>
-              <td>{{ item.code }}</td>
+              <td>{{ attendee.code }}</td>
               <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
-                {{ item[setting.key] }}</td>
+                {{ attendee[setting.key] }}</td>
               <td *ngFor="let field of eventPlan.registrationForm.fields">
-                <div *ngIf="item.formData && item.formData[field.name]">{{ item.formData[field.name] }}</div>
+                <div *ngIf="attendee.formData && attendee.formData[field.name]">{{ attendee.formData[field.name] }}
+                </div>
               </td>
+              <td>{{ attendee.group }}</td>
               <td>
-                <button mat-raised-button class="btn-sm" color="primary" (click)="editAttendee(item)">
+                <button mat-raised-button class="btn-sm" color="primary" (click)="editAttendee(attendee)">
                   <mat-icon>edit</mat-icon> Edit
                 </button>
-                <button mat-button class="btn-sm" (click)="removeAttendee(item)">
+                <button mat-button class="btn-sm" (click)="removeAttendee(attendee)">
                   <mat-icon>delete</mat-icon> Remove
                 </button>
               </td>

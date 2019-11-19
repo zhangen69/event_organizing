@@ -85,3 +85,7 @@ button.active {
 .action-group .btn-end {
   margin-left: auto;
 }
+
+.filter-wrapper > * {
+  margin-right: 2px;
+}

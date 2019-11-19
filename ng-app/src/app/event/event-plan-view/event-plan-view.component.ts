@@ -73,7 +73,10 @@ export class EventPlanViewComponent {
     }
   ];
   attendeeQueryModel = {
-    filters: []
+    searchText: '',
+    type: '',
+    list: [],
+    typeOptions: [],
   };
 
   constructor(
@@ -116,6 +119,11 @@ export class EventPlanViewComponent {
                 // sort: formData.processes
                 this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
+                this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
+                this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(settingKey => this.eventPlan.registrationForm.settings[settingKey]);
+                if (this.attendeeQueryModel.typeOptions.length > 0) {
+                  this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
+                }
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -327,8 +335,22 @@ export class EventPlanViewComponent {
   }
 
   removeAttendee(attendee) {
-    this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
-    const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({ complete: () => eventPlanReq.unsubscribe() });
+    const confirmedDelete = confirm('Are you sure to delete the attendee "' + attendee.name + '"');
+    if (confirmedDelete) {
+      this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
+      const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({ complete: () => {
+        this.toastr.info('Attendee has been removed');
+        eventPlanReq.unsubscribe();
+      }});
+    }
+  }
+
+  filterAttendees(attendees, queryModel) {
+    if (queryModel.type && queryModel.searchText) {
+      queryModel.list = attendees.filter(attendee => attendee[queryModel.type].toUpperCase().includes(queryModel.searchText.toUpperCase()));
+    } else {
+      queryModel.list = attendees;
+    }
   }
 
   configForm(eventPlan) {
@@ -555,7 +577,7 @@ export class EventPlanViewComponent {
 
     console.log('Attendees', this.eventPlan.attendees);
 
-    const updateGroupAttenddesReq = this.http.post(environment.apiUrl + '/service/event-plan', this.eventPlan).subscribe({
+    const updateGroupAttenddesReq = this.eventPlanService.submit(this.eventPlan).subscribe({
       complete: () => {
         updateGroupAttenddesReq.unsubscribe();
       }
