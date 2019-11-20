@@ -553,6 +553,19 @@ export class EventPlanViewComponent {
     this.updateQuotation(quotation);
   }
 
+  generateInvoiceFromQuotation(quotation) {
+    const invoiceData = Object.assign({}, quotation);
+    delete invoiceData.status;
+    delete invoiceData.remarks;
+    delete invoiceData.code;
+    const createInvoice$ = this.http.post(environment.apiUrl + '/service/invoice', invoiceData).subscribe({
+      next: (res) => {
+        this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
+        this.toastr.info('Invoice Generated Successfully!');
+      }
+    });
+  }
+
   checkButtonIsValid(invoice: any, validStatuses: string[]): boolean {
     if (validStatuses && validStatuses.length > 0) {
       return validStatuses.includes(invoice.status);
