@@ -201,7 +201,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
     // SpreadSheetsModule
   ],
-  entryComponents: [ConfirmationDialogComponent, DialogFormComponent],
+  entryComponents: [ConfirmationDialogComponent, DialogFormComponent, ImportAttendeesComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DatePipe,

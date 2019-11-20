@@ -64,4 +64,8 @@ export class ImportAttendeesComponent implements OnInit {
       ).subscribe((val) => this.jsonData.push(val));
     }
   }
+
+  onImportData() {
+    
+  }
 }
