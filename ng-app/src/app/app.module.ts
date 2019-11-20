@@ -1,3 +1,4 @@
+import { ImportAttendeesComponent } from './event/event-plan-view/import-attendees/import-attendees.component';
 import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
 import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
 import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
@@ -170,6 +171,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     PaymentFormComponent,
     QuotationFormComponent,
     QuotationListComponent,
+    ImportAttendeesComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { ImportAttendeesComponent } from './import-attendees/import-attendees.component';
 import { HttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -168,7 +169,6 @@ export class EventPlanViewComponent {
     });
     const fields = [obj];
 
-    // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(DialogFormComponent, {
       disableClose: true,
       width: 'auto',
@@ -654,6 +654,24 @@ export class EventPlanViewComponent {
       },
       complete: () => {
         getAttendeesReq.unsubscribe();
+      }
+    });
+  }
+
+  importAttendees() {
+    
+    const dialogRef = this.dialog.open(ImportAttendeesComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+    });
+
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: data => {
+      },
+      complete: () => {
+        dialogClosedReq.unsubscribe();
       }
     });
   }

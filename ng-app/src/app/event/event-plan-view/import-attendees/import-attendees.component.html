@@ -1,0 +1,34 @@
+<div class='maincontainer'>
+  <!-- <gc-spread-sheets [hostStyle]="hostStyle" (workbookInitialized)="workbookInit($event)"></gc-spread-sheets> -->
+  <div class=''>
+    <p>Open Excel File</p>
+    <input type="file" name="files[]" multiple id="jsonFile" accept=".xlsx" (change)="onFileChange($event)" />
+  </div>
+  <!-- <div class='exportExcel'>
+    <p>Save Excel File</p>
+    <button (click)="onClickMe($event)">Save Excel!</button>
+  </div> -->
+  <!-- <pre>{{ jsonData | json }}</pre> -->
+  <table class="table table-bordered table-hover" *ngIf="jsonData && jsonData.length > 0">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>IC/Passport Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of jsonData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.gender }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.phoneNumber }}</td>
+        <td>{{ row.identityNumber }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
