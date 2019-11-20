@@ -32,6 +32,7 @@ import storeRoutes from '../routes/store.routes';
 import supplierInvoiceRoutes from '../routes/supplier-invoice.routes';
 import uploaderRoutes from '../routes/uploader.routes';
 import userRoutes from '../routes/user.routes';
+import quotationRoutes from '../routes/quotation.routes';
 import { emailQueueCheckJob } from '../task_schedulers/email-queue.scheduler';
 
 const router = express.Router();
@@ -75,7 +76,8 @@ router.use(
   providerFacilityRoutes,
   receiptRoutes,
   // registrationFormRoutes,
-  storeRoutes
+  storeRoutes,
+  quotationRoutes,
 );
 router.use('/service/user', userRoutes);
 

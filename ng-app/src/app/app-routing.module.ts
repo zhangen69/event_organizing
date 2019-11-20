@@ -1,3 +1,5 @@
+import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
+import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
 import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
@@ -105,6 +107,15 @@ const routes: Routes = [
       { path: 'list', component: InvoiceListComponent },
       { path: 'add', component: InvoiceFormComponent },
       { path: 'edit/:id', component: InvoiceFormComponent }
+    ]
+  },
+  {
+    path: 'quotation',
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'list', component: QuotationListComponent },
+      { path: 'add', component: QuotationFormComponent },
+      { path: 'edit/:id', component: QuotationFormComponent }
     ]
   },
   {

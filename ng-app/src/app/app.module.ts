@@ -1,3 +1,5 @@
+import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
+import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
 import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { MaterialModule } from './material.module';
@@ -165,7 +167,9 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     ProcessesFilterPipe,
     ObjectToArrayPipe,
     CustomerViewComponent,
-    PaymentFormComponent
+    PaymentFormComponent,
+    QuotationFormComponent,
+    QuotationListComponent,
   ],
   imports: [
     BrowserModule,
