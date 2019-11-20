@@ -33,6 +33,7 @@ schema.pre('save', function(next) {
   const query = Counter.findOne({ domain: 'SupplierInvoice' });
   query.then(doc => {
     const str = '000';
+    const code = 'SPINV';
     if (!doc) {
       console.log('create new counter: SupplierInvoice');
       const newCounter = new Counter({ domain: 'SupplierInvoice', serial: 1 });
@@ -41,7 +42,7 @@ schema.pre('save', function(next) {
         const docSerial = newDoc.get('serial');
         console.log('newDoc.serial.length', docSerial.toString().length);
         const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
-        item.set('code', `SI-${serialnumber}`);
+        item.set('code', `${code}-${serialnumber}`);
         next();
       });
     } else {
@@ -52,7 +53,7 @@ schema.pre('save', function(next) {
         const docSerial = updatedDoc.get('serial');
         console.log('updatedDoc.serial.length', docSerial.toString().length);
         const serialnumber = str.substr(0, str.length - docSerial.toString().length) + docSerial;
-        item.set('code', `SI-${serialnumber}`);
+        item.set('code', `${code}-${serialnumber}`);
         next();
       });
     }
