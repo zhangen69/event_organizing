@@ -16,6 +16,7 @@ export interface IStandardFormField {
   reuqired?: boolean;
   enumList?: any[];
   filterOption?: any;
+  refIncludes?: string[];
 }
 
 export enum IStandardFormFieldType {
@@ -49,6 +50,7 @@ export interface IStandardColumn {
   link?: string;
   dateFormat?: string;
   template?: IStandardColumnTemplateFunc;
+  width?: string;
 }
 
 export interface HttpResponse {

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 enum InvoiceStatus {
   Open,
-  Sent,
+  Confirmed,
+  Revised,
   Paid,
-  Closed
+  Closed,
+  Cancelled,
 }
 
 @Component({

@@ -12,7 +12,7 @@ import { StandardListComponent } from 'src/app/standard/standard-list/standard-l
     styleUrls: ['./supplier-invoice-list.component.css']
 })
 export class SupplierInvoiceListComponent implements OnInit {
-    includes: string[] = ['provider', 'supplierInvoice'];
+    includes: string[] = ['provider', 'supplierInvoice', 'eventPlan'];
     actions = [
         {
             name: 'Confirm',
@@ -40,9 +40,10 @@ export class SupplierInvoiceListComponent implements OnInit {
         }
     ];
     columns: IStandardColumn[] = [
-        { name: 'code' },
-        { name: 'provider.name', displayName: 'Provider' },
-        { name: 'status' },
+        { name: 'eventPlan.name', displayName: 'Event Plan', width: '150px' },
+        { name: 'provider.name', displayName: 'Provider', width: '150px' },
+        { name: 'code', width: '100px' },
+        { name: 'status', width: '80px' },
         { name: 'remarks' },
         { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
     ];

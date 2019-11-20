@@ -1,3 +1,4 @@
+import { IStandardFormField } from './../../standard/standard.interface';
 import { Component, OnInit } from '@angular/core';
 import { IStandardFormField } from 'src/app/standard/standard.interface';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
@@ -32,10 +33,10 @@ enum SupplierInvoiceType {
 })
 export class SupplierInvoiceFormComponent implements OnInit {
     formData: any = {};
-    includes: string[] = ['store', 'provider'];
+    includes: string[] = ['store', 'provider', 'eventPlan'];
     fields: IStandardFormField[] = [
         { name: 'provider', type: 'ref', required: true },
-        { name: 'store', type: 'ref', required: true },
+        // { name: 'store', type: 'ref', required: true },
         { name: 'eventPlan', type: 'ref', required: true },
         {
             name: 'status',
@@ -76,7 +77,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
 
     addItem(array) {
         const formData = { ...this.formData };
-        const fields = [
+        const fields: IStandardFormField[] = [
             { name: 'type', type: 'enum', enum: SupplierInvoiceType, default: SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice], required: true },
             {
                 name: 'service',
@@ -100,7 +101,8 @@ export class SupplierInvoiceFormComponent implements OnInit {
             width: 'auto',
             minWidth: '50vw',
             maxHeight: '99vh',
-            data: { data: formData, fields, title: 'Add Service Item', callback: true }
+            disableClose: true,
+            data: { data: formData, fields, title: 'Add Service Item', callback: true },
         });
 
         dialogRef.afterClosed().subscribe(result => {
