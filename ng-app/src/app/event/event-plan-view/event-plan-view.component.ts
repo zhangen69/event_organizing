@@ -337,14 +337,6 @@ export class EventPlanViewComponent {
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: data => {
         if (!data.dismiss) {
-          const formData = {};
-          this.eventPlan.registrationForm.fields.forEach(field => {
-            formData[field.name] = data[field.name];
-          });
-          data.formData = formData;
-          // this.eventPlan.attendees.push(data);
-          let selectedAttendee = this.eventPlan.attendees.find(item => item._id === attendee._id);
-          selectedAttendee = data;
           this.updateEventPlan(this.eventPlan, null, true);
         }
       },
