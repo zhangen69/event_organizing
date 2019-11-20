@@ -355,9 +355,11 @@ export class EventPlanViewComponent {
   removeAttendee(attendee) {
     const confirmedDelete = confirm('Are you sure to delete the attendee "' + attendee.name + '"');
     if (confirmedDelete) {
-      this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
+      const attendees = this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
+      const attendeeQueryModel = this.attendeeQueryModel;
       const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
         complete: () => {
+          this.filterAttendees(attendees, attendeeQueryModel);
           this.toastr.info('Attendee has been removed');
           eventPlanReq.unsubscribe();
         }
@@ -670,6 +672,7 @@ export class EventPlanViewComponent {
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: (res) => {
         this.toastr.info('Imported Successfully!');
+        this.refresh();
       },
       complete: () => {
         dialogClosedReq.unsubscribe();

@@ -60,22 +60,23 @@ export class ImportAttendeesComponent implements OnInit {
       });
       const body = this.excelData.filter((ele) => ele !== this.excelData[0]);
 
-      const load$ = from(body).pipe(
+      from(body).pipe(
         map((row) => {
           const rowData = {};
           headers.forEach((header, index) => rowData[header.name] = row[index]);
           return rowData;
         })
       ).subscribe({
-        next: (val) => this.jsonData.push(val),
-        complete: () => load$.unsubscribe(),
+        next: (val) => {
+          this.jsonData.push(val);
+        }
       });
     }
   }
 
   onImportData(attendees: any[]): void {
     this.eventPlan.attendees.push.apply(this.eventPlan.attendees, attendees);
-    const updateEventPlan$ = this.http.post(environment.apiUrl + '/service/event-plan', this.eventPlan).subscribe({
+    const updateEventPlan$ = this.http.put(environment.apiUrl + '/service/event-plan', this.eventPlan).subscribe({
       next: (res) => {
         this.dialogRef.close(res);
       },

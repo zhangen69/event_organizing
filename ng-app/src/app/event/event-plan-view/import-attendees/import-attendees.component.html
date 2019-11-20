@@ -31,6 +31,6 @@
       </tr>
     </tbody>
   </table>
-  <button mat-raised-button color="primary" type="button" (click)="onImportData(jsonData)">Import</button>
+  <button mat-raised-button color="primary" type="button" (click)="onImportData(jsonData)" *ngIf="jsonData && jsonData.length > 0">Import</button>
   <button mat-raised-button type="button" (click)="onCancel(jsonData)">Cancel</button>
 </div>
