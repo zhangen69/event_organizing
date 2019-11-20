@@ -69,13 +69,19 @@ button.active {
 
 .table.table-bordered {
   border: 1px #eee solid;
+  margin-top: 10px;
 }
 
 .table td,
 .table th {
   text-align: center;
   border-bottom: 1px #eee solid;
-  padding: 10px 0;
+  padding: 10px;
+}
+
+.table.supplier-invoices td,
+.table.supplier-invoices th {
+  text-align-last: left;
 }
 
 .action-group {

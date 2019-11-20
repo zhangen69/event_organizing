@@ -296,6 +296,12 @@
       </ng-template>
     </div>
   </mat-tab>
+  <!-- Tab for Related Quotation -->
+  <mat-tab label="Quotation">
+    <div class="tab-body">
+
+    </div>
+  </mat-tab>
   <!-- Tab for Invoice (to Customer) -->
   <mat-tab label="Invoice">
     <div class="tab-body">
@@ -365,13 +371,41 @@
     </div>
   </mat-tab>
   <!-- Tab for Related Supplier Invoices -->
-  <mat-tab label="Supplier Invoice">
+  <mat-tab label="Supplier Invoices">
     <div class="tab-body">
-
+      <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
+      <table class="table table-bordered supplier-invoices">
+        <colgroup>
+          <col style="width: 300px">
+          <col>
+          <col style="width: 200px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Code</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let supplerInvoice of supplierInvoices">
+            <td>{{ supplerInvoice.provider.name }}</td>
+            <td>{{ supplerInvoice.code }}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>{{ supplierInvoices | json }}</pre>
     </div>
   </mat-tab>
   <!-- Tab for Related Payment Vouchers -->
   <mat-tab label="Payment Voucher">
+    <div class="tab-body">
+
+    </div>
+  </mat-tab>
+  <!-- Tab for Related Payments -->
+  <mat-tab label="Payments">
     <div class="tab-body">
 
     </div>

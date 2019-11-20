@@ -78,6 +78,7 @@ export class EventPlanViewComponent {
     typeOptions: []
   };
   invoice = null;
+  supplierInvoices = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -128,6 +129,8 @@ export class EventPlanViewComponent {
                 }
                 // get invoice
                 this.getInvoiceByEventPlanId(this.eventPlan._id);
+                // get supplier invoices
+                this.getSupplierInvoicesByEventPlanId(this.eventPlan._id);
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -476,6 +479,15 @@ export class EventPlanViewComponent {
         getInvoiceReq.unsubscribe();
       }
     });
+  }
+
+  getSupplierInvoicesByEventPlanId(eventPlanId: string): void {
+    const getSupplierInvoicesReq = this.http
+      .get(environment.apiUrl + '/service/supplier-invoice/getByEventPlanId/' + eventPlanId)
+      .subscribe({
+        next: ({ data }: any) => (this.supplierInvoices = data),
+        complete: () => getSupplierInvoicesReq.unsubscribe()
+      });
   }
 
   updateInvoice(invoice): void {
