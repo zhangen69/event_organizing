@@ -79,6 +79,8 @@ export class EventPlanViewComponent {
   };
   invoice = null;
   supplierInvoices = [];
+  paymentVouchers = [];
+  payments = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -128,9 +130,17 @@ export class EventPlanViewComponent {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
                 // get invoice
-                this.getInvoiceByEventPlanId(this.eventPlan._id);
+                // this.getInvoiceByEventPlanId(this.eventPlan._id);
+                this.getDataByEventPlanId('invoice', this.eventPlan._id, this.invoice);
                 // get supplier invoices
-                this.getSupplierInvoicesByEventPlanId(this.eventPlan._id);
+                // this.getSupplierInvoicesByEventPlanId(this.eventPlan._id);
+                this.getDataByEventPlanId('supplier-invoice', this.eventPlan._id, this.supplierInvoices);
+                // get payment vouchers
+                // this.getPaymentVouchersByEventPlanId(this.eventPlan._id);
+                this.getDataByEventPlanId('payment-voucher', this.eventPlan._id, this.paymentVouchers);
+                // get payments
+                // this.getPaymentsByEventPlanId(this.eventPlan._id);
+                this.getDataByEventPlanId('payment', this.eventPlan._id, this.payments);
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -470,24 +480,45 @@ export class EventPlanViewComponent {
     });
   }
 
-  getInvoiceByEventPlanId(eventPlanId: string): void {
-    const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + eventPlanId).subscribe({
-      next: ({ data }: any) => {
-        this.invoice = data;
-      },
-      complete: () => {
-        getInvoiceReq.unsubscribe();
-      }
-    });
-  }
+  // getInvoiceByEventPlanId(eventPlanId: string): void {
+  //   const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + eventPlanId).subscribe({
+  //     next: ({ data }: any) => {
+  //       this.invoice = data;
+  //     },
+  //     complete: () => {
+  //       getInvoiceReq.unsubscribe();
+  //     }
+  //   });
+  // }
 
-  getSupplierInvoicesByEventPlanId(eventPlanId: string): void {
-    const getSupplierInvoicesReq = this.http
-      .get(environment.apiUrl + '/service/supplier-invoice/getByEventPlanId/' + eventPlanId)
-      .subscribe({
-        next: ({ data }: any) => (this.supplierInvoices = data),
-        complete: () => getSupplierInvoicesReq.unsubscribe()
-      });
+  // getSupplierInvoicesByEventPlanId(eventPlanId: string): void {
+  //   const getSupplierInvoicesReq = this.http
+  //     .get(environment.apiUrl + '/service/supplier-invoice/getByEventPlanId/' + eventPlanId)
+  //     .subscribe({
+  //       next: ({ data }: any) => (this.supplierInvoices = data),
+  //       complete: () => getSupplierInvoicesReq.unsubscribe()
+  //     });
+  // }
+
+  // getPaymentVouchersByEventPlanId(eventPlanId: string): void {
+  //   const getPaymentVouchers$ = this.http.get(environment.apiUrl + '/service/payment-voucher/getByEventPlanId/' + eventPlanId).subscribe({
+  //     next: ({ data }: any) => (this.paymentVouchers = data),
+  //     complete: () => getPaymentVouchers$.unsubscribe(),
+  //   });
+  // }
+
+  // getPaymentsByEventPlanId(eventPlanId: string): void {
+  //   const getPayments$ = this.http.get(environment.apiUrl + '/service/payment/getByEventPlanId/' + eventPlanId).subscribe({
+  //     next: ({ data }: any) => (this.payments = data),
+  //     complete: () => getPayments$.unsubscribe(),
+  //   });
+  // }
+
+  getDataByEventPlanId(itemName: string, eventPlanId: string, source: any): void {
+    const getData$ = this.http.get(environment.apiUrl + '/service/' + itemName + '/getByEventPlanId/' + eventPlanId).subscribe({
+      next: ({ data }: any) => (source = data),
+      complete: () => getData$.unsubscribe(),
+    });
   }
 
   updateInvoice(invoice): void {
