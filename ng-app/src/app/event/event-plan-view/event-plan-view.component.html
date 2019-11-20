@@ -386,6 +386,7 @@
           <tr>
             <th>Provider</th>
             <th>Code</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -393,6 +394,7 @@
           <tr *ngFor="let supplerInvoice of supplierInvoices">
             <td>{{ supplerInvoice.provider.name }}</td>
             <td>{{ supplerInvoice.code }}</td>
+            <td>{{ supplerInvoice.status }}</td>
             <td></td>
           </tr>
         </tbody>
@@ -416,6 +418,7 @@
           <tr>
             <th>Provider</th>
             <th>Code</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -423,6 +426,7 @@
           <tr *ngFor="let paymentVoucher of paymentVouchers">
             <td>{{ paymentVoucher.provider.name }}</td>
             <td>{{ paymentVoucher.code }}</td>
+            <td>{{ paymentVoucher.status }}</td>
             <td></td>
           </tr>
         </tbody>
@@ -446,6 +450,7 @@
           <tr>
             <th>Provider</th>
             <th>Code</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -453,6 +458,7 @@
           <tr *ngFor="let payment of payments">
             <td>{{ payment.provider.name }}</td>
             <td>{{ payment.code }}</td>
+            <td>{{ payment.status }}</td>
             <td></td>
           </tr>
         </tbody>
