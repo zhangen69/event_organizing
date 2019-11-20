@@ -14,11 +14,12 @@ const schema = new mongoose.Schema({
   code: String,
   totalAmount: Number,
   customer: { type: mongoose.Types.ObjectId, ref: 'Customer' },
+  quotation: { type: mongoose.Types.ObjectId, ref: 'Quotation' },
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
   invoice: { type: mongoose.Types.ObjectId, ref: 'Invoice', default: null },
   lines: { type: [line], default: [] },
-  status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Revised', 'Cancelled'] },
-  remarks: String
+  status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Revised', 'Cancelled'], default: 'Open' },
+  remarks: String,
 });
 
 schema.add(auditable);

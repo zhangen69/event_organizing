@@ -364,7 +364,7 @@
           <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
             <button class="btn-sm" mat-raised-button color="primary" (click)="generateInvoiceFromQuotation(quotation)"
-              *ngIf="checkButtonIsValid(quotation, ['Closed']) && invoice === null">Generate Final Invoice</button>
+              *ngIf="checkButtonIsValid(quotation, ['Closed', 'Confirmed']) && invoice === null">Generate Final Invoice</button>
         </div>
         <!-- <pre>{{ quotation | json }}</pre> -->
       </ng-template>

@@ -132,16 +132,14 @@ export class EventPlanViewComponent {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }
                 // get invoice
-                // this.getInvoiceByEventPlanId(this.eventPlan._id);
                 this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
+                // get quotation
+                this.getDataByEventPlanId('quotation', this.eventPlan._id, 'quotation');
                 // get supplier invoices
-                // this.getSupplierInvoicesByEventPlanId(this.eventPlan._id);
                 this.getDataByEventPlanId('supplier-invoice', this.eventPlan._id, 'supplierInvoices');
                 // get payment vouchers
-                // this.getPaymentVouchersByEventPlanId(this.eventPlan._id);
                 this.getDataByEventPlanId('payment-voucher', this.eventPlan._id, 'paymentVouchers');
                 // get payments
-                // this.getPaymentsByEventPlanId(this.eventPlan._id);
                 this.getDataByEventPlanId('payment', this.eventPlan._id, 'payments');
                 this.pageLoaderService.toggle(false);
               },
@@ -555,9 +553,11 @@ export class EventPlanViewComponent {
 
   generateInvoiceFromQuotation(quotation) {
     const invoiceData = Object.assign({}, quotation);
+    delete invoiceData._id;
     delete invoiceData.status;
     delete invoiceData.remarks;
     delete invoiceData.code;
+    invoiceData.quotation = quotation._id;
     const createInvoice$ = this.http.post(environment.apiUrl + '/service/invoice', invoiceData).subscribe({
       next: (res) => {
         this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
