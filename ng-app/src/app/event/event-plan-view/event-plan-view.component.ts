@@ -342,7 +342,9 @@ export class EventPlanViewComponent {
             formData[field.name] = data[field.name];
           });
           data.formData = formData;
-          this.eventPlan.attendees.push(data);
+          // this.eventPlan.attendees.push(data);
+          let selectedAttendee = this.eventPlan.attendees.find(item => item._id === attendee._id);
+          selectedAttendee = data;
           this.updateEventPlan(this.eventPlan, null, true);
         }
       },
