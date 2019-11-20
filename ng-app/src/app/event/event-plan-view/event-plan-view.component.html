@@ -373,7 +373,8 @@
   <!-- Tab for Related Supplier Invoices -->
   <mat-tab label="Supplier Invoices">
     <div class="tab-body">
-      <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
+      <button mat-raised-button color="primary" type="button" class="btn-sm"
+        [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
       <table class="table table-bordered supplier-invoices">
         <colgroup>
           <col style="width: 300px">
@@ -401,12 +402,58 @@
   <!-- Tab for Related Payment Vouchers -->
   <mat-tab label="Payment Voucher">
     <div class="tab-body">
+      <button mat-raised-button color="primary" type="button" class="btn-sm"
+        [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
+      <table class="table table-bordered supplier-invoices">
+        <colgroup>
+          <col style="width: 300px">
+          <col>
+          <col style="width: 200px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Code</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let paymentVoucher of paymentVouchers">
+            <td>{{ paymentVoucher.provider.name }}</td>
+            <td>{{ paymentVoucher.code }}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
       <pre>{{ paymentVouchers | json }}</pre>
     </div>
   </mat-tab>
   <!-- Tab for Related Payments -->
   <mat-tab label="Payments">
     <div class="tab-body">
+        <button mat-raised-button color="primary" type="button" class="btn-sm"
+          [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
+        <table class="table table-bordered supplier-invoices">
+          <colgroup>
+            <col style="width: 300px">
+            <col>
+            <col style="width: 200px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Code</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of payments">
+              <td>{{ payment.provider.name }}</td>
+              <td>{{ payment.code }}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       <pre>{{ payments | json }}</pre>
     </div>
   </mat-tab>
