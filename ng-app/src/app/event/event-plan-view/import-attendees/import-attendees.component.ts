@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { environment } from './../../../../environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Inject } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 type AOA = any[][];
 
@@ -13,14 +16,16 @@ type AOA = any[][];
 export class ImportAttendeesComponent implements OnInit {
   excelData: any;
   jsonData = [];
+  eventPlan: any;
   // ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.excelData);
 
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<any>, private http: HttpClient, @Inject(MAT_DIALOG_DATA) public params: any) { }
 
   ngOnInit() {
+    this.eventPlan = this.params.eventPlan;
   }
-
 
   onFileChange(evt: any) {
     /* wire up file reader */
@@ -55,17 +60,33 @@ export class ImportAttendeesComponent implements OnInit {
       });
       const body = this.excelData.filter((ele) => ele !== this.excelData[0]);
 
-      from(body).pipe(
+      const load$ = from(body).pipe(
         map((row) => {
           const rowData = {};
           headers.forEach((header, index) => rowData[header.name] = row[index]);
           return rowData;
         })
-      ).subscribe((val) => this.jsonData.push(val));
+      ).subscribe({
+        next: (val) => this.jsonData.push(val),
+        complete: () => load$.unsubscribe(),
+      });
     }
   }
 
-  onImportData() {
-    
+  onImportData(attendees: any[]): void {
+    this.eventPlan.attendees.push.apply(this.eventPlan.attendees, attendees);
+    const updateEventPlan$ = this.http.post(environment.apiUrl + '/service/event-plan', this.eventPlan).subscribe({
+      next: (res) => {
+        this.dialogRef.close(res);
+      },
+      complete: () => {
+        updateEventPlan$.unsubscribe();
+      }
+    });
   }
+
+  onCancel(data = null): void {
+    this.dialogRef.close(data);
+  }
+
 }

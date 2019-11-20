@@ -659,16 +659,17 @@ export class EventPlanViewComponent {
   }
 
   importAttendees() {
-    
     const dialogRef = this.dialog.open(ImportAttendeesComponent, {
       disableClose: true,
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
+      data: { eventPlan: this.eventPlan },
     });
 
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
-      next: data => {
+      next: (res) => {
+        this.toastr.info('Imported Successfully!');
       },
       complete: () => {
         dialogClosedReq.unsubscribe();
