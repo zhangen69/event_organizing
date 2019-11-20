@@ -308,7 +308,8 @@
       <div [ngTemplateOutlet]="invoice ? showInvoiceInfo : noInvoiceMessage"></div>
       <ng-template #noInvoiceMessage>
         <p>No Invoice Yet, Please create an invoice for this event plan.</p>
-        <p>Click <a [routerLink]="['/invoice/add']">here</a> redirect to new invoice form page.</p>
+        <p>Click <a [routerLink]="['/invoice/add']" [queryParams]="{ eventPlan: eventPlan._id }">here</a> redirect to
+          new invoice form page.</p>
       </ng-template>
       <ng-template #showInvoiceInfo>
         <div class="mat-title">Invoice ({{ invoice.code }})</div>
@@ -373,8 +374,8 @@
   <!-- Tab for Related Supplier Invoices -->
   <mat-tab label="Supplier Invoices">
     <div class="tab-body">
-      <button mat-raised-button color="primary" type="button" class="btn-sm"
-        [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
+      <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']"
+        [queryParams]="{ eventPlan: eventPlan._id }">Add New Supplier Invoice</button>
       <table class="table table-bordered supplier-invoices">
         <colgroup>
           <col style="width: 300px">
@@ -402,9 +403,10 @@
   <!-- Tab for Related Payment Vouchers -->
   <mat-tab label="Payment Voucher">
     <div class="tab-body">
-      <button mat-raised-button color="primary" type="button" class="btn-sm"
-        [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
-      <table class="table table-bordered supplier-invoices">
+      <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment-voucher/add']"
+        [queryParams]="{ eventPlan: eventPlan._id }">Add
+        New Payment Voucher</button>
+      <table class="table table-bordered payment-voucher">
         <colgroup>
           <col style="width: 300px">
           <col>
@@ -431,29 +433,30 @@
   <!-- Tab for Related Payments -->
   <mat-tab label="Payments">
     <div class="tab-body">
-        <button mat-raised-button color="primary" type="button" class="btn-sm"
-          [routerLink]="['/supplier-invoice/add']">Add New Supplier Invoice</button>
-        <table class="table table-bordered supplier-invoices">
-          <colgroup>
-            <col style="width: 300px">
-            <col>
-            <col style="width: 200px">
-          </colgroup>
-          <thead>
-            <tr>
-              <th>Provider</th>
-              <th>Code</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let payment of payments">
-              <td>{{ payment.provider.name }}</td>
-              <td>{{ payment.code }}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+      <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
+        [queryParams]="{ eventPlan: eventPlan._id }">Add New
+        Payment</button>
+      <table class="table table-bordered payment">
+        <colgroup>
+          <col style="width: 300px">
+          <col>
+          <col style="width: 200px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Code</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of payments">
+            <td>{{ payment.provider.name }}</td>
+            <td>{{ payment.code }}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
       <pre>{{ payments | json }}</pre>
     </div>
   </mat-tab>

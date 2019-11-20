@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 enum InvoiceStatus {
   Open,
@@ -6,7 +9,7 @@ enum InvoiceStatus {
   Revised,
   Paid,
   Closed,
-  Cancelled,
+  Cancelled
 }
 
 @Component({
@@ -15,6 +18,7 @@ enum InvoiceStatus {
   styleUrls: ['./invoice-form.component.css']
 })
 export class InvoiceFormComponent implements OnInit {
+  formData: any = {};
   includes = ['customer', 'eventPlan'];
   fields = [
     // { name: 'code', type: 'string', required: true },
@@ -35,7 +39,20 @@ export class InvoiceFormComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['eventPlan']) {
+        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
+          next: ({ data }) => {
+            this.formData.eventPlan = data;
+          },
+          complete: () => {
+            getEventPlan$.unsubscribe();
+          }
+        });
+      }
+    });
+  }
 }
