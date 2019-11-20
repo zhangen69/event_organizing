@@ -86,8 +86,8 @@ export class ImportAttendeesComponent implements OnInit {
     });
   }
 
-  onCancel(data = null): void {
-    this.dialogRef.close(data);
+  onCancel(): void {
+    this.dialogRef.close({ dismiss: true });
   }
 
 }

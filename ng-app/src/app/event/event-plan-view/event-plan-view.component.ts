@@ -665,8 +665,10 @@ export class EventPlanViewComponent {
 
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: (res) => {
-        this.toastr.info('Imported Successfully!');
-        this.refresh();
+        if (!res.dismiss) {
+          this.toastr.info('Imported Successfully!');
+          this.refresh();
+        }
       },
       complete: () => {
         dialogClosedReq.unsubscribe();
