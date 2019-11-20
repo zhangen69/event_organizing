@@ -18,7 +18,7 @@ enum PaymentVoucherStatus {
 })
 export class PaymentVoucherFormComponent implements OnInit {
     formData: any = {};
-    includes = ['provider', 'receipt', 'event'];
+    includes = ['provider', 'receipt', 'eventPlan'];
     fields = [
         { name: 'provider', type: 'ref', required: true },
         { name: 'eventPlan', type: 'ref', required: true },

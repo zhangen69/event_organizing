@@ -131,16 +131,16 @@ export class EventPlanViewComponent {
                 }
                 // get invoice
                 // this.getInvoiceByEventPlanId(this.eventPlan._id);
-                this.getDataByEventPlanId('invoice', this.eventPlan._id, this.invoice);
+                this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
                 // get supplier invoices
                 // this.getSupplierInvoicesByEventPlanId(this.eventPlan._id);
-                this.getDataByEventPlanId('supplier-invoice', this.eventPlan._id, this.supplierInvoices);
+                this.getDataByEventPlanId('supplier-invoice', this.eventPlan._id, 'supplierInvoices');
                 // get payment vouchers
                 // this.getPaymentVouchersByEventPlanId(this.eventPlan._id);
-                this.getDataByEventPlanId('payment-voucher', this.eventPlan._id, this.paymentVouchers);
+                this.getDataByEventPlanId('payment-voucher', this.eventPlan._id, 'paymentVouchers');
                 // get payments
                 // this.getPaymentsByEventPlanId(this.eventPlan._id);
-                this.getDataByEventPlanId('payment', this.eventPlan._id, this.payments);
+                this.getDataByEventPlanId('payment', this.eventPlan._id, 'payments');
                 this.pageLoaderService.toggle(false);
               },
               complete: () => {
@@ -514,9 +514,12 @@ export class EventPlanViewComponent {
   //   });
   // }
 
-  getDataByEventPlanId(itemName: string, eventPlanId: string, source: any): void {
+  getDataByEventPlanId(itemName: string, eventPlanId: string, sourceName: string): void {
+    const source = this;
     const getData$ = this.http.get(environment.apiUrl + '/service/' + itemName + '/getByEventPlanId/' + eventPlanId).subscribe({
-      next: ({ data }: any) => (source = data),
+      next: ({ data }: any) => {
+        source[sourceName] = data;
+      },
       complete: () => getData$.unsubscribe(),
     });
   }

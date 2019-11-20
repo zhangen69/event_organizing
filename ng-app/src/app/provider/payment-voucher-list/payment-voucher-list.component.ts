@@ -7,21 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-voucher-list.component.css']
 })
 export class PaymentVoucherListComponent implements OnInit {
-  includes = ['provider', 'receipt', 'event'];
+  includes = ['provider', 'receipt', 'eventPlan'];
   columns: IStandardColumn[] = [
-     { name: 'code' },
-     { name: 'provider.name', displayName: 'Provider' },
-     { name: 'event.name', displayName: 'Event' },
-     { name: 'status' },
-     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
+    { name: 'provider.name', displayName: 'Provider' },
+    { name: 'eventPlan.name', displayName: 'Event Plan' },
+    { name: 'code' },
+    { name: 'status' },
+    { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
   ];
-  filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
-  ];
+  filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
