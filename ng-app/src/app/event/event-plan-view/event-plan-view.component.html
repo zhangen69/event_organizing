@@ -299,7 +299,70 @@
   <!-- Tab for Related Quotation -->
   <mat-tab label="Quotation">
     <div class="tab-body">
-
+      <div [ngTemplateOutlet]="quotation ? showQuotationInfo : noQuotationMessage"></div>
+      <ng-template #noQuotationMessage>
+        <p>No Quotation Yet, Please create a quotation for this event plan.</p>
+        <p>Click <a [routerLink]="['/quotation/add']" [queryParams]="{ eventPlan: eventPlan._id }">here</a> redirect to
+          new quotation form page.</p>
+      </ng-template>
+      <ng-template #showQuotationInfo>
+        <div class="mat-title">Quotation ({{ quotation.code }})</div>
+        <div class="view-field">
+          <label class="mat-body-strong">Customer</label>
+          <div class="mat-body">
+            <a [routerLink]="['/customer/view/' + quotation.customer._id]">{{ quotation.customer.name }}</a>
+          </div>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Total Amount</label>
+          <div class="mat-body">{{ getLinesTotalAmount(quotation.lines) | currency: 'MYR ' }}</div>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Status</label>
+          <div class="mat-body">{{ quotation.status }}</div>
+        </div>
+        <div class="action-group">
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Issued')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Confirmed')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Issued'])">Confirm</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Cancelled')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Revised')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Closed')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
+        </div>
+        <div class="view-field">
+          <label class="mat-body-strong">Remarks</label>
+          <div class="mat-body">{{ quotation.remarks }}</div>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Unit</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Sub Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of quotation.lines">
+              <td>{{ line.name }}</td>
+              <td>{{ line.unit }}</td>
+              <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
+              <td>{{ line.quantity }}</td>
+              <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="action-group">
+          <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
+        </div>
+        <!-- <pre>{{ quotation | json }}</pre> -->
+      </ng-template>
     </div>
   </mat-tab>
   <!-- Tab for Invoice (to Customer) -->
@@ -321,7 +384,7 @@
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Total Amount</label>
-          <div class="mat-body">{{ getInvoiceTotalAmount(invoice.lines) | currency: 'MYR ' }}</div>
+          <div class="mat-body">{{ getLinesTotalAmount(invoice.lines) | currency: 'MYR ' }}</div>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Status</label>
@@ -329,15 +392,15 @@
         </div>
         <div class="action-group">
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Confirmed')" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Confirm</button>
+            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Confirm</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Revised')" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Revise</button>
+            *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Revise</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Cancelled')" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Cancel</button>
+            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Cancel</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Paid')" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Confirmed'])">Pay</button>
+            *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Pay</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Closed')" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Paid'])">Close</button>
+            *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Remarks</label>
@@ -365,7 +428,7 @@
         </table>
         <div class="action-group">
           <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
-            *ngIf="checkInvoiceButton(invoice, ['Open', 'Revised'])">Edit</button>
+            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Edit</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>

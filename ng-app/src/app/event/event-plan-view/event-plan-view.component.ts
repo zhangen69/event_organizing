@@ -78,6 +78,7 @@ export class EventPlanViewComponent {
     typeOptions: []
   };
   invoice = null;
+  quotation = null;
   supplierInvoices = [];
   paymentVouchers = [];
   payments = [];
@@ -525,12 +526,12 @@ export class EventPlanViewComponent {
   }
 
   updateInvoice(invoice): void {
-    const updateEventPlanReq = this.http.put(environment.apiUrl + '/service/invoice', invoice).subscribe({
+    const updateInvoice$ = this.http.put(environment.apiUrl + '/service/invoice', invoice).subscribe({
       next: () => {
         this.toastr.info('Updated Succesfully!');
       },
       complete: () => {
-        updateEventPlanReq.unsubscribe();
+        updateInvoice$.unsubscribe();
       }
     });
   }
@@ -540,7 +541,23 @@ export class EventPlanViewComponent {
     this.updateInvoice(invoice);
   }
 
-  checkInvoiceButton(invoice: any, validStatuses: string[]): boolean {
+  updateQuotation(quotation): void {
+    const updateQuotation$ = this.http.put(environment.apiUrl + '/service/quotation', quotation).subscribe({
+      next: () => {
+        this.toastr.info('Updated Succesfully!');
+      },
+      complete: () => {
+        updateQuotation$.unsubscribe();
+      }
+    });
+  }
+
+  changeQuotationStatus(quotation, status) {
+    quotation.status = status;
+    this.updateQuotation(quotation);
+  }
+
+  checkButtonIsValid(invoice: any, validStatuses: string[]): boolean {
     if (validStatuses && validStatuses.length > 0) {
       return validStatuses.includes(invoice.status);
     }
@@ -671,8 +688,8 @@ export class EventPlanViewComponent {
     });
   }
 
-  getInvoiceTotalAmount(list: any[]) {
-    return list.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
+  getLinesTotalAmount(lines: any[]) {
+    return lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
   }
 
   private reformItem({ name, displayName, childName, fieldName }) {
