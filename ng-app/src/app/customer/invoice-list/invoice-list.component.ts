@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invoice-list.component.css']
 })
 export class InvoiceListComponent implements OnInit {
-  includes: string[] = ['customer','event'];
+  includes: string[] = ['customer', 'eventPlan'];
   columns: IStandardColumn[] = [
-     { name: 'customer.name', displayName: 'Customer' },
-     { name: 'event.name', displayName: 'Event' },
-     { name: 'status' },
+     { name: 'customer.name', displayName: 'Customer', width: '250px' },
+     { name: 'eventPlan.name', displayName: 'Event Plan', width: '200px' },
+     { name: 'status', width: '100px' },
      { name: 'remarks' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
