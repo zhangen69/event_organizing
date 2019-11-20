@@ -4,6 +4,9 @@ import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.c
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 enum SupplierInvoiceStatus {
   Open,
@@ -70,9 +73,22 @@ export class SupplierInvoiceFormComponent implements OnInit {
     }
   ];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['eventPlan']) {
+        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
+          next: ({ data }) => {
+            this.formData.eventPlan = data;
+          },
+          complete: () => {
+            getEventPlan$.unsubscribe();
+          }
+        });
+      }
+    });
+  }
 
   addItem(array) {
     const formData = { ...this.formData };
