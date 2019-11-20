@@ -1,3 +1,4 @@
+import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { MaterialModule } from './material.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -163,7 +164,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     EventPlanViewComponent,
     ProcessesFilterPipe,
     ObjectToArrayPipe,
-    CustomerViewComponent
+    CustomerViewComponent,
+    PaymentFormComponent
   ],
   imports: [
     BrowserModule,

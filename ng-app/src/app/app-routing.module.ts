@@ -1,3 +1,4 @@
+import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
@@ -191,7 +192,11 @@ const routes: Routes = [
   {
     path: 'payment',
     canActivate: [AuthGuard],
-    children: [{ path: 'list', component: PaymentListComponent }]
+    children: [
+      { path: 'list', component: PaymentListComponent },
+      { path: 'add', component: PaymentFormComponent },
+      { path: 'edit/:id', component: PaymentFormComponent },
+    ]
   },
   {
     path: 'registration-form',
