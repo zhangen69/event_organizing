@@ -472,16 +472,14 @@
               <div class="mat-body">{{ supplierInvoice.status }}</div>
             </div>
             <div class="action-group">
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Issued')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Revised'])">Issue</button>
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Confirmed')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Issued'])">Confirm</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Confirmed')" mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Confirm</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Paid')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Pay</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Cancelled')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Revised'])">Cancel</button>
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Revised')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed', 'Issued'])">Revise</button>
+                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Confirmed'])">Cancel</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Closed')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Close</button>
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Paid'])">Close</button>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Period</label>
