@@ -37,7 +37,7 @@ export const PaymentVoucherSchema = new mongoose.Schema({
   receipt: { type: mongoose.Types.ObjectId, ref: 'Receipt', default: null },
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
   lines: { type: [line], default: [] },
-  status: { type: String, enum: ['Open', 'Sent', 'Paid', 'Closed'] },
+  status: { type: String, enum: ['Open', 'Issued', 'Signed', 'Closed', 'Cancelled'], default: 'Open' },
   photoUrl: { type: String, default: null },
   remarks: { type: String, default: null },
   paymentType: MongooseHelper.Types.Enum(['Cash', 'Cheque', 'BankTransfer'], 'Cash'),

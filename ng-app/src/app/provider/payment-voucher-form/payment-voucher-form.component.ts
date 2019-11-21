@@ -10,9 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 
 enum PaymentVoucherStatus {
   Open,
-  Sent,
-  Paid,
-  Closed
+  Issued,
+  Signed,
+  Closed,
+  Cancelled,
 }
 
 enum PaymentType {
