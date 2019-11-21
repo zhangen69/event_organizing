@@ -92,6 +92,18 @@ export class SupplierInvoiceFormComponent implements OnInit {
 
   addItem(array) {
     const formData = { ...this.formData };
+
+    if (!formData.provider) {
+      alert('Please select a provider first!');
+      return;
+    }
+
+    const queryModel = {
+      type: 'provider',
+      searchText: formData.provider._id,
+      queryType: 'match'
+    };
+
     const fields: IStandardFormField[] = [
       {
         name: 'type',
@@ -106,6 +118,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
         type: 'ref',
         ref: 'provider-service',
         refIncludes: ['category'],
+        queryModel: queryModel,
         isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.ServiceInvoice]
       },
       {
@@ -114,6 +127,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
         type: 'ref',
         ref: 'provider-facility',
         refIncludes: ['category'],
+        queryModel: queryModel,
         isShow: item => item.type === SupplierInvoiceType[SupplierInvoiceType.RentFacility]
       }
     ];

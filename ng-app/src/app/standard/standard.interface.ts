@@ -17,6 +17,7 @@ export interface IStandardFormField {
   enumList?: any[];
   filterOption?: any;
   refIncludes?: string[];
+  queryModel?: any;
 }
 
 export enum IStandardFormFieldType {

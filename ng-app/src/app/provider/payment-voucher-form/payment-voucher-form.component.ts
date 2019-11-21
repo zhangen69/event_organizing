@@ -1,4 +1,4 @@
-import { IStandardFormField } from './../../standard/standard.interface';
+import { IStandardFormField } from 'src/app/standard/standard.interface';
 import { environment } from './../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -100,7 +100,7 @@ export class PaymentVoucherFormComponent implements OnInit {
       queryType: 'match'
     };
 
-    const fields = [
+    const fields: IStandardFormField[] = [
       {
         name: 'service',
         displayName: 'Enter service name',
