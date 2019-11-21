@@ -95,3 +95,15 @@ button.active {
 .filter-wrapper > * {
   margin-right: 2px;
 }
+
+.supplier-invoice-wrapper > mat-card {
+  margin: 10px 0;
+}
+
+.supplier-invoice-wrapper > mat-card > mat-card-header {
+  background-color: #ccc;
+}
+
+.supplier-invoice-wrapper > mat-card > mat-card-content {
+  padding: 16px;
+}

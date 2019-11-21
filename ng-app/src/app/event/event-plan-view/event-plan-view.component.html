@@ -305,7 +305,8 @@
       <div [ngTemplateOutlet]="quotation ? showQuotationInfo : noQuotationMessage"></div>
       <ng-template #noQuotationMessage>
         <p>No Quotation Yet, Please create a quotation for this event plan.</p>
-        <p>Click <a [routerLink]="['/quotation/add']" [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer._id }">here</a> redirect to
+        <p>Click <a [routerLink]="['/quotation/add']"
+            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id }">here</a> redirect to
           new quotation form page.</p>
       </ng-template>
       <ng-template #showQuotationInfo>
@@ -327,10 +328,10 @@
         <div class="action-group">
           <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Issued')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Confirmed')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Issued'])">Confirm</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Cancelled')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Confirmed')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Issued'])">Confirm</button>
+          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Cancelled')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
           <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Revised')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
           <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Closed')" mat-raised-button color="primary"
@@ -363,8 +364,9 @@
         <div class="action-group">
           <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
-            <button class="btn-sm" mat-raised-button color="primary" (click)="generateInvoiceFromQuotation(quotation)"
-              *ngIf="checkButtonIsValid(quotation, ['Closed', 'Confirmed']) && invoice === null">Generate Final Invoice</button>
+          <button class="btn-sm" mat-raised-button color="primary" (click)="generateInvoiceFromQuotation(quotation)"
+            *ngIf="checkButtonIsValid(quotation, ['Closed', 'Confirmed']) && invoice === null">Generate Final
+            Invoice</button>
         </div>
         <!-- <pre>{{ quotation | json }}</pre> -->
       </ng-template>
@@ -376,7 +378,7 @@
       <div [ngTemplateOutlet]="invoice ? showInvoiceInfo : noInvoiceMessage"></div>
       <ng-template #noInvoiceMessage>
         <p>No Invoice Yet, Please create an invoice for this event plan.</p>
-        <p>Click <a [routerLink]="['/invoice/add']" [queryParams]="{ eventPlan: eventPlan._id }">here</a> redirect to
+        <p>Click <a [routerLink]="['/invoice/add']" [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id }">here</a> redirect to
           new invoice form page.</p>
       </ng-template>
       <ng-template #showInvoiceInfo>
@@ -444,6 +446,61 @@
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']"
         [queryParams]="{ eventPlan: eventPlan._id }">Add New Supplier Invoice</button>
+      <div class="supplier-invoice-wrapper">
+        <mat-card *ngFor="let supplierInvoice of supplierInvoices">
+          <mat-card-header>
+            <mat-card-title>{{ supplierInvoice.code }}</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div class="view-field">
+              <label class="mat-body-strong">Provider</label>
+              <div class="mat-body">{{ supplierInvoice.provider.name }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Total Amount</label>
+              <div class="mat-body">{{ getLinesTotalAmount(supplierInvoice.lines) | currency: 'MYR ' }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Status</label>
+              <div class="mat-body">{{ supplierInvoice.status }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Period</label>
+              <div class="mat-body">{{ supplierInvoice.period | titleDisplay }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Remarks</label>
+              <div class="mat-body">{{ supplierInvoice.remarks }}</div>
+            </div>
+            <table class="table table-bordered supplier-invoices">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unit</th>
+                  <th>Unit Price</th>
+                  <th>Quantity</th>
+                  <th>Sub Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let line of supplierInvoice.lines">
+                  <td>{{ line.name }}</td>
+                  <td>{{ line.unit }}</td>
+                  <td>{{ line.unitPrice }}</td>
+                  <td>{{ line.quantity }}</td>
+                  <td>{{ (line.unitPrice * line.quantity) | currency: 'MYR ' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="btn-sm">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
       <table class="table table-bordered supplier-invoices">
         <colgroup>
           <col style="width: 300px">
