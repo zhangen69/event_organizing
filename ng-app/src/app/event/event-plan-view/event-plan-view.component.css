@@ -80,7 +80,9 @@ button.active {
 }
 
 .table.supplier-invoices td,
-.table.supplier-invoices th {
+.table.supplier-invoices th,
+.table.payment-vouchers td,
+.table.payment-vouchers th {
   text-align-last: left;
 }
 
@@ -96,14 +98,12 @@ button.active {
   margin-right: 2px;
 }
 
-.supplier-invoice-wrapper > mat-card {
+.supplier-invoice-wrapper > mat-card,
+.payment-voucher-wrapper > mat-card {
   margin: 10px 0;
 }
 
-.supplier-invoice-wrapper > mat-card > mat-card-header {
-  background-color: #ccc;
-}
-
-.supplier-invoice-wrapper > mat-card > mat-card-content {
+.supplier-invoice-wrapper > mat-card > mat-card-content,
+.payment-voucher-wrapper > mat-card > mat-card-content {
   padding: 16px;
 }
