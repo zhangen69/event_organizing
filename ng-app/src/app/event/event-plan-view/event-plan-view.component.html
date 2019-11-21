@@ -331,16 +331,16 @@
           <div class="mat-body">{{ quotation.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Issued')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Issued')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Confirmed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Issued'])">Confirm</button>
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
-          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Revised')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
-          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Closed')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Revised')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Closed')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Remarks</label>
@@ -404,16 +404,16 @@
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
-          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Issued'])">Confirm</button>
-          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
-          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Pay</button>
-          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Issued'])">Confirm</button>
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Pay</button>
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Remarks</label>
@@ -472,14 +472,16 @@
               <div class="mat-body">{{ supplierInvoice.status }}</div>
             </div>
             <div class="action-group">
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Confirmed')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Confirm</button>
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Paid')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Pay</button>
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Cancelled')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Confirmed'])">Cancel</button>
-              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Closed')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Paid'])">Close</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Confirmed')"
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Confirm</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Paid')"
+                mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Pay</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Cancelled')"
+                mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Confirmed'])">Cancel</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Closed')"
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Paid'])">Close</button>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Period</label>
@@ -513,7 +515,8 @@
           <mat-divider></mat-divider>
           <mat-card-actions>
             <button mat-raised-button color="primary" class="btn-sm"
-              [routerLink]="['/supplier-invoice/edit/' + supplierInvoice._id]">Edit</button>
+              [routerLink]="['/supplier-invoice/edit/' + supplierInvoice._id]"
+              *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
           </mat-card-actions>
         </mat-card>
       </div>
@@ -546,14 +549,15 @@
               <div class="mat-body">{{ paymentVoucher.status }}</div>
             </div>
             <div class="action-group">
-              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Issued')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(paymentVoucher, ['Open'])">Issue</button>
-              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Signed')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Issued'])">Sign</button>
-              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Cancelled')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Open', 'Issued'])">Cancel</button>
-              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Closed')" mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(paymentVoucher, ['Signed'])">Close</button>
+              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Issued')"
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Open'])">Issue</button>
+              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Signed')"
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Issued'])">Sign</button>
+              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Cancelled')"
+                mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(paymentVoucher, ['Open', 'Issued'])">Cancel</button>
+              <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Closed')"
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Signed'])">Close</button>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Payment Type</label>
@@ -570,11 +574,13 @@
               </div>
               <div class="view-field">
                 <label class="mat-body-strong">Payee</label>
-                <div class="mat-body">{{ paymentVoucher.chequeInfo.payeeName }} ({{ paymentVoucher.chequeInfo.payeeIdentityNumber }})</div>
+                <div class="mat-body">{{ paymentVoucher.chequeInfo.payeeName }}
+                  ({{ paymentVoucher.chequeInfo.payeeIdentityNumber }})</div>
               </div>
               <div class="view-field">
                 <label class="mat-body-strong">Drawee</label>
-                <div class="mat-body">{{ paymentVoucher.chequeInfo.draweeName }} ({{ paymentVoucher.chequeInfo.draweeIdentityNumber }})</div>
+                <div class="mat-body">{{ paymentVoucher.chequeInfo.draweeName }}
+                  ({{ paymentVoucher.chequeInfo.draweeIdentityNumber }})</div>
               </div>
               <div class="view-field">
                 <label class="mat-body-strong">Issued Date</label>
@@ -596,7 +602,8 @@
               </div>
               <div class="view-field">
                 <label class="mat-body-strong">Payee</label>
-                <div class="mat-body">{{ paymentVoucher.bankTransferInfo.payeeName }} ({{ paymentVoucher.bankTransferInfo.payeeIdentityNumber }})</div>
+                <div class="mat-body">{{ paymentVoucher.bankTransferInfo.payeeName }}
+                  ({{ paymentVoucher.bankTransferInfo.payeeIdentityNumber }})</div>
               </div>
               <div class="view-field">
                 <label class="mat-body-strong">Transfered Date</label>
@@ -627,7 +634,8 @@
           <mat-divider></mat-divider>
           <mat-card-actions>
             <button mat-raised-button color="primary" class="btn-sm"
-              [routerLink]="['/payment-voucher/edit/' + paymentVoucher._id]">Edit</button>
+              [routerLink]="['/payment-voucher/edit/' + paymentVoucher._id]"
+              *ngIf="checkButtonIsValid(paymentVoucher, ['Open'])">Edit</button>
           </mat-card-actions>
         </mat-card>
       </div>
@@ -640,95 +648,98 @@
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
         [queryParams]="{ eventPlan: eventPlan._id }">Add New
         Payment</button>
-        <div class="payment-wrapper">
-          <mat-card *ngFor="let payment of payments">
-            <mat-card-header>
-              <mat-card-title>{{ payment.code }}</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content>
+      <div class="payment-wrapper">
+        <mat-card *ngFor="let payment of payments">
+          <mat-card-header>
+            <mat-card-title>{{ payment.code }}</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div class="view-field">
+              <label class="mat-body-strong">Provider</label>
+              <div class="mat-body">{{ payment.provider.name }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Ref: Supplier Invoice</label>
+              <div class="mat-body">{{ payment.supplierInvoice.code }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Amount</label>
+              <div class="mat-body">{{ payment.amount | currency: 'MYR ' }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Status</label>
+              <div class="mat-body">{{ payment.status }}</div>
+            </div>
+            <div class="action-group">
+              <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Verified')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Open'])">Issue</button>
+              <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Failed')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Issued'])">Sign</button>
+              <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Cancelled')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Open', 'Issued'])">Cancel</button>
+              <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Closed')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Signed'])">Close</button>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Payment Type</label>
+              <div class="mat-body">{{ payment.paymentType | titleDisplay }}</div>
+            </div>
+            <div class="view-field">
+              <label class="mat-body-strong">Remarks</label>
+              <div class="mat-body">{{ payment.remarks }}</div>
+            </div>
+            <div *ngIf="payment.paymentType === 'Cheque'">
               <div class="view-field">
-                <label class="mat-body-strong">Provider</label>
-                <div class="mat-body">{{ payment.provider.name }}</div>
+                <label class="mat-body-strong">Reference No.</label>
+                <div class="mat-body">{{ payment.chequeInfo.referenceNumber }}</div>
               </div>
               <div class="view-field">
-                <label class="mat-body-strong">Ref: Supplier Invoice</label>
-                <div class="mat-body">{{ payment.supplierInvoice.code }}</div>
+                <label class="mat-body-strong">Payee</label>
+                <div class="mat-body">{{ payment.chequeInfo.payeeName }} ({{ payment.chequeInfo.payeeIdentityNumber }})
+                </div>
               </div>
               <div class="view-field">
-                <label class="mat-body-strong">Amount</label>
-                <div class="mat-body">{{ payment.amount | currency: 'MYR ' }}</div>
+                <label class="mat-body-strong">Drawee</label>
+                <div class="mat-body">{{ payment.chequeInfo.draweeName }}
+                  ({{ payment.chequeInfo.draweeIdentityNumber }})</div>
               </div>
               <div class="view-field">
-                <label class="mat-body-strong">Status</label>
-                <div class="mat-body">{{ payment.status }}</div>
+                <label class="mat-body-strong">Issued Date</label>
+                <div class="mat-body">{{ payment.chequeInfo.issuedDate | date: 'dd-MM-yyyy' }}</div>
               </div>
-              <div class="action-group">
-                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Verified')" mat-raised-button color="primary"
-                  *ngIf="checkButtonIsValid(payment, ['Open'])">Issue</button>
-                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Failed')" mat-raised-button
-                  color="primary" *ngIf="checkButtonIsValid(payment, ['Issued'])">Sign</button>
-                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Cancelled')" mat-raised-button
-                  color="primary" *ngIf="checkButtonIsValid(payment, ['Open', 'Issued'])">Cancel</button>
-                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Closed')" mat-raised-button color="primary"
-                  *ngIf="checkButtonIsValid(payment, ['Signed'])">Close</button>
+            </div>
+            <div *ngIf="payment.paymentType === 'BankTransfer'">
+              <div class="view-field">
+                <label class="mat-body-strong">Reference No.</label>
+                <div class="mat-body">{{ payment.bankTransferInfo.referenceNumber }}</div>
               </div>
               <div class="view-field">
-                <label class="mat-body-strong">Payment Type</label>
-                <div class="mat-body">{{ payment.paymentType | titleDisplay }}</div>
+                <label class="mat-body-strong">Bank</label>
+                <div class="mat-body">{{ payment.bankTransferInfo.bank }}</div>
               </div>
               <div class="view-field">
-                <label class="mat-body-strong">Remarks</label>
-                <div class="mat-body">{{ payment.remarks }}</div>
+                <label class="mat-body-strong">Account Number</label>
+                <div class="mat-body">{{ payment.bankTransferInfo.accountNumber }}</div>
               </div>
-              <div *ngIf="payment.paymentType === 'Cheque'">
-                <div class="view-field">
-                  <label class="mat-body-strong">Reference No.</label>
-                  <div class="mat-body">{{ payment.chequeInfo.referenceNumber }}</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Payee</label>
-                  <div class="mat-body">{{ payment.chequeInfo.payeeName }} ({{ payment.chequeInfo.payeeIdentityNumber }})</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Drawee</label>
-                  <div class="mat-body">{{ payment.chequeInfo.draweeName }} ({{ payment.chequeInfo.draweeIdentityNumber }})</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Issued Date</label>
-                  <div class="mat-body">{{ payment.chequeInfo.issuedDate | date: 'dd-MM-yyyy' }}</div>
-                </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Payee</label>
+                <div class="mat-body">{{ payment.bankTransferInfo.payeeName }}
+                  ({{ payment.bankTransferInfo.payeeIdentityNumber }})</div>
               </div>
-              <div *ngIf="payment.paymentType === 'BankTransfer'">
-                <div class="view-field">
-                  <label class="mat-body-strong">Reference No.</label>
-                  <div class="mat-body">{{ payment.bankTransferInfo.referenceNumber }}</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Bank</label>
-                  <div class="mat-body">{{ payment.bankTransferInfo.bank }}</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Account Number</label>
-                  <div class="mat-body">{{ payment.bankTransferInfo.accountNumber }}</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Payee</label>
-                  <div class="mat-body">{{ payment.bankTransferInfo.payeeName }} ({{ payment.bankTransferInfo.payeeIdentityNumber }})</div>
-                </div>
-                <div class="view-field">
-                  <label class="mat-body-strong">Transfered Date</label>
-                  <div class="mat-body">{{ payment.bankTransferInfo.transferedDate | date: 'dd-MM-yyyy' }}</div>
-                </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Transfered Date</label>
+                <div class="mat-body">{{ payment.bankTransferInfo.transferedDate | date: 'dd-MM-yyyy' }}</div>
               </div>
-            </mat-card-content>
-            <mat-divider></mat-divider>
-            <mat-card-actions>
-              <button mat-raised-button color="primary" class="btn-sm"
-                [routerLink]="['/payment/edit/' + payment._id]">Edit</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+            </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/edit/' + payment._id]"
+              *ngIf="checkButtonIsValid(payment, ['Open'])">Edit</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
       <table class="table table-bordered payment">
         <colgroup>
           <col style="width: 300px">
