@@ -695,6 +695,10 @@ export class EventPlanViewComponent {
     });
   }
 
+  downloadImportTemplateFile() {
+    
+  }
+
   hasAttendeeIsSelected(attendees): boolean {
     if (!attendees || attendees.length <= 0) {
       return false;

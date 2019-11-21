@@ -247,10 +247,13 @@
           *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
           Group Attendees
         </button>
-        <button mat-raised-button class="btn-end" color="primary" (click)="importAttendees()">
+        <a mat-raised-button class="btn-end" color="primary" target="new" href="http://localhost:3000/assets/import_attendee_template.xlsx">
+          <mat-icon>cloud_download</mat-icon> Template
+        </a>
+        <button mat-raised-button color="primary" (click)="importAttendees()">
           <mat-icon>import_export</mat-icon> Import
         </button>
-        <button mat-raised-button class="" color="primary" (click)="getAttendees()">
+        <button mat-raised-button color="primary" (click)="getAttendees()">
           <mat-icon>refresh</mat-icon> Refresh
         </button>
       </div>

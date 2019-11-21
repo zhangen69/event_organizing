@@ -5,6 +5,7 @@ const router = express.Router();
 
 // configure public folders
 router.use('/images', express.static(path.join(__dirname, '../images')));
+router.use('/assets', express.static(path.join(__dirname, '../assets')));
 
 // configure ng-app
 router.use('/', express.static(path.join(__dirname, '../ng-app')));
