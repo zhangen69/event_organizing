@@ -627,19 +627,108 @@
           <mat-divider></mat-divider>
           <mat-card-actions>
             <button mat-raised-button color="primary" class="btn-sm"
-              [routerLink]="['/supplier-invoice/edit/' + paymentVoucher._id]">Edit</button>
+              [routerLink]="['/payment-voucher/edit/' + paymentVoucher._id]">Edit</button>
           </mat-card-actions>
         </mat-card>
       </div>
       <!-- <pre>{{ paymentVouchers | json }}</pre> -->
     </div>
   </mat-tab>
-  <!-- Tab for Related Payments -->
+  <!-- Tab for Related Payments (To Provider) -->
   <mat-tab label="Payments">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
         [queryParams]="{ eventPlan: eventPlan._id }">Add New
         Payment</button>
+        <div class="payment-wrapper">
+          <mat-card *ngFor="let payment of payments">
+            <mat-card-header>
+              <mat-card-title>{{ payment.code }}</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <div class="view-field">
+                <label class="mat-body-strong">Provider</label>
+                <div class="mat-body">{{ payment.provider.name }}</div>
+              </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Ref: Supplier Invoice</label>
+                <div class="mat-body">{{ payment.supplierInvoice.code }}</div>
+              </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Amount</label>
+                <div class="mat-body">{{ payment.amount | currency: 'MYR ' }}</div>
+              </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Status</label>
+                <div class="mat-body">{{ payment.status }}</div>
+              </div>
+              <div class="action-group">
+                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Verified')" mat-raised-button color="primary"
+                  *ngIf="checkButtonIsValid(payment, ['Open'])">Issue</button>
+                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Failed')" mat-raised-button
+                  color="primary" *ngIf="checkButtonIsValid(payment, ['Issued'])">Sign</button>
+                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Cancelled')" mat-raised-button
+                  color="primary" *ngIf="checkButtonIsValid(payment, ['Open', 'Issued'])">Cancel</button>
+                <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Closed')" mat-raised-button color="primary"
+                  *ngIf="checkButtonIsValid(payment, ['Signed'])">Close</button>
+              </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Payment Type</label>
+                <div class="mat-body">{{ payment.paymentType | titleDisplay }}</div>
+              </div>
+              <div class="view-field">
+                <label class="mat-body-strong">Remarks</label>
+                <div class="mat-body">{{ payment.remarks }}</div>
+              </div>
+              <div *ngIf="payment.paymentType === 'Cheque'">
+                <div class="view-field">
+                  <label class="mat-body-strong">Reference No.</label>
+                  <div class="mat-body">{{ payment.chequeInfo.referenceNumber }}</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Payee</label>
+                  <div class="mat-body">{{ payment.chequeInfo.payeeName }} ({{ payment.chequeInfo.payeeIdentityNumber }})</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Drawee</label>
+                  <div class="mat-body">{{ payment.chequeInfo.draweeName }} ({{ payment.chequeInfo.draweeIdentityNumber }})</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Issued Date</label>
+                  <div class="mat-body">{{ payment.chequeInfo.issuedDate | date: 'dd-MM-yyyy' }}</div>
+                </div>
+              </div>
+              <div *ngIf="payment.paymentType === 'BankTransfer'">
+                <div class="view-field">
+                  <label class="mat-body-strong">Reference No.</label>
+                  <div class="mat-body">{{ payment.bankTransferInfo.referenceNumber }}</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Bank</label>
+                  <div class="mat-body">{{ payment.bankTransferInfo.bank }}</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Account Number</label>
+                  <div class="mat-body">{{ payment.bankTransferInfo.accountNumber }}</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Payee</label>
+                  <div class="mat-body">{{ payment.bankTransferInfo.payeeName }} ({{ payment.bankTransferInfo.payeeIdentityNumber }})</div>
+                </div>
+                <div class="view-field">
+                  <label class="mat-body-strong">Transfered Date</label>
+                  <div class="mat-body">{{ payment.bankTransferInfo.transferedDate | date: 'dd-MM-yyyy' }}</div>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" class="btn-sm"
+                [routerLink]="['/payment/edit/' + payment._id]">Edit</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
       <table class="table table-bordered payment">
         <colgroup>
           <col style="width: 300px">

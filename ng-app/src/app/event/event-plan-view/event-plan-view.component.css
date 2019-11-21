@@ -99,11 +99,13 @@ button.active {
 }
 
 .supplier-invoice-wrapper > mat-card,
+.payment-wrapper > mat-card,
 .payment-voucher-wrapper > mat-card {
   margin: 10px 0;
 }
 
 .supplier-invoice-wrapper > mat-card > mat-card-content,
+.payment-wrapper > mat-card > mat-card-content,
 .payment-voucher-wrapper > mat-card > mat-card-content {
   padding: 16px;
 }
