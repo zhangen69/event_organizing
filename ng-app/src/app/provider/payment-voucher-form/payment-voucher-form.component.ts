@@ -34,7 +34,7 @@ export class PaymentVoucherFormComponent implements OnInit {
     { name: 'eventPlan', type: 'ref', required: true },
     { name: 'status', type: 'enum', enum: PaymentVoucherStatus, default: PaymentVoucherStatus[PaymentVoucherStatus.Open] },
     { name: 'paymentType', type: 'enum', enum: PaymentType, default: PaymentType[PaymentType.Cash] },
-    { name: 'chequeInfo', type: 'object', isShow: item => item.type === PaymentType[PaymentType.Cheque], fields: [
+    { name: 'chequeInfo', type: 'object', isShow: item => item.paymentType === PaymentType[PaymentType.Cheque], fields: [
       { name: 'referenceNumber', type: 'string' },
       { name: 'payeeName', type: 'string' },
       { name: 'payeeIdentityNumber', type: 'string' },
@@ -42,7 +42,7 @@ export class PaymentVoucherFormComponent implements OnInit {
       { name: 'draweeIdentityNumber', type: 'string' },
       { name: 'issuedDate', type: 'date' },
     ]},
-    { name: 'bankTransferInfo', type: 'object', isShow: item => item.type === PaymentType[PaymentType.BankTransfer], fields: [
+    { name: 'bankTransferInfo', type: 'object', isShow: item => item.paymentType === PaymentType[PaymentType.BankTransfer], fields: [
       { name: 'referenceNumber', type: 'string' },
       { name: 'bank', type: 'string' },
       { name: 'accountNumber', type: 'string' },
