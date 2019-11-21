@@ -1,6 +1,6 @@
 # Backlogs
-- [ ] Event Plan View > Supplier Invoices [Change Status Actions]
-- [ ] Event Plan View > Payment Vouchers [Change Status Actions]
+- [x] Event Plan View > Supplier Invoices [Change Status Actions]
+- [x] Event Plan View > Payment Vouchers [Change Status Actions]
 - [ ] Event Plan View > Attendees [Export Attendee List to Excel File]
 - [ ] Event Plan View > Payments for Supplier [Add Payment], [Edit Payment], [Change Payment Status]
 - [ ] Event Plan View > Payments for Customer [Add Payment], [Edit Payment], [Change Payment Status]
