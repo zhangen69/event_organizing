@@ -404,12 +404,12 @@
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
         <div class="action-group">
+          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Issued')" mat-raised-button color="primary"
+            *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Confirmed')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Confirm</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Revised')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Revise</button>
+            *ngIf="checkButtonIsValid(invoice, ['Issued'])">Confirm</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Cancelled')" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Cancel</button>
+            *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Paid')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Pay</button>
           <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Closed')" mat-raised-button color="primary"
@@ -441,7 +441,7 @@
         </table>
         <div class="action-group">
           <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open', 'Revised'])">Edit</button>
+            *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>

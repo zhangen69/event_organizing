@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 
 enum InvoiceStatus {
   Open,
+  Issued,
   Confirmed,
-  Revised,
   Paid,
   Closed,
   Cancelled

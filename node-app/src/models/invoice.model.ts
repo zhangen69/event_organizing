@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
   invoice: { type: mongoose.Types.ObjectId, ref: 'Invoice', default: null },
   lines: { type: [line], default: [] },
-  status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Revised', 'Cancelled'], default: 'Open' },
+  status: { type: String, enum: ['Open', 'Issued', 'Confirmed', 'Paid', 'Closed', 'Cancelled'], default: 'Open' },
   remarks: String,
 });
 
