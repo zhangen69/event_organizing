@@ -53,6 +53,16 @@ export class InvoiceFormComponent implements OnInit {
           }
         });
       }
+      if (params['customer']) {
+        const getCustomer$ = this.http.get<{ data }>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
+          next: ({ data }) => {
+            this.formData.customer = data;
+          },
+          complete: () => {
+            getCustomer$.unsubscribe();
+          }
+        });
+      }
     });
   }
 }

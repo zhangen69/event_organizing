@@ -305,7 +305,7 @@
       <div [ngTemplateOutlet]="quotation ? showQuotationInfo : noQuotationMessage"></div>
       <ng-template #noQuotationMessage>
         <p>No Quotation Yet, Please create a quotation for this event plan.</p>
-        <p>Click <a [routerLink]="['/quotation/add']" [queryParams]="{ eventPlan: eventPlan._id }">here</a> redirect to
+        <p>Click <a [routerLink]="['/quotation/add']" [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer._id }">here</a> redirect to
           new quotation form page.</p>
       </ng-template>
       <ng-template #showQuotationInfo>
