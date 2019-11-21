@@ -347,7 +347,7 @@ export class EventPlanViewComponent {
   removeAttendee(attendee) {
     const confirmedDelete = confirm('Are you sure to delete the attendee "' + attendee.name + '"');
     if (confirmedDelete) {
-      const attendees = this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee);
+      const attendees = (this.eventPlan.attendees = this.eventPlan.attendees.filter(item => item !== attendee));
       const attendeeQueryModel = this.attendeeQueryModel;
       const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
         complete: () => {
@@ -364,13 +364,74 @@ export class EventPlanViewComponent {
       queryModel.list = attendees.filter(attendee => {
         const value = attendee[queryModel.type];
         if (value) {
-          return value.toUpperCase().includes(queryModel.searchText.toUpperCase())
+          return value.toUpperCase().includes(queryModel.searchText.toUpperCase());
         }
         return false;
       });
     } else {
       queryModel.list = attendees;
     }
+  }
+
+  getAttendees() {
+    const getAttendeesReq = this.http.get(environment.apiUrl + '/service/event-plan/get-attendee-list/' + this.eventPlan._id).subscribe({
+      next: (res: any) => {
+        this.eventPlan.attendees = res.attendees;
+      },
+      complete: () => {
+        getAttendeesReq.unsubscribe();
+      }
+    });
+  }
+
+  importAttendees() {
+    const dialogRef = this.dialog.open(ImportAttendeesComponent, {
+      disableClose: true,
+      width: 'auto',
+      minWidth: '50vw',
+      maxHeight: '99vh',
+      data: { eventPlan: this.eventPlan }
+    });
+
+    const dialogClosedReq = dialogRef.afterClosed().subscribe({
+      next: res => {
+        if (!res.dismiss) {
+          this.toastr.info('Imported Successfully!');
+          this.refresh();
+        }
+      },
+      complete: () => {
+        dialogClosedReq.unsubscribe();
+      }
+    });
+  }
+
+  hasAttendeeIsSelected(attendees): boolean {
+    if (!attendees || attendees.length <= 0) {
+      return false;
+    }
+    return attendees.some(attendee => attendee.isSelected);
+  }
+
+  groupAttendees() {
+    const selectedAttendees = this.eventPlan.attendees.filter(attendee => attendee.isSelected);
+    const groupName = prompt('Please Enter the Group Name');
+
+    if (!groupName && groupName !== null) {
+      this.toastr.error('Group Name cannot be empty');
+    }
+
+    if (!groupName) {
+      return;
+    }
+
+    selectedAttendees.forEach(attendee => (attendee.group = groupName));
+
+    const updateGroupAttenddesReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+      complete: () => {
+        updateGroupAttenddesReq.unsubscribe();
+      }
+    });
   }
 
   configForm(eventPlan) {
@@ -481,80 +542,26 @@ export class EventPlanViewComponent {
     });
   }
 
-  // getInvoiceByEventPlanId(eventPlanId: string): void {
-  //   const getInvoiceReq = this.http.get(environment.apiUrl + '/service/invoice/getByEventPlanId/' + eventPlanId).subscribe({
-  //     next: ({ data }: any) => {
-  //       this.invoice = data;
-  //     },
-  //     complete: () => {
-  //       getInvoiceReq.unsubscribe();
-  //     }
-  //   });
-  // }
-
-  // getSupplierInvoicesByEventPlanId(eventPlanId: string): void {
-  //   const getSupplierInvoicesReq = this.http
-  //     .get(environment.apiUrl + '/service/supplier-invoice/getByEventPlanId/' + eventPlanId)
-  //     .subscribe({
-  //       next: ({ data }: any) => (this.supplierInvoices = data),
-  //       complete: () => getSupplierInvoicesReq.unsubscribe()
-  //     });
-  // }
-
-  // getPaymentVouchersByEventPlanId(eventPlanId: string): void {
-  //   const getPaymentVouchers$ = this.http.get(environment.apiUrl + '/service/payment-voucher/getByEventPlanId/' + eventPlanId).subscribe({
-  //     next: ({ data }: any) => (this.paymentVouchers = data),
-  //     complete: () => getPaymentVouchers$.unsubscribe(),
-  //   });
-  // }
-
-  // getPaymentsByEventPlanId(eventPlanId: string): void {
-  //   const getPayments$ = this.http.get(environment.apiUrl + '/service/payment/getByEventPlanId/' + eventPlanId).subscribe({
-  //     next: ({ data }: any) => (this.payments = data),
-  //     complete: () => getPayments$.unsubscribe(),
-  //   });
-  // }
-
   getDataByEventPlanId(itemName: string, eventPlanId: string, sourceName: string): void {
     const source = this;
     const getData$ = this.http.get(environment.apiUrl + '/service/' + itemName + '/getByEventPlanId/' + eventPlanId).subscribe({
       next: ({ data }: any) => {
         source[sourceName] = data;
       },
-      complete: () => getData$.unsubscribe(),
+      complete: () => getData$.unsubscribe()
     });
   }
 
-  updateInvoice(invoice): void {
-    const updateInvoice$ = this.http.put(environment.apiUrl + '/service/invoice', invoice).subscribe({
+  changeItemStatus(item, domainName, status) {
+    item.status = status;
+    const updateItem$ = this.http.put(environment.apiUrl + '/service/' + domainName, item).subscribe({
       next: () => {
         this.toastr.info('Updated Succesfully!');
       },
       complete: () => {
-        updateInvoice$.unsubscribe();
+        updateItem$.unsubscribe();
       }
     });
-  }
-
-  changeInvoiceStatus(invoice, status) {
-    invoice.status = status;
-    this.updateInvoice(invoice);
-  }
-
-  updateQuotation(quotation): void {
-    const updateQuotation$ = this.http.put(environment.apiUrl + '/service/quotation', quotation).subscribe({
-      next: () => {
-        this.toastr.info('Updated Succesfully!');
-      },
-      complete: () => {
-        updateQuotation$.unsubscribe();
-      }
-    });
-  }
-
-  changeQuotationStatus(quotation, status) {
-    quotation.status = status;
-    this.updateQuotation(quotation);
   }
 
   generateInvoiceFromQuotation(quotation) {
@@ -565,10 +572,11 @@ export class EventPlanViewComponent {
     delete invoiceData.code;
     invoiceData.quotation = quotation._id;
     const createInvoice$ = this.http.post(environment.apiUrl + '/service/invoice', invoiceData).subscribe({
-      next: (res) => {
+      next: res => {
         this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
         this.toastr.info('Invoice Generated Successfully!');
-      }
+      },
+      complete: () => (createInvoice$.unsubscribe()),
     });
   }
 
@@ -660,73 +668,6 @@ export class EventPlanViewComponent {
     }
 
     return `${from}-${to}`;
-  }
-
-  getAttendees() {
-    const getAttendeesReq = this.http.get(environment.apiUrl + '/service/event-plan/get-attendee-list/' + this.eventPlan._id).subscribe({
-      next: (res: any) => {
-        this.eventPlan.attendees = res.attendees;
-      },
-      complete: () => {
-        getAttendeesReq.unsubscribe();
-      }
-    });
-  }
-
-  importAttendees() {
-    const dialogRef = this.dialog.open(ImportAttendeesComponent, {
-      disableClose: true,
-      width: 'auto',
-      minWidth: '50vw',
-      maxHeight: '99vh',
-      data: { eventPlan: this.eventPlan },
-    });
-
-    const dialogClosedReq = dialogRef.afterClosed().subscribe({
-      next: (res) => {
-        if (!res.dismiss) {
-          this.toastr.info('Imported Successfully!');
-          this.refresh();
-        }
-      },
-      complete: () => {
-        dialogClosedReq.unsubscribe();
-      }
-    });
-  }
-
-  downloadImportTemplateFile() {
-    
-  }
-
-  hasAttendeeIsSelected(attendees): boolean {
-    if (!attendees || attendees.length <= 0) {
-      return false;
-    }
-    return attendees.some(attendee => attendee.isSelected);
-  }
-
-  groupAttendees() {
-    const selectedAttendees = this.eventPlan.attendees.filter(attendee => attendee.isSelected);
-    const groupName = prompt('Please Enter the Group Name');
-
-    if (!groupName && groupName !== null) {
-      this.toastr.error('Group Name cannot be empty');
-    }
-
-    if (!groupName) {
-      return;
-    }
-
-    selectedAttendees.forEach(attendee => (attendee.group = groupName));
-
-    console.log('Attendees', this.eventPlan.attendees);
-
-    const updateGroupAttenddesReq = this.eventPlanService.submit(this.eventPlan).subscribe({
-      complete: () => {
-        updateGroupAttenddesReq.unsubscribe();
-      }
-    });
   }
 
   getLinesTotalAmount(lines: any[]) {

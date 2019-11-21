@@ -331,15 +331,15 @@
           <div class="mat-body">{{ quotation.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Issued')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Issued')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Confirmed')" mat-raised-button
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Confirmed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Issued'])">Confirm</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Cancelled')" mat-raised-button
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Revised')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Revised')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
-          <button class="btn-sm" (click)="changeQuotationStatus(quotation, 'Closed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Closed')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
         </div>
         <div class="view-field">
@@ -404,15 +404,15 @@
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
         <div class="action-group">
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Issued')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Confirmed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Issued'])">Confirm</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Cancelled')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Paid')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Pay</button>
-          <button class="btn-sm" (click)="changeInvoiceStatus(invoice, 'Closed')" mat-raised-button color="primary"
+          <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
         <div class="view-field">
@@ -470,6 +470,18 @@
             <div class="view-field">
               <label class="mat-body-strong">Status</label>
               <div class="mat-body">{{ supplierInvoice.status }}</div>
+            </div>
+            <div class="action-group">
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Issued')" mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Revised'])">Issue</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Confirmed')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Issued'])">Confirm</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Cancelled')" mat-raised-button
+                color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Revised'])">Cancel</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Revised')" mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed', 'Issued'])">Revise</button>
+              <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplierInvoice', 'Closed')" mat-raised-button color="primary"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Close</button>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Period</label>
@@ -611,30 +623,7 @@
           </mat-card-actions>
         </mat-card>
       </div>
-      <table class="table table-bordered payment-voucher">
-        <colgroup>
-          <col style="width: 300px">
-          <col>
-          <col style="width: 200px">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Provider</th>
-            <th>Code</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let paymentVoucher of paymentVouchers">
-            <td>{{ paymentVoucher.provider.name }}</td>
-            <td>{{ paymentVoucher.code }}</td>
-            <td>{{ paymentVoucher.status }}</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <pre>{{ paymentVouchers | json }}</pre>
+      <!-- <pre>{{ paymentVouchers | json }}</pre> -->
     </div>
   </mat-tab>
   <!-- Tab for Related Payments -->
