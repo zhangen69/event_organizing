@@ -3,6 +3,24 @@ import auditable from './auditable.model';
 import Counter from './counter.model';
 import { MongooseHelper } from '../helpers/mongoose.helper';
 
+const ChequeSchema = new mongoose.Schema({
+  referenceNumber: MongooseHelper.Types.String(),
+  payeeName: MongooseHelper.Types.String(),
+  payeeIdentityNumber: MongooseHelper.Types.String(),
+  draweeName: MongooseHelper.Types.String(),
+  draweeIdentityNumber: MongooseHelper.Types.String(),
+  issuedDate: MongooseHelper.Types.Date(),
+});
+
+const BankTransferSchema = new mongoose.Schema({
+  referenceNumber: MongooseHelper.Types.String(),
+  bank: MongooseHelper.Types.String(),
+  accountNumber: MongooseHelper.Types.String(),
+  payeeName: MongooseHelper.Types.String(),
+  payeeIdentityNumber: MongooseHelper.Types.String(),
+  transferedDate: MongooseHelper.Types.Date(),
+});
+
 const PaymentSchema = new mongoose.Schema({
   code: MongooseHelper.Types.String(),
   // name: String,
@@ -15,11 +33,11 @@ const PaymentSchema = new mongoose.Schema({
   // unitPrice: Number,
   // quantity: Number,
   amount: MongooseHelper.Types.Number(),
-  method: { type: String, enum: ['System', 'Bank-in', 'Cash'] },
+  paymentType: { type: String, enum: ['Cash', 'BankTransfer', 'Cheque'], default: 'Cash' },
   status: { type: String, enum: ['Open', 'Verified', 'Cancelled', 'Failed', 'Closed'] },
-  referenceCode: String, // bank ref or cheque no.
-  paidDate: { type: Date, default: null },
-  remarks: String
+  remarks: String,
+  chequeInfo: MongooseHelper.Types.Schema(ChequeSchema),
+  bankTransferInfo: MongooseHelper.Types.Schema(BankTransferSchema),
 });
 
 PaymentSchema.add(auditable);
