@@ -26,7 +26,7 @@ const PaymentSchema = new mongoose.Schema({
   // name: String,
   // attendee: { type: mongoose.Types.ObjectId, ref: 'Attendee' },
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
-  invoice: MongooseHelper.Types.RefObjectId('Invoice'),
+  supplierInvoice: MongooseHelper.Types.RefObjectId('SupplierInvoice'),
   provider: MongooseHelper.Types.RefObjectId('Provider'),
   // registrationForm: { type: mongoose.Types.ObjectId, ref: 'RegistrationForm' },
   // unit: String,
