@@ -361,7 +361,13 @@ export class EventPlanViewComponent {
 
   filterAttendees(attendees, queryModel) {
     if (queryModel.type && queryModel.searchText) {
-      queryModel.list = attendees.filter(attendee => attendee[queryModel.type].toUpperCase().includes(queryModel.searchText.toUpperCase()));
+      queryModel.list = attendees.filter(attendee => {
+        const value = attendee[queryModel.type];
+        if (value) {
+          return value.toUpperCase().includes(queryModel.searchText.toUpperCase())
+        }
+        return false;
+      });
     } else {
       queryModel.list = attendees;
     }

@@ -235,6 +235,7 @@
           <mat-select [(ngModel)]="attendeeQueryModel.type">
             <mat-option value="{{ option }}" *ngFor="let option of attendeeQueryModel.typeOptions">
               {{option | titleDisplay }}</mat-option>
+              <mat-option value="group">Group</mat-option>
           </mat-select>
         </mat-form-field>
 
