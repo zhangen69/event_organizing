@@ -1,3 +1,4 @@
+import { IStandardFormField } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,12 @@ enum PaymentVoucherStatus {
   Closed
 }
 
+enum PaymentType {
+  Cash,
+  Cheque,
+  BankTransfer,
+}
+
 @Component({
   selector: 'app-payment-voucher-form',
   templateUrl: './payment-voucher-form.component.html',
@@ -22,10 +29,27 @@ enum PaymentVoucherStatus {
 export class PaymentVoucherFormComponent implements OnInit {
   formData: any = {};
   includes = ['provider', 'receipt', 'eventPlan'];
-  fields = [
+  fields: IStandardFormField[] = [
     { name: 'provider', type: 'ref', required: true },
     { name: 'eventPlan', type: 'ref', required: true },
     { name: 'status', type: 'enum', enum: PaymentVoucherStatus, default: PaymentVoucherStatus[PaymentVoucherStatus.Open] },
+    { name: 'paymentType', type: 'enum', enum: PaymentType, default: PaymentType[PaymentType.Cash] },
+    { name: 'chequeInfo', type: 'object', isShow: item => item.type === PaymentType[PaymentType.Cheque], fields: [
+      { name: 'referenceNumber', type: 'string' },
+      { name: 'payeeName', type: 'string' },
+      { name: 'payeeIdentityNumber', type: 'string' },
+      { name: 'draweeName', type: 'string' },
+      { name: 'draweeIdentityNumber', type: 'string' },
+      { name: 'issuedDate', type: 'date' },
+    ]},
+    { name: 'bankTransferInfo', type: 'object', isShow: item => item.type === PaymentType[PaymentType.BankTransfer], fields: [
+      { name: 'referenceNumber', type: 'string' },
+      { name: 'bank', type: 'string' },
+      { name: 'accountNumber', type: 'string' },
+      { name: 'payeeName', type: 'string' },
+      { name: 'payeeIdentityNumber', type: 'string' },
+      { name: 'transferedDate', type: 'date' },
+    ]},
     {
       name: 'lines',
       type: 'table',

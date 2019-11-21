@@ -1,3 +1,4 @@
+import { MongooseHelper } from './../helpers/mongoose.helper';
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 import Counter from './counter.model';
@@ -11,6 +12,24 @@ const line = new mongoose.Schema({
   subTotal: { type: Number, default: 0.0 }
 });
 
+const ChequeSchema = new mongoose.Schema({
+  referenceNumber: MongooseHelper.Types.String(),
+  payeeName: MongooseHelper.Types.String(),
+  payeeIdentityNumber: MongooseHelper.Types.String(),
+  draweeName: MongooseHelper.Types.String(),
+  draweeIdentityNumber: MongooseHelper.Types.String(),
+  issuedDate: MongooseHelper.Types.Date(),
+});
+
+const BankTransferSchema = new mongoose.Schema({
+  referenceNumber: MongooseHelper.Types.String(),
+  bank: MongooseHelper.Types.String(),
+  accountNumber: MongooseHelper.Types.String(),
+  payeeName: MongooseHelper.Types.String(),
+  payeeIdentityNumber: MongooseHelper.Types.String(),
+  transferedDate: MongooseHelper.Types.Date(),
+});
+
 export const PaymentVoucherSchema = new mongoose.Schema({
   code: { type: String, default: null },
   totalAmount: { type: Number, default: 0.0 },
@@ -20,7 +39,10 @@ export const PaymentVoucherSchema = new mongoose.Schema({
   lines: { type: [line], default: [] },
   status: { type: String, enum: ['Open', 'Sent', 'Paid', 'Closed'] },
   photoUrl: { type: String, default: null },
-  remarks: { type: String, default: null }
+  remarks: { type: String, default: null },
+  paymentType: MongooseHelper.Types.Enum(['Cash', 'Cheque', 'BankTransfer'], 'Cash'),
+  chequeInfo: MongooseHelper.Types.Schema(ChequeSchema),
+  bankTransferInfo: MongooseHelper.Types.Schema(BankTransferSchema),
 });
 
 PaymentVoucherSchema.add(auditable);

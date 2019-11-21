@@ -89,7 +89,7 @@ emailQueueCheckJob.triggeredJobs();
 
 // mongodb connection
 mongoose
-  .connect(configs.mongoose.connection, { useNewUrlParser: true })
+  .connect(configs.mongoose.connection, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((res: typeof mongoose) => {
     console.log('Connected to MongoDB!');
   })
