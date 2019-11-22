@@ -214,6 +214,14 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
     return value;
   }
 
+  getLink(item, col) {
+    if (typeof col.link === 'string') {
+      return col.link + '/' + item._id;
+    } else if (typeof col.link === 'function') {
+      return col.link(item);
+    }
+  }
+
   toggleItemSelection() {
     this.selectedItems = this.dataSource.data.filter(x => x.selected);
   }

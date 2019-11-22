@@ -48,9 +48,9 @@ export interface IStandardColumn {
   type?: string;
   format?: string;
   displayName?: string;
-  link?: string;
+  link?: string | Func;
   dateFormat?: string;
-  template?: IStandardColumnTemplateFunc;
+  template?: Func;
   width?: string;
 }
 
@@ -60,4 +60,4 @@ export interface HttpResponse {
   status: number;
 }
 
-type IStandardColumnTemplateFunc = (item: any) => string;
+type Func = (item: any) => string;

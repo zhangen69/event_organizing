@@ -7,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
+  includes: string[] = ['provider', 'eventPlan', 'supplierInvoice'];
   columns: IStandardColumn[] = [
-     { name: 'name', displayName: 'Name' },
+     { name: 'provider.name', displayName: 'Provider' },
+     { name: 'eventPlan.name', displayName: 'Event Plan', format: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id },
+     { name: 'code' },
+     { name: 'amount', type: 'number' },
+     { name: 'paymentType' },
+     { name: 'status' },
   ];
   filterList = [
      { type: 'name', display: 'Name', queryType: 'string' },

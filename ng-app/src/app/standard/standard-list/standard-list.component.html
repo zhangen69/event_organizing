@@ -26,7 +26,7 @@
         </th>
         <td mat-cell *matCellDef="let item" [ngStyle]="{width: col.width}">
             <span *ngIf="col.format === 'display'">{{ getValue(item, col) }}</span>
-            <a [routerLink]="[col.link + '/' + item._id]" *ngIf="col.format === 'link'">{{ getValue(item, col) }}</a>
+            <a [routerLink]="[getLink(item, col)]" *ngIf="col.format === 'link'">{{ getValue(item, col) }}</a>
             <div *ngIf="col.format === 'template'">
                 <!-- {{ renderTemplate(col, item) }} -->
                 <span [innerHTML]="renderTemplate(col, item)"></span>
