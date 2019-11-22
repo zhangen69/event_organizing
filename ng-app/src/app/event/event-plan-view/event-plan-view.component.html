@@ -1,4 +1,4 @@
-<span class="mat-display-1">View Event Plan <span *ngIf="eventPlan && eventPlan.code">({{ eventPlan.code }})</span>
+<span class="mat-display-1">View Event Plan <span *ngIf="eventPlan && eventPlan.code">({{ eventPlan.code }} - {{ eventPlan.name }})</span>
 </span>
 
 <mat-tab-group>
@@ -6,15 +6,11 @@
   <mat-tab label="Basis Info">
     <div class="tab-body">
       <div class="view-field">
-        <label class="mat-body-strong">Name</label>
-        <div class="mat-body">{{ eventPlan.name }}</div>
-      </div>
-      <div class="view-field">
         <label class="mat-body-strong">Customer</label>
         <div class="mat-body">{{ eventPlan.customer?.name }}</div>
       </div>
       <div class="view-field">
-        <label class="mat-body-strong">Date/Time</label>
+        <label class="mat-body-strong">Date & Time</label>
         <div class="mat-body">{{ eventPlan.dateFrom | date: 'dd-MM-yyyy' }} -
           {{ eventPlan.dateTo | date: 'dd-MM-yyyy' }}</div>
         <div class="mat-body">{{ eventPlan.timeFrom | date: 'HH:mm a' }} - {{ eventPlan.timeTo | date: 'HH:mm a' }}
@@ -330,7 +326,7 @@
           <label class="mat-body-strong">Status</label>
           <div class="mat-body">{{ quotation.status }}</div>
         </div>
-        <div class="action-group">
+        <div class="action-group" *ngIf="quotation.status !== 'Closed'">
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Issued')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Confirmed')" mat-raised-button
@@ -403,7 +399,7 @@
           <label class="mat-body-strong">Status</label>
           <div class="mat-body">{{ invoice.status }}</div>
         </div>
-        <div class="action-group">
+        <div class="action-group" *ngIf="invoice.status !== 'Closed'">
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button
@@ -471,7 +467,7 @@
               <label class="mat-body-strong">Status</label>
               <div class="mat-body">{{ supplierInvoice.status }}</div>
             </div>
-            <div class="action-group">
+            <div class="action-group" *ngIf="supplierInvoice.status !== 'Closed'">
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Confirmed')"
                 mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Confirm</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Paid')"
@@ -548,7 +544,7 @@
               <label class="mat-body-strong">Status</label>
               <div class="mat-body">{{ paymentVoucher.status }}</div>
             </div>
-            <div class="action-group">
+            <div class="action-group" *ngIf="paymentVoucher.status !== 'Closed'">
               <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Issued')"
                 mat-raised-button color="primary" *ngIf="checkButtonIsValid(paymentVoucher, ['Open'])">Issue</button>
               <button class="btn-sm" (click)="changeItemStatus(paymentVoucher, 'payment-voucher', 'Signed')"
@@ -671,15 +667,15 @@
               <label class="mat-body-strong">Status</label>
               <div class="mat-body">{{ payment.status }}</div>
             </div>
-            <div class="action-group">
+            <div class="action-group" *ngIf="payment.status !== 'Closed'">
               <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Verified')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(payment, ['Open'])">Issue</button>
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Open'])">Verify</button>
               <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Failed')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(payment, ['Issued'])">Sign</button>
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Open'])">Fail</button>
               <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Cancelled')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(payment, ['Open', 'Issued'])">Cancel</button>
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Open'])">Cancel</button>
               <button class="btn-sm" (click)="changeItemStatus(payment, 'payment', 'Closed')" mat-raised-button
-                color="primary" *ngIf="checkButtonIsValid(payment, ['Signed'])">Close</button>
+                color="primary" *ngIf="checkButtonIsValid(payment, ['Verified'])">Close</button>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Payment Type</label>
