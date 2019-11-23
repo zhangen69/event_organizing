@@ -1,7 +1,7 @@
+import { MongooseHelper } from './../helpers/mongoose.helper';
 import mongoose from 'mongoose';
 import auditable from './auditable.model';
 import Counter from './counter.model';
-import { MongooseHelper } from '../helpers/mongoose.helper';
 
 const ChequeSchema = new mongoose.Schema({
   referenceNumber: MongooseHelper.Types.String(),
@@ -23,11 +23,14 @@ const BankTransferSchema = new mongoose.Schema({
 
 const PaymentSchema = new mongoose.Schema({
   code: MongooseHelper.Types.String(),
+  type: MongooseHelper.Types.Enum(['Customer', 'Provider']),
   // name: String,
   // attendee: { type: mongoose.Types.ObjectId, ref: 'Attendee' },
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
   supplierInvoice: MongooseHelper.Types.RefObjectId('SupplierInvoice'),
+  invoice: MongooseHelper.Types.RefObjectId('Invoice'),
   provider: MongooseHelper.Types.RefObjectId('Provider'),
+  customer: MongooseHelper.Types.RefObjectId('Customer'),
   // registrationForm: { type: mongoose.Types.ObjectId, ref: 'RegistrationForm' },
   // unit: String,
   // unitPrice: Number,

@@ -19,6 +19,11 @@ enum PaymentType {
   BankTransfer,
 }
 
+enum Type {
+  Customer,
+  Provider,
+}
+
 @Component({
   selector: 'app-payment-form',
   templateUrl: './payment-form.component.html',
@@ -26,11 +31,14 @@ enum PaymentType {
 })
 export class PaymentFormComponent implements OnInit {
   formData: any = {};
-  includes = ['provider', 'receipt', 'eventPlan'];
+  includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   fields: IStandardFormField[] = [
-    { name: 'provider', type: 'ref', required: true },
     { name: 'eventPlan', type: 'ref', required: true },
-    { name: 'supplierInvoice', type: 'ref', refName: 'code', required: true },
+    { name: 'type', type: 'enum', enum: Type, default: null, required: true },
+    { name: 'provider', type: 'ref', isShow: item => item.type === Type[Type.Provider], required: true },
+    { name: 'customer', type: 'ref', isShow: item => item.type === Type[Type.Customer], required: true },
+    { name: 'supplierInvoice', type: 'ref', refName: 'code', isShow: item => item.type === Type[Type.Provider], required: true },
+    { name: 'invoice', type: 'ref', refName: 'code', isShow: item => item.type === Type[Type.Customer], required: true },
     { name: 'status', type: 'enum', enum: PaymentStatus, default: PaymentStatus[PaymentStatus.Open] },
     { name: 'amount', type: 'number', required: true },
     { name: 'paymentType', type: 'enum', enum: PaymentType, default: PaymentType[PaymentType.Cash] },

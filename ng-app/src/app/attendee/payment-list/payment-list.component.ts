@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
-  includes: string[] = ['provider', 'eventPlan', 'supplierInvoice'];
+  includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   columns: IStandardColumn[] = [
      { name: 'provider.name', displayName: 'Provider' },
+     { name: 'customer.name', displayName: 'Customer' },
+     { name: 'invoice.code', displayName: 'Pay For', format: 'template', template: (item) => (item.type === 'Customer' ? item.invoice.code : item.supplierInvoice.code) },
      { name: 'eventPlan.name', displayName: 'Event Plan', format: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id },
      { name: 'code' },
      { name: 'amount', type: 'number' },
@@ -17,7 +19,8 @@ export class PaymentListComponent implements OnInit {
      { name: 'status' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'code', displayName: 'Code', queryType: 'string' },
+     { type: 'paymentType', displayName: 'Payment Type', queryType: 'string' },
   ];
 
   constructor() { }
