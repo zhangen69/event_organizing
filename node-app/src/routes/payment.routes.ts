@@ -9,11 +9,17 @@ const routes = new StandardRoutes(service, new Controller(service));
 const router = routes.router(express.Router());
 
 router.get('/' + service + '/getByEventPlanId/:id', checkAuth, (req, res, next) => {
-  paymentModel.find({ eventPlan: req.params.id }).populate('provider').populate('supplierInvoice').then((docs: any[]) => {
-    res.status(200).json({
-      data: docs,
+  paymentModel
+    .find({ eventPlan: req.params.id })
+    .populate('provider')
+    .populate('customer')
+    .populate('supplierInvoice')
+    .populate('invoice')
+    .then((docs: any[]) => {
+      res.status(200).json({
+        data: docs
+      });
     });
-  });
 });
 
 export default router;
