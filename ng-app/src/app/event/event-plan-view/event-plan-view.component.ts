@@ -2,7 +2,7 @@ import { ImportAttendeesComponent } from './import-attendees/import-attendees.co
 import { HttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import * as moment from 'moment';
 import { RegistrationFormFieldType } from '../registration-form-status.enum';
+import * as XLSX from 'xlsx';
 
 export enum EventProcessType {
   'Initial',
@@ -42,6 +43,7 @@ export class EventPlanViewComponent {
   selectProcessStatus = '';
   eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
   isSelectedAllAttendee = false;
+  @ViewChild('attendeeTable', { static: false }) attendeeTable: ElementRef;
   attendeeColumns: IStandardColumn[] = [
     { name: 'code', format: 'link', link: '/attendee/view/' },
     { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
@@ -405,6 +407,23 @@ export class EventPlanViewComponent {
         dialogClosedReq.unsubscribe();
       }
     });
+  }
+
+  exportAttendees() {
+    const element = this.attendeeTable.nativeElement.cloneNode(true);
+    const headerTds: any[] = element.childNodes[0].childNodes[0].childNodes;
+    headerTds[0].remove(); // remove thead > td: checkbox
+    headerTds[headerTds.length - 1].remove(); // remove thead > td: action
+    element.childNodes[1].childNodes.forEach((node: any) => {
+      if (node.nodeName === 'TR') {
+        node.childNodes[0].remove(); // remove body > td: checkbox
+        node.childNodes[node.childNodes.length - 1].remove(); // remove tbody > td: action
+      }
+    });
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.eventPlan.code + '-attendee_list.xlsx');
   }
 
   hasAttendeeIsSelected(attendees): boolean {

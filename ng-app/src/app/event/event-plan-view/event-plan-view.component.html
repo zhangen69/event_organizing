@@ -251,6 +251,9 @@
         <button mat-raised-button color="primary" (click)="importAttendees()">
           <mat-icon>import_export</mat-icon> Import
         </button>
+        <button mat-raised-button color="primary" (click)="exportAttendees()">
+          <mat-icon>import_export</mat-icon> Export
+        </button>
         <button mat-raised-button color="primary" (click)="getAttendees()">
           <mat-icon>refresh</mat-icon> Refresh
         </button>
@@ -258,7 +261,7 @@
       <div [ngTemplateOutlet]="eventPlan.attendees && eventPlan.attendees.length > 0 ? attendeeList : noFoundAttendees">
       </div>
       <ng-template #attendeeList>
-        <table class="table table-bordered">
+        <table class="table table-bordered" #attendeeTable>
           <thead>
             <tr>
               <th>
