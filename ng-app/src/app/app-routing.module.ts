@@ -1,3 +1,4 @@
+import { StockItemViewComponent } from './inventory/stock-item-view/stock-item-view.component';
 import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
 import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
 import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
@@ -93,7 +94,8 @@ const routes: Routes = [
     children: [
       { path: 'list', component: StockItemListComponent },
       { path: 'add', component: StockItemFormComponent },
-      { path: 'edit/:id', component: StockItemFormComponent }
+      { path: 'edit/:id', component: StockItemFormComponent },
+      { path: 'view/:id', component: StockItemViewComponent },
     ]
   },
   {

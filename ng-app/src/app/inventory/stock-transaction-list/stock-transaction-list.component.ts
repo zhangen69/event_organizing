@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class StockTransactionListComponent implements OnInit {
   includes = ['store', 'event', 'receipt'];
   columns: IStandardColumn[] = [
-     { name: 'stockItemName', displayName: 'Stock Item' },
+     { name: 'stockItemName', displayName: 'Stock Item', format: 'link', link: (item: any) => '/stock-item/view/' + item.stockItem },
      { name: 'stockItemUnit', displayName: 'Unit' },
      { name: 'stockItemUnitPrice', displayName: 'Price' },
      { name: 'stockItemCategory.name', displayName: 'Category' },
