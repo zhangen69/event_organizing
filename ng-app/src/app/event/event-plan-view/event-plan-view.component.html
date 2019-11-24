@@ -29,7 +29,7 @@
         <label class="mat-body-strong">Markup Rate (%)</label>
         <div class="mat-body">{{ (eventPlan.markupRate || 0) | number: '1.0-2' }}%</div>
       </div>
-      <div class="view-field">
+      <div class="view-field" *ngIf="eventPlan.remarks">
         <label class="mat-body-strong">Remarks</label>
         <div class="mat-body">{{ eventPlan.remarks }}</div>
       </div>
@@ -58,7 +58,7 @@
             {{ service?.unit }}
             ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small">{{ service.remarks }}</div>
+          <div class="mat-small" *ngIf="service.remarks">{{ service.remarks }}</div>
         </div>
       </ng-container>
       <!-- Section2: Facilities -->
@@ -77,7 +77,7 @@
             {{ facility?.unit }}
             ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small">{{ facility.remarks }}</div>
+          <div class="mat-small" *ngIf="facility.remarks">{{ facility.remarks }}</div>
         </div>
       </ng-container>
       <!-- Section3: Stock Items -->
@@ -96,7 +96,7 @@
             {{ stockItem?.unit }}
             ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small">{{ stockItem.remarks }}</div>
+          <div class="mat-small" *ngIf="stockItem.remarks">{{ stockItem.remarks }}</div>
         </div>
       </ng-container>
     </div>
@@ -163,7 +163,7 @@
                   </pre>
                 <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>
                 <div class="mat-small">{{ process?.provider?.name }}</div>
-                <div class="mat-body">{{ process.remarks }}</div>
+                <div class="mat-body" *ngIf="process.remarks">{{ process.remarks }}</div>
               </mat-card>
             </div>
             <div class="mat-body" *ngIf="(filteredEventProcesses | processesFilter: status).length === 0">
@@ -339,7 +339,7 @@
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Closed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
         </div>
-        <div class="view-field">
+        <div class="view-field" *ngIf="quotation.remarks">
           <label class="mat-body-strong">Remarks</label>
           <div class="mat-body">{{ quotation.remarks }}</div>
         </div>
@@ -412,7 +412,7 @@
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
-        <div class="view-field">
+        <div class="view-field" *ngIf="invoice.remarks">
           <label class="mat-body-strong">Remarks</label>
           <div class="mat-body">{{ invoice.remarks }}</div>
         </div>
@@ -488,7 +488,7 @@
               <label class="mat-body-strong">Period</label>
               <div class="mat-body">{{ supplierInvoice.period | titleDisplay }}</div>
             </div>
-            <div class="view-field">
+            <div class="view-field" *ngIf="supplierInvoice.remarks">
               <label class="mat-body-strong">Remarks</label>
               <div class="mat-body">{{ supplierInvoice.remarks }}</div>
             </div>
@@ -534,7 +534,7 @@
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment-voucher/add']"
         [queryParams]="{ eventPlan: eventPlan._id }">Add
         New Payment Voucher</button>
-      <div class="payment-voucher-wrapper">
+      <div class="payment-voucher-wrapper" fxLayout="row skretch" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
         <mat-card *ngFor="let paymentVoucher of paymentVouchers">
           <mat-card-header>
             <mat-card-title>{{ paymentVoucher.code }}</mat-card-title>
@@ -567,10 +567,6 @@
             <div class="view-field">
               <label class="mat-body-strong">Payment Type</label>
               <div class="mat-body">{{ paymentVoucher.paymentType | titleDisplay }}</div>
-            </div>
-            <div class="view-field">
-              <label class="mat-body-strong">Remarks</label>
-              <div class="mat-body">{{ paymentVoucher.remarks }}</div>
             </div>
             <div *ngIf="paymentVoucher.paymentType === 'Cheque'">
               <div class="view-field">
@@ -614,6 +610,10 @@
                 <label class="mat-body-strong">Transfered Date</label>
                 <div class="mat-body">{{ paymentVoucher.bankTransferInfo.transferedDate | date: 'dd-MM-yyyy' }}</div>
               </div>
+            </div>
+            <div class="view-field" *ngIf="paymentVoucher.remarks">
+              <label class="mat-body-strong">Remarks</label>
+              <div class="mat-body">{{ paymentVoucher.remarks }}</div>
             </div>
             <table class="table table-bordered payment-vouchers">
               <thead>
@@ -712,7 +712,7 @@
                 <label class="mat-body-strong">Payment Type</label>
                 <div class="mat-body">{{ payment.paymentType | titleDisplay }}</div>
               </div>
-              <div class="view-field">
+              <div class="view-field" *ngIf="payment.remarks">
                 <label class="mat-body-strong">Remarks</label>
                 <div class="mat-body">{{ payment.remarks }}</div>
               </div>
@@ -768,7 +768,7 @@
           </mat-card>
         </ng-template>
       </div>
-      <pre>Payment List: {{ payments | json }}</pre>
+      <!-- <pre>Payment List: {{ payments | json }}</pre> -->
     </div>
   </mat-tab>
   <!-- Tab6: Cost & Profit -->

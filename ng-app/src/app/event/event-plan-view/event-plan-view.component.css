@@ -114,6 +114,7 @@ button.active {
   height: calc(100% - 52px);
 }
 
+.payment-voucher-wrapper  mat-card > mat-card-content,
 .payment-wrapper mat-card > mat-card-content {
   height: calc(100% - 110px);
 }
