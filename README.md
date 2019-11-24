@@ -1,8 +1,15 @@
 # Backlogs
-- [ ] Provider View [Show Related Event Plans], [Show Unpay's Supplier Invoices], [Show Paid's Supplier Invoices], [Show All Services and Facilities are Provided]
+- [ ] Provider View 
+  - [Show Related Event Plans], 
+  - [Show Unpay's Supplier Invoices], 
+  - [Show Paid's Supplier Invoices], 
+  - [Show All Services and Facilities are Provided]
 - [ ] Customer View Page
 - [ ] Stock Item View Page
 - [ ] Categories [Show All Services, Facilities group by Category]
+- [ ] Event Register Page
+  - Show Event Information
+  
 
 # Solved 
 - [x] Event Plan View > Supplier Invoices [Change Status Actions]
