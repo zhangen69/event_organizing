@@ -22,6 +22,14 @@ app.use(morgan('combined', { stream: fs.createWriteStream(path.join(__dirname, '
 app.use(uploaderRoutes);
 
 app.use(startup); // apply startup configurations
+
+// testing
+app.get('/test', (req, res, next) => {
+  res.json({ message: 'test' });
+});
+
 app.listen(port, () => {
   console.log('Server is Started: http://localhost:3000')
 });
+
+export { app };
