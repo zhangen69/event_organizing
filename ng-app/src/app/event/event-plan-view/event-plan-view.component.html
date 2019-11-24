@@ -439,6 +439,10 @@
         <div class="action-group">
           <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
+            <button mat-raised-button color="primary" class="btn-sm"
+              [routerLink]="['/payment/add/']"
+              [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getLinesTotalAmount(invoice.lines) }"
+              *ngIf="checkButtonIsValid(invoice, ['Confirmed'])">Generate Payment</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>
@@ -514,6 +518,10 @@
             <button mat-raised-button color="primary" class="btn-sm"
               [routerLink]="['/supplier-invoice/edit/' + supplierInvoice._id]"
               *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
+              <button mat-raised-button color="primary" class="btn-sm"
+                [routerLink]="['/payment/add/']"
+                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getLinesTotalAmount(supplierInvoice.lines) }"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Generate Payment</button>
           </mat-card-actions>
         </mat-card>
       </div>

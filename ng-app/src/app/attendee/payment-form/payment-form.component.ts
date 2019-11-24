@@ -19,7 +19,7 @@ enum PaymentType {
   BankTransfer,
 }
 
-enum Type {
+enum PaymentForType {
   Customer,
   Provider,
 }
@@ -34,11 +34,11 @@ export class PaymentFormComponent implements OnInit {
   includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   fields: IStandardFormField[] = [
     { name: 'eventPlan', type: 'ref', required: true },
-    { name: 'type', type: 'enum', enum: Type, default: null, required: true },
-    { name: 'provider', type: 'ref', isShow: item => item.type === Type[Type.Provider], required: true },
-    { name: 'customer', type: 'ref', isShow: item => item.type === Type[Type.Customer], required: true },
-    { name: 'supplierInvoice', type: 'ref', refName: 'code', isShow: item => item.type === Type[Type.Provider], required: true },
-    { name: 'invoice', type: 'ref', refName: 'code', isShow: item => item.type === Type[Type.Customer], required: true },
+    { name: 'type', type: 'enum', enum: PaymentForType, default: null, required: true },
+    { name: 'provider', type: 'ref', isShow: item => item.type === PaymentForType[PaymentForType.Provider], required: true },
+    { name: 'customer', type: 'ref', isShow: item => item.type === PaymentForType[PaymentForType.Customer], required: true },
+    { name: 'supplierInvoice', type: 'ref', refName: 'code', isShow: item => item.type === PaymentForType[PaymentForType.Provider], required: true },
+    { name: 'invoice', type: 'ref', refName: 'code', isShow: item => item.type === PaymentForType[PaymentForType.Customer], required: true },
     { name: 'status', type: 'enum', enum: PaymentStatus, default: PaymentStatus[PaymentStatus.Open] },
     { name: 'amount', type: 'number', required: true },
     { name: 'paymentType', type: 'enum', enum: PaymentType, default: PaymentType[PaymentType.Cash] },
@@ -78,12 +78,49 @@ export class PaymentFormComponent implements OnInit {
       if (params['provider']) {
         const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/provider/' + params['provider']).subscribe({
           next: ({ data }) => {
+            this.formData.type = PaymentForType[PaymentForType.Provider];
             this.formData.provider = data;
           },
           complete: () => {
             getEventPlan$.unsubscribe();
           }
         });
+      }
+      if (params['supplierInvoice']) {
+        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/supplier-invoice/' + params['supplierInvoice']).subscribe({
+          next: ({ data }) => {
+            this.formData.type = PaymentForType[PaymentForType.Provider];
+            this.formData.supplierInvoice = data;
+          },
+          complete: () => {
+            getEventPlan$.unsubscribe();
+          }
+        });
+      }
+      if (params['customer']) {
+        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
+          next: ({ data }) => {
+            this.formData.type = PaymentForType[PaymentForType.Customer];
+            this.formData.customer = data;
+          },
+          complete: () => {
+            getEventPlan$.unsubscribe();
+          }
+        });
+      }
+      if (params['invoice']) {
+        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/invoice/' + params['invoice']).subscribe({
+          next: ({ data }) => {
+            this.formData.type = PaymentForType[PaymentForType.Customer];
+            this.formData.invoice = data;
+          },
+          complete: () => {
+            getEventPlan$.unsubscribe();
+          }
+        });
+      }
+      if (params['amount']) {
+        this.formData.amount = params['amount'];
       }
     });
   }
