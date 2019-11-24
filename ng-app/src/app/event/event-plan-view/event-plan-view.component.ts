@@ -41,6 +41,7 @@ export class EventPlanViewComponent {
   filteredEventProcesses: any[] = [];
   selectProcessStatus = '';
   eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
+  isSelectedAllAttendee = false;
   attendeeColumns: IStandardColumn[] = [
     { name: 'code', format: 'link', link: '/attendee/view/' },
     { name: 'qrcode', format: 'template', template: item => `<qrcode qrdata="${item.code}" [size]="256" [level]="'H'"></qrcode>` },
@@ -411,6 +412,18 @@ export class EventPlanViewComponent {
       return false;
     }
     return attendees.some(attendee => attendee.isSelected);
+  }
+
+  selectAllAttendee(attendees: any[], isSelectAll: boolean) {
+    attendees.forEach(attendee => attendee.isSelected = isSelectAll);
+  }
+
+  checkIsAllAttendeeSelected(attendees: any[]) {
+    const isAllSelected = attendees.every(attendee => attendee.isSelected);
+
+    if (this.isSelectedAllAttendee !== isAllSelected) {
+      this.isSelectedAllAttendee = isAllSelected;
+    }
   }
 
   groupAttendees() {

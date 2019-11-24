@@ -261,7 +261,9 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th></th>
+              <th>
+                <mat-checkbox [(ngModel)]="isSelectedAllAttendee" (change)="selectAllAttendee(attendeeQueryModel.list, isSelectedAllAttendee)"></mat-checkbox>
+              </th>
               <th>Code</th>
               <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
                 {{ setting.key | titleDisplay }}</th>
@@ -273,7 +275,7 @@
           <tbody>
             <tr *ngFor="let attendee of attendeeQueryModel.list">
               <td>
-                <mat-checkbox [(ngModel)]="attendee.isSelected"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="attendee.isSelected" (change)="checkIsAllAttendeeSelected(attendeeQueryModel.list)"></mat-checkbox>
               </td>
               <td>{{ attendee.code }}</td>
               <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
