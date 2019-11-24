@@ -1,0 +1,7 @@
+.view-field:nth-of-type(n + 2) {
+  margin-top: 10px;
+}
+
+.view-field .mat-body {
+  white-space: pre;
+}

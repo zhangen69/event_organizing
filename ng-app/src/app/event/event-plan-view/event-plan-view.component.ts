@@ -1,5 +1,5 @@
 import { ImportAttendeesComponent } from './import-attendees/import-attendees.component';
-import { HttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
+import { StandardHttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -119,7 +119,7 @@ export class EventPlanViewComponent {
             'stockItems.stockItem'
           ];
           const getEventPlanReq = this.http
-            .get<HttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join())
+            .get<StandardHttpResponse>(environment.apiUrl + '/service/event-plan/' + params['id'] + '?includes=' + includes.join())
             .pipe(map(res => res.data))
             .subscribe({
               next: data => {

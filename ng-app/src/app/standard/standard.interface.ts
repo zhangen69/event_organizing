@@ -54,7 +54,12 @@ export interface IStandardColumn {
   width?: string;
 }
 
-export interface HttpResponse {
+export interface IStandardDisplayField {
+  name: string;
+  displayName?: string;
+}
+
+export interface StandardHttpResponse {
   data: any;
   message: string;
   status: number;

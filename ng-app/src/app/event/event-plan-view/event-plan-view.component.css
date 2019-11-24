@@ -124,3 +124,8 @@ button.active {
 .payment-voucher-wrapper > mat-card {
   min-width: 40%;
 }
+
+.table.table-bordered tr:hover {
+  background-color: #ededed;
+  cursor: pointer;
+}

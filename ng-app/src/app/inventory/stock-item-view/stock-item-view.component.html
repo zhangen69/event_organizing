@@ -1,3 +1,10 @@
-<p>
-  stock-item-view works!
-</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>View Stock Item - CODE</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-standard-display-field [field]="displayField" [formData]="attendee" *ngFor="let displayField of displayFields">
+    </app-standard-display-field>
+  </mat-card-content>
+</mat-card>
+<pre>{{ attendee | json }}</pre>

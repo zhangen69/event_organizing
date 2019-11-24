@@ -11,6 +11,7 @@ import { UploadType } from '../enums/upload-type.enum';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, Observable } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
+import { StandardHttpResponse } from './standard.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -80,7 +81,7 @@ export class StandardService {
             url += `?includes=${includes.toString()}`;
         }
 
-        const fetchData = this.http.get(url);
+        const fetchData = this.http.get<StandardHttpResponse>(url);
 
         if (formData !== null) {
             const req$ = fetchData.subscribe({
