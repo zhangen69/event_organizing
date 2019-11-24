@@ -216,6 +216,7 @@
 
         <div class="form">
           <h4>Basic Information</h4>
+          <app-standard-display-field [field]="{ name: 'title' }" [formData]="eventPlan.registrationForm"></app-standard-display-field>
           <div *ngFor="let setting of (eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value')">
             <app-standard-form-field [field]="{ name: setting.key, type: 'string' }"></app-standard-form-field>
           </div>

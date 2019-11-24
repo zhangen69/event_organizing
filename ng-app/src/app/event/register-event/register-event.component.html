@@ -1,6 +1,6 @@
 <mat-card class="card-md">
     <mat-card-header>
-        <mat-card-title>Register Event</mat-card-title>
+        <mat-card-title>{{ registrationForm.title }}</mat-card-title>
         <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -11,37 +11,37 @@
                 </mat-expansion-panel-header>
 
                 <app-standard-form-field
-                    [field]="{ name: 'name', type: 'string' }"
+                    [field]="{ name: 'name', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.name"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'gender', type: 'string' }"
+                    [field]="{ name: 'gender', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.gender"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'identityNumber', type: 'string' }"
+                    [field]="{ name: 'identityNumber', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.identityNumber"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'email', type: 'string' }"
+                    [field]="{ name: 'email', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.email"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'phoneNumber', type: 'string' }"
+                    [field]="{ name: 'phoneNumber', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.phoneNumber"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'organization', type: 'string' }"
+                    [field]="{ name: 'organization', type: 'string', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.organization"
                 ></app-standard-form-field>
                 <app-standard-form-field
-                    [field]="{ name: 'address', type: 'textarea' }"
+                    [field]="{ name: 'address', type: 'textarea', required: true }"
                     [(formData)]="attendeeData"
                     *ngIf="registrationForm?.settings.address"
                 ></app-standard-form-field>

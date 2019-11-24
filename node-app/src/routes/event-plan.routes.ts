@@ -78,6 +78,7 @@ router.post(`/${service}/attendee-register`, (req, res, next) => {
     // console.log(req.body);
     // res.status(200).json({ message: 'ok' });
     eventPlanModel.findById(req.body.event).then((doc) => {
+      // console.log(doc);
       const attendees = doc['attendees'];
       const newAttendee: any = {
         formData: req.body.formData || {},

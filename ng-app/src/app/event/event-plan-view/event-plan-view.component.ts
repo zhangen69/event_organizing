@@ -489,6 +489,7 @@ export class EventPlanViewComponent {
         name: 'registrationForm',
         type: 'object',
         fields: [
+          { name: 'title', type: 'string', required: true },
           {
             name: 'settings',
             type: 'object',
@@ -749,6 +750,7 @@ export class EventPlanViewComponent {
           if (shouldRefresh) {
             this.refresh();
           }
+          this.toastr.info('Updated');
         },
         complete: () => {
           eventPlanReq.unsubscribe();
