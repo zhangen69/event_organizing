@@ -453,7 +453,7 @@
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']"
         [queryParams]="{ eventPlan: eventPlan._id }">Add New Supplier Invoice</button>
-      <div class="supplier-invoice-wrapper">
+      <div class="supplier-invoice-wrapper" fxLayout="row skretch" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
         <mat-card *ngFor="let supplierInvoice of supplierInvoices">
           <mat-card-header>
             <mat-card-title>{{ supplierInvoice.code }}</mat-card-title>
