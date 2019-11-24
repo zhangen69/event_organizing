@@ -87,6 +87,11 @@ export class EventPlanViewComponent {
   supplierInvoices = [];
   paymentVouchers = [];
   payments = [];
+  // qrcode scanner variables
+  availableDevices: MediaDeviceInfo[];
+  currentDevice: MediaDeviceInfo = null;
+  hasDevices: boolean;
+  hasPermission: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -105,6 +110,14 @@ export class EventPlanViewComponent {
     // of(Object.keys(EventPlanStatus)).pipe(
     //   map(keys => keys.slice(keys.length / 2))
     // ).subscribe(status => this.eventPlanStatus = status);
+  }
+
+  onCodeResult(resultString: string): void {
+    alert('qrcode: ' + resultString);
+  }
+
+  onHasPermission(has: boolean): void {
+    this.hasPermission = has;
   }
 
   refresh() {

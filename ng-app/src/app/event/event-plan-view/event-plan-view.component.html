@@ -178,6 +178,17 @@
   <mat-tab label="Form">
     <div class="tab-body">
       <div [ngTemplateOutlet]="eventPlan.registrationForm ? showFormInfo : noFormMessage"></div>
+      <div class="qrcode-scanner-wrapper qr-scan-area">
+          <zxing-scanner
+          #scanner
+          [(device)]="currentDevice"
+          (scanSuccess)="onCodeResult($event)"
+          (permissionResponse)="onHasPermission($event)"
+        ></zxing-scanner>
+        <div class="qr-area">
+            <div class="area"></div>
+          </div>
+      </div>
       <ng-template #noFormMessage>
         <p>No form yet, <button mat-button class="btn-link" color="primary"
             (click)="configForm(eventPlan)">click</button> here config form</p>

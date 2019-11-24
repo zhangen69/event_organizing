@@ -99,6 +99,8 @@ import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
 import { ObjectToArrayPipe } from './standard/to-array.pipe';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   declarations: [
@@ -206,6 +208,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     // SpreadSheetsModule,
+    ZXingScannerModule,
+    NgxQRCodeModule,
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent, ImportAttendeesComponent],
   providers: [

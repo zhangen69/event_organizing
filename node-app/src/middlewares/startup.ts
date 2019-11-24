@@ -1,11 +1,5 @@
-import bodyParser from 'body-parser';
-import cors from 'cors';
 import express from 'express';
-import fs from 'fs';
-import helmet from 'helmet';
 import mongoose from 'mongoose';
-import morgan from 'morgan';
-import path from 'path';
 import configs from '../configs/app.configs';
 
 // import routes
@@ -30,21 +24,11 @@ import stockItemRoutes from '../routes/stock-item.routes';
 import stockTransactionRoutes from '../routes/stock-transaction.routes';
 import storeRoutes from '../routes/store.routes';
 import supplierInvoiceRoutes from '../routes/supplier-invoice.routes';
-import uploaderRoutes from '../routes/uploader.routes';
 import userRoutes from '../routes/user.routes';
 import quotationRoutes from '../routes/quotation.routes';
 import { emailQueueCheckJob } from '../task_schedulers/email-queue.scheduler';
 
 const router = express.Router();
-
-router.use(helmet());
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(cors());
-router.use(morgan('combined', { stream: fs.createWriteStream(path.join(__dirname, '../logs.log'), { flags: 'a' }) }));
-
-// apply uploader routes
-router.use(uploaderRoutes);
 
 // apply service routes
 // const folderPath = path.join(__dirname, '../routes');
@@ -77,7 +61,7 @@ router.use(
   receiptRoutes,
   // registrationFormRoutes,
   storeRoutes,
-  quotationRoutes,
+  quotationRoutes
 );
 router.use('/service/user', userRoutes);
 
