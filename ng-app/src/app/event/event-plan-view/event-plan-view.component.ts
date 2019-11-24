@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ImportAttendeesComponent } from './import-attendees/import-attendees.component';
 import { StandardHttpResponse, IStandardFormField, IStandardColumn } from './../../standard/standard.interface';
 import { environment } from './../../../environments/environment';
@@ -93,10 +94,12 @@ export class EventPlanViewComponent {
     private pageLoaderService: PageLoaderService,
     private dialog: MatDialog,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private titleService: Title
   ) {
     this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.eventPlanService.init('event-plan');
+    this.titleService.setTitle('View Event Plan - ' + environment.title);
     this.refresh();
 
     // of(Object.keys(EventPlanStatus)).pipe(

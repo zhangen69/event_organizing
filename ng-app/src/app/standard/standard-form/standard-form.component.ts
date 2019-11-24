@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -39,25 +41,37 @@ export class StandardFormComponent implements OnInit {
     private pageLoaderService: PageLoaderService,
     private http: HttpClient,
     private dialog: MatDialog,
+    private titleService: Title
   ) {
     this.standardService = new StandardService(this.http, this.dialog, this.router, this.toastr);
   }
 
   ngOnInit() {
+    if (this.title) {
+      this.titleService.setTitle('New ' + this.title + ' - ' + environment.title);
+    }
+
     this.formId = 'form_' + moment().format('x');
     this.standardService.init(this.domainName);
     this.route.params.subscribe((params: Params) => {
       if (params['id']) {
+        if (this.title) {
+          this.titleService.setTitle('Edit ' + this.title + ' - ' + environment.title);
+        }
+
         this.pageLoaderService.toggle(true);
         this.mode = 'update';
-        this.standardService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
-          this.formData = res.data;
-          this.initialDefaultValues();
-          this.pageLoaderService.toggle(false);
-        }, (res: any) => {
-          this.pageLoaderService.toggle(false);
-          this.toastr.error(res.error.message);
-        });
+        this.standardService.fetch(params['id'], null, this.includes).subscribe(
+          (res: any) => {
+            this.formData = res.data;
+            this.initialDefaultValues();
+            this.pageLoaderService.toggle(false);
+          },
+          (res: any) => {
+            this.pageLoaderService.toggle(false);
+            this.toastr.error(res.error.message);
+          }
+        );
       }
     });
     this.fields.forEach(field => {
@@ -137,19 +151,22 @@ export class StandardFormComponent implements OnInit {
         });
 
       this.pageLoaderService.toggle(true);
-      this.standardService.submit(this.formData).subscribe((res: any) => {
-        this.toastr.success(res.message);
-        this.pageLoaderService.toggle(false);
-        if (this.afterSubmit.observers.length > 0) {
-          this.formData._id = res.data._id;
-          this.afterSubmit.emit(this.formData);
-        } else {
-          this.onCancel(`/${this.domainName}/list`);
+      this.standardService.submit(this.formData).subscribe(
+        (res: any) => {
+          this.toastr.success(res.message);
+          this.pageLoaderService.toggle(false);
+          if (this.afterSubmit.observers.length > 0) {
+            this.formData._id = res.data._id;
+            this.afterSubmit.emit(this.formData);
+          } else {
+            this.onCancel(`/${this.domainName}/list`);
+          }
+        },
+        (res: any) => {
+          this.pageLoaderService.toggle(false);
+          this.toastr.error(res.error.message);
         }
-      }, (res: any) => {
-        this.pageLoaderService.toggle(false);
-        this.toastr.error(res.error.message);
-      });
+      );
     }
   }
 }

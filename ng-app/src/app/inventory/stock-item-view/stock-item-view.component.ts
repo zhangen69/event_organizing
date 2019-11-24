@@ -1,7 +1,9 @@
+import { environment } from './../../../environments/environment.prod';
 import { IStandardDisplayField } from './../../standard/standard.interface';
 import { ActivatedRoute } from '@angular/router';
 import { StandardService } from './../../standard/standard.service';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-stock-item-view',
@@ -18,8 +20,9 @@ export class StockItemViewComponent implements OnInit {
     { name: 'remarks' },
   ];
 
-  constructor(private route: ActivatedRoute, private stockItemService: StandardService) {
+  constructor(private route: ActivatedRoute, private stockItemService: StandardService, private titleService: Title) {
     this.stockItemService.init('stock-item');
+    this.titleService.setTitle('View Stock Item - ' + environment.title);
   }
 
   ngOnInit() {

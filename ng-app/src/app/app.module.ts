@@ -8,7 +8,7 @@ import { PaymentFormComponent } from './attendee/payment-form/payment-form.compo
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { MaterialModule } from './material.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -204,8 +204,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
       }
     }),
     EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
-    // SpreadSheetsModule
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    // SpreadSheetsModule,
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent, ImportAttendeesComponent],
   providers: [
@@ -213,7 +213,8 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     DatePipe,
     CurrencyPipe,
     TitleDisplayPipe,
-    GetTotalPipe
+    GetTotalPipe,
+    Title,
   ],
   bootstrap: [AppComponent]
 })

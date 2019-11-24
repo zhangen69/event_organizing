@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, AfterViewInit, ViewChild, OnDestroy, DoCheck } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
@@ -59,7 +61,8 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
     private currencyPipe: CurrencyPipe,
     private toastr: ToastrService,
     private http: HttpClient,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titleService: Title
   ) {
     this.isAuth = this.authService.getIsAuth();
     this.authService.getAuthStatusListener().subscribe(isAuth => (this.isAuth = isAuth));
@@ -67,6 +70,10 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
 
   ngOnInit() {
     this.initial(this.domainName);
+
+    if (this.title) {
+      this.titleService.setTitle(this.title + ' List - ' + environment.title);
+    }
 
     this.displayedColumns = this.columns.map(x => x.name);
     this.displayedColumns.unshift('checkbox');
