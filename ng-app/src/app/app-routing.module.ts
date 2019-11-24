@@ -55,6 +55,7 @@ import { EventViewComponent } from './event/event-view/event-view.component';
 import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
 import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
+import { StockTransactionFormComponent } from './inventory/stock-transaction-form/stock-transaction-form.component';
 
 const routes: Routes = [
   {
@@ -98,7 +99,7 @@ const routes: Routes = [
   {
     path: 'stock-transaction',
     canActivate: [AuthGuard],
-    children: [{ path: 'list', component: StockTransactionListComponent }]
+    children: [{ path: 'list', component: StockTransactionListComponent }, { path: 'add', component: StockTransactionFormComponent }]
   },
   {
     path: 'invoice',
@@ -206,7 +207,7 @@ const routes: Routes = [
     children: [
       { path: 'list', component: PaymentListComponent },
       { path: 'add', component: PaymentFormComponent },
-      { path: 'edit/:id', component: PaymentFormComponent },
+      { path: 'edit/:id', component: PaymentFormComponent }
     ]
   },
   {

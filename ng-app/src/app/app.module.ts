@@ -1,3 +1,4 @@
+import { StockTransactionFormComponent } from './inventory/stock-transaction-form/stock-transaction-form.component';
 import { ImportAttendeesComponent } from './event/event-plan-view/import-attendees/import-attendees.component';
 import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
 import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
@@ -172,6 +173,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     QuotationFormComponent,
     QuotationListComponent,
     ImportAttendeesComponent,
+    StockTransactionFormComponent,
   ],
   imports: [
     BrowserModule,
