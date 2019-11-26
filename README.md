@@ -15,6 +15,7 @@
   - [ ] Generate Payment/Create Payment should block the user if the payment is clear or entered over the amount  
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
+- [ ] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
 
 # Solved 
 - [x] Event Plan View > Supplier Invoices [Change Status Actions]
