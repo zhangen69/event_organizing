@@ -22,7 +22,8 @@ const schema = new mongoose.Schema({
   status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Cancelled'], default: 'Open' },
   period: { type: String, enum: ['Immediate', 'ThirtyDays', 'SixtyDays', 'NinetyDays'], default: 'ThirtyDays' },
   remarks: { type: String, default: null },
-  eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' }
+  eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
+  referenceNumber: { type: String, required: true },
 });
 
 schema.add(auditable);

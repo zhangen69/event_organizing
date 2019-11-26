@@ -43,11 +43,16 @@ export class SupplierInvoiceListComponent implements OnInit {
         { name: 'eventPlan.name', displayName: 'Event Plan', width: '150px' },
         { name: 'provider.name', displayName: 'Provider', width: '150px' },
         { name: 'code', width: '100px' },
+        { name: 'referenceNumber', width: '100px' },
         { name: 'status', width: '80px' },
         { name: 'remarks' },
         { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
     ];
-    filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
+    filterList = [
+        { type: 'code', display: 'Code', queryType: 'string' },
+        { type: 'referenceNumber', display: 'Reference Number', queryType: 'string' },
+        { type: 'status', display: 'Status', queryType: 'string' },
+    ];
     refresh = new EventEmitter();
 
     @ViewChild('standardList', { static: true })

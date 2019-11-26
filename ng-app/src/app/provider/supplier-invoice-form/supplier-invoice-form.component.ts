@@ -38,7 +38,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
   includes: string[] = ['store', 'provider', 'eventPlan'];
   fields: IStandardFormField[] = [
     { name: 'provider', type: 'ref', required: true },
-    // { name: 'store', type: 'ref', required: true },
+    { name: 'referenceNumber', type: 'string', required: true },
     { name: 'eventPlan', type: 'ref', required: true },
     {
       name: 'status',
