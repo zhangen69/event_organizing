@@ -11,8 +11,8 @@
   - Show Event Information
 - [ ] Event Plan > Invoice
   - [ ] Deposit, When Issue the Invoice Customer Must Pay the Depsoit until can proceed next Status
-  - [ ] Show How Many Payments is Paid, Balance, Outstanding
-  - [ ] Generate Payment/Create Payment should block the user if the payment is clear or entered over the amount  
+  - [x] Show How Many Payments is Paid, Balance, Outstanding
+  - [x] Generate Payment/Create Payment should block the user if the payment is clear or entered over the amount  
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
 - [ ] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
