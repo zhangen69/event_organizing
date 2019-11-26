@@ -723,6 +723,16 @@ export class EventPlanViewComponent {
     return lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
   }
 
+  getOutsandingBalance(paymentForType: string, amount = 0, supplierInvoice: null) {
+    if (!this.payments || this.payments.length === 0 || amount === 0) {
+      return 0;
+    }
+
+    const paidAmount = this.payments.filter(payment => payment.type === paymentForType && (!supplierInvoice ? true : payment.supplierInvoice === supplierInvoice) && (payment.status === 'Verified' || payment.status === 'Closed')).reduce((acc, payment) => acc + payment.amount, 0);
+
+    return amount - paidAmount;
+  }
+
   private reformItem({ name, displayName, childName, fieldName }) {
     return {
       name,
