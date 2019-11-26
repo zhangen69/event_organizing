@@ -10,7 +10,10 @@
 - [ ] Event Register Page
   - Show Event Information
 - [ ] Event Plan > Invoice > Deposit
-  
+- [ ] Event Plan > Invoice
+  - [ ] Show How Many Payments is Paid, Balance, Outstanding
+  - [ ] Generate Payment/Create Payment should block the user if the payment is clear or entered over the amount  
+
 
 # Solved 
 - [x] Event Plan View > Supplier Invoices [Change Status Actions]
