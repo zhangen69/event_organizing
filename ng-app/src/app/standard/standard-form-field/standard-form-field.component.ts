@@ -311,4 +311,23 @@ export class StandardFormFieldComponent implements OnInit {
 
       return options;
   }
+
+  getInputMaxValue(max, formData) {
+    if (!max) {
+      return false;
+    }
+
+    if (typeof max === 'function') {
+      return max(formData);
+    }
+
+    return max;
+  }
+
+  checkInputValid(max, element) {
+    if ((max && element.value) && element.value > max) {
+      element.value = max;
+      this.toastr.info('Max value cannot greater than ' + max);
+    }
+  }
 }

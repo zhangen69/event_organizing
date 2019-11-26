@@ -22,7 +22,8 @@
 
   <mat-form-field *ngSwitchCase="'number'">
     <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
-      [required]="field.required" />
+      [required]="field.required" [max]="getInputMaxValue(field.max, formData)" (keyup)="getInputMaxValue(field.max, formData) && checkInputValid(getInputMaxValue(field.max, formData), $event.target)" />
+    <!-- <pre>MAX: {{getInputMaxValue(field.max, formData)}}</pre> -->
   </mat-form-field>
 
   <div *ngSwitchCase="'boolean'">

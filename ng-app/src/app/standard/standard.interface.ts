@@ -18,6 +18,7 @@ export interface IStandardFormField {
   filterOption?: any;
   refIncludes?: string[];
   queryModel?: any;
+  max?: number | boolean | Func;
 }
 
 export enum IStandardFormFieldType {
@@ -48,9 +49,9 @@ export interface IStandardColumn {
   type?: string;
   format?: string;
   displayName?: string;
-  link?: string | Func;
+  link?: string | StringFunc;
   dateFormat?: string;
-  template?: Func;
+  template?: StringFunc;
   width?: string;
 }
 
@@ -65,4 +66,5 @@ export interface StandardHttpResponse {
   status: number;
 }
 
-type Func = (item: any) => string;
+type StringFunc = (item: any) => string;
+type Func = (item: any) => any;

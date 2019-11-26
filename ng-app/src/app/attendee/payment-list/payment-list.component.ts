@@ -11,7 +11,13 @@ export class PaymentListComponent implements OnInit {
   columns: IStandardColumn[] = [
      { name: 'provider.name', displayName: 'Provider' },
      { name: 'customer.name', displayName: 'Customer' },
-     { name: 'invoice.code', displayName: 'Pay For', format: 'template', template: (item) => (item.type === 'Customer' ? item.invoice.code : item.supplierInvoice.code) },
+     { name: 'invoice.code', displayName: 'Pay For', format: 'template', template: (item) => {
+       if (item.type === 'Customer' && item.invoice) {
+         return item.invoice.code;
+       } else if (item.type === 'Provider' && item.supplierInvoice) {
+         return item.supplierInvoice.code;
+       }
+     } },
      { name: 'eventPlan.name', displayName: 'Event Plan', format: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id },
      { name: 'code' },
      { name: 'amount', type: 'number' },

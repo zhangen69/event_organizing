@@ -30,6 +30,7 @@ enum PaymentForType {
 })
 export class PaymentFormComponent implements OnInit {
   formData: any = {};
+  paidAmount = 0;
   includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   fields: IStandardFormField[] = [
     { name: 'eventPlan', type: 'ref', required: true },
@@ -39,7 +40,14 @@ export class PaymentFormComponent implements OnInit {
     { name: 'supplierInvoice', type: 'ref', refName: 'code', isShow: item => item.type === PaymentForType[PaymentForType.Provider], required: true },
     { name: 'invoice', type: 'ref', refName: 'code', isShow: item => item.type === PaymentForType[PaymentForType.Customer], required: true },
     { name: 'status', type: 'enum', enum: PaymentStatus, default: PaymentStatus[PaymentStatus.Open] },
-    { name: 'amount', type: 'number', required: true },
+    { name: 'amount', type: 'number', max: (item) => {
+      if (item.invoice) {
+        return item.invoice.lines.reduce((acc, line) => acc + (line.unitPrice * line.quantity), 0) - this.paidAmount;
+      } else if (item.supplierInvoice) {
+        return item.supplierInvoice.lines.reduce((acc, line) => acc + (line.unitPrice * line.quantity), 0) - this.paidAmount;
+      }
+      return false;
+    }, required: true },
     { name: 'paymentType', type: 'enum', enum: PaymentType, default: PaymentType[PaymentType.Cash] },
     { name: 'chequeInfo', type: 'object', isShow: item => item.paymentType === PaymentType[PaymentType.Cheque], fields: [
       { name: 'referenceNumber', type: 'string', required: true },
@@ -95,6 +103,19 @@ export class PaymentFormComponent implements OnInit {
             getEventPlan$.unsubscribe();
           }
         });
+        const paymentQueryModel = {
+          searchText: params['supplierInvoice'],
+          type: 'supplierInvoice',
+          queryType: 'match'
+        };
+        const getSupplierInvoicePayments$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/payment?queryModel=' + JSON.stringify(paymentQueryModel)).subscribe({
+          next: ({ data }) => {
+            this.paidAmount = data.filter(item => item.status === 'Verified' || item.status === 'Closed').reduce((acc, item) => acc + item.amount, 0);
+          },
+          complete: () => {
+            getSupplierInvoicePayments$.unsubscribe();
+          }
+        });
       }
       if (params['customer']) {
         const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
@@ -115,6 +136,19 @@ export class PaymentFormComponent implements OnInit {
           },
           complete: () => {
             getEventPlan$.unsubscribe();
+          }
+        });
+        const paymentQueryModel = {
+          searchText: params['invoice'],
+          type: 'invoice',
+          queryType: 'match'
+        };
+        const getInvoicePayments$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/payment?queryModel=' + JSON.stringify(paymentQueryModel)).subscribe({
+          next: ({ data }) => {
+            this.paidAmount = data.filter(item => item.status === 'Verified' || item.status === 'Closed').reduce((acc, item) => acc + item.amount, 0);
+          },
+          complete: () => {
+            getInvoicePayments$.unsubscribe();
           }
         });
       }
