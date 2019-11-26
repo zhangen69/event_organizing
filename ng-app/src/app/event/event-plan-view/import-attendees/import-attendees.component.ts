@@ -1,4 +1,4 @@
-import { environment } from './../../../../environments/environment.prod';
+import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Inject } from '@angular/core';
 import * as XLSX from 'xlsx';

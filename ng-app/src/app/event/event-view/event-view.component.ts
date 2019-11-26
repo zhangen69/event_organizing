@@ -71,7 +71,7 @@ export class EventViewComponent implements OnInit {
         filters: []
     };
 
-    eventService: StandardService;
+    eventPlanService: StandardService;
     attendeeService: StandardService;
 
     constructor(
@@ -84,11 +84,11 @@ export class EventViewComponent implements OnInit {
         private pageLoaderService: PageLoaderService
     ) {
         // this.service.init('event');
-        this.eventService = new StandardService(this.http, this.dialog, this.router, this.toastr);
+        this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.formService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.attendeeService = new StandardService(this.http, this.dialog, this.router, this.toastr);
         this.formService.init('registration-form');
-        this.eventService.init('event');
+        this.eventPlanService.init('event-plan');
         this.attendeeService.init('attendee');
     }
 
@@ -101,12 +101,11 @@ export class EventViewComponent implements OnInit {
             (params: Params) => {
                 if (params['id']) {
                     this.pageLoaderService.toggle(true);
-                    this.eventService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
+                    this.eventPlanService.fetch(params['id'], null, this.includes).subscribe((res: any) => {
                         this.formData = res.data;
                         // sort: formData.processes
                         this.formData.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                         this.filterProcesses(this.selectProcessStatus);
-                        this.fetchRegistrationForm(this.formData._id);
                         this.pageLoaderService.toggle(false);
                     });
 
@@ -118,15 +117,6 @@ export class EventViewComponent implements OnInit {
                 this.toastr.error(res.error.message);
             }
         );
-    }
-
-    fetchRegistrationForm(eventId: string) {
-        const queryModel: IQueryModel = { pageSize: 0, currentPage: 0, searchText: eventId, type: 'event', queryType: 'match' };
-        this.formService.fetchAll(queryModel).subscribe((res: any) => {
-            if (res.data.length > 0) {
-                this.registrationForm = res.data[0];
-            }
-        });
     }
 
     addItemToEvent(type, name) {
@@ -155,7 +145,7 @@ export class EventViewComponent implements OnInit {
                 element.unit = element[type].unit;
                 element.unitPrice = element[type].unitPrice;
             });
-            this.eventService.submit(event).subscribe(_ => {
+            this.eventPlanService.submit(event).subscribe(_ => {
                 this.refresh();
             });
         });
@@ -253,7 +243,7 @@ export class EventViewComponent implements OnInit {
 
     changeStatus(process, status) {
         process.status = status;
-        this.eventService.submit(this.formData).subscribe(_ => {
+        this.eventPlanService.submit(this.formData).subscribe(_ => {
             this.toastr.info('Updated Status Succesfully!');
             this.refresh();
         });
@@ -288,8 +278,8 @@ export class EventViewComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             this.pageLoaderService.toggle(true);
-            const url = this.formService.apiUrl + '/sendRegistrationFormLink';
-            this.formService.submit({ formId, email: result.email }, url).subscribe(_ => {
+            const url = this.eventPlanService.apiUrl + '/sendRegistrationFormLink';
+            this.eventPlanService.submit({ formId, email: result.email }, url).subscribe(_ => {
                 this.pageLoaderService.toggle(false);
                 this.toastr.info('Sent link to the email!');
             });
@@ -303,7 +293,7 @@ export class EventViewComponent implements OnInit {
         targetItem.order += targetItem.order <= swapItem.order ? 1 : 0;
         swapItem.order -= targetItem.order === swapItem.order ? 1 : 0;
 
-        this.eventService.submit(this.formData).subscribe(_ => {
+        this.eventPlanService.submit(this.formData).subscribe(_ => {
             this.toastr.info('Moved Process ' + item.name);
             this.refresh();
         });
@@ -316,7 +306,7 @@ export class EventViewComponent implements OnInit {
         targetItem.order = targetItem.order >= swapItem.order ? swapItem.order : targetItem.order;
         swapItem.order = targetItem.order <= swapItem.order ? swapItem.order + 1 : targetItem.order - 1;
 
-        this.eventService.submit(this.formData).subscribe(_ => {
+        this.eventPlanService.submit(this.formData).subscribe(_ => {
             this.toastr.info('Moved Process ' + item.name);
             this.refresh();
         });

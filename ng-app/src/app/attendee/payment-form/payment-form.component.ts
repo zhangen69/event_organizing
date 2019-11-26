@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IStandardFormField } from 'src/app/standard/standard.interface';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
+import { IStandardFormField, StandardHttpResponse } from 'src/app/standard/standard.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 enum PaymentStatus {
@@ -61,12 +60,12 @@ export class PaymentFormComponent implements OnInit {
     { name: 'remarks', type: 'textarea' },
   ];
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['eventPlan']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
           next: ({ data }) => {
             this.formData.eventPlan = data;
           },
@@ -76,7 +75,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['provider']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/provider/' + params['provider']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/provider/' + params['provider']).subscribe({
           next: ({ data }) => {
             this.formData.type = PaymentForType[PaymentForType.Provider];
             this.formData.provider = data;
@@ -87,7 +86,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['supplierInvoice']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/supplier-invoice/' + params['supplierInvoice']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/supplier-invoice/' + params['supplierInvoice']).subscribe({
           next: ({ data }) => {
             this.formData.type = PaymentForType[PaymentForType.Provider];
             this.formData.supplierInvoice = data;
@@ -98,7 +97,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['customer']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
           next: ({ data }) => {
             this.formData.type = PaymentForType[PaymentForType.Customer];
             this.formData.customer = data;
@@ -109,7 +108,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['invoice']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/invoice/' + params['invoice']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/invoice/' + params['invoice']).subscribe({
           next: ({ data }) => {
             this.formData.type = PaymentForType[PaymentForType.Customer];
             this.formData.invoice = data;

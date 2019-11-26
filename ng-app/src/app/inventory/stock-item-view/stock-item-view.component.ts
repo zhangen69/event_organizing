@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { IStandardDisplayField } from './../../standard/standard.interface';
 import { ActivatedRoute } from '@angular/router';
 import { StandardService } from './../../standard/standard.service';
