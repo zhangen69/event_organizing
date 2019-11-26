@@ -9,6 +9,7 @@
 - [ ] Categories [Show All Services, Facilities group by Category]
 - [ ] Event Register Page
   - Show Event Information
+- [ ] Event Plan > Invoice > Deposit
   
 
 # Solved 
