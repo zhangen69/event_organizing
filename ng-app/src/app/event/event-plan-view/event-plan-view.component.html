@@ -486,6 +486,10 @@
               <div class="mat-body">{{ supplierInvoice.provider.name }}</div>
             </div>
             <div class="view-field">
+              <label class="mat-body-strong">Reference Number</label>
+              <div class="mat-body">{{ supplierInvoice.referenceNumber }}</div>
+            </div>
+            <div class="view-field">
               <label class="mat-body-strong">Total Amount</label>
               <div class="mat-body">{{ getLinesTotalAmount(supplierInvoice.lines) | currency: 'MYR ' }}</div>
             </div>
