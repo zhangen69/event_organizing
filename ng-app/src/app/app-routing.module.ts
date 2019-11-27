@@ -4,7 +4,6 @@ import { QuotationListComponent } from './customer/quotation-list/quotation-list
 import { PaymentFormComponent } from './attendee/payment-form/payment-form.component';
 import { CustomerViewComponent } from './customer/customer-view/customer-view.component';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
-import { AttendeeViewComponent } from './attendee/attendee-view/attendee-view.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserChangePasswordComponent } from './user/user-change-password/user-change-password.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
@@ -18,8 +17,6 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { EventPlanListComponent } from './event/event-plan-list/event-plan-list.component';
 import { EventPlanFormComponent } from './event/event-plan-form/event-plan-form.component';
-import { EventListComponent } from './event/event-list/event-list.component';
-import { EventFormComponent } from './event/event-form/event-form.component';
 import { StoreFormComponent } from './inventory/store-form/store-form.component';
 import { StoreListComponent } from './inventory/store-list/store-list.component';
 import { StockItemFormComponent } from './inventory/stock-item-form/stock-item-form.component';
@@ -37,25 +34,14 @@ import { ProviderServiceListComponent } from './provider/provider-service-list/p
 import { ProviderServiceFormComponent } from './provider/provider-service-form/provider-service-form.component';
 import { ProviderFacilityFormComponent } from './provider/provider-facility-form/provider-facility-form.component';
 import { ProviderFacilityListComponent } from './provider/provider-facility-list/provider-facility-list.component';
-import { AttendeeFormComponent } from './attendee/attendee-form/attendee-form.component';
-import { AttendeeListComponent } from './attendee/attendee-list/attendee-list.component';
-import { AttendeeGroupFormComponent } from './attendee/attendee-group-form/attendee-group-form.component';
-import { AttendeeGroupListComponent } from './attendee/attendee-group-list/attendee-group-list.component';
-import { AttendanceListComponent } from './attendance/attendance-list/attendance-list.component';
-import { AttendanceFormComponent } from './attendance/attendance-form/attendance-form.component';
 import { PaymentVoucherListComponent } from './provider/payment-voucher-list/payment-voucher-list.component';
 import { PaymentVoucherFormComponent } from './provider/payment-voucher-form/payment-voucher-form.component';
 import { PaymentListComponent } from './attendee/payment-list/payment-list.component';
-import { RegistrationListComponent } from './event/registration-list/registration-list.component';
-import { RegistrationFormComponent } from './event/registration-form/registration-form.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { CustomerFormComponent } from './customer/customer-form/customer-form.component';
 import { CategoryFormComponent } from './provider/category-form/category-form.component';
 import { CategoryListComponent } from './provider/category-list/category-list.component';
-import { EventViewComponent } from './event/event-view/event-view.component';
-import { RegistrationViewComponent } from './event/registration-view/registration-view.component';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
-import { DemoXlsxComponent } from './demo-xlsx/demo-xlsx.component';
 import { StockTransactionFormComponent } from './inventory/stock-transaction-form/stock-transaction-form.component';
 
 const routes: Routes = [
@@ -67,16 +53,6 @@ const routes: Routes = [
       { path: 'add', component: EventPlanFormComponent },
       { path: 'edit/:id', component: EventPlanFormComponent },
       { path: 'view/:id', component: EventPlanViewComponent }
-    ]
-  },
-  {
-    path: 'event',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'list', component: EventListComponent },
-      { path: 'add', component: EventFormComponent },
-      { path: 'edit/:id', component: EventFormComponent },
-      { path: 'view/:id', component: EventViewComponent }
     ]
   },
   {
@@ -167,34 +143,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'attendee',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'list', component: AttendeeListComponent },
-      { path: 'add', component: AttendeeFormComponent },
-      { path: 'edit/:id', component: AttendeeFormComponent },
-      { path: 'view/:id', component: AttendeeViewComponent }
-    ]
-  },
-  {
-    path: 'attendee-group',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'list', component: AttendeeGroupListComponent },
-      { path: 'add', component: AttendeeGroupFormComponent },
-      { path: 'edit/:id', component: AttendeeGroupFormComponent }
-    ]
-  },
-  {
-    path: 'attendance',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'list', component: AttendanceListComponent },
-      { path: 'add', component: AttendanceFormComponent },
-      { path: 'edit/:id', component: AttendanceFormComponent }
-    ]
-  },
-  {
     path: 'payment-voucher',
     canActivate: [AuthGuard],
     children: [
@@ -210,16 +158,6 @@ const routes: Routes = [
       { path: 'list', component: PaymentListComponent },
       { path: 'add', component: PaymentFormComponent },
       { path: 'edit/:id', component: PaymentFormComponent }
-    ]
-  },
-  {
-    path: 'registration-form',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'list', component: RegistrationListComponent },
-      { path: 'add', component: RegistrationFormComponent },
-      { path: 'edit/:id', component: RegistrationFormComponent },
-      { path: 'view/:id', component: RegistrationViewComponent }
     ]
   },
   {
@@ -262,7 +200,6 @@ const routes: Routes = [
   },
   { path: '', component: HomeComponent },
   { path: 'register/:formId', component: RegisterEventComponent },
-  { path: 'demo-xlsx', component: DemoXlsxComponent }
 ];
 
 @NgModule({
