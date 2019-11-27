@@ -61,7 +61,7 @@ import { PaymentVoucherFormComponent } from './provider/payment-voucher-form/pay
 import { SupplierInvoiceFormComponent } from './provider/supplier-invoice-form/supplier-invoice-form.component';
 import { SupplierInvoiceListComponent } from './provider/supplier-invoice-list/supplier-invoice-list.component';
 import { StandardListComponent } from './standard/standard-list/standard-list.component';
-import { DatePipe, CurrencyPipe } from '@angular/common';
+import { DatePipe, CurrencyPipe, CommonModule } from '@angular/common';
 import { StandardFormComponent } from './standard/standard-form/standard-form.component';
 import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
 import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
@@ -150,6 +150,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     StandardDisplayFieldComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
