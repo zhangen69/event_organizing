@@ -8,7 +8,8 @@
 - [ ] Stock Item View Page
 - [ ] Categories [Show All Services, Facilities group by Category]
 - [ ] Event Register Page
-  - Show Event Information
+  - [x] Show Event Title
+  - [ ] Show Event Description, add the new property in database
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
 - [ ] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
