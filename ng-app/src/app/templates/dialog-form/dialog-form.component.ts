@@ -39,7 +39,7 @@ export class DialogFormComponent implements OnInit {
     this.includes = this.params.includes || [];
   }
 
-  onNoClick(data = null): void {
+  onNoClick(data = { dismiss: true }): void {
     this.dialogRef.close(data);
   }
 

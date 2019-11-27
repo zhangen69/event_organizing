@@ -108,7 +108,7 @@ export class EventPlanViewComponent {
   ) {
     this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.eventPlanService.init('event-plan');
-    this.titleService.setTitle('View Event Plan - ' + environment.title);
+    this.setTitle();
     this.refresh();
 
     this.selectedTabIndex = this.getTabIndexFromUrl(this.location.path(true));
@@ -125,6 +125,10 @@ export class EventPlanViewComponent {
 
   onHasPermission(has: boolean): void {
     this.hasPermission = has;
+  }
+
+  setTitle() {
+    this.titleService.setTitle('View Event Plan - ' + environment.title);
   }
 
   getTabIndexFromUrl(url) {
@@ -224,6 +228,7 @@ export class EventPlanViewComponent {
         this.updateEventPlan(data, funcBeforeSubmit);
       },
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -279,6 +284,7 @@ export class EventPlanViewComponent {
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: data => this.updateEventPlan(data),
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -330,6 +336,7 @@ export class EventPlanViewComponent {
         }
       },
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -375,6 +382,7 @@ export class EventPlanViewComponent {
         }
       },
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -437,6 +445,7 @@ export class EventPlanViewComponent {
         }
       },
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -554,6 +563,7 @@ export class EventPlanViewComponent {
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: data => this.updateEventPlan(data),
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
@@ -583,6 +593,7 @@ export class EventPlanViewComponent {
       width: 'auto',
       minWidth: '50vw',
       maxHeight: '99vh',
+      disableClose: true,
       data: { domain: 'registration-form', data: formData, fields, title: 'Send Registration Form Link', callback: true }
     });
 
@@ -603,6 +614,7 @@ export class EventPlanViewComponent {
         }
       },
       complete: () => {
+        this.setTitle();
         dialogClosedReq.unsubscribe();
       }
     });
