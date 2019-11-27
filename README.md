@@ -14,6 +14,9 @@
 - [ ] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
 - [ ] Event Plan > Attendee
   - [ ] Edit Attendee cannot update custom fields
+  - [ ] After group attendees, didnt show popup message
+  - [ ] Excel Template got 2 row is empty data by default
+  - [ ] Import excel without filter data is empty
 
 # Solved 
 - [x] Event Plan > Invoice
