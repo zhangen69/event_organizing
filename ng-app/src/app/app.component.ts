@@ -41,12 +41,12 @@ export class AppComponent implements OnInit, OnDestroy {
       name: 'Provider',
       children: [
         { url: '/provider/list', name: 'Providers' },
-        { url: '/payment/list', name: 'Payments' },
         { url: '/supplier-invoice/list', name: 'Supplier Invoice List' },
         { url: '/payment-voucher/list', name: 'Payment Vouchers' },
         { url: '/receipt/list', name: 'Receipt List' }
       ]
     },
+    { name: 'Payments', url: '/payment/list'  },
     {
       name: 'Inventory',
       children: [

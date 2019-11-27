@@ -2,7 +2,8 @@
     {{ eventPlan.name }})</span>
 </span>
 
-<mat-tab-group>
+
+<mat-tab-group [selectedIndex]="selectedTabIndex">
   <!-- Tab1: Basis Info -->
   <mat-tab label="Basis Info">
     <div class="tab-body">

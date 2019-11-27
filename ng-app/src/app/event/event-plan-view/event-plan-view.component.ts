@@ -14,6 +14,7 @@ import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.c
 import * as moment from 'moment';
 import { RegistrationFormFieldType } from '../registration-form-status.enum';
 import * as XLSX from 'xlsx';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 export enum EventProcessType {
   'Initial',
@@ -34,9 +35,11 @@ enum EventProcessStatus {
 @Component({
   selector: 'app-event-plan-view',
   templateUrl: './event-plan-view.component.html',
-  styleUrls: ['./event-plan-view.component.css']
+  styleUrls: ['./event-plan-view.component.css'],
+  providers: [Location, { provide: LocationStrategy, useClass: PathLocationStrategy }]
 })
 export class EventPlanViewComponent {
+  selectedTabIndex = 0;
   eventPlan: any = {};
   eventPlanService: StandardService;
   attendeeService: StandardService;
@@ -100,16 +103,20 @@ export class EventPlanViewComponent {
     private dialog: MatDialog,
     private router: Router,
     private toastr: ToastrService,
-    private titleService: Title
+    private titleService: Title,
+    private location: Location
   ) {
     this.eventPlanService = new StandardService(this.http, this.dialog, this.router, this.toastr);
     this.eventPlanService.init('event-plan');
     this.titleService.setTitle('View Event Plan - ' + environment.title);
     this.refresh();
 
-    // of(Object.keys(EventPlanStatus)).pipe(
-    //   map(keys => keys.slice(keys.length / 2))
-    // ).subscribe(status => this.eventPlanStatus = status);
+    this.selectedTabIndex = this.getTabIndexFromUrl(this.location.path(true));
+    this.location.subscribe((value: PopStateEvent) => {
+      if (value['url']) {
+        this.selectedTabIndex = this.getTabIndexFromUrl(value['url']);
+      }
+    });
   }
 
   onCodeResult(resultString: string): void {
@@ -118,6 +125,16 @@ export class EventPlanViewComponent {
 
   onHasPermission(has: boolean): void {
     this.hasPermission = has;
+  }
+
+  getTabIndexFromUrl(url) {
+    const regex = /#\d+$/;
+    const result = regex.exec(url);
+    if (result) {
+      const tabIndex = url.substr(result.index + 1);
+      return Number(tabIndex);
+    }
+    return 0;
   }
 
   refresh() {
