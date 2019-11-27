@@ -16,8 +16,8 @@
 - [ ] Event Plan > Attendee
   - [ ] Edit Attendee cannot update custom fields
   - [ ] After group attendees, didnt show popup message
-  - [ ] Excel Template got 2 row is empty data by default
-  - [x] Import excel without filter data is empty
+  - [x] Excel Template got 2 row is empty data by default
+  - [ ] Import excel without filter data is empty
   - [ ] All link redirect to other path, if return to event plan will auto redirect to specific tab
 
 # Solved 
