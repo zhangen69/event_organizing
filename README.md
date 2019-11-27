@@ -12,6 +12,8 @@
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
 - [ ] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
+- [ ] Event Plan > Attendee
+  - [ ] Edit Attendee cannot update custom fields
 
 # Solved 
 - [x] Event Plan > Invoice
