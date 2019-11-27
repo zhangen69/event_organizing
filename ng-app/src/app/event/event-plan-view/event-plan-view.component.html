@@ -178,7 +178,7 @@
   <mat-tab label="Form">
     <div class="tab-body">
       <div [ngTemplateOutlet]="eventPlan.registrationForm ? showFormInfo : noFormMessage"></div>
-      <div class="qrcode-scanner-wrapper qr-scan-area">
+      <!-- <div class="qrcode-scanner-wrapper qr-scan-area">
           <zxing-scanner
           #scanner
           [(device)]="currentDevice"
@@ -188,7 +188,7 @@
         <div class="qr-area">
             <div class="area"></div>
           </div>
-      </div>
+      </div> -->
       <ng-template #noFormMessage>
         <p>No form yet, <button mat-button class="btn-link" color="primary"
             (click)="configForm(eventPlan)">click</button> here config form</p>
@@ -415,7 +415,7 @@
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Outstanding Balance</label>
-          <div class="mat-body">{{ getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) | currency: 'MYR ' }}</div>
+          <div class="mat-body">{{ getOutsandingBalance('Customer', invoice) | currency: 'MYR ' }}</div>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Status</label>
@@ -425,11 +425,11 @@
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(invoice, ['Issued'])">Confirm</button>
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines)">Confirm</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) === 0">Pay</button>
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) === 0">Pay</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
@@ -462,12 +462,12 @@
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
             <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) }"
-                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) !== 0">Generate Deposit</button>
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit' }"
+                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === 0">Generate Deposit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) }"
-                *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) !== 0">Generate Payment</button>
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice) }"
+                *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) !== 0">Generate Payment</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>
@@ -499,7 +499,7 @@
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Outstanding Balance</label>
-              <div class="mat-body">{{ getOutsandingBalance('Provider', getLinesTotalAmount(supplierInvoice.lines), supplierInvoice) | currency: 'MYR ' }}</div>
+              <div class="mat-body">{{ getOutsandingBalance('Provider', supplierInvoice) | currency: 'MYR ' }}</div>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Status</label>
@@ -553,8 +553,8 @@
               *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', getLinesTotalAmount(supplierInvoice.lines), supplierInvoice) }"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', getLinesTotalAmount(supplierInvoice.lines), supplierInvoice) !== 0">Generate Payment</button>
+                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', supplierInvoice) }"
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) !== 0">Generate Payment</button>
           </mat-card-actions>
         </mat-card>
       </div>
@@ -680,7 +680,7 @@
       <!-- <pre>{{ paymentVouchers | json }}</pre> -->
     </div>
   </mat-tab>
-  <!-- Tab for Related Payments (To Provider) -->
+  <!-- Tab for Related Payments -->
   <mat-tab label="Payments">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
@@ -793,8 +793,8 @@
                 </div>
               </div>
             </mat-card-content>
-            <mat-divider></mat-divider>
-            <mat-card-actions>
+            <mat-divider *ngIf="payment.status === 'Open'"></mat-divider>
+            <mat-card-actions *ngIf="payment.status === 'Open'">
               <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/edit/' + payment._id]"
                 *ngIf="checkButtonIsValid(payment, ['Open'])">Edit</button>
             </mat-card-actions>
