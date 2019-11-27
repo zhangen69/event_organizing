@@ -461,9 +461,13 @@
           <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
             <button mat-raised-button color="primary" class="btn-sm"
-              [routerLink]="['/payment/add/']"
-              [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) }"
-              *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) !== 0">Generate Payment</button>
+                [routerLink]="['/payment/add/']"
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) }"
+                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) !== 0">Generate Deposit</button>
+              <button mat-raised-button color="primary" class="btn-sm"
+                [routerLink]="['/payment/add/']"
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) }"
+                *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', getLinesTotalAmount(invoice.lines)) !== 0">Generate Payment</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>
