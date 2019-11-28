@@ -58,6 +58,8 @@ export interface IStandardColumn {
 export interface IStandardDisplayField {
   name: string;
   displayName?: string;
+  type?: string;
+  noLabel?: boolean;
 }
 
 export interface StandardHttpResponse {

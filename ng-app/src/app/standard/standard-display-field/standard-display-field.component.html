@@ -1,6 +1,7 @@
-<ng-container>
-  <div class="view-field">
-    <label class="mat-body-strong">{{ field.displayName }}</label>
+<ng-container [ngSwitch]="field.type">
+  <div class="mat-h1" *ngSwitchCase="'title'">{{ getDisplayValue(field, formData) }}</div>
+  <div class="view-field" *ngSwitchDefault>
+    <label class="mat-body-strong" *ngIf="!field.noLabel">{{ field.displayName }}</label>
     <div class="mat-body">{{ getDisplayValue(field, formData) }}</div>
   </div>
 </ng-container>

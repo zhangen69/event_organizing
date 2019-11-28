@@ -79,10 +79,11 @@ const EventPlanNoteSchema = new mongoose.Schema({
 
 const RegistrationFormSchema = new mongoose.Schema({
   title: MongooseHelper.Types.String(),
+  description: MongooseHelper.Types.String(),
   fields: [Object],
   settings: Object,
   status: { type: String, enum: ['Open', 'Confirmed', 'Published'], default: 'Open' },
-  remarks: String
+  remarks: MongooseHelper.Types.String(),
 });
 
 const EventPlanSchema = new mongoose.Schema({

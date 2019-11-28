@@ -1,6 +1,7 @@
 <mat-card class="card-md">
     <mat-card-header>
         <mat-card-title>{{ registrationForm.title }}</mat-card-title>
+        <app-standard-display-field [field]="{ name: 'description', noLabel: true }" [formData]="registrationForm"></app-standard-display-field>
         <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>

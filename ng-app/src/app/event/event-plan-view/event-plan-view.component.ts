@@ -526,6 +526,7 @@ export class EventPlanViewComponent {
         type: 'object',
         fields: [
           { name: 'title', type: 'string', required: true },
+          { name: 'description', type: 'textarea' },
           {
             name: 'settings',
             type: 'object',
