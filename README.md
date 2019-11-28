@@ -7,14 +7,15 @@
 - [ ] Customer View Page
 - [ ] Stock Item View Page
 - [ ] Categories [Show All Services, Facilities group by Category]
-- [ ] Event Register Page
-  - [x] Show Event Title
-  - [ ] Show Event Description, add the new property in database
+
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
 
 
 # Solved 
+- [x] Event Register Page
+  - [x] Show Event Title
+  - [x] Show Event Description, add the new property in database
 - [x] Event Plan > Attendee
   - [x] Edit Attendee cannot update custom fields
   - [x] After group attendees, didnt show popup message
