@@ -12,14 +12,15 @@
   - [ ] Show Event Description, add the new property in database
 - [ ] Stock Transaction > Ajustment
   - [ ] User *MUST* provide the reason
-- [ ] Event Plan > Attendee
-  - [ ] Edit Attendee cannot update custom fields
-  - [ ] After group attendees, didnt show popup message
-  - [x] Excel Template got 2 row is empty data by default
-  - [ ] Import excel without filter data is empty
-  - [ ] All link redirect to other path, if return to event plan will auto redirect to specific tab
+
 
 # Solved 
+- [x] Event Plan > Attendee
+  - [x] Edit Attendee cannot update custom fields
+  - [x] After group attendees, didnt show popup message
+  - [x] Excel Template got 2 row is empty data by default
+  - [x] Import excel without filter data is empty
+  - [x] All link redirect to other path, if return to event plan will auto redirect to specific tab
 - [x] Supplier Invoice should record the information for Supplier's Invoice Number as Reference
 - [x] Event Plan > Invoice
   - [x] Deposit, When Issue the Invoice Customer Must Pay the Depsoit until can proceed next Status
