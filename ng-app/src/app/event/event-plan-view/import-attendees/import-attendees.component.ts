@@ -58,7 +58,7 @@ export class ImportAttendeesComponent implements OnInit {
           name: ele.replace(/(^[A-Z])/, (str) => str.toLowerCase()).replace(/\s/g, ''),
         };
       });
-      const body = this.excelData.filter((ele) => ele !== this.excelData[0]);
+      const body = this.excelData.filter((ele) => ele !== this.excelData[0] && (Object.keys(ele).some(key => ele[key])));
 
       from(body).pipe(
         map((row) => {
