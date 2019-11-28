@@ -464,7 +464,7 @@
             <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
                 [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit' }"
-                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === 0">Generate Deposit</button>
+                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines)">Generate Deposit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
                 [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice) }"
