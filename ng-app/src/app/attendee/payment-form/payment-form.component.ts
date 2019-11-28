@@ -3,6 +3,7 @@ import { IStandardFormField, StandardHttpResponse } from 'src/app/standard/stand
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 enum PaymentStatus {
   Open,
@@ -70,7 +71,7 @@ export class PaymentFormComponent implements OnInit {
   callbackUrl: string;
   callbackFragment: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private location: Location) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
