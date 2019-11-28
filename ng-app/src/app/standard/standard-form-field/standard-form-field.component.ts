@@ -56,6 +56,7 @@ class FieldModel implements IFieldOptions, OnDestroy {
   request$: Subscription;
   queryModel?: any;
   filterOption?: any;
+  max?: any;
 
   ngOnDestroy(): void {
     if (this.request$) {
@@ -327,6 +328,7 @@ export class StandardFormFieldComponent implements OnInit {
   checkInputValid(max, element) {
     if ((max && element.value) && element.value > max) {
       element.value = max;
+      this.formData[this.field.name] = max;
       this.toastr.info('Max value cannot greater than ' + max);
     }
   }
