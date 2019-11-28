@@ -112,6 +112,7 @@ button.active {
 
 .payment-wrapper mat-card {
   height: calc(100% - 52px);
+  min-width: 30%;
 }
 
 .supplier-invoice-wrapper > mat-card > mat-card-content,
