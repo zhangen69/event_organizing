@@ -1,0 +1,10 @@
+.person-in-charged:nth-child(2n+1) {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid #ccc;
+}
+
+.section {
+  margin-top: 15px;
+  font-weight: bold;
+}

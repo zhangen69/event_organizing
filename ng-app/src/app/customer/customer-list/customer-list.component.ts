@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerListComponent implements OnInit {
   columns: IStandardColumn[] = [
-    { name: 'name', displayName: 'Name' },
+    { name: 'name', displayName: 'Name', format: 'link', link: (item) => '/customer/view/' + item._id },
     { name: 'email', displayName: 'Email' },
     { name: 'address', displayName: 'Address' },
     { name: 'registrationNumber', displayName: 'Registration Number' },
