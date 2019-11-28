@@ -169,7 +169,15 @@ export class PaymentFormComponent implements OnInit {
     });
   }
 
-  redirectTo(url) {
-    this.router.navigate([url], { fragment: this.callbackFragment });
+  redirectTo() {
+    if (this.callbackUrl && this.callbackFragment) {
+      this.router.navigate([this.callbackUrl], { fragment: this.callbackFragment });
+    } else {
+      if (window.history.length > 1) {
+        this.location.back();
+      } else {
+        this.router.navigate(['/payment/list']);
+      }
+    }
   }
 }

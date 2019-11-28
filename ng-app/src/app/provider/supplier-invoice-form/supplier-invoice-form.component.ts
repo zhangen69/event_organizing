@@ -4,9 +4,10 @@ import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.c
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
 
 enum SupplierInvoiceStatus {
   Open,
@@ -35,6 +36,8 @@ enum SupplierInvoiceType {
 })
 export class SupplierInvoiceFormComponent implements OnInit {
   formData: any = {};
+  callbackUrl: string;
+  callbackFragment: string;
   includes: string[] = ['store', 'provider', 'eventPlan'];
   fields: IStandardFormField[] = [
     { name: 'provider', type: 'ref', required: true },
@@ -73,7 +76,7 @@ export class SupplierInvoiceFormComponent implements OnInit {
     }
   ];
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient, private router: Router, private location: Location) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -86,6 +89,14 @@ export class SupplierInvoiceFormComponent implements OnInit {
             getEventPlan$.unsubscribe();
           }
         });
+      }
+
+      if (params['callback']) {
+        this.callbackUrl = params['callback'];
+      }
+
+      if (params['fragment']) {
+        this.callbackFragment = params['fragment'];
       }
     });
   }
@@ -161,5 +172,17 @@ export class SupplierInvoiceFormComponent implements OnInit {
           array.push(line);
         });
     });
+  }
+  
+  redirectTo() {
+    if (this.callbackUrl && this.callbackFragment) {
+      this.router.navigate([this.callbackUrl], { fragment: this.callbackFragment });
+    } else {
+      if (window.history.length > 1) {
+        this.location.back();
+      } else {
+        this.router.navigate(['/supplier-invoice/list']);
+      }
+    }
   }
 }

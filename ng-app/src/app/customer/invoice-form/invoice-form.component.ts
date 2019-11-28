@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 enum InvoiceStatus {
   Open,
@@ -19,6 +20,8 @@ enum InvoiceStatus {
 })
 export class InvoiceFormComponent implements OnInit {
   formData: any = {};
+  callbackUrl: string;
+  callbackFragment: string;
   includes = ['customer', 'eventPlan'];
   fields = [
     // { name: 'code', type: 'string', required: true },
@@ -39,7 +42,7 @@ export class InvoiceFormComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private location: Location, private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -53,6 +56,7 @@ export class InvoiceFormComponent implements OnInit {
           }
         });
       }
+
       if (params['customer']) {
         const getCustomer$ = this.http.get<{ data }>(environment.apiUrl + '/service/customer/' + params['customer']).subscribe({
           next: ({ data }) => {
@@ -63,6 +67,26 @@ export class InvoiceFormComponent implements OnInit {
           }
         });
       }
+
+      if (params['callback']) {
+        this.callbackUrl = params['callback'];
+      }
+
+      if (params['fragment']) {
+        this.callbackFragment = params['fragment'];
+      }
     });
+  }
+
+  redirectTo() {
+    if (this.callbackUrl && this.callbackFragment) {
+      this.router.navigate([this.callbackUrl], { fragment: this.callbackFragment });
+    } else {
+      if (window.history.length > 1) {
+        this.location.back();
+      } else {
+        this.router.navigate(['/payment/list']);
+      }
+    }
   }
 }

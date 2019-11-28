@@ -326,7 +326,7 @@
       <ng-template #noQuotationMessage>
         <p>No Quotation Yet, Please create a quotation for this event plan.</p>
         <p>Click <a [routerLink]="['/quotation/add']"
-            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id }">here</a> redirect to
+            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }">here</a> redirect to
           new quotation form page.</p>
       </ng-template>
       <ng-template #showQuotationInfo>
@@ -382,7 +382,7 @@
           </tbody>
         </table>
         <div class="action-group">
-          <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" mat-raised-button color="primary"
+          <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
           <button class="btn-sm" mat-raised-button color="primary" (click)="generateInvoiceFromQuotation(quotation)"
             *ngIf="checkButtonIsValid(quotation, ['Closed', 'Confirmed']) && invoice === null">Generate Final
@@ -399,7 +399,7 @@
       <ng-template #noInvoiceMessage>
         <p>No Invoice Yet, Please create an invoice for this event plan.</p>
         <p>Click <a [routerLink]="['/invoice/add']"
-            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id }">here</a> redirect to
+            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }">here</a> redirect to
           new invoice form page.</p>
       </ng-template>
       <ng-template #showInvoiceInfo>
@@ -459,7 +459,7 @@
           </tbody>
         </table>
         <div class="action-group">
-          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" mat-raised-button color="primary"
+          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }" mat-raised-button color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
             <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
@@ -478,7 +478,7 @@
   <mat-tab label="Supplier Invoices">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']"
-        [queryParams]="{ eventPlan: eventPlan._id }">Add New Supplier Invoice</button>
+        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '7' }">Add New Supplier Invoice</button>
       <div class="supplier-invoice-wrapper" fxLayout="row skretch" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
         <mat-card *ngFor="let supplierInvoice of supplierInvoices">
           <mat-card-header>
@@ -551,6 +551,7 @@
           <mat-card-actions>
             <button mat-raised-button color="primary" class="btn-sm"
               [routerLink]="['/supplier-invoice/edit/' + supplierInvoice._id]"
+              [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '7' }"
               *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
@@ -566,7 +567,7 @@
   <mat-tab label="Payment Voucher">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment-voucher/add']"
-        [queryParams]="{ eventPlan: eventPlan._id }">Add
+        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '8' }">Add
         New Payment Voucher</button>
       <div class="payment-voucher-wrapper" fxLayout="row skretch" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
         <mat-card *ngFor="let paymentVoucher of paymentVouchers">
@@ -674,6 +675,7 @@
           <mat-card-actions>
             <button mat-raised-button color="primary" class="btn-sm"
               [routerLink]="['/payment-voucher/edit/' + paymentVoucher._id]"
+              [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '8' }"
               *ngIf="checkButtonIsValid(paymentVoucher, ['Open'])">Edit</button>
           </mat-card-actions>
         </mat-card>
@@ -685,7 +687,7 @@
   <mat-tab label="Payments">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
-        [queryParams]="{ eventPlan: eventPlan._id }">Add New
+        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }">Add New
         Payment</button>
       <div class="payment-wrapper">
         <mat-tab-group>
@@ -797,6 +799,7 @@
             <mat-divider *ngIf="payment.status === 'Open'"></mat-divider>
             <mat-card-actions *ngIf="payment.status === 'Open'">
               <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/edit/' + payment._id]"
+              [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }"
                 *ngIf="checkButtonIsValid(payment, ['Open'])">Edit</button>
             </mat-card-actions>
           </mat-card>

@@ -165,9 +165,13 @@ export class EventPlanViewComponent {
                 this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
                 this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
-                this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(
-                  settingKey => this.eventPlan.registrationForm.settings[settingKey]
-                );
+                
+                if (this.eventPlan.registrationForm && this.eventPlan.registrationForm.settings.length > 0) {
+                  this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(
+                    settingKey => this.eventPlan.registrationForm.settings[settingKey]
+                  );
+                }
+
                 if (this.attendeeQueryModel.typeOptions.length > 0) {
                   this.attendeeQueryModel.type = this.attendeeQueryModel.typeOptions[0];
                 }

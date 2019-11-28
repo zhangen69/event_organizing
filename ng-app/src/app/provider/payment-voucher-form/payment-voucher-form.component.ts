@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 enum PaymentVoucherStatus {
   Open,
@@ -29,6 +30,8 @@ enum PaymentType {
 })
 export class PaymentVoucherFormComponent implements OnInit {
   formData: any = {};
+  callbackUrl: string;
+  callbackFragment: string;
   includes = ['provider', 'receipt', 'eventPlan'];
   fields: IStandardFormField[] = [
     { name: 'provider', type: 'ref', required: true },
@@ -51,6 +54,7 @@ export class PaymentVoucherFormComponent implements OnInit {
       { name: 'payeeIdentityNumber', type: 'string' },
       { name: 'transferedDate', type: 'date' },
     ]},
+    { name: 'remarks', type: 'textarea' },
     {
       name: 'lines',
       type: 'table',
@@ -67,10 +71,9 @@ export class PaymentVoucherFormComponent implements OnInit {
         { name: 'quantity', type: 'number', required: true }
       ]
     },
-    { name: 'remarks', type: 'textarea' }
   ];
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private http: HttpClient, private router: Router, private location: Location) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -83,6 +86,14 @@ export class PaymentVoucherFormComponent implements OnInit {
             getEventPlan$.unsubscribe();
           }
         });
+      }
+
+      if (params['callback']) {
+        this.callbackUrl = params['callback'];
+      }
+
+      if (params['fragment']) {
+        this.callbackFragment = params['fragment'];
       }
     });
   }
@@ -136,5 +147,17 @@ export class PaymentVoucherFormComponent implements OnInit {
           array.push(line);
         });
     });
+  }
+  
+  redirectTo() {
+    if (this.callbackUrl && this.callbackFragment) {
+      this.router.navigate([this.callbackUrl], { fragment: this.callbackFragment });
+    } else {
+      if (window.history.length > 1) {
+        this.location.back();
+      } else {
+        this.router.navigate(['/payment-voucher/list']);
+      }
+    }
   }
 }
