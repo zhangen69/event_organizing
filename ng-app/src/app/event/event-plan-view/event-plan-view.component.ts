@@ -508,6 +508,7 @@ export class EventPlanViewComponent {
 
     const updateGroupAttenddesReq = this.eventPlanService.submit(this.eventPlan).subscribe({
       complete: () => {
+        this.toastr.info('Grouped Attendees Successfully!');
         updateGroupAttenddesReq.unsubscribe();
       }
     });
