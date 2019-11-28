@@ -463,11 +463,11 @@
             *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
             <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit' }"
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit', callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
                 *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines)">Generate Deposit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice) }"
+                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
                 *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) !== 0">Generate Payment</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
@@ -554,7 +554,7 @@
               *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
               <button mat-raised-button color="primary" class="btn-sm"
                 [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', supplierInvoice) }"
+                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', supplierInvoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
                 *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) !== 0">Generate Payment</button>
           </mat-card-actions>
         </mat-card>

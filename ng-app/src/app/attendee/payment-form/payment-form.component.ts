@@ -67,8 +67,10 @@ export class PaymentFormComponent implements OnInit {
     ]},
     { name: 'remarks', type: 'textarea' },
   ];
+  callbackUrl: string;
+  callbackFragment: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -158,6 +160,16 @@ export class PaymentFormComponent implements OnInit {
       if (params['remarks']) {
         this.formData.remarks = params['remarks'];
       }
+      if (params['callback']) {
+        this.callbackUrl = params['callback'];
+      }
+      if (params['fragment']) {
+        this.callbackFragment = params['fragment'];
+      }
     });
+  }
+
+  redirectTo(url) {
+    this.router.navigate([url], { fragment: this.callbackFragment });
   }
 }
