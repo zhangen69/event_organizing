@@ -24,8 +24,8 @@ export class StockTransactionFormComponent implements OnInit {
     { name: 'store', type: 'ref', required: true },
     { name: 'stockItem', type: 'ref', refIncludes: ['category'], required: true },
     { name: 'quantity', type: 'number', required: true },
-    { name: 'receipt', type: 'ref', refName: 'code' },
-    { name: 'eventPlan', type: 'ref' },
+    { name: 'receipt', type: 'ref', refName: 'code', isShow: (item) => item.type === TransactionType[TransactionType.StockIn] },
+    { name: 'eventPlan', type: 'ref', isShow: (item) => item.type !== TransactionType[TransactionType.Adjustment] },
     { name: 'remarks', type: 'textarea' }
   ];
 
