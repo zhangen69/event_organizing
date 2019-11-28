@@ -14,6 +14,7 @@ export class StockTransactionListComponent implements OnInit {
      { name: 'stockItemUnitPrice', displayName: 'Price' },
      { name: 'stockItemCategory.name', displayName: 'Category' },
      { name: 'type' },
+     { name: 'quantity' },
      { name: 'store.name', displayName: 'Store' },
      { name: 'event.name', displayName: 'Event' },
      { name: 'receipt.code', displayName: 'Receipt' },

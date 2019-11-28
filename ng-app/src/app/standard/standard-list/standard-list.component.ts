@@ -31,6 +31,7 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
   @Input() queryModel: any;
   @Input() domainService: StandardService;
   @Input() customList: any[];
+  @Input() apiUrl: string;
   @Input()
   set includes(includes: string[]) {
     if (!this.queryModel) {
@@ -137,6 +138,11 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
     }
 
     this.service.init(domainName, this.queryModel);
+
+    if (this.apiUrl) {
+      this.service.apiUrl = this.apiUrl;
+    }
+
   }
 
   fetchAll() {
