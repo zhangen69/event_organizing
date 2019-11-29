@@ -2,8 +2,7 @@
     {{ eventPlan.name }})</span>
 </span>
 
-
-<mat-tab-group [selectedIndex]="selectedTabIndex">
+<mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="eventPlan._id">
   <!-- Tab1: Basis Info -->
   <mat-tab label="Basis Info">
     <div class="tab-body">

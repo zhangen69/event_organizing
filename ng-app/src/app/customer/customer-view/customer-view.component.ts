@@ -1,6 +1,6 @@
 import { IStandardDisplayField } from './../../standard/standard.interface';
 import { environment } from 'src/environments/environment';
-import { StandardHttpResponse } from 'src/app/standard/standard.interface';
+import { StandardHttpResponse, IStandardDisplayField } from 'src/app/standard/standard.interface';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +13,12 @@ import { Component, OnInit } from '@angular/core';
 export class CustomerViewComponent implements OnInit {
   customer: any;
   invoices = [];
+  customerDisplayFields: IStandardDisplayField[] = [
+    { name: 'name' },
+    { name: 'email' },
+    { name: 'registrationNumber' },
+    { name: 'address' },
+  ];
   invoiceDisplayFields: IStandardDisplayField[] = [
     { name: 'code', type: 'title' },
     { name: 'eventPlan.code', type: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id, displayName: 'Event Plan Code' },

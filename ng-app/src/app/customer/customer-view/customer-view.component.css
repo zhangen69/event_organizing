@@ -40,3 +40,7 @@ mat-card table {
   background-color: #ededed;
   cursor: pointer;
 }
+
+.mat-display-1 {
+  margin-bottom: 0;
+}
