@@ -11,7 +11,7 @@ export class StockItemListComponent implements OnInit {
   apiUrl = environment.apiUrl + '/service/stock-item-with-qty';
   includes: string[] = ['category', 'provider'];
   columns: IStandardColumn[] = [
-    { name: 'name' },
+    { name: 'name', format: 'link', link: (item) => '/stock-item/view/' + item._id },
     { name: 'category.name', displayName: 'Category' },
     { name: 'cost', displayName: 'Cost (RM)', type: 'currency' },
     { name: 'unit' },

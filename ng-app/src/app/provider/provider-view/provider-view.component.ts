@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StandardHttpResponse } from 'src/app/standard/standard.interface';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-provider-view',
@@ -14,7 +15,9 @@ export class ProviderViewComponent implements OnInit {
   providerServices = [];
   providerFacilities = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private titleService: Title) {
+    this.titleService.setTitle('View Stock Item - ' + environment.title);
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
