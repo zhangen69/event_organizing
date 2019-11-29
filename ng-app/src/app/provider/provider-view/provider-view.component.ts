@@ -14,6 +14,8 @@ export class ProviderViewComponent implements OnInit {
   provider: any;
   providerServices = [];
   providerFacilities = [];
+  supplierInvoices = [];
+  paymentVouchers = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private titleService: Title) {
     this.titleService.setTitle('View Stock Item - ' + environment.title);
@@ -49,6 +51,22 @@ export class ProviderViewComponent implements OnInit {
           },
           complete: () => {
             providerFacilitiesReq$.unsubscribe();
+          }
+        });
+        const supplierInvoicesReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/supplier-invoice?queryModel=' + JSON.stringify(queryModel)).subscribe({
+          next: ({ data }) => {
+            this.supplierInvoices = data;
+          },
+          complete: () => {
+            supplierInvoicesReq$.unsubscribe();
+          }
+        });
+        const paymentVouchersReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/payment-voucher?queryModel=' + JSON.stringify(queryModel)).subscribe({
+          next: ({ data }) => {
+            this.paymentVouchers = data;
+          },
+          complete: () => {
+            paymentVouchersReq$.unsubscribe();
           }
         });
       }

@@ -1,23 +1,49 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>View Provider</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="mat-h3 section">Basic Information</div>
-    <app-standard-display-field [field]="{ name: 'name' }" [formData]="provider"></app-standard-display-field>
-    <app-standard-display-field [field]="{ name: 'email' }" [formData]="provider"></app-standard-display-field>
-    <app-standard-display-field [field]="{ name: 'registrationNumber' }" [formData]="provider"></app-standard-display-field>
-    <app-standard-display-field [field]="{ name: 'address' }" [formData]="provider"></app-standard-display-field>
-    <div *ngIf="provider?.personInCharged">
-      <div class="mat-h3 section">Person In Charged Details</div>
-      <div class="person-in-charged" *ngFor="let person of provider.personInCharged; let i = index">
-          <div class="mat-body-strong">Person {{ i + 1 }}</div>
-          <app-standard-display-field [field]="{ name: 'name', displayName: 'Name' }" [formData]="person"></app-standard-display-field>
-          <app-standard-display-field [field]="{ name: 'email', displayName: 'Email' }" [formData]="person"></app-standard-display-field>
-          <app-standard-display-field [field]="{ name: 'jobTitle', displayName: 'Job Title' }" [formData]="person"></app-standard-display-field>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-<pre>{{ providerServices | json }}</pre>
-<pre>{{ providerFacilities | json }}</pre>
+<mat-tab-group>
+  <mat-tab label="Basic Information">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>View Provider</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="mat-h3 section">Basic Information</div>
+        <app-standard-display-field [field]="{ name: 'name' }" [formData]="provider"></app-standard-display-field>
+        <app-standard-display-field [field]="{ name: 'email' }" [formData]="provider"></app-standard-display-field>
+        <app-standard-display-field [field]="{ name: 'registrationNumber' }" [formData]="provider">
+        </app-standard-display-field>
+        <app-standard-display-field [field]="{ name: 'address' }" [formData]="provider"></app-standard-display-field>
+        <div *ngIf="provider?.personInCharged">
+          <div class="mat-h3 section">Person In Charged Details</div>
+          <div class="person-in-charged" *ngFor="let person of provider.personInCharged; let i = index">
+            <div class="mat-body-strong">Person {{ i + 1 }}</div>
+            <app-standard-display-field [field]="{ name: 'name', displayName: 'Name' }" [formData]="person">
+            </app-standard-display-field>
+            <app-standard-display-field [field]="{ name: 'email', displayName: 'Email' }" [formData]="person">
+            </app-standard-display-field>
+            <app-standard-display-field [field]="{ name: 'jobTitle', displayName: 'Job Title' }" [formData]="person">
+            </app-standard-display-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+
+  <mat-tab label="Services">
+    <h1>Services</h1>
+    <pre>{{ providerServices | json }}</pre>
+  </mat-tab>
+
+  <mat-tab label="Facilities">
+    <h1>Facilities</h1>
+    <pre>{{ providerFacilities | json }}</pre>
+  </mat-tab>
+
+  <mat-tab label="Supplier Inoivces">
+    <h1>Supplier Inoivces</h1>
+    <pre>{{ supplierInvoices | json }}</pre>
+  </mat-tab>
+
+  <mat-tab label="Payment Vouchers">
+    <h1>Payment Vouchers</h1>
+    <pre>{{ paymentVouchers | json }}</pre>
+  </mat-tab>
+</mat-tab-group>
