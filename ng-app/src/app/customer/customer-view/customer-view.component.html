@@ -28,15 +28,31 @@
   </mat-tab>
 
   <mat-tab label="Invoices">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Related Invoices</mat-card-title>
-      </mat-card-header>
+    <mat-card *ngFor="let invoice of invoices">
       <mat-card-content>
-        <div *ngFor="let invoice of invoices">
-          <app-standard-display-field [field]="displayField" [formData]="invoice"
-            *ngFor="let displayField of invoiceDisplayFields"></app-standard-display-field>
-        </div>
+        <app-standard-display-field [field]="displayField" [formData]="invoice"
+          *ngFor="let displayField of invoiceDisplayFields"></app-standard-display-field>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Unit</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Sub Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of invoice.lines">
+              <td>{{ line.name }}</td>
+              <td>{{ line.unit }}</td>
+              <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
+              <td>{{ line.quantity }}</td>
+              <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
+            </tr>
+          </tbody>
+        </table>
       </mat-card-content>
     </mat-card>
     <!-- <pre>{{ invoices | json }}</pre> -->

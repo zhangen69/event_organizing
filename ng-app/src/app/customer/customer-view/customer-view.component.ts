@@ -17,7 +17,7 @@ export class CustomerViewComponent implements OnInit {
     { name: 'code', type: 'title' },
     { name: 'eventPlan.code', type: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id, displayName: 'Event Plan Code' },
     { name: 'eventPlan.name', displayName: 'Event Plan Name' },
-    { name: 'totalAmount', getValue: (item) => item.lines.reduce((acc, line) => acc + (line.quantity * line.unitPrice), 0) },
+    { name: 'totalAmount', type: 'currency', getValue: (item) => item.lines.reduce((acc, line) => acc + (line.quantity * line.unitPrice), 0) },
     { name: 'status' },
   ];
 
