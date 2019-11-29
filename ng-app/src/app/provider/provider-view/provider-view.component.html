@@ -46,7 +46,7 @@
           </tr>
         </tbody>
       </table>
-    <pre>{{ providerServices | json }}</pre>
+    <!-- <pre>{{ providerServices | json }}</pre> -->
   </mat-tab>
 
   <mat-tab label="Facilities">
@@ -74,11 +74,37 @@
           </tr>
         </tbody>
       </table>
-    <pre>{{ providerFacilities | json }}</pre>
+    <!-- <pre>{{ providerFacilities | json }}</pre> -->
   </mat-tab>
 
   <mat-tab label="Supplier Inoivces">
-    <h1>Supplier Inoivces</h1>
+      <mat-card *ngFor="let invoice of supplierInvoices">
+        <mat-card-content>
+          <app-standard-display-field [field]="displayField" [formData]="invoice"
+            *ngFor="let displayField of supplierInvoiceDisplayFields"></app-standard-display-field>
+  
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Unit</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Sub Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let line of invoice.lines">
+                <td>{{ line.name }}</td>
+                <td>{{ line.unit }}</td>
+                <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
+                <td>{{ line.quantity }}</td>
+                <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
     <pre>{{ supplierInvoices | json }}</pre>
   </mat-tab>
 

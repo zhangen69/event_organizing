@@ -25,6 +25,13 @@ export class ProviderViewComponent implements OnInit {
     { name: 'address' }
   ];
   personInChargedDisplayFields: IStandardDisplayField[] = [{ name: 'name' }, { name: 'email' }, { name: 'jobTitle' }];
+  supplierInvoiceDisplayFields: IStandardDisplayField[] = [
+    { name: 'code', type: 'title' },
+    { name: 'eventPlan.code', type: 'link', link: (item) => item.eventPlan ? '/event-plan/view/' + item.eventPlan._id : '', displayName: 'Event Plan Code' },
+    { name: 'eventPlan.name', displayName: 'Event Plan Name' },
+    { name: 'totalAmount', type: 'currency', getValue: (item) => item.lines.reduce((acc, line) => acc + (line.quantity * line.unitPrice), 0) },
+    { name: 'status' },
+  ];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private titleService: Title, private location: Location) {
     this.selectedTabIndex = this.getTabIndexFromUrl(this.location.path(true));
@@ -72,6 +79,7 @@ export class ProviderViewComponent implements OnInit {
               providerFacilitiesReq$.unsubscribe();
             }
           });
+          queryModel.includes = ['eventPlan'];
         const supplierInvoicesReq$ = this.http
           .get<StandardHttpResponse>(environment.apiUrl + '/service/supplier-invoice?queryModel=' + JSON.stringify(queryModel))
           .subscribe({
