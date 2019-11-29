@@ -1,3 +1,4 @@
+import { ProviderViewComponent } from './provider/provider-view/provider-view.component';
 import { StockItemViewComponent } from './inventory/stock-item-view/stock-item-view.component';
 import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
 import { QuotationListComponent } from './customer/quotation-list/quotation-list.component';
@@ -121,7 +122,8 @@ const routes: Routes = [
     children: [
       { path: 'list', component: ProviderListComponent },
       { path: 'add', component: ProviderFormComponent },
-      { path: 'edit/:id', component: ProviderFormComponent }
+      { path: 'edit/:id', component: ProviderFormComponent },
+      { path: 'view/:id', component: ProviderViewComponent },
     ]
   },
   {

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProviderListComponent implements OnInit {
   columns: IStandardColumn[] = [
-     { name: 'name' },
+     { name: 'name', format: 'link', link: (item) => '/provider/view/' + item._id },
      { name: 'email' },
      { name: 'address' },
      { name: 'registrationNumber' },

@@ -83,6 +83,7 @@ import { GetTotalPipe } from './pipes/get-total.pipe';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
 import { ObjectToArrayPipe } from './standard/to-array.pipe';
+import { ProviderViewComponent } from './provider/provider-view/provider-view.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { ObjectToArrayPipe } from './standard/to-array.pipe';
     StockTransactionFormComponent,
     StockItemViewComponent,
     StandardDisplayFieldComponent,
+    ProviderViewComponent,
   ],
   imports: [
     CommonModule,
