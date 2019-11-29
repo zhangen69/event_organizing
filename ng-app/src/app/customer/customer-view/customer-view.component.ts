@@ -1,4 +1,3 @@
-import { IStandardDisplayField } from './../../standard/standard.interface';
 import { environment } from 'src/environments/environment';
 import { StandardHttpResponse, IStandardDisplayField } from 'src/app/standard/standard.interface';
 import { HttpClient } from '@angular/common/http';

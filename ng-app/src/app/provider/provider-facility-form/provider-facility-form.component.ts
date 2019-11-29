@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-provider-facility-form',
@@ -6,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-facility-form.component.css']
 })
 export class ProviderFacilityFormComponent implements OnInit {
-  includes = ['provider'];
+  formData: any = {};
+  includes = ['provider', 'category'];
   fields = [
     { name: 'provider', type: 'ref', required: true },
     { name: 'category', type: 'ref', required: true },
@@ -16,7 +20,24 @@ export class ProviderFacilityFormComponent implements OnInit {
     { name: 'description', type: 'textarea' }
   ];
 
-  constructor() {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
+    this.route.queryParams.subscribe(params => {
+      if (params.provider) {
+        this.getData(params.provider, 'provider', 'provider');
+      }
+    });
+  }
 
   ngOnInit() {}
+
+  getData(id, domainName, propName) {
+    const req$ = this.http.get<{ data }>(environment.apiUrl + '/service/' + domainName + '/' + id).subscribe({
+      next: ({ data }) => {
+        this.formData[propName] = data;
+      },
+      complete: () => {
+        req$.unsubscribe();
+      }
+    });
+  }
 }

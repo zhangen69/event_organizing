@@ -1,6 +1,6 @@
-<div class="mat-display-1">View Customer <span *ngIf="customer && customer.code">{{ customer.name }})</span></div>
+<div class="mat-display-1">View Customer <span *ngIf="customer._id">{{ customer.name }}</span></div>
 
-<mat-tab-group>
+<mat-tab-group *ngIf="customer._id">
   <mat-tab label="Basic Information">
     <mat-card>
       <mat-card-content>

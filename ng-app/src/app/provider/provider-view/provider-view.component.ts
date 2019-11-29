@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StandardHttpResponse } from 'src/app/standard/standard.interface';
+import { StandardHttpResponse, IStandardDisplayField } from 'src/app/standard/standard.interface';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-provider-view',
@@ -11,13 +12,27 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./provider-view.component.css']
 })
 export class ProviderViewComponent implements OnInit {
-  provider: any;
+  selectedTabIndex = 0;
+  provider: any = {};
   providerServices = [];
   providerFacilities = [];
   supplierInvoices = [];
   paymentVouchers = [];
+  providerDisplayFields: IStandardDisplayField[] = [
+    { name: 'name' },
+    { name: 'email' },
+    { name: 'registrationNumber' },
+    { name: 'address' }
+  ];
+  personInChargedDisplayFields: IStandardDisplayField[] = [{ name: 'name' }, { name: 'email' }, { name: 'jobTitle' }];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private titleService: Title) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private titleService: Title, private location: Location) {
+    this.selectedTabIndex = this.getTabIndexFromUrl(this.location.path(true));
+    this.location.subscribe((value: PopStateEvent) => {
+      if (value['url']) {
+        this.selectedTabIndex = this.getTabIndexFromUrl(value['url']);
+      }
+    });
     this.titleService.setTitle('View Stock Item - ' + environment.title);
   }
 
@@ -35,42 +50,59 @@ export class ProviderViewComponent implements OnInit {
         const queryModel = {
           type: 'provider',
           searchText: params.id,
-          queryType: 'match',
+          queryType: 'match'
         };
-        const providerServicesReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/provider-service?queryModel=' + JSON.stringify(queryModel)).subscribe({
-          next: ({ data }) => {
-            this.providerServices = data;
-          },
-          complete: () => {
-            providerServicesReq$.unsubscribe();
-          }
-        });
-        const providerFacilitiesReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/provider-facility?queryModel=' + JSON.stringify(queryModel)).subscribe({
-          next: ({ data }) => {
-            this.providerFacilities = data;
-          },
-          complete: () => {
-            providerFacilitiesReq$.unsubscribe();
-          }
-        });
-        const supplierInvoicesReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/supplier-invoice?queryModel=' + JSON.stringify(queryModel)).subscribe({
-          next: ({ data }) => {
-            this.supplierInvoices = data;
-          },
-          complete: () => {
-            supplierInvoicesReq$.unsubscribe();
-          }
-        });
-        const paymentVouchersReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/payment-voucher?queryModel=' + JSON.stringify(queryModel)).subscribe({
-          next: ({ data }) => {
-            this.paymentVouchers = data;
-          },
-          complete: () => {
-            paymentVouchersReq$.unsubscribe();
-          }
-        });
+        const providerServicesReq$ = this.http
+          .get<StandardHttpResponse>(environment.apiUrl + '/service/provider-service?queryModel=' + JSON.stringify(queryModel))
+          .subscribe({
+            next: ({ data }) => {
+              this.providerServices = data;
+            },
+            complete: () => {
+              providerServicesReq$.unsubscribe();
+            }
+          });
+        const providerFacilitiesReq$ = this.http
+          .get<StandardHttpResponse>(environment.apiUrl + '/service/provider-facility?queryModel=' + JSON.stringify(queryModel))
+          .subscribe({
+            next: ({ data }) => {
+              this.providerFacilities = data;
+            },
+            complete: () => {
+              providerFacilitiesReq$.unsubscribe();
+            }
+          });
+        const supplierInvoicesReq$ = this.http
+          .get<StandardHttpResponse>(environment.apiUrl + '/service/supplier-invoice?queryModel=' + JSON.stringify(queryModel))
+          .subscribe({
+            next: ({ data }) => {
+              this.supplierInvoices = data;
+            },
+            complete: () => {
+              supplierInvoicesReq$.unsubscribe();
+            }
+          });
+        const paymentVouchersReq$ = this.http
+          .get<StandardHttpResponse>(environment.apiUrl + '/service/payment-voucher?queryModel=' + JSON.stringify(queryModel))
+          .subscribe({
+            next: ({ data }) => {
+              this.paymentVouchers = data;
+            },
+            complete: () => {
+              paymentVouchersReq$.unsubscribe();
+            }
+          });
       }
     });
   }
 
+  getTabIndexFromUrl(url) {
+    const regex = /#\d+$/;
+    const result = regex.exec(url);
+    if (result) {
+      const tabIndex = url.substr(result.index + 1);
+      return Number(tabIndex);
+    }
+    return 0;
+  }
 }
