@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
   photoUrl: String,
   attachments: [String],
   provider: { type: mongoose.Types.ObjectId, ref: 'Provider' },
+  category: { type: mongoose.Types.ObjectId, ref: 'Category' },
   description: String
 });
 

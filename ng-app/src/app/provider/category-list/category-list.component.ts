@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryListComponent implements OnInit {
   columns: IStandardColumn[] = [
-     { name: 'name' },
+     { name: 'name', format: 'link', link: (item) => '/category/view/' + item._id },
      { name: 'type' },
      { name: 'remarks' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },

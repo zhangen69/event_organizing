@@ -84,6 +84,7 @@ import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
 import { ObjectToArrayPipe } from './standard/to-array.pipe';
 import { ProviderViewComponent } from './provider/provider-view/provider-view.component';
+import { CategoryViewComponent } from './provider/category-view/category-view.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +151,7 @@ import { ProviderViewComponent } from './provider/provider-view/provider-view.co
     StockItemViewComponent,
     StandardDisplayFieldComponent,
     ProviderViewComponent,
+    CategoryViewComponent,
   ],
   imports: [
     CommonModule,

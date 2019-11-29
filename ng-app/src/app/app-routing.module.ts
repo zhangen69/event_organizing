@@ -1,3 +1,4 @@
+import { CategoryViewComponent } from './provider/category-view/category-view.component';
 import { ProviderViewComponent } from './provider/provider-view/provider-view.component';
 import { StockItemViewComponent } from './inventory/stock-item-view/stock-item-view.component';
 import { QuotationFormComponent } from './customer/quotation-form/quotation-form.component';
@@ -178,7 +179,8 @@ const routes: Routes = [
     children: [
       { path: 'list', component: CategoryListComponent },
       { path: 'add', component: CategoryFormComponent },
-      { path: 'edit/:id', component: CategoryFormComponent }
+      { path: 'edit/:id', component: CategoryFormComponent },
+      { path: 'view/:id', component: CategoryViewComponent },
     ]
   },
   {

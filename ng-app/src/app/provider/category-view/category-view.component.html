@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>View Category</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-standard-display-field [field]="displayField" [formData]="category" *ngFor="let displayField of displayFields">
+    </app-standard-display-field>
+  </mat-card-content>
+</mat-card>
+<h1>Category</h1>
+<pre>{{ category | json }}</pre>
+<h1>Services</h1>
+<pre>{{ providerServices | json }}</pre>
+<h1>Facilities</h1>
+<pre>{{ providerFacilities | json }}</pre>
