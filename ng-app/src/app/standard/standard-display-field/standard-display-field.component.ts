@@ -24,7 +24,9 @@ export class StandardDisplayFieldComponent implements OnInit {
       return;
     }
 
-    if (field.name.includes('.')) {
+    if (field.getValue) {
+      return field.getValue(formData);
+    } else if (field.name.includes('.')) {
       let thisVal = formData;
       field.name.split('.').forEach(ele => {
         if (!thisVal) {

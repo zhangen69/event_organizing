@@ -60,6 +60,7 @@ export interface IStandardDisplayField {
   displayName?: string;
   type?: string;
   noLabel?: boolean;
+  getValue?: Func;
 }
 
 export interface StandardHttpResponse {
