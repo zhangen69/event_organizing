@@ -9,19 +9,15 @@ import { IStandardColumn } from 'src/app/standard/standard.interface';
 export class QuotationListComponent implements OnInit {
   includes: string[] = ['customer', 'eventPlan'];
   columns: IStandardColumn[] = [
-     { name: 'customer.name', displayName: 'Customer', width: '250px' },
-     { name: 'eventPlan.name', displayName: 'Event Plan', width: '200px' },
-     { name: 'status', width: '100px' },
-     { name: 'remarks' },
-     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
+    { name: 'customer.name', displayName: 'Customer', width: '250px', format: 'link', link: item => '/customer/view/' + item.customer._id },
+    { name: 'eventPlan.name', displayName: 'Event Plan', width: '200px', format: 'link', link: item => '/event-plan/view/' + item.eventPlan._id },
+    { name: 'status', width: '100px' },
+    { name: 'remarks' },
+    { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
   ];
-  filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
-  ];
+  filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

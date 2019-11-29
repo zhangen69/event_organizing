@@ -9,7 +9,9 @@
     <div class="tab-body">
       <div class="view-field">
         <label class="mat-body-strong">Customer</label>
-        <div class="mat-body">{{ eventPlan.customer?.name }}</div>
+        <div class="mat-body">
+          <a [routerLink]="['/customer/view/' + eventPlan.customer._id]">{{ eventPlan.customer?.name }}</a>
+        </div>
       </div>
       <div class="view-field">
         <label class="mat-body-strong">Date & Time</label>

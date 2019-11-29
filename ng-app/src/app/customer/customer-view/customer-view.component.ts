@@ -15,10 +15,10 @@ export class CustomerViewComponent implements OnInit {
   invoices = [];
   invoiceDisplayFields: IStandardDisplayField[] = [
     { name: 'code', type: 'title' },
-    { name: 'status' },
-    { name: 'eventPlan.code', displayName: 'Event Plan Code' },
+    { name: 'eventPlan.code', type: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id, displayName: 'Event Plan Code' },
     { name: 'eventPlan.name', displayName: 'Event Plan Name' },
     { name: 'totalAmount', getValue: (item) => item.lines.reduce((acc, line) => acc + (line.quantity * line.unitPrice), 0) },
+    { name: 'status' },
   ];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
