@@ -42,8 +42,8 @@ export class PaymentVoucherFormComponent implements OnInit {
       { name: 'referenceNumber', type: 'string' },
       { name: 'payeeName', type: 'string' },
       { name: 'payeeIdentityNumber', type: 'string' },
-      { name: 'draweeName', type: 'string' },
-      { name: 'draweeIdentityNumber', type: 'string' },
+      // { name: 'draweeName', type: 'string' },
+      // { name: 'draweeIdentityNumber', type: 'string' },
       { name: 'issuedDate', type: 'date' },
     ]},
     { name: 'bankTransferInfo', type: 'object', isShow: item => item.paymentType === PaymentType[PaymentType.BankTransfer], fields: [
