@@ -157,6 +157,8 @@ export class EventPlanViewComponent {
             'facilities.provider',
             'facilities.providerFacility',
             'processes.provider',
+            'processes.providerService',
+            'processes.providerFacility',
             'stockItems.stockItem'
           ];
           const getEventPlanReq = this.http
@@ -290,7 +292,10 @@ export class EventPlanViewComponent {
     });
 
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
-      next: data => this.updateEventPlan(data),
+      next: data => {
+        data.processes.filter(process => !process.status).forEach(process => process.status = 'Open');
+        this.updateEventPlan(data);
+      },
       complete: () => {
         this.setTitle();
         dialogClosedReq.unsubscribe();
@@ -685,6 +690,8 @@ export class EventPlanViewComponent {
     process.status = status;
     const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
       next: () => {
+        this.filterProcesses(this.selectProcessStatus);
+        console.log(this.selectProcessStatus);
         this.toastr.info('Updated Status Succesfully!');
       },
       complete: () => {
