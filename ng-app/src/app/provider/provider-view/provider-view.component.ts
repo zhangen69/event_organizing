@@ -65,7 +65,8 @@ export class ProviderViewComponent implements OnInit {
         const queryModel = {
           type: 'provider',
           searchText: params.id,
-          queryType: 'match'
+          queryType: 'match',
+          includes: [],
         };
         const providerServicesReq$ = this.http
           .get<StandardHttpResponse>(environment.apiUrl + '/service/provider-service?queryModel=' + JSON.stringify(queryModel))

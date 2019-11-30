@@ -2,7 +2,7 @@
     {{ eventPlan.name }})</span>
 </span>
 
-<mat-tab-group [selectedIndex]="selectedTabIndex" *ngIf="eventPlan._id">
+<mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event.index)" *ngIf="eventPlan._id">
   <!-- Tab1: Basis Info -->
   <mat-tab label="Basis Info">
     <div class="tab-body">
@@ -217,8 +217,10 @@
         </div>
 
         <div class="form">
-          <app-standard-display-field [field]="{ name: 'title', type: 'title' }" [formData]="eventPlan.registrationForm"></app-standard-display-field>
-          <app-standard-display-field [field]="{ name: 'description', noLabel: true }" [formData]="eventPlan.registrationForm"></app-standard-display-field>
+          <app-standard-display-field [field]="{ name: 'title', type: 'title' }"
+            [formData]="eventPlan.registrationForm"></app-standard-display-field>
+          <app-standard-display-field [field]="{ name: 'description', noLabel: true }"
+            [formData]="eventPlan.registrationForm"></app-standard-display-field>
           <h4>Basic Information</h4>
           <div *ngFor="let setting of (eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value')">
             <app-standard-form-field [field]="{ name: setting.key, type: 'string' }"></app-standard-form-field>
@@ -280,7 +282,8 @@
           <thead>
             <tr>
               <th>
-                <mat-checkbox [(ngModel)]="isSelectedAllAttendee" (change)="selectAllAttendee(attendeeQueryModel.list, isSelectedAllAttendee)"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="isSelectedAllAttendee"
+                  (change)="selectAllAttendee(attendeeQueryModel.list, isSelectedAllAttendee)"></mat-checkbox>
               </th>
               <th>Code</th>
               <th *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
@@ -293,7 +296,8 @@
           <tbody>
             <tr *ngFor="let attendee of attendeeQueryModel.list">
               <td>
-                <mat-checkbox [(ngModel)]="attendee.isSelected" (change)="checkIsAllAttendeeSelected(attendeeQueryModel.list)"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="attendee.isSelected"
+                  (change)="checkIsAllAttendeeSelected(attendeeQueryModel.list)"></mat-checkbox>
               </td>
               <td>{{ attendee.code }}</td>
               <td *ngFor="let setting of eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value'">
@@ -328,7 +332,8 @@
       <ng-template #noQuotationMessage>
         <p>No Quotation Yet, Please create a quotation for this event plan.</p>
         <p>Click <a [routerLink]="['/quotation/add']"
-            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }">here</a> redirect to
+            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }">here</a>
+          redirect to
           new quotation form page.</p>
       </ng-template>
       <ng-template #showQuotationInfo>
@@ -384,8 +389,9 @@
           </tbody>
         </table>
         <div class="action-group">
-          <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}" [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
+          <button class="btn-sm" routerLink="/quotation/edit/{{quotation._id}}"
+            [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '5' }" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Edit</button>
           <button class="btn-sm" mat-raised-button color="primary" (click)="generateInvoiceFromQuotation(quotation)"
             *ngIf="checkButtonIsValid(quotation, ['Closed', 'Confirmed']) && invoice === null">Generate Final
             Invoice</button>
@@ -401,7 +407,8 @@
       <ng-template #noInvoiceMessage>
         <p>No Invoice Yet, Please create an invoice for this event plan.</p>
         <p>Click <a [routerLink]="['/invoice/add']"
-            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }">here</a> redirect to
+            [queryParams]="{ eventPlan: eventPlan._id, customer: eventPlan.customer?._id, callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }">here</a>
+          redirect to
           new invoice form page.</p>
       </ng-template>
       <ng-template #showInvoiceInfo>
@@ -428,11 +435,13 @@
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Issued')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines)">Confirm</button>
+            color="primary"
+            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines)">Confirm</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) === 0">Pay</button>
+            color="primary"
+            *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) === 0">Pay</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Closed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Paid'])">Close</button>
         </div>
@@ -461,16 +470,17 @@
           </tbody>
         </table>
         <div class="action-group">
-          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}" [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }" mat-raised-button color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
-            <button mat-raised-button color="primary" class="btn-sm"
-                [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit', callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
-                *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines)">Generate Deposit</button>
-              <button mat-raised-button color="primary" class="btn-sm"
-                [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
-                *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) !== 0">Generate Payment</button>
+          <button class="btn-sm" routerLink="/invoice/edit/{{invoice._id}}"
+            [queryParams]="{ callback: '/event-plan/view/' + this.eventPlan._id, fragment: '6' }" mat-raised-button
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
+          <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/add/']"
+            [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit', callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
+            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines)">Generate
+            Deposit</button>
+          <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/add/']"
+            [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
+            *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) !== 0">Generate
+            Payment</button>
         </div>
         <!-- <pre>{{ invoice | json }}</pre> -->
       </ng-template>
@@ -480,7 +490,8 @@
   <mat-tab label="Supplier Invoices">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/supplier-invoice/add']"
-        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '7' }">Add New Supplier Invoice</button>
+        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '7' }">Add
+        New Supplier Invoice</button>
       <div class="supplier-invoice-wrapper" fxLayout="row skretch" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
         <mat-card *ngFor="let supplierInvoice of supplierInvoices">
           <mat-card-header>
@@ -490,7 +501,10 @@
           <mat-card-content>
             <div class="view-field">
               <label class="mat-body-strong">Provider</label>
-              <div class="mat-body">{{ supplierInvoice.provider.name }}</div>
+              <div class="mat-body">
+                <a
+                  [routerLink]="['/provider/view/' + supplierInvoice.provider._id]">{{ supplierInvoice.provider.name }}</a>
+              </div>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Reference Number</label>
@@ -555,10 +569,10 @@
               [routerLink]="['/supplier-invoice/edit/' + supplierInvoice._id]"
               [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '7' }"
               *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Edit</button>
-              <button mat-raised-button color="primary" class="btn-sm"
-                [routerLink]="['/payment/add/']"
-                [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', supplierInvoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) !== 0">Generate Payment</button>
+            <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/add/']"
+              [queryParams]="{ eventPlan: eventPlan._id, provider: supplierInvoice.provider._id, supplierInvoice: supplierInvoice._id, amount: getOutsandingBalance('Provider', supplierInvoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
+              *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) !== 0">Generate
+              Payment</button>
           </mat-card-actions>
         </mat-card>
       </div>
@@ -580,7 +594,10 @@
           <mat-card-content>
             <div class="view-field">
               <label class="mat-body-strong">Provider</label>
-              <div class="mat-body">{{ paymentVoucher.provider.name }}</div>
+              <div class="mat-body">
+                <a
+                  [routerLink]="['/provider/view/' + paymentVoucher.provider._id]">{{ paymentVoucher.provider.name }}</a>
+              </div>
             </div>
             <div class="view-field">
               <label class="mat-body-strong">Total Amount</label>
@@ -689,18 +706,21 @@
   <mat-tab label="Payments">
     <div class="tab-body">
       <button mat-raised-button color="primary" type="button" class="btn-sm" [routerLink]="['/payment/add']"
-        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }">Add New
+        [queryParams]="{ eventPlan: eventPlan._id, callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }">Add
+        New
         Payment</button>
       <div class="payment-wrapper">
         <mat-tab-group>
           <mat-tab label="Customer">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
-              <ng-container [ngTemplateOutlet]="paymentItem" [ngTemplateOutletContext]="{ data: payment }" *ngFor="let payment of payments | filterOptions: 'Customer': 'type'"></ng-container>
+              <ng-container [ngTemplateOutlet]="paymentItem" [ngTemplateOutletContext]="{ data: payment }"
+                *ngFor="let payment of payments | filterOptions: 'Customer': 'type'"></ng-container>
             </div>
           </mat-tab>
           <mat-tab label="Provider">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="0.5%" fxAlignColumns="start stretch">
-              <ng-container [ngTemplateOutlet]="paymentItem" [ngTemplateOutletContext]="{ data: payment }" *ngFor="let payment of payments | filterOptions: 'Provider': 'type'"></ng-container>
+              <ng-container [ngTemplateOutlet]="paymentItem" [ngTemplateOutletContext]="{ data: payment }"
+                *ngFor="let payment of payments | filterOptions: 'Provider': 'type'"></ng-container>
             </div>
           </mat-tab>
         </mat-tab-group>
@@ -714,7 +734,9 @@
             <mat-card-content>
               <div class="view-field" *ngIf="payment.provider">
                 <label class="mat-body-strong">Provider</label>
-                <div class="mat-body">{{ payment.provider.name }}</div>
+                <div class="mat-body">
+                  <a [routerLink]="['/provider/view/' + payment.provider._id]">{{ payment.provider.name }}</a>
+                </div>
               </div>
               <div class="view-field" *ngIf="payment.customer">
                 <label class="mat-body-strong">Customer</label>
@@ -761,7 +783,8 @@
                 </div>
                 <div class="view-field">
                   <label class="mat-body-strong">Payee</label>
-                  <div class="mat-body">{{ payment.chequeInfo.payeeName }} ({{ payment.chequeInfo.payeeIdentityNumber }})
+                  <div class="mat-body">{{ payment.chequeInfo.payeeName }}
+                    ({{ payment.chequeInfo.payeeIdentityNumber }})
                   </div>
                 </div>
                 <div class="view-field">
@@ -801,7 +824,7 @@
             <mat-divider *ngIf="payment.status === 'Open'"></mat-divider>
             <mat-card-actions *ngIf="payment.status === 'Open'">
               <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/edit/' + payment._id]"
-              [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }"
+                [queryParams]="{ callback: '/event-plan/view/' + eventPlan._id, fragment: '9' }"
                 *ngIf="checkButtonIsValid(payment, ['Open'])">Edit</button>
             </mat-card-actions>
           </mat-card>

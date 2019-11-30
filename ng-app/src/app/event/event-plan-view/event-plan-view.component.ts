@@ -119,6 +119,10 @@ export class EventPlanViewComponent {
     });
   }
 
+  onTabChange(tabIndex) {
+    this.location.replaceState(this.location.path() + '#' + tabIndex);
+  }
+
   onCodeResult(resultString: string): void {
     alert('qrcode: ' + resultString);
   }

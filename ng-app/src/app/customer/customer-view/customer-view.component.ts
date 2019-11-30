@@ -16,17 +16,17 @@ export class CustomerViewComponent implements OnInit {
     { name: 'name' },
     { name: 'email' },
     { name: 'registrationNumber' },
-    { name: 'address' },
+    { name: 'address' }
   ];
   invoiceDisplayFields: IStandardDisplayField[] = [
     { name: 'code', type: 'title' },
-    { name: 'eventPlan.code', type: 'link', link: (item) => '/event-plan/view/' + item.eventPlan._id, displayName: 'Event Plan Code' },
+    { name: 'eventPlan.code', type: 'link', link: item => '/event-plan/view/' + item.eventPlan._id, displayName: 'Event Plan Code' },
     { name: 'eventPlan.name', displayName: 'Event Plan Name' },
-    { name: 'totalAmount', type: 'currency', getValue: (item) => item.lines.reduce((acc, line) => acc + (line.quantity * line.unitPrice), 0) },
-    { name: 'status' },
+    { name: 'totalAmount', type: 'currency', getValue: item => item.lines.reduce((acc, line) => acc + line.quantity * line.unitPrice, 0) },
+    { name: 'status' }
   ];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -45,16 +45,17 @@ export class CustomerViewComponent implements OnInit {
           queryType: 'match',
           includes: ['eventPlan']
         };
-        const invoiceReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/invoice?queryModel=' + JSON.stringify(invoiceQueryModel)).subscribe({
-          next: ({ data }) => {
-            this.invoices = data;
-          },
-          complete: () => {
-            invoiceReq$.unsubscribe();
-          }
-        });
+        const invoiceReq$ = this.http
+          .get<StandardHttpResponse>(environment.apiUrl + '/service/invoice?queryModel=' + JSON.stringify(invoiceQueryModel))
+          .subscribe({
+            next: ({ data }) => {
+              this.invoices = data;
+            },
+            complete: () => {
+              invoiceReq$.unsubscribe();
+            }
+          });
       }
     });
   }
-
 }
