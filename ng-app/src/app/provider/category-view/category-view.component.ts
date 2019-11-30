@@ -19,6 +19,13 @@ export class CategoryViewComponent implements OnInit {
     { name: 'name' },
     { name: 'remarks' },
   ];
+  itemDisplayFields: IStandardDisplayField[] = [
+    { name: 'name' },
+    { name: 'provider.name', displayName: 'Provider' },
+    { name: 'unit' },
+    { name: 'unitPrice' },
+    { name: 'remarks' },
+  ];
 
   constructor(private route: ActivatedRoute, private standardService: StandardService, private titleService: Title, private http: HttpClient) {
     this.standardService.init('category');
@@ -33,7 +40,7 @@ export class CategoryViewComponent implements OnInit {
             this.category = data;
           }
         });
-        const queryModel = { type: 'category', searchText: params.id, queryType: 'match' };
+        const queryModel = { type: 'category', searchText: params.id, queryType: 'match', includes: ['provider'] };
         const providerServicesReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/provider-service?queryModel=' + JSON.stringify(queryModel)).subscribe({
           next: ({ data }) => {
             this.providerServices = data;
