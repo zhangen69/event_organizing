@@ -583,7 +583,6 @@ export class EventPlanViewComponent {
       }
     ];
 
-    // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(DialogFormComponent, {
       disableClose: true,
       width: 'auto',
