@@ -67,7 +67,7 @@ table {
 }
 
 .standard-table.mat-table .mat-column-action {
-    width: 250px;
+    width: 100px;
 }
 
 .standard-table.mat-table .mat-column-action button {
