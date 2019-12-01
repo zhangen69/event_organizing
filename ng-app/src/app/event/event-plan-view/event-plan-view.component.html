@@ -467,7 +467,7 @@
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Total Amount</label>
-          <div class="mat-body">{{ getLinesTotalAmount(invoice.lines) | currency: 'MYR ' }}</div>
+          <div class="mat-body">{{ getLinesTotalAmount(invoice.lines, true) | currency: 'MYR ' }}</div>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Outstanding Balance</label>
@@ -482,7 +482,7 @@
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Issue</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Confirmed')" mat-raised-button
             color="primary"
-            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines)">Confirm</button>
+            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines, true)">Confirm</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button
@@ -521,7 +521,7 @@
             color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Edit</button>
           <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/add/']"
             [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), remarks: 'Deposit', callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"
-            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines)">Generate
+            *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) === getLinesTotalAmount(invoice.lines, true)">Generate
             Deposit</button>
           <button mat-raised-button color="primary" class="btn-sm" [routerLink]="['/payment/add/']"
             [queryParams]="{ eventPlan: eventPlan._id, customer: invoice.customer._id, invoice: invoice._id, amount: getOutsandingBalance('Customer', invoice), callback: '/event-plan/view/' + this.eventPlan._id, fragment: '9' }"

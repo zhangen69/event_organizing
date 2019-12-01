@@ -100,7 +100,7 @@ export class EventPlanViewComponent {
     { name: 'a', type: 'Initial' },
     { name: 'b', type: 'Initial' },
     { name: 'c', type: 'Schedule' },
-    { name: 'd', type: 'Initial' },
+    { name: 'd', type: 'Initial' }
   ];
 
   constructor(
@@ -178,7 +178,7 @@ export class EventPlanViewComponent {
                 // this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
                 this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
-                
+
                 if (this.eventPlan.registrationForm && this.eventPlan.registrationForm.settings.length > 0) {
                   this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(
                     settingKey => this.eventPlan.registrationForm.settings[settingKey]
@@ -265,7 +265,10 @@ export class EventPlanViewComponent {
           {
             name: 'processType',
             type: 'enum',
-            enumList: [{ key: 'Service', value: 'Service' }, { key: 'Facility', value: 'Facility' }]
+            enumList: [
+              { key: 'Service', value: 'Service' },
+              { key: 'Facility', value: 'Facility' }
+            ]
           },
           { name: 'provider', type: 'ref', isShow: (eventPlan: any) => !!eventPlan.processType },
           {
@@ -303,7 +306,7 @@ export class EventPlanViewComponent {
         if (data.dismiss) {
           return;
         }
-        data.processes.filter(process => !process.status).forEach(process => process.status = 'Open');
+        data.processes.filter(process => !process.status).forEach(process => (process.status = 'Open'));
         this.updateEventPlan(data);
       },
       complete: () => {
@@ -504,7 +507,7 @@ export class EventPlanViewComponent {
   }
 
   selectAllAttendee(attendees: any[], isSelectAll: boolean) {
-    attendees.forEach(attendee => attendee.isSelected = isSelectAll);
+    attendees.forEach(attendee => (attendee.isSelected = isSelectAll));
   }
 
   checkIsAllAttendeeSelected(attendees: any[]) {
@@ -684,7 +687,7 @@ export class EventPlanViewComponent {
         this.getDataByEventPlanId('invoice', this.eventPlan._id, 'invoice');
         this.toastr.info('Invoice Generated Successfully!');
       },
-      complete: () => (createInvoice$.unsubscribe()),
+      complete: () => createInvoice$.unsubscribe()
     });
   }
 
@@ -794,18 +797,27 @@ export class EventPlanViewComponent {
     return `${from}-${to}`;
   }
 
-  getLinesTotalAmount(lines: any[]) {
+  getLinesTotalAmount(lines: any[], extraCharged: boolean) {
     if (!lines) {
       return 0;
     }
 
-    const total = (lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0)) * (1 + (this.eventPlan.markupRate / 100));
+    let total = lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
+
+    if (extraCharged) {
+      total = total * (1 + this.eventPlan.markupRate / 100);
+    }
 
     return this.formatCurrency(total);
   }
 
   formatCurrency(amount) {
     const dotIndex = amount.toString().indexOf('.');
+
+    if (dotIndex === -1) {
+      return amount;
+    }
+
     const number = amount.toString().substr(0, dotIndex);
     let decimal = amount.toString().substr(number.length + 1, 2);
     let firstDigit = decimal.substr(0, 1);
@@ -845,17 +857,22 @@ export class EventPlanViewComponent {
   }
 
   getOutsandingBalance(paymentForType: string, item: any) {
-    const totalAmount = this.getLinesTotalAmount(item.lines);
+    const totalAmount = this.getLinesTotalAmount(item.lines, paymentForType === 'Customer');
 
     if (!this.payments || this.payments.length === 0 || !item) {
       return totalAmount;
     }
 
-    const paidAmount = this.payments.filter(payment => {
-      return payment.type === paymentForType &&
-        (payment.status === 'Verified' || payment.status === 'Closed') &&
-        ((paymentForType === 'Customer' && payment.invoice && payment.invoice._id === item._id) || (paymentForType === 'Provider' && payment.supplierInvoice && payment.supplierInvoice._id === item._id));
-    }).reduce((acc, payment) => acc + payment.amount, 0);
+    const paidAmount = this.payments
+      .filter(payment => {
+        return (
+          payment.type === paymentForType &&
+          (payment.status === 'Verified' || payment.status === 'Closed') &&
+          ((paymentForType === 'Customer' && payment.invoice && payment.invoice._id === item._id) ||
+            (paymentForType === 'Provider' && payment.supplierInvoice && payment.supplierInvoice._id === item._id))
+        );
+      })
+      .reduce((acc, payment) => acc + payment.amount, 0);
 
     return this.formatCurrency(totalAmount - paidAmount);
   }
