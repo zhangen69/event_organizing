@@ -4,9 +4,9 @@ import { MongooseHelper } from '../helpers/mongoose.helper';
 import Counter from './counter.model';
 import shortid from 'shortid';
 
-const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'In Progress', 'Closed', 'Cancelled'];
-const EventProcessStatus = ['Open', 'In Progress', 'Done', 'Verified', 'Closed', 'Cancelled'];
-const EventProcessTypes = ['Initial', 'Preparation', 'Schedule', 'Closed'];
+const EventPlanStatus = ['Draft', 'Confirmed', 'Initial', 'Preparation', 'InProgress', 'Closed', 'Cancelled'];
+const EventProcessStatus = ['Open', 'InProgress', 'Done', 'Verified', 'Closed', 'Cancelled'];
+const EventProcessTypes = ['Initial', 'Preparation', 'InProgress', 'Schedule', 'Closed'];
 const AttendeeStatus = ['Open', 'Paid', 'Cancelled'];
 
 const EventServiceSchema = new mongoose.Schema({

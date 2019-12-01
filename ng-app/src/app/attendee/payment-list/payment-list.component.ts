@@ -9,13 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class PaymentListComponent implements OnInit {
   includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   columns: IStandardColumn[] = [
-    { name: 'code' },
+    { name: 'code', width: '80px' },
     { name: 'provider.name', displayName: 'Provider' },
     { name: 'customer.name', displayName: 'Customer' },
     {
       name: 'invoice.code',
       displayName: 'Pay For',
       format: 'template',
+      width: '80px',
       template: item => {
         if (item.type === 'Customer' && item.invoice) {
           return item.invoice.code;

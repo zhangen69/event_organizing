@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class PaymentVoucherListComponent implements OnInit {
   includes = ['provider', 'receipt', 'eventPlan'];
   columns: IStandardColumn[] = [
+    { name: 'code' },
     { name: 'provider.name', displayName: 'Provider' },
     { name: 'eventPlan.name', displayName: 'Event Plan' },
-    { name: 'code' },
     { name: 'status' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
   ];

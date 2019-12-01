@@ -58,7 +58,7 @@
           <div class="mat-body">
             {{ service?.name }} x {{ service?.quantity }}
             {{ service?.unit }}
-            ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
+            ({{ service?.unitPrice | currency: 'RM' }} x {{ service?.quantity }} = {{ service?.unitPrice * service?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="service.remarks">{{ service.remarks }}</div>
         </div>
@@ -77,7 +77,8 @@
           <div class="mat-body">
             {{ facility?.name }} x {{ facility?.quantity }}
             {{ facility?.unit }}
-            ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
+            <!-- ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }}) -->
+            ({{ facility?.unitPrice | currency: 'RM' }} x {{ facility?.quantity }} = {{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="facility.remarks">{{ facility.remarks }}</div>
         </div>
@@ -96,7 +97,8 @@
           <div class="mat-body">
             {{ stockItem?.name }} x {{ stockItem?.quantity }}
             {{ stockItem?.unit }}
-            ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
+            <!-- ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }}) -->
+            ({{ stockItem?.unitPrice | currency: 'RM' }} x {{ stockItem?.quantity }} = {{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="stockItem.remarks">{{ stockItem.remarks }}</div>
         </div>

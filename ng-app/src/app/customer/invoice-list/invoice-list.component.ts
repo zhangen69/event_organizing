@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class InvoiceListComponent implements OnInit {
   includes: string[] = ['customer', 'eventPlan'];
   columns: IStandardColumn[] = [
+    { name: 'code', width: '150px' },
      { name: 'customer.name', displayName: 'Customer', width: '250px', format: 'link', link: (item) => '/customer/view/' + item.customer._id },
      { name: 'eventPlan.name', displayName: 'Event Plan', width: '200px' },
      { name: 'status', width: '100px' },
