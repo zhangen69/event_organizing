@@ -157,4 +157,8 @@ button.active {
 .remarks {
   white-space: pre-wrap;
 }
+
+.form mat-expansion-panel {
+  margin-bottom: 10px;
+}
   

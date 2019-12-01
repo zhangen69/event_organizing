@@ -224,18 +224,57 @@
         </div>
 
         <div class="form">
-          <app-standard-display-field [field]="{ name: 'title', type: 'title' }"
-            [formData]="eventPlan.registrationForm"></app-standard-display-field>
-          <app-standard-display-field [field]="{ name: 'description', noLabel: true }"
-            [formData]="eventPlan.registrationForm"></app-standard-display-field>
-          <h4>Basic Information</h4>
-          <div *ngFor="let setting of (eventPlan.registrationForm.settings | toArray | filterOptions: true: 'value')">
-            <app-standard-form-field [field]="{ name: setting.key, type: 'string' }"></app-standard-form-field>
-          </div>
-          <h4 *ngIf="eventPlan.registrationForm.fields.length > 0">Detail Information</h4>
-          <div *ngFor="let field of eventPlan.registrationForm.fields">
-            <app-standard-form-field [field]="field"></app-standard-form-field>
-          </div>
+          <mat-card class="card-md">
+            <mat-card-header>
+              <mat-card-title>{{ eventPlan.registrationForm.title }}</mat-card-title>
+              <mat-card-subtitle>
+                  <app-standard-display-field [field]="{ name: 'description', noLabel: true }" [formData]="eventPlan.registrationForm">
+                  </app-standard-display-field>
+              </mat-card-subtitle>
+              <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-expansion-panel expanded>
+                  <mat-expansion-panel-header class="bg-primary">
+                    <mat-panel-title>
+                      <h4>Basic Information</h4>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <app-standard-form-field [field]="{ name: 'name', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.name"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'gender', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.gender"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.identityNumber"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'email', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.email"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.phoneNumber"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'organization', type: 'string', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.organization"></app-standard-form-field>
+                  <app-standard-form-field [field]="{ name: 'address', type: 'textarea', required: true }"
+                    *ngIf="eventPlan.registrationForm?.settings.address"></app-standard-form-field>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel expanded *ngIf="eventPlan.registrationForm?.fields.length > 0">
+                  <mat-expansion-panel-header class="bg-primary">
+                    <mat-panel-title>
+                      <h4>Detail Information</h4>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div *ngFor="let field of eventPlan.registrationForm?.fields">
+                    <app-standard-form-field [field]="field"></app-standard-form-field>
+                  </div>
+                </mat-expansion-panel>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" type="button">
+                <mat-icon>done</mat-icon> Register Now
+              </button>
+            </mat-card-actions>
+          </mat-card>
         </div>
       </ng-template>
     </div>
