@@ -40,11 +40,11 @@ export class SupplierInvoiceListComponent implements OnInit {
         }
     ];
     columns: IStandardColumn[] = [
-        { name: 'code', width: '100px' },
-        { name: 'eventPlan.name', displayName: 'Event Plan', width: '150px' },
-        { name: 'provider.name', displayName: 'Provider', width: '150px' },
+        { name: 'code', width: '80px' },
+        { name: 'eventPlan.name', displayName: 'Event Plan', format: 'link', link: item => item.eventPlan ? '/event-plan/view/' + item.eventPlan._id : '', width: '150px' },
+        { name: 'provider.name', displayName: 'Provider', format: 'link', link: item => item.provider ? '/provider/view/' + item.provider._id : '', width: '150px' },
         { name: 'referenceNumber', width: '150px' },
-        { name: 'period', width: '100px' },
+        { name: 'period', width: '80px' },
         { name: 'status', width: '80px' },
         { name: 'remarks' },
         { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }

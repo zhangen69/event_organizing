@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IStandardFormField } from 'src/app/standard/standard.interface';
+import { IStandardFormField, StandardHttpResponse } from 'src/app/standard/standard.interface';
 import { DialogFormComponent } from 'src/app/templates/dialog-form/dialog-form.component';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -81,12 +81,22 @@ export class SupplierInvoiceFormComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['eventPlan']) {
-        const getEventPlan$ = this.http.get<{ data }>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
+        const getEventPlan$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/event-plan/' + params['eventPlan']).subscribe({
           next: ({ data }) => {
             this.formData.eventPlan = data;
           },
           complete: () => {
             getEventPlan$.unsubscribe();
+          }
+        });
+      }
+      if (params['provider']) {
+        const req$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/provider/' + params['provider']).subscribe({
+          next: ({ data }) => {
+            this.formData.provider = data;
+          },
+          complete: () => {
+            req$.unsubscribe();
           }
         });
       }
