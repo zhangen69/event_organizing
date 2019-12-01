@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export class EventPlanListComponent implements OnInit {
     @ViewChild('generateEventForm', { static: true })
     generateEventForm: TemplateRef<any>;
+    includes: string[] = ['customer'];
     actions = [
         {
             name: 'Generate Event',
@@ -47,6 +48,7 @@ export class EventPlanListComponent implements OnInit {
     columns: IStandardColumn[] = [
         { name: 'code', format: 'link', link: '/event-plan/view/', width: '80px' },
         { name: 'name', width: '100px' },
+        { name: 'customer.name', width: '150px', format: 'link', link: item => item.customer ? '/customer/view/' + item.customer._id : '' },
         {
             name: 'date',
             width: '100px',
