@@ -589,10 +589,10 @@
                 mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Confirm</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Paid')"
                 mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed'])">Pay</button>
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) === 0">Pay</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Cancelled')"
                 mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Open', 'Confirmed'])">Cancel</button>
+                *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Cancel</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Closed')"
                 mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Paid'])">Close</button>
             </div>
@@ -849,11 +849,11 @@
                     ({{ payment.chequeInfo.payeeIdentityNumber }})
                   </div>
                 </div>
-                <div class="view-field">
+                <!-- <div class="view-field">
                   <label class="mat-body-strong">Drawee</label>
                   <div class="mat-body">{{ payment.chequeInfo.draweeName }}
                     ({{ payment.chequeInfo.draweeIdentityNumber }})</div>
-                </div>
+                </div> -->
                 <div class="view-field">
                   <label class="mat-body-strong">Issued Date</label>
                   <div class="mat-body">{{ payment.chequeInfo.issuedDate | date: 'dd-MM-yyyy' }}</div>

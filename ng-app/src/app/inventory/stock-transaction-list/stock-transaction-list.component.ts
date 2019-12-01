@@ -22,7 +22,7 @@ export class StockTransactionListComponent implements OnInit {
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'stockItemName', displayName: 'Stock Item Name', queryType: 'string' },
   ];
 
   constructor() { }

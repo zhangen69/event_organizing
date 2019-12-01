@@ -53,8 +53,8 @@ export class PaymentFormComponent implements OnInit {
       { name: 'referenceNumber', type: 'string', required: true },
       { name: 'payeeName', type: 'string', required: true },
       { name: 'payeeIdentityNumber', type: 'string', required: true },
-      { name: 'draweeName', type: 'string', required: true },
-      { name: 'draweeIdentityNumber', type: 'string', required: true },
+      // { name: 'draweeName', type: 'string', required: true },
+      // { name: 'draweeIdentityNumber', type: 'string', required: true },
       { name: 'issuedDate', type: 'date', required: true },
     ]},
     { name: 'bankTransferInfo', type: 'object', isShow: item => item.paymentType === PaymentType[PaymentType.BankTransfer], fields: [

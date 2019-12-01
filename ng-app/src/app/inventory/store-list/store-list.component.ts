@@ -15,7 +15,8 @@ export class StoreListComponent implements OnInit {
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'name', displayName: 'Name', queryType: 'string' },
+     { type: 'status', displayName: 'Status', queryType: 'string' },
   ];
 
   constructor() { }
