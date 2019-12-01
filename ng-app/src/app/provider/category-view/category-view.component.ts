@@ -15,6 +15,7 @@ export class CategoryViewComponent implements OnInit {
   category: any;
   providerServices = [];
   providerFacilities = [];
+  stockItems = [];
   displayFields: IStandardDisplayField[] = [
     { name: 'name' },
     { name: 'remarks' },
@@ -55,6 +56,14 @@ export class CategoryViewComponent implements OnInit {
           },
           complete: () => {
             providerFacilitiesReq$.unsubscribe();
+          }
+        });
+        const stockItemsReq$ = this.http.get<StandardHttpResponse>(environment.apiUrl + '/service/stock-item?queryModel=' + JSON.stringify(queryModel)).subscribe({
+          next: ({ data }) => {
+            this.stockItems = data;
+          },
+          complete: () => {
+            stockItemsReq$.unsubscribe();
           }
         });
       }

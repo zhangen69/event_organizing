@@ -16,7 +16,7 @@ export class StoreListComponent implements OnInit {
   ];
   filterList = [
      { type: 'name', displayName: 'Name', queryType: 'string' },
-     { type: 'status', displayName: 'Status', queryType: 'string' },
+     { type: 'status', displayName: 'Statups', queryType: 'string' },
   ];
 
   constructor() { }
