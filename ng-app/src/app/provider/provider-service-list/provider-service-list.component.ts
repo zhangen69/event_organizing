@@ -9,14 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class ProviderServiceListComponent implements OnInit {
   includes = ['provider'];
   columns: IStandardColumn[] = [
-    { name: 'provider.name', displayName: 'Provider' },
+    { name: 'provider.name', displayName: 'Provider', format: 'link', link: item => item.provider ? '/provider/view/' + item.provider._id : '' },
     { name: 'name' },
     { name: 'unit' },
     { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'currency' },
     { name: 'description' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
   ];
-  filterList = [{ type: 'name', display: 'Name', queryType: 'string' }];
+  filterList = [
+    { type: 'name', displayName: 'Name', queryType: 'string' },
+    { type: 'description', displayName: 'Description', queryType: 'string' },
+  ];
 
   constructor() {}
 
