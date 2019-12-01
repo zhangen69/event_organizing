@@ -20,7 +20,7 @@ export class ReceiptFormComponent implements OnInit {
         // { name: 'code', type: 'string', required: true },
         { name: 'provider', type: 'ref', required: true },
         { name: 'store', type: 'ref', required: true },
-        { name: 'supplierInvoice', type: 'ref', refName: 'code' },
+        // { name: 'supplierInvoice', type: 'ref', refName: 'code' },
         { name: 'remarks', type: 'textarea' },
         {
             name: 'lines',
