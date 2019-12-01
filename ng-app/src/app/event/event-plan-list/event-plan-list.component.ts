@@ -65,7 +65,12 @@ export class EventPlanListComponent implements OnInit {
         { name: 'remarks', displayName: 'Remarks' },
         { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
     ];
-    filterList = [{ type: 'name', display: 'Name', queryType: 'string' }, { type: 'remarks', display: 'Remarks', queryType: 'string' }];
+    filterList = [
+        { type: 'code', displayName: 'Code', queryType: 'string' },
+        { type: 'name', displayName: 'Name', queryType: 'string' },
+        { type: 'status', displayName: 'Status', queryType: 'string' },
+        { type: 'remarks', displayName: 'Remarks', queryType: 'string' },
+    ];
     generateEventFormFields: IStandardFormField[] = [
         { name: 'name', type: 'string' },
         { name: 'customer', type: 'ref' },
