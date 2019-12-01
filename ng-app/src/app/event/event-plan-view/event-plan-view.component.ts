@@ -178,8 +178,7 @@ export class EventPlanViewComponent {
                 // this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
                 this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
-
-                if (this.eventPlan.registrationForm && this.eventPlan.registrationForm.settings.length > 0) {
+                if (this.eventPlan.registrationForm && this.eventPlan.registrationForm.settings) {
                   this.attendeeQueryModel.typeOptions = Object.keys(this.eventPlan.registrationForm.settings).filter(
                     settingKey => this.eventPlan.registrationForm.settings[settingKey]
                   );
@@ -725,6 +724,9 @@ export class EventPlanViewComponent {
   }
 
   drop(event: CdkDragDrop<any[]>) {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
     moveItemInArray(this.eventPlan.processes, event.previousIndex, event.currentIndex);
     const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
       next: () => {

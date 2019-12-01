@@ -14,7 +14,8 @@ export class CategoryListComponent implements OnInit {
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
-     { type: 'name', display: 'Name', queryType: 'string' },
+     { type: 'name', displayName: 'Name', queryType: 'string' },
+     { type: 'type', displayName: 'Type', queryType: 'string' },
   ];
 
   constructor() { }
