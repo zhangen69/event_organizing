@@ -11,14 +11,14 @@ export class CustomerListComponent implements OnInit {
     { name: 'name', displayName: 'Name', format: 'link', link: (item) => '/customer/view/' + item._id },
     { name: 'email', displayName: 'Email' },
     { name: 'address', displayName: 'Address' },
-    { name: 'registrationNumber', displayName: 'Registration Number' },
+    // { name: 'registrationNumber', displayName: 'Registration Number' },
     { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [
     { type: 'name', display: 'Name', queryType: 'string' },
     { type: 'email', display: 'Email', queryType: 'string' },
     { type: 'address', display: 'Address', queryType: 'string' },
-    { type: 'registrationNumber', display: 'Registration Number', queryType: 'string' },
+    // { type: 'registrationNumber', display: 'Registration Number', queryType: 'string' },
   ];
 
   constructor() { }
