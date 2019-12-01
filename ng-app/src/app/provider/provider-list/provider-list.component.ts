@@ -11,7 +11,7 @@ export class ProviderListComponent implements OnInit {
      { name: 'name', format: 'link', link: (item) => '/provider/view/' + item._id },
      { name: 'email' },
      { name: 'address' },
-     { name: 'registrationNumber' },
+    //  { name: 'registrationNumber' },
     //  { name: 'personInCharged', type: 'array' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
@@ -19,7 +19,7 @@ export class ProviderListComponent implements OnInit {
      { type: 'name', queryType: 'string' },
      { type: 'email', queryType: 'string' },
      { type: 'address', queryType: 'string' },
-     { type: 'registrationNumber', queryType: 'string' },
+    //  { type: 'registrationNumber', queryType: 'string' },
   ];
 
   constructor() { }

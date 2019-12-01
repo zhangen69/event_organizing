@@ -50,7 +50,6 @@
   </mat-tab>
 
   <mat-tab label="Facilities">
-    <h1>Facilities</h1>
 
     <button mat-raised-button color="primary" type="button" [routerLink]="['/provider-facility/add']" [queryParams]="{ provider: provider._id }" [queryParams]="{ callback: '/provider/view/' + provider._id, fragment: 3 }">New Facility</button>
 
@@ -78,6 +77,9 @@
   </mat-tab>
 
   <mat-tab label="Supplier Inoivces">
+
+    <button mat-raised-button color="primary" type="button" [routerLink]="['/supplier-invoice/add']" [queryParams]="{ provider: provider._id }" [queryParams]="{ callback: '/provider/view/' + provider._id, fragment: 4 }">New Supplier Invoice</button>
+
       <mat-card *ngFor="let invoice of supplierInvoices">
         <mat-card-content>
           <app-standard-display-field [field]="displayField" [formData]="invoice"
