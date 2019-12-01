@@ -14,7 +14,7 @@ export class CategoryFormComponent implements OnInit {
   fields = [
      { name: 'name', type: 'string', required: true },
      { name: 'type', type: 'enum', enum: CategoryType, default: CategoryType[CategoryType.Facility], required: true },
-     { name: 'category', type: 'ref' },
+    //  { name: 'category', type: 'ref' },
      { name: 'remarks', type: 'textarea' },
   ];
 

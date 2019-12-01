@@ -154,4 +154,7 @@ button.active {
         border: 2px solid red;
       }
     
+.remarks {
+  white-space: pre-wrap;
+}
   

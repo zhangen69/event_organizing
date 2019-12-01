@@ -15,11 +15,12 @@ import * as moment from 'moment';
 import { RegistrationFormFieldType } from '../registration-form-status.enum';
 import * as XLSX from 'xlsx';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 export enum EventProcessType {
   'Initial',
   'Preparation',
-  'Setup',
+  'InProgress',
   'Schedule',
   'Closed'
 }
@@ -45,7 +46,7 @@ export class EventPlanViewComponent {
   attendeeService: StandardService;
   filteredEventProcesses: any[] = [];
   selectProcessStatus = '';
-  eventPlanStatus: string[] = ['Initial', 'Preparation', 'In Progress', 'Closed'];
+  eventPlanStatus: string[] = ['Initial', 'Preparation', 'InProgress', 'Schedule', 'Closed'];
   isSelectedAllAttendee = false;
   @ViewChild('attendeeTable', { static: false }) attendeeTable: ElementRef;
   attendeeColumns: IStandardColumn[] = [
@@ -95,6 +96,12 @@ export class EventPlanViewComponent {
   currentDevice: MediaDeviceInfo = null;
   hasDevices: boolean;
   hasPermission: boolean;
+  demoList = [
+    { name: 'a', type: 'Initial' },
+    { name: 'b', type: 'Initial' },
+    { name: 'c', type: 'Schedule' },
+    { name: 'd', type: 'Initial' },
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -168,7 +175,7 @@ export class EventPlanViewComponent {
               next: data => {
                 this.eventPlan = data;
                 // sort: formData.processes
-                this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+                // this.eventPlan.processes.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
                 this.filterProcesses(this.selectProcessStatus);
                 this.filterAttendees(this.eventPlan.attendees, this.attendeeQueryModel);
                 
@@ -254,7 +261,7 @@ export class EventPlanViewComponent {
         childName: 'Process Item',
         fields: [
           { name: 'name', type: 'string', required: true },
-          { name: 'type', type: 'enum', enum: EventProcessType, default: EventProcessType[EventProcessType.Schedule] },
+          { name: 'type', type: 'enum', enum: EventProcessType, default: EventProcessType[EventProcessType.Initial] },
           {
             name: 'processType',
             type: 'enum',
@@ -293,6 +300,9 @@ export class EventPlanViewComponent {
 
     const dialogClosedReq = dialogRef.afterClosed().subscribe({
       next: data => {
+        if (data.dismiss) {
+          return;
+        }
         data.processes.filter(process => !process.status).forEach(process => process.status = 'Open');
         this.updateEventPlan(data);
       },
@@ -703,16 +713,30 @@ export class EventPlanViewComponent {
   filterProcesses(status?: string) {
     if (!status) {
       this.filteredEventProcesses = this.eventPlan.processes;
+      this.selectProcessStatus = status;
     } else {
       this.selectProcessStatus = status;
       this.filteredEventProcesses = this.eventPlan.processes.filter(val => val.status === status);
     }
-    this.filteredEventProcesses.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+    // this.filteredEventProcesses.sort((a, b) => (a.order > b.order ? -1 : a.order === b.order ? 0 : 1));
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.eventPlan.processes, event.previousIndex, event.currentIndex);
+    const eventPlanReq = this.eventPlanService.submit(this.eventPlan).subscribe({
+      next: () => {
+        this.toastr.info('Moved Process Position!');
+      },
+      complete: () => {
+        eventPlanReq.unsubscribe();
+      }
+    });
   }
 
   onMoveUpPosition(item, itemIndex) {
-    const targetItem = this.eventPlan.processes[itemIndex];
-    const swapItem = this.eventPlan.processes[itemIndex - 1];
+    const targetItem = this.eventPlan.processes.find(process => process === item);
+    const targetItemIndex = this.eventPlan.processes.findIndex(process => process === item);
+    const swapItem = this.eventPlan.processes[targetItemIndex - 1];
 
     targetItem.order += targetItem.order <= swapItem.order ? 1 : 0;
     swapItem.order -= targetItem.order === swapItem.order ? 1 : 0;
@@ -775,15 +799,57 @@ export class EventPlanViewComponent {
       return 0;
     }
 
-    return lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0);
+    const total = (lines.reduce((acc, item) => item.unitPrice * item.quantity + acc, 0)) * (1 + (this.eventPlan.markupRate / 100));
+
+    return this.formatCurrency(total);
+  }
+
+  formatCurrency(amount) {
+    const dotIndex = amount.toString().indexOf('.');
+    const number = amount.toString().substr(0, dotIndex);
+    let decimal = amount.toString().substr(number.length + 1, 2);
+    let firstDigit = decimal.substr(0, 1);
+    const lastDigit = decimal.length === 2 ? decimal.substr(decimal.length - 1, 1) : '0';
+    let newLastDigit;
+
+    switch (lastDigit) {
+      case '1':
+      case '2':
+        newLastDigit = '0';
+        // round down to 0
+        break;
+      case '3':
+      case '4':
+        newLastDigit = '5';
+        // round up to 5
+        break;
+      case '6':
+      case '7':
+        newLastDigit = '5';
+        // round down to 5
+        break;
+      case '8':
+      case '9':
+        newLastDigit = '0';
+        firstDigit = (Number(firstDigit) + 1).toString();
+        // round up to 0
+        break;
+      default:
+        newLastDigit = lastDigit;
+        break;
+    }
+
+    decimal = firstDigit + newLastDigit;
+
+    return Number(Number(number + '.' + decimal).toFixed(2));
   }
 
   getOutsandingBalance(paymentForType: string, item: any) {
-    if (!this.payments || this.payments.length === 0 || !item) {
-      return 0;
-    }
-
     const totalAmount = this.getLinesTotalAmount(item.lines);
+
+    if (!this.payments || this.payments.length === 0 || !item) {
+      return totalAmount;
+    }
 
     const paidAmount = this.payments.filter(payment => {
       return payment.type === paymentForType &&
@@ -791,7 +857,7 @@ export class EventPlanViewComponent {
         ((paymentForType === 'Customer' && payment.invoice && payment.invoice._id === item._id) || (paymentForType === 'Provider' && payment.supplierInvoice && payment.supplierInvoice._id === item._id));
     }).reduce((acc, payment) => acc + payment.amount, 0);
 
-    return totalAmount - paidAmount;
+    return this.formatCurrency(totalAmount - paidAmount);
   }
 
   private reformItem({ name, displayName, childName, fieldName }) {

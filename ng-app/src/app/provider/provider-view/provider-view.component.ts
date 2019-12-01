@@ -22,7 +22,8 @@ export class ProviderViewComponent implements OnInit {
     { name: 'name' },
     { name: 'email' },
     { name: 'registrationNumber' },
-    { name: 'address' }
+    { name: 'address' },
+    { name: 'remarks' },
   ];
   personInChargedDisplayFields: IStandardDisplayField[] = [{ name: 'name' }, { name: 'email' }, { name: 'jobTitle' }];
   supplierInvoiceDisplayFields: IStandardDisplayField[] = [

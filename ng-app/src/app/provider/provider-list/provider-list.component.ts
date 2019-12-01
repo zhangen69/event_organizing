@@ -12,7 +12,7 @@ export class ProviderListComponent implements OnInit {
      { name: 'email' },
      { name: 'address' },
      { name: 'registrationNumber' },
-     { name: 'personInCharged', type: 'array' },
+    //  { name: 'personInCharged', type: 'array' },
      { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' },
   ];
   filterList = [

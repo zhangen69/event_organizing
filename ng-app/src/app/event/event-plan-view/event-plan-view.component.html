@@ -60,7 +60,7 @@
             {{ service?.unit }}
             ({{ service?.unitPrice * service?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small" *ngIf="service.remarks">{{ service.remarks }}</div>
+          <div class="mat-small remarks" *ngIf="service.remarks">{{ service.remarks }}</div>
         </div>
       </ng-container>
       <!-- Section2: Facilities -->
@@ -79,7 +79,7 @@
             {{ facility?.unit }}
             ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small" *ngIf="facility.remarks">{{ facility.remarks }}</div>
+          <div class="mat-small remarks" *ngIf="facility.remarks">{{ facility.remarks }}</div>
         </div>
       </ng-container>
       <!-- Section3: Stock Items -->
@@ -98,7 +98,7 @@
             {{ stockItem?.unit }}
             ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
           </div>
-          <div class="mat-small" *ngIf="stockItem.remarks">{{ stockItem.remarks }}</div>
+          <div class="mat-small remarks" *ngIf="stockItem.remarks">{{ stockItem.remarks }}</div>
         </div>
       </ng-container>
     </div>
@@ -106,6 +106,10 @@
   <!-- Tab3: Processes -->
   <mat-tab label="Processes">
     <div class="tab-body">
+      <!-- <div cdkDropList (cdkDropListDropped)="dropDemo(demoList, $event)">
+          <div cdkDrag *ngFor="let item of demoList | processesFilter: 'Initial'">{{ item.name }}</div>
+      </div>
+      <pre>{{ eventPlan.processes | json }}</pre> -->
       <div class="mat-subheading-1">Processes
         <button mat-icon-button class="process-btn-group" color="primary" (click)="addEventProcessToEvent()">
           <mat-icon>edit</mat-icon>
@@ -139,21 +143,25 @@
                 (click)="filterProcesses('Cancelled')">Cancelled</button>
             </div>
             <!-- <pre>{{ filteredEventProcesses | json }}</pre> -->
-            <div class="process-item"
-              *ngFor="let process of filteredEventProcesses | processesFilter: status; let i = index; let l = count">
-              <mat-card class="mat-elevation-z4">
-                <div *ngIf="!selectProcessStatus">
-                  <button mat-button (click)="onMoveDownPosition(process, i)" *ngIf="i !== l-1">
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                  </button>
-                  <button mat-button (click)="onMoveUpPosition(process, i)" *ngIf="i !== 0">
-                    <mat-icon>keyboard_arrow_up</mat-icon>
-                  </button>
-                </div>
-                <div class="mat-body-strong">
-                  {{ getDuration(process) }} <i>{{ process.type }}</i>
-                </div>
-                <pre fxLayout="column">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+              <!-- <div class="example-box" *ngFor="let movie of filteredEventProcesses" cdkDrag>{{movie}}</div> -->
+              <div class="process-item" cdkDrag
+                *ngFor="let process of eventPlan.processes; let i = index; let l = count">
+                <mat-card class="mat-elevation-z4" *ngIf="process.type === status">
+                  <!-- <div *ngIf="!selectProcessStatus">
+                    <button mat-button (click)="onMoveDownPosition(process, i)" *ngIf="i !== l-1">
+                      <mat-icon>keyboard_arrow_down</mat-icon>
+                    </button>
+                    <button mat-button (click)="onMoveUpPosition(process, i)" *ngIf="i !== 0">
+                      <mat-icon>keyboard_arrow_up</mat-icon>
+                    </button>
+                  </div> -->
+                  <div class="mat-body-strong">
+                    {{ getDuration(process) }} <i>{{ process.type }}</i>
+                  </div>
+                  <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>
+                  <div class="mat-small">{{ process?.provider?.name }}</div>
+                  <pre fxLayout="column">
                     <span>Status: {{ process.status }}</span>
                     <div class="btn-group" fxLayout="row">
                         <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'In Progress')" *ngIf="process.status === 'Open'">Proceed</button>
@@ -163,10 +171,9 @@
                         <button mat-stroked-button class="btn-sm" type="button" (click)="changeProcessStatus(process, 'Cancelled')" *ngIf="process.status === 'Open'">Cancel</button>
                     </div>
                   </pre>
-                <div class="mat-body-strong">{{ process.type }}:{{ process.name }}</div>
-                <div class="mat-small">{{ process?.provider?.name }}</div>
-                <div class="mat-body" *ngIf="process.remarks">{{ process.remarks }}</div>
-              </mat-card>
+                  <div class="mat-body" *ngIf="process.remarks">{{ process.remarks }}</div>
+                </mat-card>
+              </div>
             </div>
             <div class="mat-body" *ngIf="(filteredEventProcesses | processesFilter: status).length === 0">
               <p>No process yet.</p>

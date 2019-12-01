@@ -6,7 +6,8 @@ const schema = new mongoose.Schema({
   email: String,
   address: String,
   registrationNumber: String,
-  personInCharged: { type: [Object], default: [] }
+  personInCharged: { type: [Object], default: [] },
+  remarks: String,
 });
 
 schema.add(auditable);

@@ -11,6 +11,7 @@ export class ProviderFormComponent implements OnInit {
      { name: 'email', type: 'string', required: true },
      { name: 'address', type: 'textarea', required: true },
      { name: 'registrationNumber', type: 'string', required: true },
+     { name: 'remarks', type: 'textarea' },
      { name: 'personInCharged', type: 'array', displayName: 'Person In Charged', childName: 'Person', fields: [
        { name: 'name', type: 'string', displayName: 'Name' },
        { name: 'jobTitle', type: 'string', displayName: 'Title/Position' },

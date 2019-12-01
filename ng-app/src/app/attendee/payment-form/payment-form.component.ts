@@ -156,7 +156,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['amount']) {
-        this.formData.amount = params['amount'];
+        this.formData.amount = Number(Number(params['amount']).toFixed(2));
       }
       if (params['remarks']) {
         this.formData.remarks = params['remarks'];
