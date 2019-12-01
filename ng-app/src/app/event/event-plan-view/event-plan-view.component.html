@@ -408,7 +408,7 @@
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Cancelled')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Open', 'Revised'])">Cancel</button>
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Revised')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(quotation, ['Confirmed', 'Issued'])">Revise</button>
+            color="primary" *ngIf="checkButtonIsValid(quotation, ['Issued'])">Revise</button>
           <button class="btn-sm" (click)="changeItemStatus(quotation, 'quotation', 'Closed')" mat-raised-button
             color="primary" *ngIf="checkButtonIsValid(quotation, ['Confirmed'])">Close</button>
         </div>

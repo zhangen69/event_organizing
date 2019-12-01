@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
   customer: { type: mongoose.Types.ObjectId, ref: 'Customer' },
   eventPlan: { type: mongoose.Types.ObjectId, ref: 'EventPlan' },
   lines: { type: [line], default: [] },
-  status: { type: String, enum: ['Open', 'Confirmed', 'Paid', 'Closed', 'Revised', 'Cancelled'] },
+  status: { type: String, enum: ['Open', 'Issued', 'Confirmed', 'Closed', 'Revised', 'Cancelled'] },
   remarks: String
 });
 

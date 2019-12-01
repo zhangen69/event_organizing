@@ -6,9 +6,9 @@ import { Location } from '@angular/common';
 
 enum QuotationStatus {
   Open,
+  Issued,
   Confirmed,
   Revised,
-  Paid,
   Closed,
   Cancelled
 }
