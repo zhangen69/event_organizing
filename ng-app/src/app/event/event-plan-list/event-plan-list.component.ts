@@ -45,10 +45,11 @@ export class EventPlanListComponent implements OnInit {
         }
     ];
     columns: IStandardColumn[] = [
-        { name: 'code', format: 'link', link: '/event-plan/view/' },
-        { name: 'name' },
+        { name: 'code', format: 'link', link: '/event-plan/view/', width: '80px' },
+        { name: 'name', width: '100px' },
         {
             name: 'date',
+            width: '100px',
             format: 'template',
             template: item => {
                 const from = moment(item.dateFrom);
