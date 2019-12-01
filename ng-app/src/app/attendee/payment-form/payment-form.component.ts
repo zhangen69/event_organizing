@@ -32,6 +32,7 @@ enum PaymentForType {
 export class PaymentFormComponent implements OnInit {
   formData: any = {};
   paidAmount = 0;
+  outstandingAmount = 0;
   includes: string[] = ['provider', 'customer', 'eventPlan', 'supplierInvoice', 'invoice'];
   fields: IStandardFormField[] = [
     { name: 'eventPlan', type: 'ref', required: true },
@@ -42,10 +43,8 @@ export class PaymentFormComponent implements OnInit {
     { name: 'invoice', type: 'ref', refName: 'code', isShow: item => item.type === PaymentForType[PaymentForType.Customer], required: true },
     { name: 'status', type: 'enum', enum: PaymentStatus, default: PaymentStatus[PaymentStatus.Open] },
     { name: 'amount', type: 'number', max: (item) => {
-      if (item.invoice) {
-        return item.invoice.lines.reduce((acc, line) => acc + (line.unitPrice * line.quantity), 0) - this.paidAmount;
-      } else if (item.supplierInvoice) {
-        return item.supplierInvoice.lines.reduce((acc, line) => acc + (line.unitPrice * line.quantity), 0) - this.paidAmount;
+      if (item.invoice || item.supplierInvoice) {
+        return this.outstandingAmount - this.paidAmount;
       }
       return false;
     }, required: true },
@@ -156,6 +155,7 @@ export class PaymentFormComponent implements OnInit {
         });
       }
       if (params['amount']) {
+        this.outstandingAmount = Number(params.amount);
         this.formData.amount = Number(Number(params['amount']).toFixed(2));
       }
       if (params['remarks']) {

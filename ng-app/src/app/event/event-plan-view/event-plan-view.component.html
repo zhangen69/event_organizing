@@ -394,7 +394,7 @@
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Total Amount</label>
-          <div class="mat-body">{{ getLinesTotalAmount(quotation.lines) | currency: 'MYR ' }}</div>
+          <div class="mat-body">{{ getLinesTotalAmount(quotation.lines, true) | currency: 'MYR ' }}</div>
         </div>
         <div class="view-field">
           <label class="mat-body-strong">Status</label>
@@ -433,6 +433,13 @@
               <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
               <td>{{ line.quantity }}</td>
               <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
+            </tr>
+            <tr>
+              <td>Markup Amount</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{ getLinesTotalAmount(quotation.lines) * (eventPlan.markupRate / 100) | currency: 'MYR ' }}</td>
             </tr>
           </tbody>
         </table>
@@ -486,7 +493,7 @@
             color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Issued']) && getOutsandingBalance('Customer', invoice) !== getLinesTotalAmount(invoice.lines, true)">Confirm</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Cancelled')" mat-raised-button
-            color="primary" *ngIf="checkButtonIsValid(invoice, ['Open', 'Issued'])">Cancel</button>
+            color="primary" *ngIf="checkButtonIsValid(invoice, ['Open'])">Cancel</button>
           <button class="btn-sm" (click)="changeItemStatus(invoice, 'invoice', 'Paid')" mat-raised-button
             color="primary"
             *ngIf="checkButtonIsValid(invoice, ['Confirmed']) && getOutsandingBalance('Customer', invoice) === 0">Pay</button>
@@ -514,6 +521,13 @@
               <td>{{ line.unitPrice | currency: 'MYR ' }}</td>
               <td>{{ line.quantity }}</td>
               <td>{{ (line.quantity * line.unitPrice) | currency: 'MYR ' }}</td>
+            </tr>
+            <tr>
+              <td>Markup Amount</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{ getLinesTotalAmount(invoice.lines) * (eventPlan.markupRate / 100) | currency: 'MYR ' }}</td>
             </tr>
           </tbody>
         </table>
