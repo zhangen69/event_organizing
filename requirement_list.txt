@@ -1,0 +1,160 @@
+Project Title: Event Organizing Management System
+Student Name: Tan Zhang En (B180036A)
+Requirement List
+
+Actor - Admin
+1 - Settings
+1.1 - Provider
+1.1.1 - Admin can add new provider
+1.1.2 - Admin can edit provider information
+1.1.3 - Admin can search provider by "Name", "Email" or "Address"
+1.1.4 - Admin can view the provider details
+1.1.5 - Admin can add new service in Provider View Page
+1.1.6 - Admin can add new facility in Provider View Page
+1.1.7 - Admin can view related supplier invoices
+1.1.8 - Admin can view related payment vouchers
+1.1.9 - Admin can delete provider
+--------------------------------------------------------------------
+1.2 - Category
+1.2.1 - Admin can add new category
+1.2.3 - Admin can edit category information
+1.2.4 - Admin can search category by "Name" or "Type"
+1.2.5 - Admin can view the category details
+1.2.6 - Admin can delete category
+--------------------------------------------------------------------
+1.3 - Store
+1.3.1 - Admin can add new store
+1.3.2 - Admin can edit store information
+1.3.3 - Admin can search store by "Name" or "Status"
+1.3.4 - Admin can delete store
+--------------------------------------------------------------------
+1.4 - Stock Item
+1.4.1 - Admin can add new stock item
+1.4.2 - Admin can edit stock item information
+1.4.3 - Admin can search stock item by "Name"
+1.4.4 - Admin can view the stock item details
+1.4.5 - Admin can delete stock item
+--------------------------------------------------------------------
+1.5 - Service
+1.5.1 - Admin can add new service
+1.5.2 - Admin can edit service information
+1.5.3 - Admin can search service by "Name" or "Description"
+1.5.4 - Admin can view the service's provider details
+1.5.5 - Admin can delete service
+--------------------------------------------------------------------
+1.6 - Facility
+1.6.1 - Admin can add new facility
+1.6.2 - Admin can edit facility information
+1.6.3 - Admin can search facility by "Name" or "Description"
+1.6.4 - Admin can view the facility's provider details
+1.6.5 - Admin can delete facility
+--------------------------------------------------------------------
+1.7 - Customer
+1.7.1 - Admin can add new customer
+1.7.2 - Admin can edit customer information
+1.7.3 - Admin can search customer by "Name", "Email" or "Address"
+1.7.4 - Admin can view the customer details
+1.7.5 - Admin can view related invoices
+1.7.6 - Admin can delete customer
+--------------------------------------------------------------------
+1.8 - User
+1.8.1 - Admin can view user list
+1.8.1 - Admin can add new user
+1.8.2 - Admin can edit user information
+1.8.3 - Admin can lock user
+1.8.4 - Admin can reset the user password that will send the reset password link to the user's email
+--------------------------------------------------------------------
+1.9 - Stock Transaction
+1.9.1 - Admin can view stock transaction list
+1.9.2 - Admin can view the stock transaction's stock item details
+1.9.3 - Admin can search stock transaction by "Stock Item Name"
+1.9.4 - Admin can add new stock transaction
+--------------------------------------------------------------------
+1.10 - Profile
+1.10.1 - Admin can edit profile information
+1.10.2 - Admin can change password
+--------------------------------------------------------------------
+2 - Core Functions
+2.1 - Event Plan
+2.1.1 - Admin can add new event plan
+2.1.2 - Admin can edit event plan information
+2.1.3 - Admin can search event plan by "Code", "Name", "Status" or "Remarks"
+2.1.4 - Admin can view event plan's customer details
+2.1.5 - Admin can view event plan details
+--------------------------------------------------------------------
+2.2 - Event Resources
+2.2.1 - Admin can add service for the event plan
+2.2.2 - Admin can edit service information for the event plan
+2.2.3 - Admin can delete service for the event plan
+2.2.4 - Admin can add facility for the event plan
+2.2.5 - Admin can edit facility information for the event plan
+2.2.6 - Admin can delete facility for the event plan
+2.2.7 - Admin can add stock item for the event plan
+2.2.8 - Admin can edit stock item information for the event plan
+2.2.9 - Admin can delete stock item for the event plan
+--------------------------------------------------------------------
+2.3 - Event Processes
+2.3.1 - Admin can add a new process
+2.3.2 - Admin can edit the process information
+2.3.3 - Admin can delete the process
+2.3.4 - Admin can drag and drop to change the position of the process
+2.3.5 - Admin can filter processes by "Status" and "Type"
+2.3.6 - Admin can change process status
+--------------------------------------------------------------------
+2.4 - Registration Form
+2.4.1 - Admin can configure the form
+2.4.2 - Admin can publish the form
+2.4.3 - Admin can copy the link of the form to the clipboard
+2.4.4 - Admin can share the link of the form via email
+2.4.5 - Admin can preview the form
+--------------------------------------------------------------------
+2.5 - Attendee
+2.5.1 - Admin can add a new Attendee
+2.5.2 - Admin can download the template file
+2.5.3 - Admin can upload a excel file to import attendee list
+2.5.4 - Admin can export attendee list to excel file
+2.5.5 - Admin can edit attendee information
+2.5.6 - Admin can search attendee by form fields that configure in the form 
+2.5.7 - Admin can delete attendee
+--------------------------------------------------------------------
+2.6 - Quotation
+2.6.1 - Admin can add a new quotation
+2.6.2 - Admin can edit the quotation information when the status is "Open" or "Revised"
+2.6.3 - Admin can change quotation status
+2.6.4 - Admin can generate final invoice if the quotation status is "Confirmed" or "Closed" and there haven't any invoice from quotation
+--------------------------------------------------------------------
+2.7 - Invoice
+2.7.1 - Admin can add a new invoice
+2.7.2 - Admin can edit the invoice information when the status is "Open"
+2.7.3 - Admin can change the invoice status
+2.7.4 - Admin can generate payment for deposit when the status is "Issued"
+2.7.5 - Admin can change the invoice status as "Confirmed" when the deposit payment is verified
+2.7.6 - Admin can change the invoice status as "Paid" when the outstanding balance is clear
+--------------------------------------------------------------------
+2.8 - Supplier Invoice
+2.8.1 - Admin can add a new supplier invoice
+2.8.2 - Admin can edit the supplier invoice information
+2.8.3 - Admin can change the supplier invoice status
+2.8.4 - Admin can generate payment if the supplier invoice status is "Confirmed"
+2.8.5 - Admin can change the supplier invoice status as "Paid" when the outstanding balance is clear
+--------------------------------------------------------------------
+2.9 - Payment Voucher
+2.9.1 - Admin can add a new payment voucher
+2.9.2 - Admin can edit the payment voucher information
+2.9.3 - Admin can change the payment voucher status
+--------------------------------------------------------------------
+2.10 - Payment
+2.10.1 - Admin can add a new payment for customer or provider
+2.10.2 - Admin can edit the payment information when the status is "Open"
+2.10.3 - Admin can change the payment status
+--------------------------------------------------------------------
+2.11 - Estimate Cost & Profit
+2.11.1 - Admin can overview the cost and profit information that generate based on event resource
+--------------------------------------------------------------------
+Actor - Attendee
+3 - Register Event
+3.1 - Attendee can access event registration form page
+3.2 - Attendee can fill-in the information in the form
+3.3 - Attendee can submit the form
+3.4 - Attendee will be receive the notification email
+--------------------------------------------------------------------
