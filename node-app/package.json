@@ -7,7 +7,8 @@
     "start": "tsc",
     "serve": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
     "dev": "concurrently -k \"npm run serve\" \"npm run start-open --prefix ../ng-app\" ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "rimraf webpack-dist/server.bundle.js && webpack"
   },
   "author": "Jacob Tan",
   "license": "MIT",
@@ -26,7 +27,10 @@
     "nodemon": "^1.19.4",
     "ts-node-dev": "^1.0.0-pre.43",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "axios": "^0.19.0",
