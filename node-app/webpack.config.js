@@ -14,9 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, '../webpack-dist'),
     filename: 'server.bundle.js'
   },
-  externals: [nodeExternals({
-    whitelist: ['node_modules']
-  })],
+  externals: [nodeExternals()],
   plugins: [
     new copyPlugin([
       { from: path.resolve(__dirname, './package.prod.json'), to: path.resolve(__dirname, '../webpack-dist/package.json') },

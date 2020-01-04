@@ -66,7 +66,7 @@ router.use(
 router.use('/service/user', userRoutes);
 
 // apply ng-app routes, public folders
-router.use(NgAppRoutes);
+// router.use(NgAppRoutes);
 
 // Start: Task Schedulers
 emailQueueCheckJob.triggeredJobs();

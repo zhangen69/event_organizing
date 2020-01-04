@@ -58,7 +58,8 @@
           <div class="mat-body">
             {{ service?.name }} x {{ service?.quantity }}
             {{ service?.unit }}
-            ({{ service?.unitPrice | currency: 'RM' }} x {{ service?.quantity }} = {{ service?.unitPrice * service?.quantity | currency: 'RM' }})
+            ({{ service?.unitPrice | currency: 'RM' }} x {{ service?.quantity }} =
+            {{ service?.unitPrice * service?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="service.remarks">{{ service.remarks }}</div>
         </div>
@@ -78,7 +79,8 @@
             {{ facility?.name }} x {{ facility?.quantity }}
             {{ facility?.unit }}
             <!-- ({{ facility?.unitPrice * facility?.quantity | currency: 'RM' }}) -->
-            ({{ facility?.unitPrice | currency: 'RM' }} x {{ facility?.quantity }} = {{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
+            ({{ facility?.unitPrice | currency: 'RM' }} x {{ facility?.quantity }} =
+            {{ facility?.unitPrice * facility?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="facility.remarks">{{ facility.remarks }}</div>
         </div>
@@ -98,7 +100,8 @@
             {{ stockItem?.name }} x {{ stockItem?.quantity }}
             {{ stockItem?.unit }}
             <!-- ({{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }}) -->
-            ({{ stockItem?.unitPrice | currency: 'RM' }} x {{ stockItem?.quantity }} = {{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
+            ({{ stockItem?.unitPrice | currency: 'RM' }} x {{ stockItem?.quantity }} =
+            {{ stockItem?.unitPrice * stockItem?.quantity | currency: 'RM' }})
           </div>
           <div class="mat-small remarks" *ngIf="stockItem.remarks">{{ stockItem.remarks }}</div>
         </div>
@@ -230,46 +233,47 @@
             <mat-card-header>
               <mat-card-title>{{ eventPlan.registrationForm.title }}</mat-card-title>
               <mat-card-subtitle>
-                  <app-standard-display-field [field]="{ name: 'description', noLabel: true }" [formData]="eventPlan.registrationForm">
-                  </app-standard-display-field>
+                <app-standard-display-field [field]="{ name: 'description', noLabel: true }"
+                  [formData]="eventPlan.registrationForm">
+                </app-standard-display-field>
               </mat-card-subtitle>
               <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <mat-expansion-panel expanded>
-                  <mat-expansion-panel-header class="bg-primary">
-                    <mat-panel-title>
-                      <h4>Basic Information</h4>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
+              <mat-expansion-panel expanded>
+                <mat-expansion-panel-header class="bg-primary">
+                  <mat-panel-title>
+                    <h4>Basic Information</h4>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                  <app-standard-form-field [field]="{ name: 'name', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.name"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'gender', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.gender"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.identityNumber"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'email', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.email"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.phoneNumber"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'organization', type: 'string', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.organization"></app-standard-form-field>
-                  <app-standard-form-field [field]="{ name: 'address', type: 'textarea', required: true }"
-                    *ngIf="eventPlan.registrationForm?.settings.address"></app-standard-form-field>
-                </mat-expansion-panel>
+                <app-standard-form-field [field]="{ name: 'name', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.name"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'gender', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.gender"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'identityNumber', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.identityNumber"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'email', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.email"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'phoneNumber', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.phoneNumber"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'organization', type: 'string', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.organization"></app-standard-form-field>
+                <app-standard-form-field [field]="{ name: 'address', type: 'textarea', required: true }"
+                  *ngIf="eventPlan.registrationForm?.settings.address"></app-standard-form-field>
+              </mat-expansion-panel>
 
-                <mat-expansion-panel expanded *ngIf="eventPlan.registrationForm?.fields.length > 0">
-                  <mat-expansion-panel-header class="bg-primary">
-                    <mat-panel-title>
-                      <h4>Detail Information</h4>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
+              <mat-expansion-panel expanded *ngIf="eventPlan.registrationForm?.fields.length > 0">
+                <mat-expansion-panel-header class="bg-primary">
+                  <mat-panel-title>
+                    <h4>Detail Information</h4>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                  <div *ngFor="let field of eventPlan.registrationForm?.fields">
-                    <app-standard-form-field [field]="field"></app-standard-form-field>
-                  </div>
-                </mat-expansion-panel>
+                <div *ngFor="let field of eventPlan.registrationForm?.fields">
+                  <app-standard-form-field [field]="field"></app-standard-form-field>
+                </div>
+              </mat-expansion-panel>
             </mat-card-content>
             <mat-card-actions>
               <button mat-raised-button color="primary" type="button">
@@ -309,8 +313,7 @@
           *ngIf="hasAttendeeIsSelected(eventPlan.attendees)">
           Group Attendees
         </button>
-        <a mat-raised-button class="btn-end" color="primary" target="new"
-          href="http://localhost:3000/assets/import_attendee_template.xlsx">
+        <a mat-raised-button class="btn-end" color="primary" href="assets/import attendee list.xlsx" download>
           <mat-icon>cloud_download</mat-icon> Template
         </a>
         <button mat-raised-button color="primary" (click)="importAttendees()">
@@ -591,8 +594,7 @@
                 mat-raised-button color="primary"
                 *ngIf="checkButtonIsValid(supplierInvoice, ['Confirmed']) && getOutsandingBalance('Provider', supplierInvoice) === 0">Pay</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Cancelled')"
-                mat-raised-button color="primary"
-                *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Cancel</button>
+                mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Open'])">Cancel</button>
               <button class="btn-sm" (click)="changeItemStatus(supplierInvoice, 'supplier-invoice', 'Closed')"
                 mat-raised-button color="primary" *ngIf="checkButtonIsValid(supplierInvoice, ['Paid'])">Close</button>
             </div>

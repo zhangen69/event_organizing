@@ -1,6 +1,6 @@
 const mongoose = {
-    // connection: 'mongodb+srv://jacob:RRgqCzxv5stwDPvZ@node-app-yfxfw.gcp.mongodb.net/demo_db?retryWrites=true',
-    connection: 'mongodb://localhost:27017/demo_db',
+    connection: 'mongodb+srv://jacob:RRgqCzxv5stwDPvZ@node-app-yfxfw.gcp.mongodb.net/demo_db?retryWrites=true',
+    // connection: 'mongodb://localhost:27017/demo_db',
 };
 
 const cloudinary = {

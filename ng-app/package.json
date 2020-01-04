@@ -26,6 +26,7 @@
     "@angular/pwa": "^0.803.19",
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
+    "@azure/ng-deploy": "^0.2.3",
     "@grapecity/spread-excelio": "^13.0.1",
     "@grapecity/spread-sheets-angular": "^13.0.1",
     "@grapecity/spread-sheets-charts": "^13.0.1",

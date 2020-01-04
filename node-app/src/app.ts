@@ -29,7 +29,7 @@ app.get('/test', (req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log('Server is Started: http://localhost:3000')
+  console.log('Server is Started: http://localhost:' + port);
 });
 
 export { app };
