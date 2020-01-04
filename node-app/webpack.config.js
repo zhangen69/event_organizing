@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const copyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -13,5 +14,12 @@ module.exports = {
     path: path.resolve(__dirname, '../webpack-dist'),
     filename: 'server.bundle.js'
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    whitelist: ['node_modules']
+  })],
+  plugins: [
+    new copyPlugin([
+      { from: path.resolve(__dirname, './package.prod.json'), to: path.resolve(__dirname, '../webpack-dist/package.json') },
+    ]),
+  ],
 };

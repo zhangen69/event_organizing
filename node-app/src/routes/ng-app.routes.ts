@@ -8,9 +8,9 @@ router.use('/images', express.static(path.join(__dirname, '../images')));
 router.use('/assets', express.static(path.join(__dirname, '../assets')));
 
 // configure ng-app
-router.use('/', express.static(path.join(__dirname, '../ng-app')));
+router.use('/', express.static(path.join(__dirname, './ng-app')));
 router.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, '../ng-app', 'index.html'));
+    res.sendFile(path.join(__dirname, './ng-app', 'index.html'));
 });
 
 export default router;
