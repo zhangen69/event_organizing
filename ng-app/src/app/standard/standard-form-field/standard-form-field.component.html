@@ -44,8 +44,7 @@
 
     <div *ngSwitchCase="'time'">
       <mat-form-field>
-        <input matInput [formControlName]="field.name" [placeholder]="field.displayName"
-          (change)="onUpdateTimeData(field.name)" [required]="field.required" type="time" class="time" />
+        <input matInput [formControlName]="field.name" [placeholder]="field.displayName" [required]="field.required" type="time" class="time" />
       </mat-form-field>
     </div>
 
@@ -146,5 +145,5 @@
       </div>
     </div>
   </ng-container>
-  <pre>{{ getErrors | json }}</pre>
+  <!-- <pre>{{ getErrors | json }}</pre> -->
 </div>

@@ -13,12 +13,17 @@ export interface IStandardFormField {
   fields?: IStandardFormField[];
   add?: any;
   isShow?: any;
-  reuqired?: boolean;
-  enumList?: any[];
+  enumList?: IFieldEnumList[];
   filterOption?: any;
   refIncludes?: string[];
   queryModel?: any;
   max?: number | boolean | Func;
+  refChange?: IRefChange;
+}
+
+export interface IFieldEnumList {
+  key: string;
+  value: string;
 }
 
 export enum IStandardFormFieldType {
@@ -72,3 +77,4 @@ export interface StandardHttpResponse {
 
 type StringFunc = (item: any) => string;
 type Func = (item: any) => any;
+type IRefChange = (refData: any, data: any) => any;

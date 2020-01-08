@@ -1,133 +1,11 @@
 import { FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { Observable, Subscription } from 'rxjs';
 import { map, throttleTime } from 'rxjs/operators';
-
-interface IFieldOptions {
-  name: string;
-  type: string;
-  displayName?: string;
-  required?: boolean;
-  default?: any;
-  enum?: any;
-  enumList?: IFieldEnumList[];
-  fields?: any[];
-  childName?: string;
-  ref?: string;
-  refName?: string;
-  refValue: string;
-  refOptions?: any[];
-  refIncludes?: string[];
-  refFilteredOptions?: Observable<any[]>;
-  refChange?: IRefChange;
-  add?: any;
-  queryModel?: any;
-  filterOption?: any;
-}
-
-type IRefChange = (refData: any, data: any) => any;
-
-interface IFieldEnumList {
-  key: string;
-  value: string;
-}
-
-class FieldModel implements IFieldOptions, OnDestroy {
-  name: string;
-  type: string;
-  displayName?: string;
-  required?: boolean;
-  default?: any;
-  enum?: any;
-  enumList?: IFieldEnumList[];
-  fields?: any[];
-  childName?: string;
-  ref?: string;
-  refName?: string;
-  refValue: string;
-  refOptions?: any[];
-  refIncludes?: string[];
-  refFilteredOptions?: Observable<any[]>;
-  refChange?: IRefChange;
-  add?: any;
-  request$: Subscription;
-  queryModel?: any;
-  filterOption?: any;
-  max?: any;
-
-  ngOnDestroy(): void {
-    if (this.request$) {
-      this.request$.unsubscribe();
-    }
-  }
-
-  constructor(private options: IFieldOptions, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {
-    Object.keys(options).forEach((option: string) => {
-      this[option] = options[option];
-    });
-
-    if (this.type === 'enum' && this.enum) {
-      this.enumList = [];
-      Object.keys(this.enum)
-        .filter(x => typeof this.enum[x as any] !== 'number')
-        .forEach((key: string) => {
-          this.enumList.push({ key: key, value: this.enum[key] });
-        });
-    } else if (this.type === 'ref' || this.type === 'textarea-autocomplete') {
-      if (!this.ref) {
-        this.ref = this.name.replace(/([A-Z])/g, '-$1').toLowerCase();
-      }
-
-      if (!this.refName && this.refName !== '') {
-        this.refName = 'name';
-      }
-
-      let api = `${environment.apiUrl}/service/${this.ref}`;
-      if (this.refIncludes && this.refIncludes.length > 0) {
-        let queryModel: any = {};
-
-        if (this.queryModel) {
-          queryModel = this.queryModel;
-        }
-
-        queryModel.includes = this.refIncludes;
-
-        api += `?queryModel=${JSON.stringify(queryModel)}`;
-      } else if (this.queryModel) {
-        api += `?queryModel=${JSON.stringify(this.queryModel)}`;
-      }
-      this.request$ = this.http
-        .get(api)
-        .pipe(
-          throttleTime(500),
-          map((res: any) => res.data)
-        )
-        .subscribe(options => {
-          this.refOptions = options;
-        });
-    } else if (this.type === 'table') {
-      this.fields.forEach(field => {
-        if (!field.displayName) {
-          field.displayName = this.titleDisplayPipe.transform(field.name);
-        }
-      });
-    }
-
-    if (!this.displayName) {
-      this.displayName = this.titleDisplayPipe.transform(this.name);
-    }
-  }
-
-  private _filterOptions(value: any): any[] {
-    const filterValue = typeof value === 'string' ? value.toLowerCase() : value[this.refName].toLowerCase();
-
-    return this.refOptions.filter(option => option[this.refName].toLowerCase().includes(filterValue));
-  }
-}
+import { IStandardFormField } from '../standard.interface';
 
 @Component({
   selector: 'app-standard-form-field',
@@ -137,17 +15,27 @@ class FieldModel implements IFieldOptions, OnDestroy {
 })
 export class StandardFormFieldComponent implements OnInit {
   @Input() parentField: any;
-  @Input() field: FieldModel;
+  @Input() field: IStandardFormField;
   @Input() formData: any;
+  @Input() form: FormGroup;
+  get isValid() {
+    return this.form.controls[this.field.name].valid;
+  }
+  get isTouched() {
+    return this.form.controls[this.field.name].touched;
+  }
+  get getErrors() {
+    return this.form.controls[this.field.name].errors;
+  }
   imagePreview: string;
   pickedImage: any = null;
   selectedTime: string;
-  @Input() form: FormGroup;
-  get isValid() { return this.form.controls[this.field.name].valid; }
-  get isTouched() { return this.form.controls[this.field.name].touched; }
-  get getErrors() { return this.form.controls[this.field.name].errors; }
 
-  constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {}
+  constructor(
+    private toastr: ToastrService,
+    private titleDisplayPipe: TitleDisplayPipe,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.initial();
@@ -157,64 +45,140 @@ export class StandardFormFieldComponent implements OnInit {
     if (!this.formData) {
       this.formData = {};
     }
-    this.field = new FieldModel(this.field, this.titleDisplayPipe, this.http);
 
-    switch (this.field.type) {
+    this.transformFormField(this.field, this.formData);
+  }
+
+  private transformFormField(field: IStandardFormField, formData: any) {
+    // check field
+    if (!field) {
+      console.error('Form Field cannot be empty');
+      return;
+    }
+
+    switch (field.type) {
       case 'object':
-        if (!this.formData[this.field.name]) {
-          this.formData[this.field.name] = {};
+        if (!formData[field.name]) {
+          formData[field.name] = {};
         }
         break;
+      // check type: enum
+      case 'enum':
+        if (!field.enum) {
+          console.error('Form Field Enum cannot be empty');
+          return;
+        }
+        field.enumList = [];
+        Object.keys(field.enum)
+          .filter(x => typeof field.enum[x as any] !== 'number')
+          .forEach((key: string) => {
+            field.enumList.push({ key: key, value: field.enum[key] });
+          });
+        break;
+      // check type: ref + textarea-autocomplete
+      case 'ref':
+      case 'textarea-autocomplete':
+        // check ref
+        if (!field.ref) {
+          field.ref = field.name.replace(/([A-Z])/g, '-$1').toLowerCase();
+        }
+        // check refName
+        if (!field.refName && field.refName !== '') {
+          field.refName = 'name';
+        }
+        // setup/config api url
+        let api = `${environment.apiUrl}/service/${field.ref}`;
+        // check refIncludes
+        if (field.refIncludes && field.refIncludes.length > 0) {
+          let queryModel: any = {};
+          // check queryModel
+          if (field.queryModel) {
+            queryModel = field.queryModel;
+          }
+          queryModel.includes = field.refIncludes;
+          api += `?queryModel=${JSON.stringify(queryModel)}`;
+        } else if (field.queryModel) {
+          api += `?queryModel=${JSON.stringify(field.queryModel)}`;
+        }
+        // setup/config subscription
+        const request$ = this.http
+          .get(api)
+          .pipe(
+            throttleTime(500),
+            map((res: any) => res.data)
+          )
+          .subscribe(options => {
+            field.refOptions = options;
+          });
+        break;
+      // check type: table
       case 'array':
       case 'table':
-        if (!this.formData[this.field.name] && !this.field.default) {
-          this.formData[this.field.name] = [{}];
+        if (!field.fields && !field.fields.length) {
+          console.error('Fields/Columns cannot be empty');
+          return;
         }
-
-        if (this.field.default && !this.formData[this.field.name]) {
-          this.formData[this.field.name] = this.field.default;
+        field.fields.forEach(field => {
+          if (!field.displayName) {
+            field.displayName = this.titleDisplayPipe.transform(field.name);
+          }
+        });
+        if (!formData[field.name] && !field.default) {
+          formData[field.name] = [{}];
         }
-
+        if (field.default && !formData[field.name]) {
+          formData[field.name] = field.default;
+        }
         break;
       case 'date':
-        if (!this.formData[this.field.name]) {
-          this.formData[this.field.name] = new Date();
+        if (!formData[field.name]) {
+          formData[field.name] = new Date();
         }
         break;
       case 'time':
         let date = new Date();
 
-        if (this.formData[this.field.name]) {
-          date = new Date(this.formData[this.field.name]);
+        if (formData[field.name]) {
+          date = new Date(formData[field.name]);
         } else {
-          this.formData[this.field.name] = date;
+          formData[field.name] = date;
         }
-
-        const hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours().toString();
-        const minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes().toString();
-
-        this.selectedTime = `${hours}:${minutes}`;
-
-        // console.log('time', this.selectedTime);
+        const hours =
+          date.getHours() > 9
+            ? date.getHours()
+            : '0' + date.getHours().toString();
+        const minutes =
+          date.getMinutes() > 9
+            ? date.getMinutes()
+            : '0' + date.getMinutes().toString();
+        formData[field.name] = `${hours}:${minutes}`;
         break;
       case 'boolean':
-        if (!this.formData[this.field.name]) {
-          this.formData[this.field.name] = false;
+        if (!formData[field.name]) {
+          formData[field.name] = false;
         }
         break;
       default:
-        if (this.parentField && this.parentField.type === 'array' && !this.formData) {
-          this.formData = {};
+        if (
+          this.parentField &&
+          this.parentField.type === 'array' &&
+          !formData
+        ) {
+          formData = {};
         }
 
-        if (this.field.default && !this.formData[this.field.name]) {
-          this.formData[this.field.name] = this.field.default;
+        if (field.default && !formData[field.name]) {
+          formData[field.name] = field.default;
         }
 
         break;
     }
-  }
 
+    // check displayName
+    if (!field.displayName) {
+      field.displayName = this.titleDisplayPipe.transform(field.name);
+    }
+  }
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
 
@@ -226,12 +190,18 @@ export class StandardFormFieldComponent implements OnInit {
       reader.readAsDataURL(file);
       this.pickedImage = file;
     } else {
-      this.toastr.error('Invalid MIME type, please select JPEG or PNG type image.');
+      this.toastr.error(
+        'Invalid MIME type, please select JPEG or PNG type image.'
+      );
     }
   }
 
   getOptions(): any[] {
-    return [{ name: 'One', value: 1 }, { name: 'Two', value: 2 }, { name: 'Three', value: 3 }];
+    return [
+      { name: 'One', value: 1 },
+      { name: 'Two', value: 2 },
+      { name: 'Three', value: 3 }
+    ];
   }
 
   getRefValue(option, field) {
@@ -274,28 +244,6 @@ export class StandardFormFieldComponent implements OnInit {
     array.splice(index, 1);
   }
 
-  onUpdateTimeData(fieldName: string) {
-    const timeControl = this.form.controls[fieldName];
-    console.log('selected time:', timeControl.value);
-    timeControl.setValue('19:00');
-    return;
-    if (timeControl && timeControl.value) {
-      const timeArr = timeControl.value.split(':');
-      const hour = Number(timeArr[0]);
-      const minute = Number(timeArr[1]);
-
-      const date = new Date();
-
-      date.setHours(hour);
-      date.setMinutes(minute);
-      date.setSeconds(0);
-
-      // this.formData[this.field.name] = date;
-      timeControl.setValue(date);
-      console.log('formData > ' + this.field.displayName, date);
-    }
-  }
-
   isShow(field): boolean {
     if (!field.isShow) {
       return true;
@@ -313,12 +261,12 @@ export class StandardFormFieldComponent implements OnInit {
   }
 
   getRefOptions(options, filterOption) {
-      if (filterOption && options) {
-          const key = this.formData[filterOption.type][filterOption.fieldName];
-          options = options.filter(option => option[filterOption.type] === key);
-      }
+    if (filterOption && options) {
+      const key = this.formData[filterOption.type][filterOption.fieldName];
+      options = options.filter(option => option[filterOption.type] === key);
+    }
 
-      return options;
+    return options;
   }
 
   getInputMaxValue(max, formData) {
@@ -334,7 +282,7 @@ export class StandardFormFieldComponent implements OnInit {
   }
 
   checkInputValid(max, element) {
-    if ((max && element.value) && element.value > max) {
+    if (max && element.value && element.value > max) {
       element.value = max;
       this.formData[this.field.name] = max;
       this.toastr.info('Max value cannot greater than ' + max);

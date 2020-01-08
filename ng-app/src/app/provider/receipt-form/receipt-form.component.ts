@@ -32,10 +32,10 @@ export class ReceiptFormComponent implements OnInit {
             childName: 'Receipt Item',
             default: [],
             fields: [
-                { name: 'name', type: 'string', reuqired: true },
-                { name: 'unit', type: 'string', reuqired: true },
-                { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'number', reuqired: true },
-                { name: 'quantity', type: 'number', reuqired: true }
+                { name: 'name', type: 'string', required: true },
+                { name: 'unit', type: 'string', required: true },
+                { name: 'unitPrice', displayName: 'U/Price (RM)', type: 'number', required: true },
+                { name: 'quantity', type: 'number', required: true }
             ]
         }
     ];

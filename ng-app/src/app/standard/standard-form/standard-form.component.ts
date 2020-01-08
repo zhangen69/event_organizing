@@ -37,7 +37,7 @@ export class StandardFormComponent implements OnInit {
       return { field: field.name, errors };
     });
     return errors;
-   }
+  }
 
   mode = 'create';
   formData: any = {};
@@ -68,8 +68,8 @@ export class StandardFormComponent implements OnInit {
     if (this.title) {
       this.titleService.setTitle(
         (this.title ? this.title : (this.formData._id ? 'Edit' : 'New') + ' ' + this.titleDisplayPipe.transform(this.domainName)) +
-          ' - ' +
-          environment.title
+        ' - ' +
+        environment.title
       );
     }
 
@@ -83,28 +83,19 @@ export class StandardFormComponent implements OnInit {
 
         this.pageLoaderService.toggle(true);
         this.mode = 'update';
-        this.standardService.fetch(params['id'], null, this.includes).subscribe(
-          (res: any) => {
+        this.standardService.fetch(params['id'], null, this.includes).subscribe({
+          next: (res: any) => {
             this.formData = res.data;
-            this.fields
-              .filter(field => field.type === 'time')
-              .forEach(field => {
-                // this.formData[field.name]
-                const date = new Date(this.formData[field.name]);
-                const hours = date.getHours();
-                const minutes = date.getMinutes();
-                this.formData[field.name] = (hours > 9 ? hours : '0' + hours) + ':' + (minutes > 9 ? minutes : '0' + minutes);
-              });
-            console.log(this.formData);
+            this.transformTimeValue(this.formData);
+            this.initialDefaultValues(this.formData);
             this.form.patchValue(this.formData);
-            this.initialDefaultValues();
             this.pageLoaderService.toggle(false);
           },
-          (res: any) => {
+          error: (res: any) => {
             this.pageLoaderService.toggle(false);
             this.toastr.error(res.error.message);
           }
-        );
+        });
       }
     });
     this.fields.forEach(field => {
@@ -118,7 +109,7 @@ export class StandardFormComponent implements OnInit {
     }
   }
 
-  private initialDefaultValues() {
+  private initialDefaultValues(formData: any) {
     this.fields.forEach(field => {
       let defaultValue;
 
@@ -139,8 +130,8 @@ export class StandardFormComponent implements OnInit {
           break;
       }
 
-      if (!this.checkHasValue(this.formData, field.name)) {
-        this.formData[field.name] = defaultValue;
+      if (!this.checkHasValue(formData, field.name)) {
+        formData[field.name] = defaultValue;
       }
     });
   }
@@ -176,29 +167,34 @@ export class StandardFormComponent implements OnInit {
       return;
     }
 
+    const formData = this.form.value;
+
+    // transform value for time
+    this.transformTimeValue(formData, true);
+
     if (this.pickedImage !== null) {
       this.onUploadFile();
     } else if (this.callback && this.submitFunc.observers.length > 0) {
-      this.submitFunc.emit(this.formData);
+      this.submitFunc.emit(formData);
     } else {
       this.fields
         .filter(field => {
           return field.type === 'ref';
         })
         .forEach(field => {
-          if (typeof this.formData[field.type] !== 'object') {
-            this.formData[field.type] = null;
+          if (typeof formData[field.type] !== 'object') {
+            formData[field.type] = null;
           }
         });
 
       this.pageLoaderService.toggle(true);
-      this.standardService.submit(this.formData).subscribe(
+      this.standardService.submit(formData).subscribe(
         (res: any) => {
           this.toastr.success(res.message);
           this.pageLoaderService.toggle(false);
           if (this.afterSubmit.observers.length > 0) {
-            this.formData._id = res.data._id;
-            this.afterSubmit.emit(this.formData);
+            formData._id = res.data._id;
+            this.afterSubmit.emit(formData);
           } else {
             this.onCancel(`/${this.domainName}/list`);
           }
@@ -208,6 +204,24 @@ export class StandardFormComponent implements OnInit {
           this.toastr.error(res.error.message);
         }
       );
+    }
+  }
+
+  private transformTimeValue(formData, toDate = false) {
+    if (this.fields.some((field) => field.type === 'time')) {
+      this.fields.filter((field) => field.type === 'time').forEach((field) => {
+        const date = toDate ? new Date() : new Date(formData[field.name]);
+        if (!toDate) {
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
+          formData[field.name] = (hours > 9 ? hours : '0' + hours) + ':' + (minutes > 9 ? minutes : '0' + minutes);
+        } else {
+          const timeItems: string[] = formData[field.name].split(':');
+          date.setHours(Number(timeItems[0]));
+          date.setMinutes(Number(timeItems[1]));
+          formData[field.name] = date;
+        }
+      });
     }
   }
 }
