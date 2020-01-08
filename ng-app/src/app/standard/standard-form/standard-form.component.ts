@@ -29,6 +29,15 @@ export class StandardFormComponent implements OnInit {
   @Output() submitFunc = new EventEmitter<any>();
   @Output() afterSubmit = new EventEmitter<any>();
   form: FormGroup;
+  get getFormErrors() {
+    const errors = this.fields.filter((field) => {
+      return this.form.controls[field.name].errors !== null;
+    }).map((field) => {
+      const errors = this.form.controls[field.name].errors;
+      return { field: field.name, errors };
+    });
+    return errors;
+   }
 
   mode = 'create';
   formData: any = {};

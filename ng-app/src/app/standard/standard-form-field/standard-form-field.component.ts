@@ -145,6 +145,7 @@ export class StandardFormFieldComponent implements OnInit {
   @Input() form: FormGroup;
   get isValid() { return this.form.controls[this.field.name].valid; }
   get isTouched() { return this.form.controls[this.field.name].touched; }
+  get getErrors() { return this.form.controls[this.field.name].errors; }
 
   constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {}
 
