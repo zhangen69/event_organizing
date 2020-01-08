@@ -273,11 +273,13 @@ export class StandardFormFieldComponent implements OnInit {
     array.splice(index, 1);
   }
 
-  onUpdateTimeData() {
-    console.log('selected time:', this.selectedTime);
-
-    if (this.selectedTime) {
-      const timeArr = this.selectedTime.split(':');
+  onUpdateTimeData(fieldName: string) {
+    const timeControl = this.form.controls[fieldName];
+    console.log('selected time:', timeControl.value);
+    timeControl.setValue('19:00');
+    return;
+    if (timeControl && timeControl.value) {
+      const timeArr = timeControl.value.split(':');
       const hour = Number(timeArr[0]);
       const minute = Number(timeArr[1]);
 
@@ -287,7 +289,8 @@ export class StandardFormFieldComponent implements OnInit {
       date.setMinutes(minute);
       date.setSeconds(0);
 
-      this.formData[this.field.name] = date;
+      // this.formData[this.field.name] = date;
+      timeControl.setValue(date);
       console.log('formData > ' + this.field.displayName, date);
     }
   }

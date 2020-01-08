@@ -47,7 +47,7 @@ export class StandardFormComponent implements OnInit {
     private dialog: MatDialog,
     private titleService: Title,
     private standardFormService: StandardFormService,
-    private titleDisplayPipe: TitleDisplayPipe,
+    private titleDisplayPipe: TitleDisplayPipe
   ) {
     this.standardService = new StandardService(this.http, this.dialog, this.router, this.toastr);
   }
@@ -60,7 +60,7 @@ export class StandardFormComponent implements OnInit {
       this.titleService.setTitle(
         (this.title ? this.title : (this.formData._id ? 'Edit' : 'New') + ' ' + this.titleDisplayPipe.transform(this.domainName)) +
           ' - ' +
-          environment.title,
+          environment.title
       );
     }
 
@@ -77,6 +77,17 @@ export class StandardFormComponent implements OnInit {
         this.standardService.fetch(params['id'], null, this.includes).subscribe(
           (res: any) => {
             this.formData = res.data;
+            this.fields
+              .filter(field => field.type === 'time')
+              .forEach(field => {
+                // this.formData[field.name]
+                const date = new Date(this.formData[field.name]);
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                this.formData[field.name] = (hours > 9 ? hours : '0' + hours) + ':' + (minutes > 9 ? minutes : '0' + minutes);
+              });
+            console.log(this.formData);
+            this.form.patchValue(this.formData);
             this.initialDefaultValues();
             this.pageLoaderService.toggle(false);
           },
@@ -148,6 +159,14 @@ export class StandardFormComponent implements OnInit {
   }
 
   onSubmit() {
+    // double check form validation
+    if (this.form.invalid || this.form.errors) {
+      this.form.errors.forEach(([key, value]) => {
+        this.toastr.error(key, value);
+      });
+      return;
+    }
+
     if (this.pickedImage !== null) {
       this.onUploadFile();
     } else if (this.callback && this.submitFunc.observers.length > 0) {
