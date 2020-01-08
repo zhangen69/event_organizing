@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TitleDisplayPipe } from './../../pipes/title-display.pipe';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
@@ -141,6 +142,9 @@ export class StandardFormFieldComponent implements OnInit {
   imagePreview: string;
   pickedImage: any = null;
   selectedTime: string;
+  @Input() form: FormGroup;
+  get isValid() { return this.form.controls[this.field.name].valid; }
+  get isTouched() { return this.form.controls[this.field.name].touched; }
 
   constructor(private toastr: ToastrService, private titleDisplayPipe: TitleDisplayPipe, private http: HttpClient) {}
 

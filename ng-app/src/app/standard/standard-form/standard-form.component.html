@@ -4,8 +4,8 @@
         <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <form #form="ngForm" id="form" (ngSubmit)="form.valid && onSubmit()">
-            <app-standard-form-field form="form" [field]="field" [(formData)]="formData" *ngFor="let field of fields">
+        <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+            <app-standard-form-field [form]="form" [field]="field" [(formData)]="formData" *ngFor="let field of fields">
             </app-standard-form-field>
             <div class="form-actions-group">
                 <button mat-raised-button type="button" (click)="onCancel('/' + domainName + '/list')">

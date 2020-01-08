@@ -1,16 +1,16 @@
-<ng-container [ngSwitch]="field.type" *ngIf="isShow(field)">
+<ng-container [ngSwitch]="field.type" *ngIf="isShow(field)" [formGroup]="form">
   <mat-form-field *ngSwitchCase="'string'">
-    <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    <input matInput [formControlName]="field.name" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" />
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="'textarea'">
-    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="4" rows="4" [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="4" rows="4" [formControlName]="field.name" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required"></textarea>
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="'textarea-autocomplete'">
-    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="4" rows="4" [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="4" rows="4" [formControlName]="field.name" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" [matAutocomplete]="textareaAutocomplete"></textarea>
 
     <mat-autocomplete #textareaAutocomplete="matAutocomplete" [displayWith]="displayFn"
@@ -21,18 +21,18 @@
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="'number'">
-    <input matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    <input matInput [formControlName]="field.name" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" [max]="getInputMaxValue(field.max, formData)" (keyup)="getInputMaxValue(field.max, formData) && checkInputValid(getInputMaxValue(field.max, formData), $event.target)" />
     <!-- <pre>MAX: {{getInputMaxValue(field.max, formData)}}</pre> -->
   </mat-form-field>
 
   <div *ngSwitchCase="'boolean'">
-    <mat-checkbox [(ngModel)]="formData[field.name]" [name]="field.name">{{ field.displayName }}</mat-checkbox>
+    <mat-checkbox [formControlName]="field.name" [name]="field.name">{{ field.displayName }}</mat-checkbox>
   </div>
 
   <div *ngSwitchCase="'date'">
     <mat-form-field>
-      <input matInput [matDatepicker]="datepicker" [(ngModel)]="formData[field.name]" [placeholder]="field.displayName"
+      <input matInput [matDatepicker]="datepicker" [formControlName]="field.name" [placeholder]="field.displayName"
         class="date" disabled />
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker #datepicker disabled="false"></mat-datepicker>
@@ -48,13 +48,13 @@
 
   <mat-form-field *ngSwitchCase="'enum'">
     <mat-label>{{ field.displayName }}</mat-label>
-    <mat-select [(ngModel)]="formData[field.name]" [name]="field.name" [required]="field.required">
+    <mat-select [formControlName]="field.name" [name]="field.name" [required]="field.required">
       <mat-option *ngFor="let enum of field.enumList" [value]="enum.value">{{ enum.value | titleDisplay }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field *ngSwitchCase="'ref'">
-    <input type="text" matInput [(ngModel)]="formData[field.name]" [name]="field.name" [placeholder]="field.displayName"
+    <input type="text" matInput [formControlName]="field.name" [name]="field.name" [placeholder]="field.displayName"
       [required]="field.required" [matAutocomplete]="textboxAutocomplete" />
 
     <mat-autocomplete #textboxAutocomplete="matAutocomplete" [displayWith]="displayFn"

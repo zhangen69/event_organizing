@@ -9,6 +9,9 @@ import { Location } from '@angular/common';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
+import { FormGroup } from '@angular/forms';
+import { StandardFormService } from '../standard-form.service';
+import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 
 @Component({
   selector: 'app-standard-form',
@@ -25,6 +28,7 @@ export class StandardFormComponent implements OnInit {
   @Output() cancel = new EventEmitter<any>();
   @Output() submitFunc = new EventEmitter<any>();
   @Output() afterSubmit = new EventEmitter<any>();
+  form: FormGroup;
 
   mode = 'create';
   formData: any = {};
@@ -41,14 +45,23 @@ export class StandardFormComponent implements OnInit {
     private pageLoaderService: PageLoaderService,
     private http: HttpClient,
     private dialog: MatDialog,
-    private titleService: Title
+    private titleService: Title,
+    private standardFormService: StandardFormService,
+    private titleDisplayPipe: TitleDisplayPipe,
   ) {
     this.standardService = new StandardService(this.http, this.dialog, this.router, this.toastr);
   }
 
   ngOnInit() {
+    if (this.fields && this.fields.length > 0) {
+      this.form = this.standardFormService.toFormGroup(this.fields);
+    }
     if (this.title) {
-      this.titleService.setTitle('New ' + this.title + ' - ' + environment.title);
+      this.titleService.setTitle(
+        (this.title ? this.title : (this.formData._id ? 'Edit' : 'New') + ' ' + this.titleDisplayPipe.transform(this.domainName)) +
+          ' - ' +
+          environment.title,
+      );
     }
 
     this.formId = 'form_' + moment().format('x');
