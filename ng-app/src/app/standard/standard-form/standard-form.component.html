@@ -4,7 +4,7 @@
     <mat-card-subtitle>Please fill-in all the required fields marked with asterisks (*).</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <app-standard-form-field [(form)]="form" [field]="field" [(formData)]="formData" *ngFor="let field of fields">
       </app-standard-form-field>
       <div class="form-actions-group">

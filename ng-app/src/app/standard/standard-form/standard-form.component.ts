@@ -1,3 +1,4 @@
+import { IStandardFormField } from './../standard.interface';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
@@ -9,7 +10,7 @@ import { Location } from '@angular/common';
 import { PageLoaderService } from 'src/app/templates/page-loader/page-loader.service';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { StandardFormService } from '../standard-form.service';
 import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 
@@ -21,7 +22,7 @@ import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
 export class StandardFormComponent implements OnInit {
   @Input() title: string;
   @Input() domainName: string;
-  @Input() fields: any[];
+  @Input() fields: IStandardFormField[];
   @Input() includes: string[];
   @Input() dataSource: any;
   @Input() callback: boolean;
@@ -158,11 +159,29 @@ export class StandardFormComponent implements OnInit {
     }
   }
 
+  onCheckFormValidation(form: FormGroup) {
+    return Object.keys(form.controls).filter((controlKey) => {
+      const error = form.controls[controlKey].errors;
+      return error;
+    }).map((controlKey) => {
+      const control = form.controls[controlKey];
+      const field = this.fields.find((field) => field.name === controlKey);
+      return { key: controlKey, message: this.getErrorMessage(control.errors), displayName: field.displayName };
+    });
+  }
+
+  getErrorMessage(error: ValidationErrors) {
+    if (error.required) {
+      return 'This field is required, cannot be empty';
+    }
+  }
+
   onSubmit() {
+    const errors = this.onCheckFormValidation(this.form);
     // double check form validation
-    if (this.form.invalid || this.form.errors) {
-      this.form.errors.forEach(([key, value]) => {
-        this.toastr.error(key, value);
+    if (errors && errors.length > 0) {
+      errors.forEach((error) => {
+        this.toastr.error(error.message, error.displayName);
       });
       return;
     }
