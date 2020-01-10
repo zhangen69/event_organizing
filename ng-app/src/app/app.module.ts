@@ -1,4 +1,4 @@
-import { StandardDisplayFieldComponent } from './standard/standard-display-field/standard-display-field.component';
+import { StandardModule } from './standard/standard.module';
 import { StockItemViewComponent } from './inventory/stock-item-view/stock-item-view.component';
 import { StockTransactionFormComponent } from './inventory/stock-transaction-form/stock-transaction-form.component';
 import { ImportAttendeesComponent } from './event/event-plan-view/import-attendees/import-attendees.component';
@@ -60,11 +60,7 @@ import { PaymentVoucherListComponent } from './provider/payment-voucher-list/pay
 import { PaymentVoucherFormComponent } from './provider/payment-voucher-form/payment-voucher-form.component';
 import { SupplierInvoiceFormComponent } from './provider/supplier-invoice-form/supplier-invoice-form.component';
 import { SupplierInvoiceListComponent } from './provider/supplier-invoice-list/supplier-invoice-list.component';
-import { StandardListComponent } from './standard/standard-list/standard-list.component';
 import { DatePipe, CurrencyPipe, CommonModule } from '@angular/common';
-import { StandardFormComponent } from './standard/standard-form/standard-form.component';
-import { StandardFormFieldComponent } from './standard/standard-form-field/standard-form-field.component';
-import { StandardFilterComponent } from './standard/standard-filter/standard-filter.component';
 import { TitleDisplayPipe } from './pipes/title-display.pipe';
 import { RegisterEventComponent } from './event/register-event/register-event.component';
 import { PageLoaderComponent } from './templates/page-loader/page-loader.component';
@@ -78,11 +74,9 @@ import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { FilterOptionsPipe } from './standard/filter-options.pipe';
 import { GetTotalPipe } from './pipes/get-total.pipe';
 import { EventPlanViewComponent } from './event/event-plan-view/event-plan-view.component';
 import { ProcessesFilterPipe } from './event/event-plan-view/processes-filter.pipe';
-import { ObjectToArrayPipe } from './standard/to-array.pipe';
 import { ProviderViewComponent } from './provider/provider-view/provider-view.component';
 import { CategoryViewComponent } from './provider/category-view/category-view.component';
 
@@ -129,19 +123,12 @@ import { CategoryViewComponent } from './provider/category-view/category-view.co
     PaymentVoucherFormComponent,
     SupplierInvoiceFormComponent,
     SupplierInvoiceListComponent,
-    StandardListComponent,
-    StandardFormComponent,
-    StandardFormFieldComponent,
-    StandardFilterComponent,
     RegisterEventComponent,
-    TitleDisplayPipe,
     PageLoaderComponent,
     DialogFormComponent,
-    FilterOptionsPipe,
     GetTotalPipe,
     EventPlanViewComponent,
     ProcessesFilterPipe,
-    ObjectToArrayPipe,
     CustomerViewComponent,
     PaymentFormComponent,
     QuotationFormComponent,
@@ -149,7 +136,6 @@ import { CategoryViewComponent } from './provider/category-view/category-view.co
     ImportAttendeesComponent,
     StockTransactionFormComponent,
     StockItemViewComponent,
-    StandardDisplayFieldComponent,
     ProviderViewComponent,
     CategoryViewComponent,
   ],
@@ -180,6 +166,7 @@ import { CategoryViewComponent } from './provider/category-view/category-view.co
     }),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StandardModule,
   ],
   entryComponents: [ConfirmationDialogComponent, DialogFormComponent, ImportAttendeesComponent],
   providers: [
