@@ -47,7 +47,6 @@ export class StandardFormFieldComponent implements OnInit {
     }
 
     this.transformFormField(this.field, this.formData);
-    this.form.patchValue(this.formData);
   }
 
   private transformFormField(field: IStandardFormField, formData: any) {

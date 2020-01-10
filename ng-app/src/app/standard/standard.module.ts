@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FilterOptionsPipe } from './filter-options.pipe';
 import { TitleDisplayPipe } from '../pipes/title-display.pipe';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -55,6 +56,7 @@ import { TitleDisplayPipe } from '../pipes/title-display.pipe';
     MatTooltipModule,
     MatInputModule,
     MatButtonModule,
+    MatSortModule,
   ],
   exports: [
     StandardDisplayFieldComponent,

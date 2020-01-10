@@ -2,7 +2,7 @@ import { IStandardFormField } from './../standard.interface';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StandardService } from 'src/app/standard/standard.service';
 import { ToastrService } from 'ngx-toastr';
@@ -19,7 +19,7 @@ import { TitleDisplayPipe } from 'src/app/pipes/title-display.pipe';
   templateUrl: './standard-form.component.html',
   styleUrls: ['./standard-form.component.css']
 })
-export class StandardFormComponent implements OnInit {
+export class StandardFormComponent implements OnInit, AfterViewInit {
   @Input() title: string;
   @Input() domainName: string;
   @Input() fields: IStandardFormField[];
@@ -108,6 +108,10 @@ export class StandardFormComponent implements OnInit {
       this.mode = 'update';
       this.formData = this.dataSource;
     }
+  }
+
+  ngAfterViewInit() {
+    this.form.patchValue(this.formData);
   }
 
   private initialDefaultValues(formData: any) {
