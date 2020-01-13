@@ -64,8 +64,8 @@ export class EventPlanListComponent implements OnInit {
                 }
             }
         },
-        { name: 'remarks', displayName: 'Remarks' },
-        { name: 'audit.updatedDate', displayName: 'Updated', type: 'date' }
+        // { name: 'remarks', displayName: 'Remarks' },
+        { name: 'audit.updatedDate', displayName: 'Updated', type: 'date', width: '150px' }
     ];
     filterList = [
         { type: 'code', displayName: 'Code', queryType: 'string' },

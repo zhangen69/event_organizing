@@ -2,7 +2,14 @@ import { AuthService } from './auth/auth.service';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
-import { PageLoaderService } from './templates/page-loader/page-loader.service';
+
+interface IRoute {
+  name: string;
+  displayName?: string;
+  url?: string;
+  children?: IRoute[];
+  opened?: boolean;
+}
 
 @Component({
   selector: 'app-root',
@@ -14,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuth = false;
   sidenavOpened = true;
   mobileQuery: MediaQueryList;
-  routes = [
+  routes: IRoute[] = [
     {
       name: 'Profile',
       children: [{ url: '/user/profile', name: 'My Profile' }, { url: '/user/changePassword', name: 'Change Password' }]
@@ -61,8 +68,13 @@ export class AppComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    if (window.innerWidth <= 600) {
+      this.sidenavOpened = false;
+    }
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this._mobileQueryListener = () => {
+      changeDetectorRef.detectChanges();
+    };
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.isAuth = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {

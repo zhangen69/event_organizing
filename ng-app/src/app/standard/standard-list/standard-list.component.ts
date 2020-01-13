@@ -204,7 +204,7 @@ export class StandardListComponent implements OnInit, OnDestroy, DoCheck, AfterV
     switch (column.type) {
       case 'date':
       case 'time':
-        value = this.datePipe.transform(value, column.dateFormat || 'hh:mm a, dd-MM-yyyy');
+        value = this.datePipe.transform(value, column.dateFormat || 'hh:mm a, dd-MMM-yyyy');
         break;
       case 'currency':
         value = this.currencyPipe.transform(value);

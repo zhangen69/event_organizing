@@ -70,6 +70,17 @@ mat-sidenav-container:not(.is-auth) mat-sidenav-content {
   height: 36px;
 }
 
+.mat-drawer-container {
+  background-color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-sidenav-container.is-opened mat-sidenav {
+    left: 0;
+  }
+
+}
+
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }

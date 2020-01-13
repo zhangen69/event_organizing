@@ -8,5 +8,13 @@
 }
 
 .td-checkbox {
-  width: 40px;
+  min-width: 40px;
+}
+
+.td-action {
+  min-width: 100px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
 }
